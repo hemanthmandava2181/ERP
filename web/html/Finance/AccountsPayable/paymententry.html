@@ -1,0 +1,110 @@
+<script src="/erp/scripts/finance/accountspayable/paymententry.js"></script>
+
+<div class = "container"  id="paymententryId" data-ng-controller="paymententrycontroller">
+	<div id = "mainhome">
+		<div id = "mainpage">
+			<h3>Payment Entry</h3>   
+			<h5>&nbsp;</h5>
+			<div class = "panel panel-primary">
+				<div class = "panel-body">
+					<div class = "form-group row">
+						<div class = "form-group col-md-4">
+							<label>Financial Year</label>
+							<select class = "form-control" data-ng-model = "data.object.financial_year">
+								<option data-ng-repeat = "year in years" value = "{{year.year_id}}">{{year.year_name}}</option>	
+							</select>
+						</div>
+						<div class = "form-group col-md-4">
+							<label>Journal Voucher No.</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.voucher_no" />
+						</div>
+						<button class = "btn btn-primary" id = "searchres" style = "margin-top : 2.6%;" data-ng-click = "">Search</button>   
+					</div>
+				</div>
+			</div>
+			<div class = "panel panel-primary">
+				<div class = "panel-body">
+					<div id="dataDiv" style="overflow-x:auto;">
+						<table class="table table-bordered">  
+							<thread> 
+								<tr style='background-color: CornflowerBlue'>        
+									<th>S.No</th>        
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">Vendor/Employee</th>   
+									<th style="min-width: 150px;max-width: 150px;text-align: center;">Voucher No.</th>    
+									<th style="min-width: 130px;max-width: 130px;text-align: center;">Voucher Date</th>    
+									<th style="min-width: 150px;max-width: 150px;text-align: center;">Voucher Amount</th> 	
+									<th style="min-width: 130px;max-width: 130px;text-align: center;">Paid Amount</th> 
+									<th style="min-width: 100px;max-width: 100px;text-align: center;">Pay Amount</th>     
+									<th style="min-width: 70px;max-width: 70px;text-align: center;">View</th>   	   		   	             
+								</tr>
+								<tr>          
+									 <td align="center">
+									 	<input type = "checkbox" id = "check" value = "true" />
+									 </td>             
+									 <td align="left">ESI Payable</td>
+									 <td align="left">JV-300618004402</td>
+									 <td align="left">30-06-2018</td> 
+									 <td align="right">9152.0</td>
+									 <td align="right"></td>
+									 <td align="center">
+									 	<input type = "text" class = "form-control" disabled data-ng-model = "data.object.pay_amount" />
+									 </td>
+									 <td align="center">
+									 	<button class = "btn btn-primary" id = "view" data-ng-click = "" >View</button>
+									 </td>
+								</tr>             
+							</thread>                         
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class = "panel panel-primary">
+				<div class = "panel-heading">Bank Payment</div>
+				<div class = "panel-body">
+					<div class = "form-group row">
+						<div class = "form-group col-md-3">
+							<label>Bank Account</label>
+							<select class = "form-control" data-ng-model = "data.object.bank_account">
+								<option data-ng-repeat = "account in accounts" value = "{{account.id}}">{{account.name}}</option>
+							</select>
+						</div>
+						<div class = "form-group col-md-3">
+							<label>C.H No/Neft/RTGS No.</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object." />
+						</div>
+						<div class = "form-group col-md-3">
+							<label>Date</label>
+							<input type = "date" class = "form-control" data-ng-model = "data.object.date" />
+						</div>
+						<div class = "form-group col-md-3">
+							<label>Amount</label>
+							<input type = "text" class = "form-control" disabled data-ng-model = "data.objcet.amount" id = "amount" />
+						</div>
+					</div>
+					<div class = "form-group row">
+						<div class = "form-group col-md-12">
+							<label>Description</label>
+							<textarea type = "text" class = "form-control" placeholder = "Description" data-ng-model = "data.object.description" ></textarea>
+						</div>
+					</div>   
+					<div class = "form-group row">
+						<div class = "form-group col-md-6">
+							<label>Signature1</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.signature1" />
+						</div>
+						<div class = "form-group col-md-6">
+							<label>Signature2</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.signature2" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		jQuery(document).ready(function() { 
+			angular.bootstrap(jQuery("#paymententryId"), [ 'paymententry' ]);
+		});
+	</script>
+
+</div>

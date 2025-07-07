@@ -1,0 +1,412 @@
+
+
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/HRReports/loginreport.js"></script>
+<!-- BreadCrumb Start -->
+
+<div id="loginReportDiv" data-ng-controller="loginReportController">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Employee Login Report</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!"></a></li>
+							<li class="breadcrumb-item"><a href="#!"></a></li>
+							<li class="breadcrumb-item"><a href="#!"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="display">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header bg-primary">
+						<h6 class="card-title">Employee Login Report</h6>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-6">
+								<label>From Date <span class="text-danger ">*</span></label>
+								<div>
+									<input type="date" id="from" class="form-control"
+										name="fromdate" data-ng-model="data.object.from_date">
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<label>To Date <span class="text-danger ">*</span></label>
+								<div>
+									<input type="date" id="to" class="form-control" name="todate"
+										data-ng-model="data.object.to_date">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-sm-3">
+								<button class="btn btn-primary" style="margin-left: 415px;"
+									value="Submit" type="Submit"
+									data-ng-click="getloginreport(data.object);getLoginafter11(data.object);getMissedlogin(data.object);
+									getLoginbefore11(data.object);getAllReports(data.object);getLeavesReport(data.object);getDefaultLogins(data.object);"
+									>SUBMIT</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="display1">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-6">
+								<label>From Date :
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<span><label>{{data.object.from_date |
+										date:"dd-MM-yyyy"}}</label></span>
+							</div>
+							<div class="col-sm-6">
+								<label>To Date :
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<span><label>{{data.object.to_date |
+										date:"dd-MM-yyyy"}}</label></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+	</div>
+ <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <ul class="nav nav-tabs  tabs" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" data-toggle="tab" href="#loginbefore" role="tab">Login Before 11 AM</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" data-toggle="tab" href="#loginafter" role="tab">Login After 11AM</a>
+                                                        </li>
+                                                         <li class="nav-item">
+                                                            <a class="nav-link" data-toggle="tab" href="#missedlogin" role="tab">Missed Logins</a>
+                                                        </li>
+                                                         <li class="nav-item">
+                                                            <a class="nav-link" data-toggle="tab" href="#defaultlogin" role="tab">Default Logins</a>
+                                                        </li>
+                                                         <li class="nav-item">
+                                                            <a class="nav-link" data-toggle="tab" href="#all" role="tab">All</a>
+                                                        </li>
+                                                         <li class="nav-item">
+                                                            <a class="nav-link" data-toggle="tab" href="#leaves" role="tab">Leaves</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content tabs card-block">
+                                                        <div class="tab-pane active" id="loginbefore" role="tabpanel">
+                                                            <div class="dt-responsive table-responsive">
+                                                                <table id="simpletable" class="table table-hover table-bordered nowrap">
+                                                                    <thead class="btn-grd-primary">
+                                                                       <tr>
+																<th>S.No</th>
+															<!-- 	<th>Location</th> -->
+																<th>Login Type</th>
+																<th>Employee Type</th>
+																<th>Employee ID</th>
+																<th>Employee Name</th>
+																<th>Department</th>
+																<th>Designation</th>
+																<th>Cadre</th>
+																<th>Login</th>
+																<th>Logout</th>
+																<th>Login IP Address</th>
+																<th>Logout IP Address</th>
+
+															</tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                       <tr data-ng-repeat="data in beforelogins">   
+        <td>{{$index+1}}</td>   
+		<!-- <td>{{data.location}}</td>   -->
+		<td>{{data.login_type}}</td>	 
+		<td>{{data.type}}</td>		 
+		<td>{{data.empid}}</td>	
+		<td>{{data.name}}</td>  
+		<td>{{data.department}}</td>	 
+		<td>{{data.designation}}</td>		 
+		<td>{{data.cader}}</td>	
+		<td>{{data.login_time}}</td>  
+		<td>{{data.logout_time}}</td>	 
+		<td>{{data.login_ip}}</td>		 
+		<td>{{data.logout_ip}}</td>			
+		
+	</tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane" id="loginafter" role="tabpanel">
+                                                            <div class="dt-responsive table-responsive">
+                                                                <table id="simpletable1" class="table table-hover table-bordered nowrap">
+                                                                    <thead class="btn-grd-primary">
+                                                                        <tr>
+																<th>S.No</th>
+																<!-- <th>Location</th> -->
+																<th>Login Type</th>
+																<th>Employee Type</th>
+																<th>Employee ID</th>
+																<th>Employee Name</th>
+																<th>Department</th>
+																<th>Designation</th>
+																<th>Cadre</th>
+																<th>Login</th>
+																<th>Logout</th>
+																<th>Login IP Address</th>
+																<th>Logout IP Address</th>
+
+															</tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr  data-ng-repeat="data in afterlogins">
+                                                                             <td>{{$index+1}}</td>    
+		<!-- <td>{{data.location}}</td>   -->
+		<td>{{data.login_type}}</td>	 
+		<td>{{data.type}}</td>		 
+		<td>{{data.empid}}</td>	
+		<td>{{data.name}}</td>  
+		<td>{{data.department}}</td>	 
+		<td>{{data.designation}}</td>		 
+		<td>{{data.cader}}</td>	
+		<td>{{data.login_time}}</td>  
+		<td>{{data.logout_time}}</td>	 
+		<td>{{data.login_ip}}</td>		 
+		<td>{{data.logout_ip}}</td>			
+		
+	</tr>
+					
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                           <div class="tab-pane" id="missedlogin" role="tabpanel">
+                                                            <div class="dt-responsive table-responsive">
+                                                                <table id="simpletable1" class="table table-hover table-bordered nowrap">
+                                                                    <thead class="btn-grd-primary">
+                                                                       <tr>
+																<th>S.No</th>
+																<!-- <th>Location</th> -->
+																<th>Employee Type</th>
+																<th>Employee ID</th>
+																<th>Employee Name</th>
+																<th>Department</th>
+																<th>Designation</th>
+																<th>Cadre</th>
+																<th>Grade</th>
+
+															</tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr  data-ng-repeat="data in missedlogins">
+                                                                            <td>{{$index+1}}</td>   
+		<!-- <td>{{data.location}}</td>   -->
+		<td>{{data.type}}</td>	 
+		<td>{{data.empid}}</td>		 
+		<td>{{data.name}}</td>	
+		<td>{{data.department}}</td>  
+		<td>{{data.designation}}</td>	 
+		<td>{{data.cader}}</td>		 
+		<td>{{data.grade}}</td>	
+				
+		
+	</tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                      <div class="tab-pane" id="defaultlogin" role="tabpanel">
+                                                            <div class="dt-responsive table-responsive">
+                                                                <table id="simpletable1" class="table table-hover table-bordered nowrap">
+                                                                    <thead class="btn-grd-primary">
+                                                                       <tr>
+																<th>S.No</th>
+																<!-- <th>Location</th> -->
+																<th>Employee Type</th>
+																<th>Employee ID</th>
+																<th>Employee Name</th>
+																<th>Department</th>
+																<th>Designation</th>
+																<th>Cadre</th>
+																<th>Grade</th>
+
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr  data-ng-repeat="data in defaultlogins">
+                                                                           <td>{{$index+1}}</td>   
+		<!-- <td>{{data.location}}</td>   -->
+		<td>{{data.type}}</td>	 
+		<td>{{data.empid}}</td>		 
+		<td>{{data.name}}</td>	
+		<td>{{data.department}}</td>  
+		<td>{{data.designation}}</td>	 
+		<td>{{data.cader}}</td>		 
+		<td>{{data.grade}}</td>	
+				
+		
+	</tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>     
+                                                        
+                                                           <div class="tab-pane" id="all" role="tabpanel">
+                                                            <div class="dt-responsive table-responsive">
+                                                                <table id="simpletable1" class="table table-hover table-bordered nowrap">
+                                                                    <thead class="btn-grd-primary">
+                                                                        <tr>
+																<th>S.No</th>
+																<!-- <th>Location</th> -->
+																<th>Employee Type</th>
+																<th>Employee ID</th>
+																<th>Employee Name</th>
+																<th>Department</th>
+																<th>Login Type</th>
+																<th>Login</th>
+																<th>Logout</th>
+															</tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr  data-ng-repeat="data in allreports">
+                                                                             <td>{{$index+1}}</td>   
+		<!-- <td>{{data.location}}</td>   -->
+		<td>{{data.type}}</td>	 
+		<td>{{data.empid}}</td>		 
+		<td>{{data.name}}</td>	
+		<td>{{data.department}}</td>  
+		<td>{{data.login_type}}</td>	 
+		<td>{{data.login_time}}</td>		 
+		<td>{{data.logout_time}}</td>	
+				
+	</tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        
+                                                        
+                                                        <div class="tab-pane" id="leaves" role="tabpanel">
+                                                            <div class="dt-responsive table-responsive">
+                                                                <table id="simpletable1" class="table table-hover table-bordered nowrap">
+                                                                    <thead class="btn-grd-primary">
+                                                                        <tr>
+																<th>S.No</th>
+																<th>Employee Name</th>
+																<th>Leave Type</th>
+																<th>Approved By</th>
+																<th>Reason</th>
+																<th>Status</th>
+															</tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr  data-ng-repeat="data in leavesreports">
+                                                                             <td>{{$index+1}}</td>   
+		<td>{{data.name}}</td>  
+		<td>{{data.leave_type}}</td>	 
+		<td>{{data.approval_by}}</td>		 
+		<td>{{data.reason}}</td>	
+		<td>{{data.leavestatus}}</td>  
+		
+				
+		
+	</tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>   
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>                                                                                       
+
+
+<script
+	src="/erp/files/assets/pages/advance-elements/moment-with-locales.min.js"></script>
+<script
+	src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="/erp/files/assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
+
+<script
+	src="/erp/files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js"></script>
+
+<script src="/erp/files/bower_components/datedropper/js/datedropper.min.js"></script>
+
+<script src="/erp/files/bower_components/spectrum/js/spectrum.js"></script>
+<script src="/erp/files/bower_components/jscolor/js/jscolor.js"></script>
+
+<script
+	src="/erp/files/bower_components/jquery-minicolors/js/jquery.minicolors.min.js"></script>
+
+<script src="/erp/files/assets/pages/advance-elements/custom-picker.js"></script>
+
+<script src="/erp/files/assets/js/pcoded.min.js"></script>
+<script src="/erp/files/assets/js/vertical/vertical-layout.min.js"></script>
+<script src="/erp/files/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script src="/erp/files/assets/js/sweetalert.js"></script>
+
+<script src="/erp/files/assets/js/script.js"></script>
+
+<script>
+jQuery(document).ready(function() {
+	
+	$("#display").show();
+	$("#display1").hide();
+
+	angular.bootstrap(jQuery("#loginReportDiv"), [ 'loginReportModule' ]);
+	        
+});  
+
+       
+</script>
+

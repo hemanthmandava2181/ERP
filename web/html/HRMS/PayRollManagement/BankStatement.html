@@ -1,0 +1,283 @@
+<script src="/erp/files/assets/js/erp-scripts/HRMS/PayrollManagement/bankstatement.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+	
+	<div id="BankStatementDIV" data-ng-controller="BankStatementController">
+    
+<!-- BreadCrumb Start -->
+<div id="display">
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-block caption-breadcrumb">
+				<div class="breadcrumb-header">
+					<h5>Bank Statement</h5>
+				</div>
+				<div class="page-header-breadcrumb">
+					<ul class="breadcrumb-title">
+						<li class="breadcrumb-item"><a href="#!"> <i
+								class="ti-home"></i>
+						</a></li>
+						<li class="breadcrumb-item"><a href="#!">HRMS</a></li>
+						<li class="breadcrumb-item"><a href="#!">PayRoll
+								Management</a></li>
+						<li class="breadcrumb-item"><a href="#!">Bank Statement</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- BreadCrumb End -->
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header bg-primary">
+				<h6 class="card-title">Bank Statement</h6>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-xl-2 m-b-30">
+						Financial year <label class="col-sm-3 col-form-label"></label>
+					</div>
+					<div class="col-sm-12 col-xl-3 m-b-30">
+						<select class="form-control"
+							data-ng-model="data.object.financial_year">
+							<option></option>
+							<option data-ng-repeat="financialyear in financialyears"
+								value="{{financialyear.id}}">{{financialyear.name}}</option>
+						</select>
+					</div>
+					<div class="col-sm-12 col-xl-2 m-b-30">
+						Month <label class="col-sm-3 col-form-label"></label>
+					</div>
+					<div class="col-sm-12 col-xl-3 m-b-30">
+							 <select class="form-control"
+								data-ng-model="data.object.payroll_month">
+								<option></option>
+								<option data-ng-repeat="month in months"
+									value="{{month.id}}">{{month.name}}</option>
+							</select>
+						
+					</div>
+					<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+						<label class="mr-3"> <input type="radio" name="radio"
+							checked="checked" value="kotak" data-ng-model="data.object.type"><i
+							class="helper mr-2"></i>Kotak Mahindra</label> 
+							
+						<label class="mr-3"> <input type="radio" name="radio" 
+					checked="checked" 	value="otherkotak" data-ng-model="data.object.type"><i
+							class="helper mr-2"></i>Other than Kotak </label>
+						 <label class="mr-3"> <input type="radio" name="radio"
+						 checked="checked" 	value="otherkotak" data-ng-model="data.object.type"><i
+							class="helper mr-2"></i>All
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" data-ng-show="data.object.type == 'kotak'">
+	<div class="col-sm-3">
+		<button class="btn btn-primary" style="margin-left: 415px;"
+			value="submit" type="submit"
+			data-ng-click="getEmployeeKotak(data.object);">GET</button>
+	</div>
+</div>
+
+<div class="row" data-ng-show="data.object.type == 'otherkotak'">
+	<div class="col-sm-3">
+		<button class="btn btn-primary" style="margin-left: 415px;"
+			value="submit" type="submit"
+			data-ng-click="getOthetKotakbank(data.object);">GET</button>
+	</div>
+</div>
+
+<div class="row"
+	data-ng-show="data.object.type == 'all'">
+	<div class="col-sm-3">
+		<button class="btn btn-primary" style="margin-left: 415px;"
+			value="submit" type="submit"
+			data-ng-click="getAllBank(data.object);">GET</button>
+	</div>
+</div>
+</div>
+<div id="onlykotak">
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header"></div>
+			<div class="card-body">
+				<div class="dt-responsive table-responsive">
+					<table class="table table-hover table-bordered" id="simpletable">
+						<thead class="btn-grd-primary">
+							<tr>
+								<th>S.No</th>
+								<th>Account Number</th>
+								<th>Amount</th>
+								<th>Name</th>
+								<th>Employee Number</th>
+								<th>Bank Name</th>
+								<th>IFSC Code</th>
+								<th>Branch Name</th>
+								<th>Pan</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="emp in employeekotak | filter:search">
+								<td>{{$index+1}}</td>
+								<td>{{emp.bank_acno}}</td>
+								<td>{{emp.amount}}</td>
+								<td>{{emp.name}}</td>
+								<td>{{emp.empid}}</td>
+								<td>{{emp.bank_name}}</td>
+								<td>{{emp.ifsc_code}}</td>
+								<td>{{emp.branch}}</td>
+								<td>{{emp.pan_no}}</td>
+
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<div id="otherthankotak">
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header"></div>
+			<div class="card-body">
+				<div class="dt-responsive table-responsive">
+					<table class="table table-hover table-bordered" id="simpletable">
+						<thead class="btn-grd-primary">
+							
+								<tr>
+								<th>S.No</th>
+								<th>Account Number</th>
+								<th>Amount</th>
+								<th>Name</th>
+								<th>Employee Number</th>
+								<th>Bank Name</th>
+								<th>IFSC Code</th>
+								<th>Branch Name</th>
+								<th>Pan</th>
+							</tr>
+							
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="emp in employeeotherthankotak | filter:search">
+							<td>{{$index+1}}</td>
+								<td>{{emp.bank_acno}}</td>
+								<td>{{emp.amount}}</td>
+								<td>{{emp.name}}</td>
+								<td>{{emp.empid}}</td>
+								<td>{{emp.bank_name}}</td>
+								<td>{{emp.ifsc_code}}</td>
+								<td>{{emp.branch}}</td>
+								<td>{{emp.pan_no}}</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div id="allbankdata">
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header"></div>
+			<div class="card-body">
+				<div class="dt-responsive table-responsive">
+					<table class="table table-hover table-bordered" id="simpletable">
+						<thead class="btn-grd-primary">
+							<tr>
+								<th>S.No</th>
+								<th>Account Number</th>
+								<th>Amount</th>
+								<th>Name</th>
+								<th>Employee Number</th>
+								<th>Bank Name</th>
+								<th>IFSC Code</th>
+								<th>Branch Name</th>
+								<th>Pan</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="emp in employeeallbank | filter:search">
+								<td>{{$index+1}}</td>
+								<td>{{emp.bank_acno}}</td>
+								<td>{{emp.amount}}</td>
+								<td>{{emp.name}}</td>
+								<td>{{emp.empid}}</td>
+								<td>{{emp.bank_name}}</td>
+								<td>{{emp.ifsc_code}}</td>
+								<td>{{emp.branch}}</td>
+								<td>{{emp.pan_no}}</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+
+
+<script
+	src="files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+
+
+<script>
+	jQuery(document).ready(
+			function() {
+
+				$("#display").show();
+				$("#onlykotak").hide();
+				$("#otherthankotak").hide();   
+				$("#allbankdata").hide();
+				
+				$("#joining").DataTable();
+				$("#relieving").DataTable();
+				$("#stop").DataTable();
+				
+				angular.bootstrap(jQuery("#BankStatementDIV"),
+						[ 'bankstatementModule' ]);
+
+			});
+</script>
+

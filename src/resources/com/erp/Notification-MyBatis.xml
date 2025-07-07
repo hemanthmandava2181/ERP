@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Notification">
+
+	<insert id="Insert" parameterType="map">
+		insert into	hrms.notification_groups(group_name,created_by)
+		values(#{p.group_name},#{p.id})
+	</insert>
+	
+	
+	<insert id="inserting" parameterType="map">
+		insert into	hrms.notifications(description)
+		values(#{p.description})
+	</insert>
+    
+    <select id="getId" resultType="Notification">
+    select group_name,status,id from hrms.notification_groups where id=#{id};
+    
+    </select>   
+    
+    <insert id="Toadded" parameterType="map">
+		insert into	hrms.notification_groups_members(employee,notification_group,created_by) values(#{p.id},#{p.group_id},#{p.emp_id});
+	</insert> 
+    
+       
+	<select id="getAll" resultType="map">
+		SELECT id,group_name,(case when status='true' then 'Active'
+		when status='false' then 'Inactive' end) as status from hrms.notification_groups;
+	  </select>  
+	   
+	   <select id="getdropdown" resultType="map">
+		SELECT id, group_name from hrms.notification_groups where status = 'true';
+	  </select>
+	  
+	  
+	  
+	  
+	  <select id="getbasedonselection" resultType="map">
+		select b.id,b.notification_group,b.employee,b.status ,c.empid ,c.company_email,c.cader,c.grade,c.department,c.designation,c.division,c.employee_type ,
+		d.description,e.type as employee_type_name,f.department_name,g.designation_name,h.mobile,concat(i.first_name,' ',i.middle_name,' ',i.last_name) as name
+		from hrms.notification_groups a
+		inner join
+		hrms.notification_groups_members b
+		on a.id=b.notification_group
+		inner join
+		hrms. employee_employment_details c
+		on c.id=b.employee
+			left outer join  hrms.cader_mst d
+			on d.id=c.cader
+			left outer join hrms.employee_types_mst e
+			on e.id=c.employee_type
+			left outer join hrms.department_mst f
+			on f.id =c.department
+			left outer join hrms.designation_mst g
+			on g.id = c.designation
+			left outer join hrms.employee_personal_details h
+			on h.id = c.id 
+			left outer join hrms.employee_personal_details i
+            on i.id = c.id
+			where a.id=#{id};
+			
+	  </select>         
+	  
+	    <select id="getById" resultType="map">
+     select id,group_name from hrms.notification_groups where id=#{id};
+	  </select>
+	  
+	 <!--  <select id="getId" resultType="java.lang.String">
+     select group_name from hrms.notification_groups where id=#{id};
+	  </select> -->
+	  
+	  
+	  
+	  
+	  
+	  
+	  <update id="updateData"  parameterType="map">
+		update hrms.notification_groups SET group_name=#{p.group_name} ,status=#{p.status} WHERE id=#{p.id};
+	</update>
+	  
+	  
+	  
+	  <select id="getemployeedatabased" resultType="java.util.Map">      
+	  
+	  
+
+			select a.empid,a.mobile,concat(first_name,' ',middle_name,' ',last_name) as name,d.department_name,e.designation_name as designation,f.description as cader_name,g.grade_name,i.type from (select * from hrms.employee_personal_details) a inner join 
+			(select * from hrms.employee_employment_details where cader=#{p.caderid} OR grade=#{p.gradeid} OR department=#{p.departmentid} OR designation=#{p.designationid} OR employee_type=#{p.employee_type}) b on (a.empid=b.empid) inner join
+			(select * from hrms.department_mst) d on (d.id=b.department) inner join 
+			(select * from hrms.designation_mst) e on (e.id=b.designation) inner join 
+			(select * from hrms.cader_mst) f on (f.id=b.cader) inner join 
+			(select * from hrms.grades_mst) g on (g.id=b.grade) inner join    
+			(select * from hrms.employee_types_mst)i on (i.id =b.employee_type)
+
+			   
+</select>
+          
+ <select id="getGroupDetails" resultType="java.util.Map">  
+
+
+select a.id,a.mobile,a.name,a.empid,b.designation_name,c.department_name from (select id,mobile,concat(first_name,' ',middle_name,' ',last_name) as name,empid from hrms.employee_personal_details)a
+inner join (select empid,designation,department from hrms.employee_employment_details)e on a.empid=e.empid inner join
+(select id,notification_group,employee from hrms.notification_groups_members)d on a.id=d.employee inner join (select * from hrms.designation_mst)b on b.id=e.designation
+inner join (select * from hrms.department_mst)c on c.id=e.department where d.notification_group=#{id} 
+</select>
+
+	    
+	  
+	 
+	    <!-- <select id="getById" resultType="UserModel">
+		SELECT name,fathername,mobno,email,gender,address from apssdc.projectexample WHERE name = #{name};
+	  </select>
+
+	<delete id="deleteData" parameterType="java.lang.String">
+		delete from apssdc.projectexample where name = #{name};    
+	</delete>
+	
+	<update id="updateData"  parameterType="map">
+		update apssdc.projectexample SET fathername=#{p.fathername},mobno=#{p.mobno},
+		email=#{p.email},gender=#{p.gender},address=#{p.address} WHERE name=#{p.name};
+	</update> -->
+	
+</mapper>	

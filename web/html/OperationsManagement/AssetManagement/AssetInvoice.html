@@ -1,0 +1,298 @@
+
+<script src="/erp/files/assets/js/erp-scripts/Assets/assetinvoice.js"></script>
+
+<div id="invoiceId" data-ng-controller="AssetInvoiceController">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Exit Employees Reports</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Employee Self
+									Services</a></li>
+							<li class="breadcrumb-item"><a href="#!">e-Exit</a></li>
+							<li class="breadcrumb-item"><a href="#!">Exit Employees
+									Reports</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>     
+	</div>
+	<!-- BreadCrumb End -->
+
+
+
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">PO Invoice Submission</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-xl-3 col-sm-2">
+							<label class="font-weight-bold">GRN No<span
+								class="text-danger">*</span></label> <select name="select"
+								class="form-control form-control-default"
+								data-ng-model="data.object.grn_id"
+								data-ng-click="getGrnData(data.object);">
+								<option></option>
+								<option data-ng-repeat="grn in grns" value="{{grn.id}}">{{grn.grn_id}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							<label class="font-weight-bold">PO No</label> <input type="text"
+								class="form-control" data-ng-model="data.object.purchase_order_no" readonly>
+						</div>
+						<div class="col-sm-12 col-xl-2">
+							<label>&nbsp; </label>
+							<button type="submit" class="btn btn-grd-primary hor-grd">PO
+								Details</button>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							<label class="font-weight-bold">Vendor Name</label> <input
+								type="text" class="form-control"
+								data-ng-model="data.object.vendorname" readonly>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							<label class="font-weight-bold">PO Amount</label> <input
+								type="text" class="form-control"
+								data-ng-model="data.object.poamount" readonly>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							<label class="font-weight-bold">GRN Amount</label> <input
+								type="text" class="form-control"
+								data-ng-model="data.object.GrnAmount" readonly>
+						</div>
+						<div>
+
+							<div class="col-sm-12 col-xl-12 col-sm-2">
+								<label class="font-weight-bold">Cost Center<span
+									class="text-danger">*</span></label> <select name="select"
+									class="form-control form-control-default"
+									data-ng-model="data.object.id">
+									<option></option>
+									<option data-ng-repeat="cost_center in cost_centers"
+										value="{{cost_center.id}}">{{cost_center.name}}</option>
+								</select>
+							</div>
+
+						</div>
+
+					</div>
+
+
+
+
+
+
+
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<div class="card-header bg-primary">
+							<h6 class="card-title">Invoice Details</h6>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-12 col-xl-2 m-b-30">
+									<label class="font-weight-bold">Invoice #<span
+										class="text-danger">*</span></label> <input type="text"
+										class="form-control"
+										data-ng-model="data.object.invoice_number">
+								</div>
+								<div class="col-sm-12 col-xl-2 m-b-30">
+									<label class="font-weight-bold">Invoice Date<span
+										class="text-danger">*</span></label> <input type="date"
+										class="form-control" data-ng-model="data.object.invoice_date">
+								</div>
+								<div class="col-sm-12 col-xl-2 m-b-30">
+									<label class="font-weight-bold">Invoice Due Date<span
+										class="text-danger">*</span></label> <input type="date"
+										class="form-control"
+										data-ng-model="data.object.invoice_due_date">
+								</div>
+								<div class="col-sm-12 col-xl-2 m-b-30">
+									<label class="font-weight-bold">Amount</label> <input
+										type="text" class="form-control"
+										data-ng-model="data.object.amount" readonly>
+								</div>
+								<div class="col-sm-12 col-xl-2 m-b-30">
+									<label class="font-weight-bold" readonly> Paid Amount</label> <input
+										type="text" class="form-control"
+										data-ng-model="data.object.net_amount" readonly>
+								</div>
+							</div>
+							<hr>
+
+							<div class="row">
+								<div class="col-sm-12">
+
+
+
+
+									<div>
+
+
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="dt-responsive table-responsive">
+													<table id="simple"
+														class="table table-hover table-bordered nowrap">
+														<thead>
+															<tr>
+																<th>S.No</th>
+																<th>Description <span class="text-danger">*</span></th>
+																<th>HSN/SAC Code</th>
+																<th>GL Account<span class="text-danger">*</span></th>
+																<th>Value<span class="text-danger">*</span></th>
+																<th>Tax Exemption</th>
+																<th>Upload Document</th>
+																<th>ADD</th>
+
+
+
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>#</td>
+																<td>
+																	<div>
+																		<textarea></textarea>
+																	</div>
+																</td>
+																<td>
+																	<div>
+																		<input type="text" class="form-control">
+																	</div>
+																</td>
+																<td>
+
+
+																	<div>
+																		<select name="select"
+																			class="form-control form-control-default">
+																			<option value="opt1">Vijayawada</option>
+																			<option value="opt2">Gannavaram</option>
+																			<option value="opt3">Various Engineering
+																				Colleges Ap</option>
+																			<option value="opt3">Rajahmundry</option>
+
+																		</select>
+																	</div>
+
+																</td>
+																<td><input type="text" class="form-control">
+
+																</td>
+
+																<td>
+																	<div>
+																		<select name="select"
+																			class="form-control form-control-default">
+																			<option value="opt1">Vijayawada</option>
+																			<option value="opt2">Gannavaram</option>
+																			<option value="opt3">Various Engineering
+																				Colleges Ap</option>
+																			<option value="opt3">Rajahmundry</option>
+
+																		</select>
+																	</div>
+																</td>
+																<td><input type="file"></td>
+																<td>
+																	<button type="submit" class="btn btn-primary">ADD</button>
+
+																</td>
+
+															</tr>
+														</tbody>
+
+													</table>
+												</div>
+
+
+
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+					<div class="card">
+						<div class="card-header bg-primary">
+							<h6 class="card-title">Description</h6>
+						</div>
+						<div class="card-body">
+							<div class="col-sm-12">
+								<textarea placeholder="description"
+									class="form-control form-control-primary"
+									data-ng-model="data.object.description"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+					<div class="card">
+						<div class="card-header bg-primary">
+							<h6 class="card-title">Attachments</h6>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 mt-1">
+									<button class="btn btn-success ">Add Documents</button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 mt-1">
+									<input type="text" class="form-control form-control-primary"
+										placeholder="document name">
+								</div>
+								<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+									<input type="file" class="form-control form-control-primary"
+										placeholder="document name">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 mt-1 text-center">
+					<button class="btn btn-grd-success" data-ng-click="saveassetinvoicedetails(data.object);">Submit</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<script>
+	jQuery(document).ready(function() {
+		angular.bootstrap(jQuery("#invoiceId"), [ 'assetinvoice' ]);
+	});
+</script>
+

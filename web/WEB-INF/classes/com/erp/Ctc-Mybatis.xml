@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Ctc">
+
+	<insert id="Insert" parameterType="map">
+	 insert into hrms.payslip_heads_mst(pname,title) 
+		values(#{p.pname},#{p.title}) ; </insert>
+		
+		
+
+	<select id="getAll" resultType="Ctc">
+		SELECT pname,title,status from    
+		hrms.payslip_heads_mst;
+	</select>
+	
+	<!-- Getting all employees in Modify ctc -->
+	<select id="getallemployees" resultType="Ctc">
+		select
+		a.empid,concat(first_name,' ',middle_name,' ',last_name) as
+		name,d.department_name,e.designation_name as designation,f.description
+		as cader_name,g.grade_name,c.ctc,c.ctc_calculator from
+		(select empid,first_name,middle_name,last_name from
+		hrms.employee_personal_details) a inner join
+		(select * from hrms.employee_employment_details) b on (a.empid=b.empid) inner
+		join
+		(select * from hrms.employee_bank_details) c on (c.empid=b.empid) inner join
+		(select * from hrms.department_mst) d on (d.id=b.department) inner
+		join
+		(select * from hrms.designation_mst) e on (e.id=b.designation) inner join
+		(select * from hrms.cader_mst) f on (f.id=b.cader) inner join
+		(select * from hrms.grades_mst) g on (g.id=b.grade)
+	</select>
+	
+	<!-- Getting employees based on given data in modify ctc -->
+	
+	<select id="getemployeedata" resultType="Ctc">
+		select a.empid,concat(first_name,' ',middle_name,' ',last_name) as
+		name,d.department_name,e.designation_name as designation,
+		f.description as cader_name,g.grade_name,k.annual_salary as ctc,j.name
+		as ctc_calculator,i.effective_date as effective_date from
+		(select empid,first_name,middle_name,last_name from
+		hrms.employee_personal_details) a inner join
+		(select * from hrms.employee_employment_details where cader=#{p.caderid} OR
+		grade=#{p.gradeid} OR department=#{p.departmentid}) b on
+		(a.empid=b.empid) inner join
+		(select * from hrms.employee_bank_details) c on (c.empid=b.empid) inner join
+		(select * from hrms.department_mst) d on (d.id=b.department) inner
+		join
+		(select * from hrms.designation_mst) e on (e.id=b.designation) inner join
+		(select * from hrms.cader_mst) f on (f.id=b.cader) inner join
+		(select * from hrms.grades_mst) g on (g.id=b.grade) inner join
+		(select * from hrms.employee_ctc_association )k on (k.empid=b.empid) left
+		join
+		(select * from hrms.effective_ctc_association ) i on
+		(i.annual_salary=k.annual_salary) inner join
+		(select * from hrms.ctc_calculator_mst) j on (j.id=k.ctc_calculator) ;
+	</select>
+	        
+	
+	<!-- Getting employee details based on empid -->     
+	       
+	<select id="getDetails" resultType="Ctc">
+	select distinct a.empid,a.title,a.first_name as first_name,a.middle_name as middle_name,a.last_name as last_name,a.mobile as mobile,
+		a.alternate_mobile as alternate_mobile,a.dob as dob,a.gender as gender,a.email as email,a.aadhaar as aadhaar,a.passport as passport,
+		a.nativity as nativity,a.nationality as nationality,a.caste as caste,a.sub_caste as sub_caste,a.blood_group as blood_group,a.emergency_name as emergency_name,
+		a.emergency_contact as emergency_contact,a.relation as relationid,a.city as city,a.state as state,a.country as country,a.street as street,
+		a.pincode as pincode,a.present_address as present_address,a.district as district,b.company_email as company_email,b.cader as cader,
+		b.grade as grade,b.joining_date as joining_date,b.confirmed_date as confirmed_date,b.contract_from as contract_from,b.contract_to as contract_to,
+		b.relieved_date as relieved_date,b.department as department,b.designation as designation,b.division as division,b.cost_center as cost_center,
+		b.employee_type as employee_type,b.notice_period as notice_period,b.reporting_to as reporting_to,c.bank_name as bank_name,c.branch as branch,
+		c.ifsc_code as ifsc_code,c.bank_acno as bank_acno,c.pan_no as pan_no,c.esi_no as esi_no,c.uan_no as uan_no,c.pf_no as pf_no,c.cfms_code as cfms_code,
+		d.ctc_calculator as ctc_calculator,d.annual_salary as annual_salary,f.effective_date as effective_date,c.pan_name as pan_name,
+		g.designation as company_designation,g.company_name,g.from_date as from_date,g.to_date as to_date,g.document_name as document_name from
+		(select empid,title,first_name,middle_name,last_name,mobile,alternate_mobile,dob,gender,email,aadhaar,passport,
+		nativity,nationality,caste,sub_caste,blood_group,emergency_name,emergency_contact,relation,city,state,country,street,
+		pincode,present_address,district from hrms.employee_personal_details) a inner join
+		(select empid,company_email,cader,grade,joining_date,confirmed_date,contract_from,contract_to,relieved_date,
+		department,designation,division,cost_center,employee_type,notice_period,reporting_to 
+		from hrms.employee_employment_details) b on (b.empid = a.empid) inner join (select empid,bank_name,branch,ifsc_code,bank_acno,
+		pan_name,pan_no,esi_no,uan_no,pf_no,cfms_code from hrms.employee_bank_details) c on (c.empid = a.empid) inner join
+		(select empid,ctc_calculator,annual_salary from hrms.employee_ctc_association) d on (d.empid = a.empid) inner join 
+		(select empid,effective_date,annual_salary from hrms.effective_ctc_association) f on (f.empid = a.empid) inner join
+		(select empid,company_name,designation,from_date,to_date,document_name from hrms.employee_professional_details) g on (g.empid = a.empid)
+		where f.annual_salary = d.annual_salary AND a.empid = #{empid}
+	</select>
+	
+	
+	<!-- Updating employee details based on empid -->
+	
+	<update id="Update" parameterType="map">
+		update hrms.employee_personal_details set title = #{p.title},first_name = #{p.first_name},middle_name = #{p.middle_name},
+		last_name = #{p.last_name},mobile = #{p.mobile},alternate_mobile = #{p.alternate_mobile},dob = #{p.dob},
+		gender = #{p.gender},email = #{p.email},aadhaar = #{p.aadhaar},passport = #{p.passport},nativity = #{p.nativity},
+		nationality = #{p.nationality},caste = #{p.caste},sub_caste = #{p.sub_caste},blood_group = #{p.blood_group},
+		emergency_name = #{p.emergency_name},emergency_contact = #{p.emergency_contact},
+		relation = #{p.relation} where empid = #{p.empid}
+    </update>
+    
+    <insert id="Insert1" parameterType="map">
+		insert into hrms.employee_communication_details(pincode,dno,street,village,mandal,districtid,
+		state,empid) values (#{p.pincode},#{p.dno},#{p.street},
+		#{p.village},#{p.mandal},#{p.districtid},#{p.state},#{p.empid})       
+    </insert>
+    
+    <update id="Update1" parameterType="map">
+		update hrms.employee_employment_details set company_email = #{p.company_email},cader = #{p.caderid},
+		grade = #{p.gradeid},joining_date = #{p.joining_date},confirmed_date = #{p.confirmed_date},
+		contract_from = #{p.contract_from},contract_to = #{p.contract_to},relieved_date = #{p.relieved_date},
+		department = #{p.departmentid},designation = #{p.designationid},division = #{p.divisionid},
+		cost_center = #{p.cost_centerid},reporting_to = #{p.reporting_to},notice_period = #{p.notice_period}
+		where empid = #{p.empid}  
+    </update>
+    
+    <insert id="Insert4" parameterType="map">
+		insert into hrms.employee_professional_details(empid,company_name,
+		company_designation,from_date,to_date,document_name,consent) values
+		 (#{p.empid},#{p.company_name},#{p.company_designation},
+		#{p.from_date},#{p.to_date},#{p.document_name},#{p.consent})     
+    </insert>  
+    
+     <insert id="Insert5" parameterType="map">   
+		insert into hrms.employee_family_details(empid,name,dob,relation) values (#{p.empid},#{p.name},#{p.dob1},#{p.relationid});       
+    </insert>
+    
+    <!-- Getting EMployees -->
+    
+    <select id="getemployees" parameterType="map" resultType="Ctc">
+		select id, empid from hrms.employee_bank_details where ctc_calculator = #{ctc_calculator}  order by empid;
+	</select>    
+	
+	<select id="getEarnings" resultType="Ctc">
+		SELECT id as payslip_id, name  from
+		hrms.payslip_heads_mst where title='Earnings';
+	</select>
+	
+	<select id="getDeductions" resultType="Ctc">
+		SELECT id as payslip_id, name  from
+		hrms.payslip_heads_mst where title='Deductions';   
+	</select>
+		
+	<delete id="deleteData" parameterType="java.lang.String">
+		delete from
+		hrms.payslip_heads_mst where pname = #{pname};
+	</delete>
+
+	<update id="updateData" parameterType="map">
+		update
+		hrms.payslip_heads_mst SET title=#{p.title},status=#{p.status} WHERE
+		name=#{p.pname};
+	</update>   
+	<select id="getById" resultType="Ctc">
+		SELECT title,status from hrms.payslip_heads_mst WHERE pname = #{pname};
+	</select>
+	
+	<!-- updating employee profile details by admin in modify ctc page -->
+	
+	
+    
+   <update id="personalupdate" parameterType="map">
+	update hrms.employee_personal_details set title = #{p.title},first_name = #{p.first_name},middle_name = #{p.middle_name},
+		last_name = #{p.last_name},mobile = #{p.mobile},alternate_mobile = #{p.alternate_mobile},dob = #{p.dob},email = #{p.email},
+		gender = #{p.gender},aadhaar = #{p.aadhaar},passport = #{p.passport},nativity = #{p.nativity},city = #{p.city},
+		nationality = #{p.nationality},caste = #{p.caste},sub_caste = #{p.sub_caste},blood_group = #{p.blood_group},
+		emergency_name = #{p.emergency_name},emergency_contact = #{p.emergency_contact},street = #{p.street},
+		relation = #{p.relationid},present_address = #{p.present_address},state = #{p.state},district = #{p.district},
+		pincode = #{p.pincode},country = #{p.country} where empid = #{p.empid}
+    </update>
+ <update id="employementupdate" parameterType="map">
+		update hrms.employee_employment_details set company_email = #{p.company_email},cader = #{p.cader},grade = #{p.grade},
+		department = #{p.department},designation = #{p.designation},division = #{p.division},cost_center = #{p.cost_center},notice_period = #{p.notice_period},
+		joining_date = #{p.joining_date},confirmed_date = #{p.confirmed_date},contract_from = #{p.contract_from},contract_to = #{p.contract_to},
+		relieved_date = #{p.relieved_date},reporting_to = #{p.reporting_to},employee_type = #{p.employee_type}
+		where empid = #{p.empid}
+    </update>
+<update id="bankupdate" parameterType="map">
+		update hrms.employee_bank_details set bank_name = #{p.bank_name},branch = #{p.branch},ifsc_code = #{p.ifsc_code},
+		bank_acno = #{p.bank_acno},pan_name = #{p.pan_name},pan_no = #{p.pan_no},esi_no = #{p.esi_no},uan_no = #{p.uan_no},
+		pf_no = #{p.pf_no},cfms_code = #{p.cfms_code} where empid = #{p.empid}   
+    </update>
+<update id="professionalupdate" parameterType="map">
+		update hrms.employee_professional_details set company_name = #{p.company_name},designation = #{p.company_designation},consent=#{p.consent},
+	document_name = #{p.document_name},from_date = #{p.from_date},to_date = #{p.to_date} where empid = #{p.empid}
+    </update>
+    
+    <update id="communicationupdate" parameterType="map">
+		update hrms.employee_communication_details set pincode = #{p.pincode},dno = #{p.dno},street = #{p.street},
+		village = #{p.village},mandal = #{p.mandal},districtid = #{p.districtid},state = #{p.state}
+		where empid = #{p.empid}
+    </update>
+		
+	
+    <update id="familyupdate" parameterType="map">
+		update hrms.employee_family_details set name = #{p.name},relation = #{p.relation_id},dob = #{p.dob1}
+		where empid = #{p.empid}
+    </update>  
+    <select id="getctcDetails" resultType="Ctc">
+		select distinct concat(first_name,' ',last_name) as name,
+		b.empid,b.ctc_calculator as ctc_calculatorid,
+		max(b.annual_salary) as ctc_amount,c.joining_date as joining_date from
+		(select empid,first_name,last_name from hrms.employee_personal_details) a
+		inner join
+		(select empid,annual_salary ,ctc_calculator from
+		hrms.employee_ctc_association where empid = #{p.empid}) b on
+		a.empid=b.empid
+		inner join (select empid,joining_date from
+		hrms.employee_employment_details) c on (c.empid = b.empid)
+		group by b.empid,ctc_calculatorid,joining_date,name
+	</select>
+	
+    <update id="ctcupdate" parameterType="map">
+		update
+		hrms.employee_bank_details set ctc = #{p.revised_ctc},ctc_calculator =
+		#{p.ctc_calculatorname},effective_date = #{p.effective_from}
+		where
+		empid = #{p.empid}
+	</update>
+	  
+     <select id="getMonth" resultType="java.lang.Integer">    
+		SELECT EXTRACT(MONTH FROM stoped_date) as month from hrms.employee_stop_salary1 where stoped_date =#{p.stoped_date}
+	 </select> 	      
+    <select id="getsalsummary" resultType="Ctc" parameterType="map">
+	 select a.empid,concat(first_name,' ',middle_name,' ',last_name) as fullname,d.department_name,f.description as cader_name,g.grade_name,c.financial_year ,c.stop_date as stoped_date from 
+			(select empid,first_name,middle_name,last_name from hrms.employee_personal_details) a inner join 
+			(select * from hrms.employee_employment_details) b on (a.empid=b.empid) inner join 
+			(select * from hrms.employee_stop_salary) c on (c.empid=b.empid) inner join 
+			(select * from hrms.department_mst) d on (d.id=b.department) inner join 	
+			(select * from hrms.cader_mst) f on (f.id=b.cader) inner join 
+			(select * from hrms.grades_mst) g on (g.id=b.grade) where c.empid=#{p.empid} 
+    </select> 
+    
+      <select id="getStopData" resultType="Ctc" parameterType="map">
+	 select a.empid,concat(first_name,' ',middle_name,' ',last_name) as name,d.department_name,f.description as cader_name,g.grade_name,c.stop_date as stoped_date from 
+			(select empid,first_name,middle_name,last_name from hrms.employee_personal_details) a inner join 
+			(select * from hrms.employee_employment_details) b on (a.empid=b.empid) inner join 
+			(select * from hrms.employee_stop_salary) c on (c.empid=b.empid) inner join 
+			(select * from hrms.department_mst) d on (d.id=b.department) inner join 	
+			(select * from hrms.cader_mst) f on (f.id=b.cader) inner join 
+			(select * from hrms.grades_mst) g on (g.id=b.grade) where c.empid=#{p.empid} ;
+    </select>  	
+    
+    
+     <select id="releasestopdate" resultType="Ctc" parameterType="map">
+	 select a.empid,concat(first_name,' ',middle_name,' ',last_name) as name,d.department_name,f.description as cader_name,g.grade_name,c.stop_date as stop_date from 
+			(select empid,first_name,middle_name,last_name from hrms.employee_personal_details) a inner join 
+			(select * from hrms.employee_employment_details) b on (a.empid=b.empid) inner join 
+			(select * from hrms.employee_stop_salary where status='false') c on (c.empid=b.empid) inner join 
+			(select * from hrms.department_mst) d on (d.id=b.department) inner join 	
+			(select * from hrms.cader_mst) f on (f.id=b.cader) inner join 
+			(select * from hrms.grades_mst) g on (g.id=b.grade) where c.empid=#{p.empid} ;
+    </select>  
+    
+      <select id="releasestopsalary" resultType="Ctc" parameterType="map">
+	 select a.empid,concat(first_name,' ',middle_name,' ',last_name) as name,d.department_name,f.description as cader_name,g.grade_name,c.stop_date as stoped_date,i.name as financialyear,j.name as monthname,h.financial_year,h.month from 
+			(select empid,first_name,middle_name,last_name from hrms.employee_personal_details) a inner join 
+			(select * from hrms.employee_employment_details) b on (a.empid=b.empid) inner join 
+			(select * from hrms.employee_stop_salary where release_date IS NOT NULL ) c on (c.empid=b.empid) inner join 
+			(select * from hrms.department_mst) d on (d.id=b.department) inner join 	
+			(select * from hrms.cader_mst) f on (f.id=b.cader) inner join 
+			(select * from hrms.grades_mst) g on (g.id=b.grade)inner join 
+			(select * from hrms.employee_stop_salary_pay) h on (h.empid=b.empid) inner join
+			(select * from hrms.financial_year_mst)i   on (i.id=h.financial_year) inner join
+			(select * from hrms.months_mst)j on (j.id=h.month) where a.empid=#{p.empid} ;
+    </select>  
+      
+    <select id="releasestopsalaryamount" resultType="Ctc">
+    select c.empid,c.financial_year,c.month,a.stop_date from (select stop_date,id from hrms.employee_stop_salary)a inner join (select empid,financial_year,month,status,stop_id from  
+hrms.employee_stop_salary_pay)c on c.stop_id=a.id where c.empid = #{empid}  and c.financial_year=#{financial_year} and c.month=#{month} and c.status='FALSE';
+    
+     </select>
+     
+      <select id="releaseStopSalaryDate" resultType="Ctc">
+    select empid,stop_date,status from  
+hrms.employee_stop_salary where empid = #{empid}  and  stop_date=#{stop_date} and status='FALSE';
+    
+     </select>
+    
+   <insert id= "releasestopsalarypayroll" parameterType="map">
+   insert into hrms.employee_stop_salary_payroll(empid,financial_year,payroll_month,payslip_heads,amount)(with total_paydays as (select b.empid,b.financial_year,b.years,b.quarter,b.month,b.totaldays,(case when b.qtrleaves > b.total_leaves then b.totaldays-(b.pleaves+b.absent)
+                                                                when (b.pleaves+b.absent)>=total_leaves and b.total_leaves > b.qtrleaves   then b.totaldays-(b.pleaves+b.absent+qtrleaves-b.total_leaves)
+                                                                when (b.pleaves+b.absent+b.qtrleaves)>b.total_leaves and total_leaves > b.qtrleaves  then b.total_leaves-(b.pleaves+b.absent+b.qtrleaves)+b.total_leaves else b.totaldays end) as paydays from
+(select a.empid,a.financial_year,a.years,a.quarter,a.month,a.total_leaves,a.qtrleaves,count(*)totaldays, sum(case when a.leave_type=1 then 1 else 0 end ) AS pleaves,sum(case when a.leave_type=7 then 1 else 0 end) AS absent from
+(select a.*,b.login_date,c.leave_type,c.leave,d.date,e.total_leaves,e.available_leaves,e.used_leaves,coalesce(f.qtrleaves,0) qtrleaves from (select a.empid,a.financial_year,b.years,extract (quarter from concat(b.years,'-',a.month,'-','24')::date)as quarter,a.month,generate_series(concat(b.years,'-',a.month-1,'-','25')::date,concat(b.years,'-',a.month,'-','24')::date,interval '1 Day')::date as days from hrms.employee_stop_salary_pay a inner join (select a.id,extract(year from a.months)as years,extract(month from a.months) as months from (select id, generate_series(from_date,to_date,interval '1 month')::date months  from hrms.financial_year_mst) a) b on (a.financial_year=b.id and a.month=b.months) where financial_year=#{p.financial_year} and month=#{p.month} and empid=#{p.empid}) a
+left join hrms.employee_login_details b on (a.days=b.login_date and a.empid=b.empid) left join (select empid,leave_type,generate_series(from_date,to_date,interval '1 Day') leave from hrms.leaves) c on (a.empid=c.empid and a.days=c.leave)
+left join (select * from hrms.calender_mst where holiday_type=0) d on (a.days=d.date) left join
+(select b.year_name,a.empid,a.quarter,a.total_leaves,a.available_leaves,a.used_leaves from hrms.employee_leave_summary a inner join hrms.calendar_year_mst b on (a.calendar_year=b.id)) e on (a.empid=e.empid and a.years=e.year_name::int and a.quarter=e.quarter)
+left join
+(select b.year_name,a.empid,extract(quarter from generate_series(a.from_date,a.to_date,interval '1 Day')) as quarter,sum(a.no_days) qtrleaves from hrms.leaves a inner join hrms.calendar_year_mst b on (a.calendar_year=b.id) group by b.year_name,a.empid,extract(quarter from generate_series(a.from_date,a.to_date,interval '1 Day'))) f on (a.empid=f.empid and a.years=f.year_name::int and a.quarter=f.quarter)) a group by a.empid,a.financial_year,a.years,a.quarter,a.month,a.total_leaves,a.qtrleaves) b),
+ctc as (select a.empid,b.payslip_heads,b.value,b.entity_type,round(a.annual_salary/12) salary from hrms.employee_ctc_association a left join hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator) where b.entity_type!=2),
+spl as (select a.empid,a.payslip_heads,b.value,b.entity_type,a.heads,a.salary from (select a.empid,a.ctc_calculator,b.payslip_heads,b.entity_type,b.value,unnest(string_to_array(b.subtractheads,','))as heads, round(a.annual_salary/12) salary from hrms.employee_ctc_association a inner join hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator)  where b.entity_type=2 )a inner join
+hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator and a.heads::int=b.payslip_heads))
+
+select a.empid,a.financial_year,a.month as payroll_month,b.payslip_heads,sum(case when b.entity_type=1 then round((b.salary/a.totaldays)*(b.value/100)*a.paydays)
+                                                              when b.entity_type=0 then b.value/12 end) amount  from total_paydays a inner join ctc b on (a.empid=b.empid) group by a.empid,a.financial_year,a.month ,b.payslip_heads
+union
+select a.empid,a.financial_year,a.payroll_month,a.payslip_heads,(a.salary-a.amount-a.epf) as amount from (select a.empid,a.financial_year,a.month as payroll_month,b.payslip_heads,b.salary,sum(case when b.heads::int=20 then round((b.salary/a.totaldays)*(b.value/100)*a.paydays) end) as epf, SUM(case when b.heads::int!=20 and b.entity_type=1 then round((b.salary/a.totaldays)*(b.value/100)*a.paydays)
+                                                              when b.entity_type=0 then b.value/12 end) amount from total_paydays a inner join spl b on (a.empid=b.empid) GROUP BY a.empid,a.financial_year,a.month,b.payslip_heads,b.salary) a)
+   
+   
+   
+   
+   </insert>
+   <update id="Updatestopdatesalary" parameterType="map">
+
+	update  hrms.employee_stop_salary_pay set release_date=#{p.release_date} ,status='TRUE'  where
+	empid=#{p.empid} 
+   
+   
+   </update>
+	<insert id="InsertSalsummary" parameterType="map">      
+	insert into hrms.employee_stop_salary(empid,financial_year,stop_date)
+	values(#{p.empid},#{p.financial_year},#{p.stoped_date}) 	
+    </insert>   
+    
+    
+    <insert id="addstopsalaryData" parameterType="map">          
+	insert into hrms.employee_stop_salary(empid,stop_date,stop_by)
+	values(#{p.empid},#{p.stop_date},#{p.stop_by}) 	
+    </insert>  
+    
+    
+    <update id="releaseEmployeestopsalaryDate" parameterType="map">
+    
+  update  hrms.employee_stop_salary set release_date=#{p.release_date},status='TRUE' where empid=#{p.empid} and stop_date=#{p.stop_date};
+    </update>  
+   <update id="update3" parameterType="map">
+    update hrms.employee_stop_salary1 set payroll_month=(SELECT (EXTRACT(MONTH FROM stoped_date)) as month from hrms.employee_stop_salary1 where stoped_date =#{p.stoped_date}) where stoped_date=#{p.stoped_date}
+   </update>  
+   
+   
+   
+    <insert id="Insert3" parameterType="map">
+	  
+		  insert into hrms.employee_payroll(empid,payroll_month,financial_year,amount,payslip_heads) 
+		values(#{p.employeename},#{p.monthid},#{p.financial_year},#{p.amount},#{p.payslip_id}); 
+		           
+		  </insert>
+
+	<insert id="InsertModifiedCTCArreas" parameterType="map">
+		insert into hrms.employee_arrears
+		(empid,financial_year,month,arrear_amount,created_by) (select
+		empid,financial_year,extract(month from effective_date)
+		as month,a.arrears_amount,#{p.created_by} from (select #{p.empid} as
+		empid,(#{p.revised_ctc}/12)-(#{p.ctc_amount}/12)as
+		arrears_amount,generate_series(#{p.effective_date},now()::date,interval
+		'1 Month') as effective_date) a inner join (select id as
+		financial_year,generate_series(from_date,to_date,interval '1
+		Day')::date as days from hrms.financial_year_mst) b on
+		a.effective_date=b.days )
+	</insert>
+
+	<insert id="updatearrearspayrolldata" parameterType="map">
+	insert into hrms.employee_arrears_payroll  (empid,financial_year,payroll_month,revise_month,payslip_heads,amount)   (select
+	a.empid,a.financial_year,a.payroll_month,a.revise_month,b.payslip_heads,b.value*(a.amount/100)
+	amount from
+	(select d.financial_year,extract(month from now()::date) as payroll_month
+	,a.financial_year as revise_year,extract(month from a.effective_date)
+	as revise_month,
+	a.empid,a.ctc_calculator,sum(a.arrear_amount) as amount from (select    
+	a.financial_year,a.month,a.empid,b.effective_date,b.ctc_calculator,a.arrear_amount
+	from hrms.employee_arrears a inner join (select
+	empid,ctc_calculator,max(effective_date) as effective_date from
+	hrms.effective_ctc_association where empid=#{p.empid} group by
+	empid,ctc_calculator) b on (a.empid=b.empid) where a.status='f' ) a
+	inner join (select id,generate_series(from_date,to_date,interval '1
+	Day')::date as Days from hrms.financial_year_mst) c on
+	(a.effective_date=c.days and a.financial_year>=c.id and
+	a.month>=extract(month from c.days))
+	inner join
+	(select id as financial_year,generate_series(from_date,to_date,interval '1
+	Day')::date as Days from hrms.financial_year_mst) d on
+	(now()::date=d.days) group by d.financial_year,extract(month from
+	now()::date),a.financial_year,extract(month from
+	a.effective_date),a.empid,a.ctc_calculator) a left join
+	hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator)
+	where b.entity_type=1)
+	union
+	(select
+	a.empid,a.financial_year,a.payroll_month,a.revise_month,a.payslip_heads,(a.amount-(a.splamount+a.epf))
+	as amount from (select a.empid,
+	a.financial_year,a.payroll_month,a.revise_month,a.payslip_heads,a.amount,sum(case
+	when a.heads::int=20 then (a.amount/100)*b.value end) as epf,SUM(case
+	when a.heads::int!=20 and b.entity_type=1 then (a.amount/100)*b.value
+	end)as splamount from (select a.empid,
+	a.financial_year,a.payroll_month,a.revise_year,a.revise_month,a.ctc_calculator,b.payslip_heads,b.entity_type,b.value,unnest(string_to_array(b.subtractheads,','))as
+	heads, a.amount from (select d.financial_year,extract(month from
+	now()::date) as payroll_month ,a.financial_year as
+	revise_year,extract(month from a.effective_date) as
+	revise_month,a.empid,a.ctc_calculator,sum(a.arrear_amount) as amount
+	from (select
+	a.financial_year,a.month,a.empid,b.effective_date,b.ctc_calculator,a.arrear_amount
+	from hrms.employee_arrears a inner join (select
+	empid,ctc_calculator,max(effective_date) as effective_date from
+	hrms.effective_ctc_association where empid= #{p.empid} group by
+	empid,ctc_calculator) b on (a.empid=b.empid) where a.status='f' ) a
+	inner join (select id,generate_series(from_date,to_date,interval '1
+	Day')::date as Days from hrms.financial_year_mst) c on
+	(a.effective_date=c.days and a.financial_year>=c.id and
+	a.month>=extract(month from c.days))
+	inner join   
+	(select id as financial_year,generate_series(from_date,to_date,interval '1
+	Day')::date as Days from hrms.financial_year_mst) d on
+	(now()::date=d.days) group by d.financial_year,extract(month from
+	now()::date),a.financial_year,extract(month from
+	a.effective_date),a.empid,a.ctc_calculator) a inner join
+	hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator)
+	where b.entity_type=2 )a inner join    
+	hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator and
+	a.heads::int=b.payslip_heads)where b.entity_type=1 group by
+	a.financial_year,a.payroll_month,a.revise_year,a.revise_month,a.empid,a.payslip_heads,a.amount)a)
+	</insert>
+	
+	<update id="updateCTCAssociation" parameterType="map">
+		update hrms.employee_ctc_association set annual_salary=#{p.revised_ctc} ,
+		ctc_calculator=#{p.ctc_calculatorid} , created_by=#{p.created_by}
+		where empid=#{p.empid}
+	</update>
+	
+	<update id="updateCTCarrearspayrolldata" parameterType="map">
+		update hrms.employee_arrears set status='TRUE' where empid=#{p.empid};
+	</update>
+	
+	<select id="viewdetalisdata" parameterType="map" resultType="Ctc" >
+	
+select a.empid, concat(a.first_name,' ',a.middle_name,' ',a.last_name)
+		AS name,b.joining_date,c.bank_name,c.bank_acno,c.uan_no from 
+		(select * from  hrms.employee_personal_details where empid=#{empid}) a inner join
+		(select * from hrms.employee_employment_details) b on a.empid=b.empid inner join
+		(select * from hrms.employee_bank_details )c on a.empid=c.empid
+	
+	
+	
+	</select>
+	
+	
+	
+	
+	
+	<select id="getViewpayslipearings" resultType="Ctc">
+	select a.amount,b.name from (select
+	empid,payslip_head,amount,financial_year,payroll_month from
+	hrms.employee_payroll)a inner join
+	(select id,name from hrms.payslip_heads_mst where heads_nature=0)b on
+	a.payslip_head=b.id where a.empid=#{p.empid} and a.financial_year= #{p.financial_year}
+	and a.payroll_month= #{p.payroll_month}
+	
+	
+	
+	
+	</select>
+	
+	<select id="getViewpayslipdeduction" resultType="Ctc">
+	select a.amount,b.name from (select
+	empid,payslip_head,amount,financial_year,payroll_month from
+	hrms.employee_payroll)a inner join
+	(select id,name from hrms.payslip_heads_mst where heads_nature=1)b on
+	a.payslip_head=b.id where a.empid=#{p.empid} and a.financial_year= #{p.financial_year}
+	and a.payroll_month= #{p.payroll_month}
+	
+	
+	
+	
+	</select>
+	
+	
+	<insert id="saveFileUploadDetails" parameterType="map">                            
+		INSERT INTO                                                                              
+		hrms.fileuploaddetails(filepath,fileextension,role,                
+		logtime,year)
+		VALUES(#{p1.filePath},#{p1.fileExtension},#{p1.role},current_timestamp,#{p1.financial_year});      
+	</insert> 
+	
+	
+	<insert id="saveIncometaxDetails" parameterType="map">                      
+		insert into	hrms.employee_payroll(financial_year,payroll_month,empid,amount,created_by,payslip_head)
+		
+		values(#{p.financial_year},#{p.payroll_month},#{p.empid},#{p.amount},#{p.role},11);
+	</insert>
+
+	    
+</mapper>	     

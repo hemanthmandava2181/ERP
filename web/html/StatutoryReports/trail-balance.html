@@ -1,0 +1,1253 @@
+<script src="/erp/files/assets/js/erp-scripts/finance/satutaryreports/trailbalance.js"></script>
+    
+
+
+    <!-- Form Picker  -->   
+
+    <link rel="stylesheet" type="text/css" href="files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css">
+
+    <link rel="stylesheet" type="text/css" href="files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css" />
+
+    <link rel="stylesheet" type="text/css" href="files/bower_components/datedropper/css/datedropper.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="files/bower_components/spectrum/css/spectrum.css" />
+
+    <link rel="stylesheet" type="text/css" href="files/bower_components/jquery-minicolors/css/jquery.minicolors.css" />
+
+    <!-- Cloned CSS -->   
+
+    <link rel="stylesheet" type="text/css" href="files/assets/pages/j-pro/css/demo.css">
+    <link rel="stylesheet" type="text/css" href="files/assets/pages/j-pro/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="files/assets/pages/j-pro/css/j-forms.css">
+
+  <div 
+	id="trailbalanceId" data-ng-controller="trailbalanceController">
+
+
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Trail Balance</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Finance &amp; Accounts</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Statutory Reports</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Trail Balance</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <ul class="nav nav-fill nav-pills" role="tablist">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link active" data-toggle="tab" href="#home3" role="tab">Financial Year</a>
+                                                                <div class="slide"></div>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" data-toggle="tab" href="#profile3" role="tab">Period</a>
+                                                                <div class="slide"></div>
+                                                            </li>
+                                                        </ul>
+
+                                                        <div class="tab-content card-block">
+                                                            <div class="tab-pane active" id="home3" role="tabpanel">
+                                                                <div class="row">
+                                                                    <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 col-xl-6 mt-1">
+                                                                        <div class="form-group">
+                                                                            <label>Financial Year</label>
+                                                                            <select class="form-control form-control-primary"
+                                                                             
+												data-ng-model="data.object.financial_year">
+												<option>--Select--</option>
+												<option data-ng-repeat="year in financialyear"
+													value="{{year.financial_year}}">{{year.fy}}</option>
+											</select>                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 col-xl-6">
+                                                                        <button type="button" class="btn btn-grd-success hor-grd btn-sm mt-4 float-right" data-ng-click="getTrailAssetReport(data.object);getTrailEquityReport(data.object);getTrailIncomeExpenditureReport(data.object);getTrailExpenditureReport(data.object);"><i class="feather icon-download-cloud mr-2"></i>Get Data</button>
+                                                                    </div>
+
+    
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                               <div class="tab-pane" id="profile3" role="tabpanel">
+                                                                <div class="row">
+                                                                    <div class="col-md-6 col-sm-12 col-xs-12 col-xl-6 col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label>From Date</label>  
+                                                                            <input class="form-control" type="date" placeholder="Select your date" data-ng-model = "data.object.from_date" id="from" />      
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-sm-12 col-xs-12 col-xl-6 col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label>To Date</label>
+                                                                            <input class="form-control" type="date" placeholder="Select your date"  data-ng-model = "data.object.to_date" id="to"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12 col-xl-12 col-md-12 text-center">
+                                                                        <button type="button" class="btn btn-sm btn-success hor-grd font-weight-bold"  data-ng-click="getMonthTrailAssetReport(data.object);getMonthTrailEquityReport(data.object);getMonthTrailIncomeExpenditureReport(data.object);getMonthTrailExpenditureReport(data.object);"><i class="feather icon-download-cloud mr-2 font-weight-bold"></i>Get Data</button>
+                                                                    </div>   
+                                                                </div>   
+                                                            </div> 
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                         <div class="row" id="yearbased">
+                                            <div class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+                                                <div class="card" style="border-radius: 25px;">
+                                                    <div class="card-header bg-primary text-center" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+                                                        <h6 class="card-title">ANDHRA PRADESH STATE SKILL DEVELOPMENT CORPORATION</h6>
+                                                        <h6 class="card-title mt-2">Statement of Trail Balance</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+                                                                <button type="button" class="btn btn-success bg-c-yellow text-white btn-out-dashed btn-sm float-left">Export Excel</button>
+
+                                                            </div>
+
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-5">
+                                                                <div id="accordion" role="tablist" aria-multiselectable="true">
+                                                                    <div class="accordion-panel mt-2 mb-2">
+                                                                        <div class="accordion-heading bg-c-pink text-white" role="tab" id="headingOne">
+                                                                            <h3 class="card-title accordion-title">
+                                                                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                                    Income
+                                                                                </a>
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div id="collapseOne" class="panel-collapse collapse in show mt-3" role="tabpanel" aria-labelledby="headingOne">
+                                                                            <div class="accordion-content accordion-desc">
+                                                                                <div class="dt-responsive table-responsive">
+                                                                                    <table class="table table-bordered">
+                                                                                        <tbody>
+                                                                                            <tr class="bg-c-green text-white">
+                                                                                               <th class="text-center">Account Name</th>
+                                                                                                    <th class="text-center">Debit</th>
+                                                                                                    <th class="text-center">Credit</th>
+
+                                                                                            </tr>
+                                                                                            
+                                                                                            <tr data-ng-repeat="trailincome in filteredResult = trailincomeDetails | filter:search" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+                                                                                               
+                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAccountNames(trailincome);"><b>{{trailincome.group_name}}(+)</b></a></td>
+                                                                                                <td style="text-align: right;"><b>{{trailincome.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailincome.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                </tr>   
+                                                                                            <tr class="collapse" id="collapseExample1">   
+                                                                                                        <tr data-ng-repeat="trailglaccountname in filteredResult = trailglaccounts | filter:search">
+                                                                                                            <td style="text-align: right;"><a href data-ng-click="getTrailGLAccountDetails(trailglaccountname);" data-toggle="modal" data-target="#myModal">{{trailglaccountname.account_name}}</a></td>
+                                                                                                    <td style="text-align: right;">{{trailglaccountname.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglaccountname.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                </tr>
+                                                                                                      
+                                                                                              
+                                                                                           
+                                                                                            <tr data-ng-repeat="trailincome1 in filteredResult = trailincomeDetails1 | filter:search" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                                                                                               
+                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAccountTwoNames(trailincome1);"><b>{{trailincome1.group_name}}(+)</b></a></td>
+                                                                                                 <td style="text-align: right;"><b>{{trailincome1.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailincome1.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                </tr>
+                                                                                            <tr class="collapse" id="collapseExample2">
+                                                                                               
+                                                                                                        <tr data-ng-repeat="trailglaccountname1 in filteredResult = trailglaccounts1 | filter:search">
+                                                                                                            <td style="text-align: right;"><a href data-ng-click="getTrailGLAccountDetails1(trailglaccountname1 );" data-toggle="modal" data-target="#myModal1">{{trailglaccountname1.account_name}}</a></td>
+                                                                                                             <td style="text-align: right;">{{trailglaccountname1.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;">{{trailglaccountname1.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                </tr>
+                                                                                                         <tr>
+                                                                                                <th class="text-right">Total</th>
+                                                                                                <td class="text-right"><b>{{trailincomeDetails[0].debit_amount + trailincomeDetails1[0].debit_amount | number : 2}}</b></td>
+                                                                                                <td class="text-right"><b>{{trailincomeDetails[0].credit_amount + trailincomeDetails1[0].credit_amount | number : 2}}</b>
+                                                                                                </td>
+                                                                                                
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="accordion-panel mt-2 mb-2">
+                                                                        <div class="accordion-heading bg-c-pink text-white" role="tab" id="headingTwo">
+                                                                            <h3 class="card-title accordion-title">
+                                                                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                                    Expenditure
+                                                                                </a>
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div id="collapseTwo" class="panel-collapse collapse in show mt-3" role="tabpanel" aria-labelledby="headingTwo">
+                                                                            <div class="accordion-content accordion-desc">
+                                                                                <div class="accordion-content accordion-desc">
+                                                                                    <div class="dt-responsive table-responsive">
+                                                                                        <table class="table table-bordered">
+                                                                                            <tbody>
+                                                                                                <tr class="bg-c-green text-white">
+                                                                                                    <th class="text-center">Account Name</th>
+                                                                                                    <th class="text-center">Debit</th>
+                                                                                                    <th class="text-center">Credit</th>
+                                                                                                    
+                                                                                                </tr>
+                                                                                                <tr data-ng-repeat="trailexpenditure in filteredResult = trailexpenditureDetails | filter:search" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLExpAccountNames(trailexpenditure);"><b>{{trailexpenditure.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailexpenditure.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailexpenditure.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                </tr>
+                                                                                                <tr class="collapse" id="collapseExample3">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailexpenditureaccount in filteredResult = trailexpenditureaccounts | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAccountDetails2(trailexpenditureaccount);" data-toggle="modal" data-target="#myModal2">{{trailexpenditureaccount.account_name}}</a></td>
+                                                                                                               <td style="text-align: right;">{{trailexpenditureaccount.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailexpenditureaccount.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="trailexpenditure1 in filteredResult = trailexpenditureDetails1 | filter:search" data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLExpAccountOneNames(trailexpenditure1);"><b>{{trailexpenditure1.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{trailexpenditure1.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailexpenditure1.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                </tr>
+                                                                                                <tr class="collapse" id="collapseExample4">   
+                                                                                                   
+                                                                                                            <tr data-ng-repeat="trailexpenditureaccount1 in filteredResult = trailexpenditureaccounts1 | filter:search">
+                                                                                                   <td style="text-align: right;"><a href data-ng-click="getTrailGLAccountDetails3(trailexpenditureaccount1);" data-toggle="modal" data-target="#myModal3">{{trailexpenditureaccount1.account_name}}</a></td>
+                                                                                                    <td style="text-align: right;">{{trailexpenditureaccount1.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailexpenditureaccount1.credit_amount | number : 2}}</td>
+                                                                                                  
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="trailexpenditure2 in filteredResult = trailexpenditureDetails2 | filter:search" data-toggle="collapse" data-target="#collapseExample5" aria-expanded="false" aria-controls="collapseExample5">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLExpAccountTwoNames(trailexpenditure2);"><b>{{trailexpenditure2.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{trailexpenditure2.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailexpenditure2.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                </tr>
+                                                                                                <tr class="collapse" id="collapseExample5">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailexpenditureaccount2 in filteredResult = trailexpenditureaccounts2 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAccountDetails4(trailexpenditureaccount2);" data-toggle="modal" data-target="#myModal4">{{trailexpenditureaccount2.account_name}}</a></td>
+                                                                                                     <td style="text-align: right;">{{trailexpenditureaccount2.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailexpenditureaccount2.credit_amount | number : 2}}</td>
+                                                                                                  
+                                                                                                            </tr>
+                                                                                                <tr>
+                                                                                                    <th class="text-right">Total</th>
+                                                                                                    <td class="text-right"><b>{{trailexpenditureDetails[0].debit_amount + trailexpenditureDetails1[0].debit_amount + trailexpenditureDetails2[0].debit_amount | number : 2}}</b>
+                                                                                                    </td>
+                                                                                                    <td class="text-right"><b>{{trailexpenditureDetails[0].credit_amount + trailexpenditureDetails1[0].credit_amount + trailexpenditureDetails2[0].credit_amount | number : 2}}</b>
+                                                                                                    </td>
+                                                                                                    
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                 <!--   Assets -->
+                                                                 <div class="accordion-panel mt-2 mb-2">
+                                                                        <div class="accordion-heading bg-c-pink text-white" role="tab" id="headingThree">
+                                                                            <h3 class="card-title accordion-title">
+                                                                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                                    Assets
+                                                                                </a>
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div id="collapseThree" class="panel-collapse collapse in show mt-3" role="tabpanel" aria-labelledby="headingThree">
+                                                                            <div class="accordion-content accordion-desc">
+                                                                                <div class="accordion-content accordion-desc">
+                                                                                    <div class="dt-responsive table-responsive">
+                                                                                        <table class="table table-bordered">
+                                                                                            <tbody>
+                                                                                                <tr class="bg-c-green text-white">
+                                                                                                    <th class="text-center">Account Name</th>
+                                                                                                    <th class="text-center">Debit</th>
+                                                                                                    <th class="text-center">Credit</th>
+                                                                                                    
+                                                                                                </tr>
+                                                                                                <tr data-ng-repeat="trailasset in filteredResult = trailassetDetails | filter:search" data-toggle="collapse" data-target="#collapseExample6" aria-expanded="false" aria-controls="collapseExample6">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset(trailasset);"><b>{{trailasset.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{trailasset.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                </tr>
+                                                                                                <tr class="collapse" id="collapseExample6">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailglassetname in filteredResult = trailglassetnames | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAssetDetails(trailglassetname);" data-toggle="modal" data-target="#myModal5">{{trailglassetname.account_name}}</a></td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="trailasset1 in filteredResult = trailassetDetails1 | filter:search" data-toggle="collapse" data-target="#collapseExample7" aria-expanded="false" aria-controls="collapseExample7">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset1(trailasset1);"><b>{{trailasset1.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset1.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset1.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample7">
+                                                                                                   
+                                                                                                            <tr data-ng-repeat="trailglassetname1 in filteredResult = trailglassetnames1 | filter:search">
+                                                                                                            <td style="text-align: right;"><a href data-ng-click="getTrailGLAssetDetails1(trailglassetname1);" data-toggle="modal" data-target="#myModal6">{{trailglassetname1.account_name}}</a></td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname1.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname1.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="trailasset2 in filteredResult = trailassetDetails2 | filter:search" data-toggle="collapse" data-target="#collapseExample8" aria-expanded="false" aria-controls="collapseExample8">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset2(trailasset2);"><b>{{trailasset2.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset2.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset2.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample8">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailglassetname2 in filteredResult = trailglassetnames2 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAssetDetails2(trailglassetname2);" data-toggle="modal" data-target="#myModal7">{{trailglassetname2.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{trailglassetname2.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname2.credit_amount | number : 2}}</td>
+                                                                                                  
+                                                                                                            </tr>   
+                                                                                                            
+                                                                                                            <tr data-ng-repeat="trailasset3 in filteredResult = trailassetDetails3 | filter:search" data-toggle="collapse" data-target="#collapseExample9" aria-expanded="false" aria-controls="collapseExample9">
+                                                                                                     <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset3(trailasset3);"><b>{{trailasset3.group_name}}(+)</b></a></td>
+                                                                                                      <td style="text-align: right;"><b>{{trailasset3.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset3.credit_amount | number : 2}}</b></td>
+                                                                                          
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample9">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailglassetname3 in filteredResult = trailglassetnames3 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAssetDetails3(trailglassetname3);" data-toggle="modal" data-target="#myModal8">{{trailglassetname3.account_name}}</a></td>
+                                                                                                                  <td style="text-align: right;">{{trailglassetname3.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname3.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="trailasset4 in filteredResult = trailassetDetails4 | filter:search" data-toggle="collapse" data-target="#collapseExample10" aria-expanded="false" aria-controls="collapseExample10">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset4(trailasset4);"><b>{{trailasset4.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{trailasset4.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset4.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample10">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailglassetname4 in filteredResult = trailglassetnames4 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAssetDetails4(trailglassetname4);" data-toggle="modal" data-target="#myModal9">{{trailglassetname4.account_name}}</a></td>
+                                                                                                                  <td style="text-align: right;">{{trailglassetname4.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname4.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="trailasset5 in filteredResult = trailassetDetails5 | filter:search" data-toggle="collapse" data-target="#collapseExample11" aria-expanded="false" aria-controls="collapseExample11">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset5(trailasset5);"><b>{{trailasset5.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset5.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset5.credit_amount | number : 2}}</b></td>
+                                                                                                
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample11">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailglassetname5 in filteredResult = trailglassetnames5 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAssetDetails5(trailglassetname5);" data-toggle="modal" data-target="#myModal10">{{trailglassetname5.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{trailglassetname5.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname5.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="trailasset6 in filteredResult = trailassetDetails6 | filter:search" data-toggle="collapse" data-target="#collapseExample12" aria-expanded="false" aria-controls="collapseExample12">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset6(trailasset6);"><b>{{trailasset6.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset6.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset6.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample12">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailglassetname6 in filteredResult = trailglassetnames6 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAssetDetails6(trailglassetname6);" data-toggle="modal" data-target="#myModal11">{{trailglassetname6.account_name}}</a></td>
+                                                                                                                 <td style="text-align: right;">{{trailglassetname6.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname6.credit_amount | number : 2}}</td>
+                                                                                                  
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="trailasset7 in filteredResult = trailassetDetails7 | filter:search" data-toggle="collapse" data-target="#collapseExample13" aria-expanded="false" aria-controls="collapseExample13">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset7(trailasset7);"><b>{{trailasset7.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset7.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset7.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample13">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailglassetname7 in filteredResult = trailglassetnames7 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAssetDetails7(trailglassetname7);" data-toggle="modal" data-target="#myModal12">{{trailglassetname7.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{trailglassetname7.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname7.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="trailasset8 in filteredResult = trailassetDetails8 | filter:search" data-toggle="collapse" data-target="#collapseExample14" aria-expanded="false" aria-controls="collapseExample14">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset8(trailasset8);"><b>{{trailasset8.group_name}}(+)</b></a></td>
+                                                                                                     <td style="text-align: right;"><b>{{trailasset8.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset8.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample14">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailglassetname8 in filteredResult = trailglassetnames8 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAssetDetails8(trailglassetname8);" data-toggle="modal" data-target="#myModal13">{{trailglassetname8.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{trailglassetname8.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname8.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="trailasset9 in filteredResult = trailassetDetails9 | filter:search" data-toggle="collapse" data-target="#collapseExample15" aria-expanded="false" aria-controls="collapseExample15">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset9(trailasset9);"><b>{{trailasset9.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{trailasset9.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset9.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                <tr class="collapse" id="collapseExample15">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailglassetname9 in filteredResult = trailglassetnames9 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAssetDetails9(trailglassetname9);" data-toggle="modal" data-target="#myModal14">{{trailglassetname9.account_name}}</a></td>
+                                                                                                                 <td style="text-align: right;">{{trailglassetname9.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname9.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="trailasset10 in filteredResult = trailassetDetails10 | filter:search" data-toggle="collapse" data-target="#collapseExample16" aria-expanded="false" aria-controls="collapseExample16">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset10(trailasset10);"><b>{{trailasset10.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset10.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailasset10.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample16">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailglassetname10 in filteredResult = trailglassetnames10 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLAssetDetails10(trailglassetname10);" data-toggle="modal" data-target="#myModal15">{{trailglassetname10.account_name}}</a></td>
+                                                                                                                 <td style="text-align: right;">{{trailglassetname10.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailglassetname10.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                <tr>
+                                                                                                    <th class="text-right">Total</th>
+                                                                                                    <td class="text-right"><b>{{trailassetDetails[0].debit_amount + trailassetDetails1[0].debit_amount + trailassetDetails2[0].debit_amount + trailassetDetails3[0].debit_amount + trailassetDetails4[0].debit_amount + trailassetDetails5[0].debit_amount + trailassetDetails6[0].debit_amount + trailassetDetails7[0].debit_amount + trailassetDetails8[0].debit_amount + trailassetDetails9[0].debit_amount + trailassetDetails10[0].debit_amount | number : 2}}</b>
+                                                                                                    </td>
+                                                                                                   <td class="text-right"><b>{{trailassetDetails[0].credit_amount + trailassetDetails1[0].credit_amount + trailassetDetails2[0].credit_amount + trailassetDetails3[0].credit_amount + trailassetDetails4[0].credit_amount + trailassetDetails5[0].credit_amount + trailassetDetails6[0].credit_amount + trailassetDetails7[0].credit_amount + trailassetDetails8[0].credit_amount + trailassetDetails9[0].credit_amount + trailassetDetails10[0].credit_amount | number : 2}}</b>
+                                                                                            </td>
+                                                                                             
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                         
+                                                                 <!--   Liability -->
+                                                                 <div class="accordion-panel mt-2 mb-2">
+                                                                        <div class="accordion-heading bg-c-pink text-white" role="tab" id="headingFour">
+                                                                            <h3 class="card-title accordion-title">
+                                                                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                                                    Liability
+                                                                                </a>
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div id="collapseFour" class="panel-collapse collapse in show mt-3" role="tabpanel" aria-labelledby="headingFour">
+                                                                            <div class="accordion-content accordion-desc">
+                                                                                <div class="accordion-content accordion-desc">
+                                                                                    <div class="dt-responsive table-responsive">
+                                                                                        <table class="table table-bordered">
+                                                                                            <tbody>
+                                                                                                <tr class="bg-c-green text-white">
+                                                                                                    <tr class="bg-c-green text-white">
+                                                                                                    <th class="text-center">Account Name</th>
+                                                                                                    <th class="text-center">Debit</th>
+                                                                                                    <th class="text-center">Credit</th>
+                                                                                                    
+                                                                                                </tr>
+                                                                                                <tr data-ng-repeat="trailequity in filteredResult = trailequityDetails | filter:search" data-toggle="collapse" data-target="#collapseExample17" aria-expanded="false" aria-controls="collapseExample17">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLEquity(trailequity);"><b>{{trailequity.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{trailequity.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailequity.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample17">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailequityaccount in filteredResult = trailequityaccounts | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLEquityDetails(trailequityaccount);" data-toggle="modal" data-target="#myModal16">{{trailequityaccount.account_name}}</a></td>
+                                                                                                                 <td style="text-align: right;">{{trailequityaccount.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailequityaccount.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="trailequity1 in filteredResult = trailequityDetails1 | filter:search" data-toggle="collapse" data-target="#collapseExample18" aria-expanded="false" aria-controls="collapseExample18">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLEquity1(trailequity1);"><b>{{trailequity1.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailequity1.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailequity1.credit_amount | number : 2}}</b></td>
+                                                                                                  
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample18">
+                                                                                                   
+                                                                                                            <tr data-ng-repeat="trailequityaccount1 in filteredResult = trailequityaccounts1 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLEquityDetails1(trailequityaccount1);" data-toggle="modal" data-target="#myModal17">{{trailequityaccount1.account_name}}</a></td>
+                                                                                                               <td style="text-align: right;">{{trailequityaccount1.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailequityaccount1.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="trailequity2 in filteredResult = trailequityDetails2 | filter:search" data-toggle="collapse" data-target="#collapseExample19" aria-expanded="false" aria-controls="collapseExample19">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLEquity2(trailequity2);"><b>{{trailequity2.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{trailequity2.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailequity2.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample19">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailequityaccount2 in filteredResult = trailequityaccounts2 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLEquityDetails2(trailequityaccount2);" data-toggle="modal" data-target="#myModal18">{{trailequityaccount2.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{trailequityaccount2.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailequityaccount2.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                            <tr data-ng-repeat="trailequity3 in filteredResult = trailequityDetails3 | filter:search" data-toggle="collapse" data-target="#collapseExample20" aria-expanded="false" aria-controls="collapseExample20">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLEquity3(trailequity3);"><b>{{trailequity3.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailequity3.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailequity3.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample20">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailequityaccount3 in filteredResult = trailequityaccounts3 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLEquityDetails3(trailequityaccount3);" data-toggle="modal" data-target="#myModal19">{{trailequityaccount3.account_name}}</a></td>
+                                                                                                                  <td style="text-align: right;">{{trailequityaccount3.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailequityaccount3.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="trailequity4 in filteredResult = trailequityDetails4 | filter:search" data-toggle="collapse" data-target="#collapseExample21" aria-expanded="false" aria-controls="collapseExample21">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLEquity4(trailequity4);"><b>{{trailequity4.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{trailequity4.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailequity4.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample21">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailequityaccount4 in filteredResult = trailequityaccounts4 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLEquityDetails4(trailequityaccount4);" data-toggle="modal" data-target="#myModal20">{{trailequityaccount4.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{trailequityaccount4.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailequityaccount4.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="trailequity5 in filteredResult = trailequityDetails5 | filter:search" data-toggle="collapse" data-target="#collapseExample22" aria-expanded="false" aria-controls="collapseExample22">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLEquity5(trailequity5);"><b>{{trailequity5.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailequity5.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{trailequity5.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample22">  
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="trailequityaccount5 in filteredResult = trailequityaccounts5 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getTrailGLEquityDetails5(trailequityaccount5);" data-toggle="modal" data-target="#myModal21">{{trailequityaccount5.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{trailequityaccount5.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{trailequityaccount5.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             
+                                                                                                               
+                                                                                                <tr>
+                                                                                                    <th class="text-right">Total</th>
+                                                                                                    <td class="text-right"><b>{{trailequityDetails[0].debit_amount + trailequityDetails1[0].debit_amount + trailequityDetails2[0].debit_amount + trailequityDetails3[0].debit_amount + trailequityDetails4[0].debit_amount + trailequityDetails5[0].debit_amount | number : 2}}</b>
+                                                                                                    </td>
+                                                                                                   <td class="text-right"><b>{{trailequityDetails[0].credit_amount + trailequityDetails1[0].credit_amount + trailequityDetails2[0].credit_amount + trailequityDetails3[0].credit_amount + trailequityDetails4[0].credit_amount + trailequityDetails5[0].credit_amount | number : 2}}</b>
+                                                                                            </td>
+                                                                                            
+                                                                                                </tr>
+                                                                                            </tbody>   
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                            
+                                                                    
+                                                                    <div class="accordion-panel mt-2 mb-2">
+                                                                        <div class=" accordion-heading bg-c-pink text-white" role="tab" id="headingSix">
+                                                                            <h3 class="card-title accordion-title">
+                                                                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                                                                    Total Comprehensive Income for Year
+                                                                                </a>
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div id="collapseSix" class="panel-collapse collapse in show mt-3" role="tabpanel" aria-labelledby="headingSix">
+                                                                            <div class="accordion-content accordion-desc">
+                                                                                <div class="accordion-content accordion-desc">
+                                                                                    <div class="dt-responsive table-responsive">
+                                                                                        <table class="table table-bordered">   
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <th class="text-right">Total</th>
+                                                                                                    <td class="text-right"><b>{{trailincomeDetails[0].debit_amount + trailincomeDetails1[0].debit_amount + trailexpenditureDetails[0].debit_amount + trailexpenditureDetails1[0].debit_amount + trailexpenditureDetails2[0].debit_amount + 
+                                                                                                    trailassetDetails[0].debit_amount + trailassetDetails1[0].debit_amount + trailassetDetails2[0].debit_amount + trailassetDetails3[0].debit_amount + trailassetDetails4[0].debit_amount + trailassetDetails5[0].debit_amount + trailassetDetails6[0].debit_amount + trailassetDetails7[0].debit_amount + trailassetDetails8[0].debit_amount + trailassetDetails9[0].debit_amount + trailassetDetails10[0].debit_amount + 
+                                                                                                     trailequityDetails[0].debit_amount + trailequityDetails1[0].debit_amount + trailequityDetails2[0].debit_amount + trailequityDetails3[0].debit_amount + trailequityDetails4[0].debit_amount + trailequityDetails5[0].debit_amount | number : 2}}</b></td>
+                                                                                                   <td class="text-right"><b>{{trailincomeDetails[0].credit_amount + trailincomeDetails1[0].credit_amount + trailexpenditureDetails[0].credit_amount + trailexpenditureDetails1[0].credit_amount + trailexpenditureDetails2[0].credit_amount + 
+                                                                                                    trailassetDetails[0].credit_amount + trailassetDetails1[0].credit_amount + trailassetDetails2[0].credit_amount + trailassetDetails3[0].credit_amount + trailassetDetails4[0].credit_amount + trailassetDetails5[0].credit_amount + trailassetDetails6[0].credit_amount + trailassetDetails7[0].credit_amount + trailassetDetails8[0].credit_amount + trailassetDetails9[0].credit_amount + trailassetDetails10[0].credit_amount + 
+                                                                                                     trailequityDetails[0].credit_amount + trailequityDetails1[0].credit_amount + trailequityDetails2[0].credit_amount + trailequityDetails3[0].credit_amount + trailequityDetails4[0].credit_amount + trailequityDetails5[0].credit_amount | number : 2}}</b></td>
+                                                                                                
+                                                                                                
+                                                                                                 </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>   
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                         <div class="row" id="monthbased">
+                                            <div class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+                                                <div class="card" style="border-radius: 25px;">
+                                                    <div class="card-header bg-primary text-center" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+                                                        <h6 class="card-title">ANDHRA PRADESH STATE SKILL DEVELOPMENT CORPORATION</h6>
+                                                        <h6 class="card-title mt-2">Statement of Trail Balance</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+                                                                <button type="button" class="btn btn-success bg-c-yellow text-white btn-out-dashed btn-sm float-left">Export Excel</button>
+
+                                                            </div>
+
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-5">
+                                                                <div id="accordion" role="tablist" aria-multiselectable="true">
+                                                                    <div class="accordion-panel mt-2 mb-2">
+                                                                        <div class="accordion-heading bg-c-pink text-white" role="tab" id="headingOne">
+                                                                            <h3 class="card-title accordion-title">
+                                                                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                                    Income
+                                                                                </a>
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div id="collapseOne" class="panel-collapse collapse in show mt-3" role="tabpanel" aria-labelledby="headingOne">
+                                                                            <div class="accordion-content accordion-desc">
+                                                                                <div class="dt-responsive table-responsive">
+                                                                                    <table class="table table-bordered">
+                                                                                        <tbody>
+                                                                                            <tr class="bg-c-green text-white">
+                                                                                               <th class="text-center">Account Name</th>
+                                                                                                    <th class="text-center">Debit</th>
+                                                                                                    <th class="text-center">Credit</th>
+
+                                                                                            </tr>
+                                                                                            
+                                                                                            <tr data-ng-repeat="monthtrailincome in filteredResult = monthtrailincomeDetails | filter:search" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+                                                                                               
+                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAccountNames(monthtrailincome);"><b>{{monthtrailincome.group_name}}(+)</b></a></td>
+                                                                                                <td style="text-align: right;"><b>{{monthtrailincome.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailincome.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                </tr>   
+                                                                                            <tr class="collapse" id="collapseExample1">   
+                                                                                                        <tr data-ng-repeat="monthtrailglaccountname in filteredResult = trailglaccounts | filter:search">
+                                                                                                            <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAccountDetails(monthtrailglaccountname);" data-toggle="modal" data-target="#myModalmonth">{{monthtrailglaccountname.account_name}}</a></td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglaccountname.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglaccountname.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                </tr>
+                                                                                                      
+                                                                                              
+                                                                                           
+                                                                                            <tr data-ng-repeat="monthtrailincome1 in filteredResult = monthtrailincomeDetails1 | filter:search" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                                                                                               
+                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAccountTwoNames(monthtrailincome1);"><b>{{monthtrailincome1.group_name}}(+)</b></a></td>
+                                                                                                 <td style="text-align: right;"><b>{{monthtrailincome1.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailincome1.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                </tr>
+                                                                                            <tr class="collapse" id="collapseExample2">
+                                                                                               
+                                                                                                        <tr data-ng-repeat="monthtrailglaccountname1 in filteredResult = monthtrailglaccounts1 | filter:search">
+                                                                                                            <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAccountDetails1(monthtrailglaccountname1 );" data-toggle="modal" data-target="#myModalmonth1">{{monthtrailglaccountname1.account_name}}</a></td>
+                                                                                                             <td style="text-align: right;">{{monthtrailglaccountname1.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglaccountname1.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                </tr>
+                                                                                                         <tr>
+                                                                                                <th class="text-right">Total</th>
+                                                                                                <td class="text-right"><b>{{monthtrailincomeDetails[0].debit_amount + monthtrailincomeDetails1[0].debit_amount | number : 2}}</b></td>
+                                                                                                <td class="text-right"><b>{{monthtrailincomeDetails[0].credit_amount + monthtrailincomeDetails1[0].credit_amount | number : 2}}</b>
+                                                                                                </td>
+                                                                                                
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="accordion-panel mt-2 mb-2">
+                                                                        <div class="accordion-heading bg-c-pink text-white" role="tab" id="headingTwo">
+                                                                            <h3 class="card-title accordion-title">
+                                                                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                                    Expenditure
+                                                                                </a>
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div id="collapseTwo" class="panel-collapse collapse in show mt-3" role="tabpanel" aria-labelledby="headingTwo">
+                                                                            <div class="accordion-content accordion-desc">
+                                                                                <div class="accordion-content accordion-desc">
+                                                                                    <div class="dt-responsive table-responsive">
+                                                                                        <table class="table table-bordered">
+                                                                                            <tbody>
+                                                                                                <tr class="bg-c-green text-white">
+                                                                                                    <th class="text-center">Account Name</th>
+                                                                                                    <th class="text-center">Debit</th>
+                                                                                                    <th class="text-center">Credit</th>
+                                                                                                      
+                                                                                                </tr>
+                                                                                                <tr data-ng-repeat="monthtrailexpenditure in filteredResult = monthtrailexpenditureDetails | filter:search" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLExpAccountNames(monthtrailexpenditure);"><b>{{monthtrailexpenditure.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailexpenditure.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailexpenditure.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                </tr>
+                                                                                                <tr class="collapse" id="collapseExample3">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailexpenditureaccount in filteredResult = monthtrailexpenditureaccounts | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAccountDetails2(monthtrailexpenditureaccount);" data-toggle="modal" data-target="#myModalmonth2">{{monthtrailexpenditureaccount.account_name}}</a></td>
+                                                                                                               <td style="text-align: right;">{{monthtrailexpenditureaccount.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailexpenditureaccount.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="monthtrailexpenditure1 in filteredResult = monthtrailexpenditureDetails1 | filter:search" data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLExpAccountOneNames(monthtrailexpenditure1);"><b>{{monthtrailexpenditure1.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{monthtrailexpenditure1.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailexpenditure1.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                </tr>
+                                                                                                <tr class="collapse" id="collapseExample4">   
+                                                                                                   
+                                                                                                            <tr data-ng-repeat="monthtrailexpenditureaccount1 in filteredResult = monthtrailexpenditureaccounts1 | filter:search">
+                                                                                                   <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAccountDetails3(monthtrailexpenditureaccount1);" data-toggle="modal" data-target="#myModalmonth3">{{trailexpenditureaccount1.account_name}}</a></td>
+                                                                                                    <td style="text-align: right;">{{monthtrailexpenditureaccount1.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailexpenditureaccount1.credit_amount | number : 2}}</td>
+                                                                                                  
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="monthtrailexpenditure2 in filteredResult = monthtrailexpenditureDetails2 | filter:search" data-toggle="collapse" data-target="#collapseExample5" aria-expanded="false" aria-controls="collapseExample5">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLExpAccountTwoNames(monthtrailexpenditure2);"><b>{{monthtrailexpenditure2.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{monthtrailexpenditure2.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailexpenditure2.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                </tr>
+                                                                                                <tr class="collapse" id="collapseExample5">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailexpenditureaccount2 in filteredResult = monthtrailexpenditureaccounts2 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAccountDetails4(monthtrailexpenditureaccount2);" data-toggle="modal" data-target="#myModalmonth4">{{monthtrailexpenditureaccount2.account_name}}</a></td>
+                                                                                                     <td style="text-align: right;">{{monthtrailexpenditureaccount2.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailexpenditureaccount2.credit_amount | number : 2}}</td>
+                                                                                                  
+                                                                                                            </tr>
+                                                                                                <tr>
+                                                                                                    <th class="text-right">Total</th>
+                                                                                                    <td class="text-right"><b>{{monthtrailexpenditureDetails[0].debit_amount + monthtrailexpenditureDetails1[0].debit_amount + monthtrailexpenditureDetails2[0].debit_amount | number : 2}}</b>
+                                                                                                    </td>
+                                                                                                    <td class="text-right"><b>{{monthtrailexpenditureDetails[0].credit_amount + monthtrailexpenditureDetails1[0].credit_amount + monthtrailexpenditureDetails2[0].credit_amount | number : 2}}</b>
+                                                                                                    </td>
+                                                                                                    
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                 <!--   Assets -->
+                                                                 <div class="accordion-panel mt-2 mb-2">
+                                                                        <div class="accordion-heading bg-c-pink text-white" role="tab" id="headingThree">
+                                                                            <h3 class="card-title accordion-title">
+                                                                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                                    Assets
+                                                                                </a>
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div id="collapseThree" class="panel-collapse collapse in show mt-3" role="tabpanel" aria-labelledby="headingThree">
+                                                                            <div class="accordion-content accordion-desc">
+                                                                                <div class="accordion-content accordion-desc">
+                                                                                    <div class="dt-responsive table-responsive">
+                                                                                        <table class="table table-bordered">
+                                                                                            <tbody>
+                                                                                                <tr class="bg-c-green text-white">
+                                                                                                    <th class="text-center">Account Name</th>
+                                                                                                    <th class="text-center">Debit</th>
+                                                                                                    <th class="text-center">Credit</th>
+                                                                                                    
+                                                                                                </tr>
+                                                                                                <tr data-ng-repeat="monthtrailasset in filteredResult = monthtrailassetDetails | filter:search" data-toggle="collapse" data-target="#collapseExample6" aria-expanded="false" aria-controls="collapseExample6">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAsset(monthtrailasset);"><b>{{monthtrailasset.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{monthtrailasset.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                </tr>
+                                                                                                <tr class="collapse" id="collapseExample6">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailglassetname in filteredResult = monthtrailglassetnames | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAssetDetails(monthtrailglassetname);" data-toggle="modal" data-target="#myModalmonth5">{{monthtrailglassetname.account_name}}</a></td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="monthtrailasset1 in filteredResult = monthtrailassetDetails1 | filter:search" data-toggle="collapse" data-target="#collapseExample7" aria-expanded="false" aria-controls="collapseExample7">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAsset1(monthtrailasset1);"><b>{{monthtrailasset1.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset1.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset1.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample7">
+                                                                                                   
+                                                                                                            <tr data-ng-repeat="monthtrailglassetname1 in filteredResult = monthtrailglassetnames1 | filter:search">
+                                                                                                            <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAssetDetails1(monthtrailglassetname1);" data-toggle="modal" data-target="#myModalmonth6">{{monthtrailglassetname1.account_name}}</a></td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname1.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname1.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="monthtrailasset2 in filteredResult = monthtrailassetDetails2 | filter:search" data-toggle="collapse" data-target="#collapseExample8" aria-expanded="false" aria-controls="collapseExample8">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAsset2(monthtrailasset2);"><b>{{monthtrailasset2.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset2.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset2.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample8">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailglassetname2 in filteredResult = monthtrailglassetnames2 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAssetDetails2(monthtrailglassetname2);" data-toggle="modal" data-target="#myModalmonth7">{{monthtrailglassetname2.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{monthtrailglassetname2.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname2.credit_amount | number : 2}}</td>
+                                                                                                  
+                                                                                                            </tr>   
+                                                                                                            
+                                                                                                            <tr data-ng-repeat="monthtrailasset3 in filteredResult = monthtrailassetDetails3 | filter:search" data-toggle="collapse" data-target="#collapseExample9" aria-expanded="false" aria-controls="collapseExample9">
+                                                                                                     <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAsset3(monthtrailasset3);"><b>{{monthtrailasset3.group_name}}(+)</b></a></td>
+                                                                                                      <td style="text-align: right;"><b>{{monthtrailasset3.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset3.credit_amount | number : 2}}</b></td>
+                                                                                             
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample9">
+                                                                                                       
+                                                                                                            <tr data-ng-repeat="monthtrailglassetname3 in filteredResult = monthtrailglassetnames3 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAssetDetails3(monthtrailglassetname3);" data-toggle="modal" data-target="#myModalmonth8">{{monthtrailglassetname3.account_name}}</a></td>
+                                                                                                                  <td style="text-align: right;">{{monthtrailglassetname3.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname3.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>      
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="monthtrailasset4 in filteredResult = monthtrailassetDetails4 | filter:search" data-toggle="collapse" data-target="#collapseExample10" aria-expanded="false" aria-controls="collapseExample10">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset4(trailasset4);"><b>{{monthtrailasset4.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{monthtrailasset4.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset4.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample10">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailglassetname4 in filteredResult = monthtrailglassetnames4 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAssetDetails4(monthtrailglassetname4);" data-toggle="modal" data-target="#myModalmonth9">{{monthtrailglassetname4.account_name}}</a></td>
+                                                                                                                  <td style="text-align: right;">{{monthtrailglassetname4.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname4.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="monthtrailasset5 in filteredResult = monthtrailassetDetails5 | filter:search" data-toggle="collapse" data-target="#collapseExample11" aria-expanded="false" aria-controls="collapseExample11">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset5(trailasset5);"><b>{{monthtrailasset5.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset5.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset5.credit_amount | number : 2}}</b></td>
+                                                                                                
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample11">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailglassetname5 in filteredResult = monthtrailglassetnames5 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAssetDetails5(monthtrailglassetname5);" data-toggle="modal" data-target="#myModalmonth10">{{monthtrailglassetname5.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{monthtrailglassetname5.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname5.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="monthtrailasset6 in filteredResult = monthtrailassetDetails6 | filter:search" data-toggle="collapse" data-target="#collapseExample12" aria-expanded="false" aria-controls="collapseExample12">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAsset6(monthtrailasset6);"><b>{{monthtrailasset6.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset6.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset6.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample12">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailglassetname6 in filteredResult = monthtrailglassetnames6 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAssetDetails6(monthtrailglassetname6);" data-toggle="modal" data-target="#myModalmonth11">{{monthtrailglassetname6.account_name}}</a></td>
+                                                                                                                 <td style="text-align: right;">{{monthtrailglassetname6.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname6.credit_amount | number : 2}}</td>
+                                                                                                  
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="monthtrailasset7 in filteredResult = monthtrailassetDetails7 | filter:search" data-toggle="collapse" data-target="#collapseExample13" aria-expanded="false" aria-controls="collapseExample13">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAsset7(monthtrailasset7);"><b>{{monthtrailasset7.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset7.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset7.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample13">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailglassetname7 in filteredResult = monthtrailglassetnames7 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAssetDetails7(monthtrailglassetname7);" data-toggle="modal" data-target="#myModalmonth12">{{monthtrailglassetname7.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{monthtrailglassetname7.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname7.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="monthtrailasset8 in filteredResult = monthtrailassetDetails8 | filter:search" data-toggle="collapse" data-target="#collapseExample14" aria-expanded="false" aria-controls="collapseExample14">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getTrailGLAsset8(trailasset8);"><b>{{monthtrailasset8.group_name}}(+)</b></a></td>
+                                                                                                     <td style="text-align: right;"><b>{{monthtrailasset8.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset8.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample14">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailglassetname8 in filteredResult = monthtrailglassetnames8 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAssetDetails8(monthtrailglassetname8);" data-toggle="modal" data-target="#myModalmonth13">{{monthtrailglassetname8.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{monthtrailglassetname8.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname8.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="monthtrailasset9 in filteredResult = monthtrailassetDetails9 | filter:search" data-toggle="collapse" data-target="#collapseExample15" aria-expanded="false" aria-controls="collapseExample15">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAsset9(monthtrailasset9);"><b>{{monthtrailasset9.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{monthtrailasset9.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset9.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                <tr class="collapse" id="collapseExample15">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailglassetname9 in filteredResult = monthtrailglassetnames9 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAssetDetails9(monthtrailglassetname9);" data-toggle="modal" data-target="#myModalmonth14">{{monthtrailglassetname9.account_name}}</a></td>
+                                                                                                                 <td style="text-align: right;">{{monthtrailglassetname9.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname9.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="monthtrailasset10 in filteredResult = monthtrailassetDetails10 | filter:search" data-toggle="collapse" data-target="#collapseExample16" aria-expanded="false" aria-controls="collapseExample16">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAsset10(monthtrailasset10);"><b>{{monthtrailasset10.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset10.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailasset10.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample16">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailglassetname10 in filteredResult = monthtrailglassetnames10 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLAssetDetails10(monthtrailglassetname10);" data-toggle="modal" data-target="#myModalmonth15">{{monthtrailglassetname10.account_name}}</a></td>
+                                                                                                                 <td style="text-align: right;">{{monthtrailglassetname10.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailglassetname10.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                <tr>
+                                                                                                    <th class="text-right">Total</th>
+                                                                                                    <td class="text-right"><b>{{monthtrailassetDetails[0].debit_amount + monthtrailassetDetails1[0].debit_amount + monthtrailassetDetails2[0].debit_amount + monthtrailassetDetails3[0].debit_amount + monthtrailassetDetails4[0].debit_amount + monthtrailassetDetails5[0].debit_amount + monthtrailassetDetails6[0].debit_amount + monthtrailassetDetails7[0].debit_amount + monthtrailassetDetails8[0].debit_amount + monthtrailassetDetails9[0].debit_amount + monthtrailassetDetails10[0].debit_amount | number : 2}}</b>
+                                                                                                    </td>
+                                                                                                   <td class="text-right"><b>{{monthtrailassetDetails[0].credit_amount + monthtrailassetDetails1[0].credit_amount + monthtrailassetDetails2[0].credit_amount + monthtrailassetDetails3[0].credit_amount + monthtrailassetDetails4[0].credit_amount + monthtrailassetDetails5[0].credit_amount + monthtrailassetDetails6[0].credit_amount + monthtrailassetDetails7[0].credit_amount + monthtrailassetDetails8[0].credit_amount + monthtrailassetDetails9[0].credit_amount + monthtrailassetDetails10[0].credit_amount | number : 2}}</b>
+                                                                                            </td>
+                                                                                             
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                         
+                                                                 <!--   Liability -->
+                                                                 <div class="accordion-panel mt-2 mb-2">
+                                                                        <div class="accordion-heading bg-c-pink text-white" role="tab" id="headingFour">
+                                                                            <h3 class="card-title accordion-title">
+                                                                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                                                    Liability
+                                                                                </a>
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div id="collapseFour" class="panel-collapse collapse in show mt-3" role="tabpanel" aria-labelledby="headingFour">
+                                                                            <div class="accordion-content accordion-desc">
+                                                                                <div class="accordion-content accordion-desc">
+                                                                                    <div class="dt-responsive table-responsive">
+                                                                                        <table class="table table-bordered">
+                                                                                            <tbody>
+                                                                                                <tr class="bg-c-green text-white">
+                                                                                                    <tr class="bg-c-green text-white">
+                                                                                                    <th class="text-center">Account Name</th>
+                                                                                                    <th class="text-center">Debit</th>
+                                                                                                    <th class="text-center">Credit</th>
+                                                                                                    
+                                                                                                </tr>
+                                                                                                <tr data-ng-repeat="monthtrailequity in filteredResult = monthtrailequityDetails | filter:search" data-toggle="collapse" data-target="#collapseExample17" aria-expanded="false" aria-controls="collapseExample17">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquity(monthtrailequity);"><b>{{monthtrailequity.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{monthtrailequity.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailequity.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample17">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailequityaccount in filteredResult = monthtrailequityaccounts | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquityDetails(monthtrailequityaccount);" data-toggle="modal" data-target="#myModalmonth16">{{monthtrailequityaccount.account_name}}</a></td>
+                                                                                                                 <td style="text-align: right;">{{monthtrailequityaccount.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailequityaccount.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="monthtrailequity1 in filteredResult = monthtrailequityDetails1 | filter:search" data-toggle="collapse" data-target="#collapseExample18" aria-expanded="false" aria-controls="collapseExample18">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquity1(monthtrailequity1);"><b>{{monthtrailequity1.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailequity1.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailequity1.credit_amount | number : 2}}</b></td>
+                                                                                                  
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample18">
+                                                                                                   
+                                                                                                            <tr data-ng-repeat="monthtrailequityaccount1 in filteredResult = monthtrailequityaccounts1 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquityDetails1(monthtrailequityaccount1);" data-toggle="modal" data-target="#myModalmonth17">{{monthtrailequityaccount1.account_name}}</a></td>
+                                                                                                               <td style="text-align: right;">{{monthtrailequityaccount1.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailequityaccount1.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr data-ng-repeat="monthtrailequity2 in filteredResult = monthtrailequityDetails2 | filter:search" data-toggle="collapse" data-target="#collapseExample19" aria-expanded="false" aria-controls="collapseExample19">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquity2(monthtrailequity2);"><b>{{monthtrailequity2.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{monthtrailequity2.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailequity2.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample19">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailequityaccount2 in filteredResult = monthtrailequityaccounts2 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquityDetails2(monthtrailequityaccount2);" data-toggle="modal" data-target="#myModalmonth18">{{monthtrailequityaccount2.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{monthtrailequityaccount2.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailequityaccount2.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                            <tr data-ng-repeat="monthtrailequity3 in filteredResult = monthtrailequityDetails3 | filter:search" data-toggle="collapse" data-target="#collapseExample20" aria-expanded="false" aria-controls="collapseExample20">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquity3(monthtrailequity3);"><b>{{monthtrailequity3.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailequity3.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailequity3.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample20">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailequityaccount3 in filteredResult = monthtrailequityaccounts3 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquityDetails3(monthtrailequityaccount3);" data-toggle="modal" data-target="#myModalmonth19">{{monthtrailequityaccount3.account_name}}</a></td>
+                                                                                                                  <td style="text-align: right;">{{monthtrailequityaccount3.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailequityaccount3.credit_amount | number : 2}}</td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="monthtrailequity4 in filteredResult = monthtrailequityDetails4 | filter:search" data-toggle="collapse" data-target="#collapseExample21" aria-expanded="false" aria-controls="collapseExample21">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquity4(monthtrailequity4);"><b>{{monthtrailequity4.group_name}}(+)</b></a></td>
+                                                                                                   <td style="text-align: right;"><b>{{monthtrailequity4.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailequity4.credit_amount | number : 2}}</b></td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample21">
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailequityaccount4 in filteredResult = monthtrailequityaccounts4 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquityDetails4(monthtrailequityaccount4);" data-toggle="modal" data-target="#myModalmonth20">{{monthtrailequityaccount4.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{monthtrailequityaccount4.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailequityaccount4.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             <tr data-ng-repeat="monthtrailequity5 in filteredResult = monthtrailequityDetails5 | filter:search" data-toggle="collapse" data-target="#collapseExample22" aria-expanded="false" aria-controls="collapseExample22">
+                                                                                                    <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquity5(monthtrailequity5);"><b>{{monthtrailequity5.group_name}}(+)</b></a></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailequity5.debit_amount | number : 2}}</b></td>
+                                                                                                    <td style="text-align: right;"><b>{{monthtrailequity5.credit_amount | number : 2}}</b></td>
+                                                                                                   
+                                                                                                            </tr>
+                                                                                                <tr class="collapse" id="collapseExample22">  
+                                                                                                    
+                                                                                                            <tr data-ng-repeat="monthtrailequityaccount5 in filteredResult = monthtrailequityaccounts5 | filter:search">
+                                                                                                                <td style="text-align: right;"><a href data-ng-click="getMonthTrailGLEquityDetails5(monthtrailequityaccount5);" data-toggle="modal" data-target="#myModalmonth21">{{monthtrailequityaccount5.account_name}}</a></td>
+                                                                                                                <td style="text-align: right;">{{monthtrailequityaccount5.debit_amount | number : 2}}</td>
+                                                                                                    <td style="text-align: right;">{{monthtrailequityaccount5.credit_amount | number : 2}}</td>
+                                                                                                    
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                             
+                                                                                                               
+                                                                                                <tr>
+                                                                                                    <th class="text-right">Total</th>
+                                                                                                    <td class="text-right"><b>{{monthtrailequityDetails[0].debit_amount + monthtrailequityDetails1[0].debit_amount + monthtrailequityDetails2[0].debit_amount + monthtrailequityDetails3[0].debit_amount + monthtrailequityDetails4[0].debit_amount + monthtrailequityDetails5[0].debit_amount | number : 2}}</b>
+                                                                                                    </td>
+                                                                                                   <td class="text-right"><b>{{monthtrailequityDetails[0].credit_amount + monthtrailequityDetails1[0].credit_amount + monthtrailequityDetails2[0].credit_amount + monthtrailequityDetails3[0].credit_amount + monthtrailequityDetails4[0].credit_amount + monthtrailequityDetails5[0].credit_amount | number : 2}}</b>
+                                                                                            </td>
+                                                                                            
+                                                                                                </tr>
+                                                                                            </tbody>   
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                            
+                                                                    
+                                                                    <div class="accordion-panel mt-2 mb-2">
+                                                                        <div class=" accordion-heading bg-c-pink text-white" role="tab" id="headingSix">
+                                                                            <h3 class="card-title accordion-title">
+                                                                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                                                                    Total Comprehensive Income for Year
+                                                                                </a>
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div id="collapseSix" class="panel-collapse collapse in show mt-3" role="tabpanel" aria-labelledby="headingSix">
+                                                                            <div class="accordion-content accordion-desc">
+                                                                                <div class="accordion-content accordion-desc">
+                                                                                    <div class="dt-responsive table-responsive">
+                                                                                        <table class="table table-bordered">   
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <th class="text-right">Total</th>
+                                                                                                    <td class="text-right"><b>{{monthtrailincomeDetails[0].debit_amount + monthtrailincomeDetails1[0].debit_amount + monthtrailexpenditureDetails[0].debit_amount + monthtrailexpenditureDetails1[0].debit_amount + monthtrailexpenditureDetails2[0].debit_amount + 
+                                                                                                    monthtrailassetDetails[0].debit_amount + monthtrailassetDetails1[0].debit_amount + monthtrailassetDetails2[0].debit_amount + monthtrailassetDetails3[0].debit_amount + monthtrailassetDetails4[0].debit_amount + monthtrailassetDetails5[0].debit_amount + monthtrailassetDetails6[0].debit_amount + monthtrailassetDetails7[0].debit_amount + monthtrailassetDetails8[0].debit_amount + monthtrailassetDetails9[0].debit_amount + monthtrailassetDetails10[0].debit_amount + 
+                                                                                                     monthtrailequityDetails[0].debit_amount + monthtrailequityDetails1[0].debit_amount + monthtrailequityDetails2[0].debit_amount + monthtrailequityDetails3[0].debit_amount + monthtrailequityDetails4[0].debit_amount + monthtrailequityDetails5[0].debit_amount | number : 2}}</b></td>
+                                                                                                   <td class="text-right"><b>{{monthtrailincomeDetails[0].credit_amount + monthtrailincomeDetails1[0].credit_amount + monthtrailexpenditureDetails[0].credit_amount + monthtrailexpenditureDetails1[0].credit_amount + monthtrailexpenditureDetails2[0].credit_amount + 
+                                                                                                    monthtrailassetDetails[0].credit_amount + monthtrailassetDetails1[0].credit_amount + monthtrailassetDetails2[0].credit_amount + monthtrailassetDetails3[0].credit_amount + monthtrailassetDetails4[0].credit_amount + monthtrailassetDetails5[0].credit_amount + monthtrailassetDetails6[0].credit_amount + monthtrailassetDetails7[0].credit_amount + trailassetDetails8[0].credit_amount + monthtrailassetDetails9[0].credit_amount + monthtrailassetDetails10[0].credit_amount + 
+                                                                                                     monthtrailequityDetails[0].credit_amount + monthtrailequityDetails1[0].credit_amount + monthtrailequityDetails2[0].credit_amount + monthtrailequityDetails3[0].credit_amount + monthtrailequityDetails4[0].credit_amount + monthtrailequityDetails5[0].credit_amount | number : 2}}</b></td>
+                                                                                                
+                                                                                                
+                                                                                                 </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>   
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                               
+
+    
+    <!-- Cloned JS -->
+
+    <script src="files/assets/pages/j-pro/js/jquery.ui.min.js"></script>
+    <script src="files/assets/pages/j-pro/js/jquery.maskedinput.min.js"></script>
+    <script src="files/assets/pages/j-pro/js/jquery-cloneya.min.js"></script>
+
+    <script src="files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+
+    <script src="files/bower_components/modernizr/js/modernizr.js"></script>
+    <script src="files/bower_components/modernizr/js/css-scrollbars.js"></script>
+
+    <!-- Form Picker -->
+
+    <script src="files/assets/pages/advance-elements/moment-with-locales.min.js"></script>
+    <script src="files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="files/assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js"></script>
+
+    <script src="files/bower_components/datedropper/js/datedropper.min.js"></script>
+
+    <script src="files/bower_components/spectrum/js/spectrum.js"></script>
+    <script src="files/bower_components/jscolor/js/jscolor.js"></script>
+
+    <script src="files/bower_components/jquery-minicolors/js/jquery.minicolors.min.js"></script>
+
+    <script src="files/assets/pages/advance-elements/custom-picker.js"></script>
+
+    <!-- Cloned JS -->
+
+    <script src="files/assets/pages/j-pro/js/custom/cloned-form.js"></script>
+
+    <!-- Accordion JS -->
+    <script src="files/assets/pages/accordion/accordion.js"></script>
+  
+    <script src="files/assets/js/pcoded.min.js"></script>
+    <script src="files/assets/js/vertical/vertical-layout.min.js"></script>
+    <script src="files/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+      
+  
+<script>   
+$("#yearbased").hide();
+$("#monthbased").hide();
+		jQuery(document).ready(function() { 
+			angular.bootstrap(jQuery("#trailbalanceId"), [ 'trailbalance' ]);
+		});
+	</script>
+<script>
+   jQuery(document).on('click', "#home3", function(){    
+$("#yearbased").show();
+$("#monthbased").hide();
+});  
+   </script>   
+   
+   <script>
+   jQuery(document).on('click', "#profile3", function(){
+$("#yearbased").hide();
+$("#monthbased").show();
+});  
+   </script>   

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Manager">
+
+	          
+	<select id="getLoginSheets" resultType="ManagerModel" parameterType="map">
+
+<!-- select count (*) as logincount,login_date,created_date from hrms.employee_login_details   where
+		created_date>=#{p.from_date} and
+		#{p.to_date}>=created_date  and  
+login_date =#{p.from_date} group by login_date,created_date -->
+<!-- 
+		select empid,login_date,login_time,created_date   
+		from hrms.employee_login_details where  
+		created_date>=#{p.from_date} and
+		#{p.to_date}>=created_date      -->
+		select count (login_date) as logincount,login_date from hrms.employee_login_details  where login_date :: date>=#{p.from_date} and
+		#{p.to_date}>=login_date::date group by login_date
+    </select>   
+       
+    <select id="getLeaveSheets" resultType="ManagerModel" parameterType="map">
+
+		
+		select concat(first_name, ' ' ,last_name) as name,a.empid,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,
+c.leave_type,c.leave_nature,c.created_date,c.from_date,c.to_date from
+	(select empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details where status=0) b on (a.empid = b.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select empid,leave_type,leave_nature,created_date,from_date,to_date,leavestatus from hrms.leaves) c on (a.empid = c.empid) 
+	 where
+		c.from_date>=#{p.from_date} and
+		#{p.to_date}>=c.to_date
+and c.leave_type=#{p.leave_type}
+
+    </select>  
+    
+    <select id="getLoginbefore11" resultType="ManagerModel" parameterType="map">
+ select distinct concat(first_name, ' ' ,last_name) as name,a.empid,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,i.type,c.login_time as login_time,c.login_date as login_date,c.logout_time as logout_time,c.created_date from
+	(select empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details where status=0) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time,created_date from hrms.employee_login_details) c on (a.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)    
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from hrms.employee_types_mst) i on (i.id = b.employee_type)
+	where c.login_time BETWEEN '10:00:00' and '11:00:00' and c.login_date=cast(#{p} as date)
+	</select>
+	<select id="getLoginafter11" resultType="ManagerModel" parameterType="map">
+select  distinct concat(first_name, ' ' ,last_name) as name,a.empid,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,i.type ,c.login_time as login_time,c.login_date as login_date,c.logout_time as logout_time,c.created_date from
+	(select  empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details where status=0) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time,created_date from hrms.employee_login_details) c on (a.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from hrms.employee_types_mst) i on (i.id = b.employee_type)
+	where c.login_time BETWEEN '11:00:00' and '19:00:00' and c.login_date=cast(#{p} as date)
+	</select>
+	<select id="getMissedLogin" resultType="ManagerModel" parameterType="map">   
+select  distinct concat(first_name, ' ' ,last_name) as name,a.empid,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,i.type,c.login_date from
+	(select  empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join  (select distinct empid,status,cader,department,designation,grade,employee_type from hrms.employee_employment_details where status=0) b  on (a.empid=b.empid)
+	inner join (select distinct empid,login_date from hrms.employee_login_details where  login_date=cast(#{p} as date)c on (c.empid != b.empid)
+	inner join (select distinct id,cader_name,description from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select distinct id,department_name from hrms.department_mst) e on (e.id = b.department)
+	inner join (select distinct id,designation_name  from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select distinct id,grade_name from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select distinct id,type from hrms.employee_types_mst) i on (i.id = b.employee_type)
+	</select>   
+	<select id="getAllReports" resultType="ManagerModel" parameterType="map">
+	select distinct concat(first_name, ' ' ,last_name) as name,a.empid,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,
+i.type,c.login_time as login_time,c.login_date as login_date,c.logout_time as logout_time,c.created_date from
+	(select   empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details where status=0) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time,created_date from hrms.employee_login_details) c on (b.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from  hrms.employee_types_mst) i on (i.id = b.employee_type)
+	where c.login_date=cast(#{p} as date)
+	</select>
+	<select id="getLeavesReport" resultType="ManagerModel" parameterType="map">
+
+	
+		select a.empid,b.empid,b.leave_type,b.approval_by,b.reason,b.leavestatus,a.name,b.from_date,b.to_date,b.created_date from
+(select empid,concat(first_name,'',last_name)as name from
+		hrms.employee_personal_details)a 
+		inner join (select empid,leave_type,approval_by,reason,leavestatus,from_date,to_date,created_date from hrms.leaves where  cast(created_date as date)=cast(#{p} as date)b 
+		on a.empid=b.empid
+	
+
+	
+	</select>
+	<update id="updateDataapprove"  parameterType="map" >
+		update hrms.leaves  SET leavestatus=1,approved_date=#{p.current_timestamp} where empid=#{p.empid} 
+		 
+	</update>
+	 <update id="updateDatareject"  parameterType="map">
+		update hrms.leaves  SET leavestatus=2,approved_date=#{p.current_timestamp} where empid=#{p.empid} 
+		 
+	</update>
+	   
+	
+	<select id="getById" resultType="map">       
+  SELECT leave_type,leave_nature integer,empid,emergency_number,from_date,to_date,comp_date,
+  no_days,approval_by,reason,comments,leavestatus,approved_date,created_date,created_by,
+  file_name from hrms.leaves WHERE name= #{name} ;     
+	  </select>  
+	  <select id="getByIdviewlogin" resultType="map">       
+ select  distinct concat(first_name, ' ' ,last_name) as name,a.empid,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,i.type ,c.login_time as login_time,c.login_date as login_date,c.logout_time as logout_time from
+	(select  empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details where status=0) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time,created_date from hrms.employee_login_details) c on (a.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from hrms.employee_types_mst) i on (i.id = b.employee_type)
+	where c.login_date=cast(#{p.login_date} as date)
+	  </select> 
+</mapper>	

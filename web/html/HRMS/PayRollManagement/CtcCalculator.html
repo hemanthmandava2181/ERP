@@ -1,0 +1,309 @@
+
+<link rel="stylesheet" type="text/css" href="files/assets/css/style.css">
+<script src="/erp/files/assets/js/erp-scripts/HRMS/general/CtcModule.js"></script>
+<!-- <script
+	src="/erp/files/assets/js/erp-scripts/HRMS/general/letterheader.js"></script> -->
+
+
+<!-- Content Starts Here -->
+<div id="Ctcid" data-ng-controller="CtcController">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Ctc Calculator</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Name <input type="text" class="form-control"
+								placeholder="Enter Calulator name"
+								data-ng-model="data.object.calc_names" />
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Financial Year <select class="form-control"
+								data-ng-model="data.object.financial_year">
+								<option>--Select Year--</option>
+								<option data-ng-repeat="year in years" value="{{year.id}}">{{year.name}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Cader <select class="form-control"
+								data-ng-model="data.object.caderid">
+								<option></option>
+								<option data-ng-repeat="cader in caders"
+									value="{{cader.caderid}}">{{cader.cader_name}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Grade <select class="form-control"
+								data-ng-model="data.object.gradeid">
+								<option></option>
+								<option data-ng-repeat="grade in grades"
+									value="{{grade.gradeid}}">{{grade.grade_name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12 mt-1">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Earnings</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="dt-responsive table-responsive">
+							<table id="order-table"
+								class="table table-hover table-bordered nowrap">
+								<thead class="btn-grd">
+									<tr>
+										<th>Payslip Heads</th>
+										<th>Entity Type</th>
+										<th>Value</th>
+									</tr>
+								</thead>
+								<tbody>    
+									<tr data-ng-repeat="data in Earningdata">
+										<td data-ng-model="data.payslip_id" value="data.payslip_id" >{{data.name}}</td>
+										<td><select data-ng-model="data.entity_type">
+												<option value=0>Fixed</option>
+												<option value=1>Percentage</option>
+												<option value=2>others</option>
+										</select></td>
+										<td><input type="text" class="form-control"
+											placeholder="Enter Value" data-ng-model="data.value"
+											data-ng-blur="savedetails(data);"></td>
+
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12 mt-1">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Deductions</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="dt-responsive table-responsive">
+							<table id="order-table"
+								class="table table-hover table-bordered nowrap">
+								<thead class="btn-grd">
+									<tr>
+										<th>Payslip Heads</th>
+										<th>Entity Type</th>
+										<th>Value</th>
+									</tr>
+								</thead>
+								<tbody>  
+									<tr data-ng-repeat="letterhead in Deductiondata">    
+										<td data-ng-model="letterhead.payslip_id"  value="letterhead.payslip_id">{{letterhead.name}}
+										</td>
+										<td><select data-ng-model="letterhead.entity_type">   
+												<option value=0>Fixed</option>
+												<option value=1>Percentage</option>
+												<option value=2>others</option>
+										</select></td>
+										<td><input type="text" class="form-control"
+											placeholder="Enter Value" data-ng-model="letterhead.value"
+											data-ng-blur="saveDeductiondetails(letterhead);"></td>
+
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>         
+
+
+
+	<div class="row">
+		<!--  saveCalcdetails(data.object); -->  
+		<div class="col-md-12 mt-4 text-center">
+			<button class="btn btn-grd-primary hor-grd text-center"
+				data-ng-click="savedata(data.object); saveCalcdetails(data.object);">Submit</button>
+		</div>
+	</div>
+	<br>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<h4 class="card-title">Ctc Calculator List</h4>
+			<div class="card">
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="order-table"
+							class="table table-hover table-bordered nowrap">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th>Name</th>
+									<th>Financial Year</th>
+									<th>Cader</th>
+									<th>Grade</th>
+									<th>View</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									data-ng-repeat="data in filteredResult =(regdetails | filter:search)">
+									<td align="right">{{$index+1}}</td>
+
+
+									<!-- <td><input onclick="selectAllGRNLineItems(this)"
+										id="selectAll" type="checkbox"></td> -->
+									<td>{{data.name}}</td>
+									<td>{{data.years}}</td>
+									<td>{{data.cader_name}}</td>
+									<td>{{data.grade_name}}</td>
+
+									<!-- <td><button type="button" class="btn btn-primary"
+								id="removebtn" data-ng-click="getsearch(data.object);">UPDATE</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-primary" id="removebtn"
+								onclick="Andromeda.showCtcview();">View</button></td>
+
+ -->
+
+									<td>
+										<button type="button" id="Register" class="btn btn-primary"
+											data-toggle="modal" data-target="#myModal"
+											data-ng-click="getById(data);">View</button>
+
+
+										<div class="modal fade" id="myModal" role="dialog">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h4 class="modal-title" style="margin-left: 370px;">Ctc
+															Details</h4>
+													</div>
+													<div class="modal-body">
+														<!-- <div class="panel panel-success">
+									<div class="panel-body"> -->
+														<div class="container">
+															<form>    
+																<br> <label class="control-label col-md-2">Name</label>
+																<div class="col-md-4">
+																	<input type="text" class="form-control"
+																		data-ng-model="data3.object.name" data-ng-value=>
+																</div>
+																<label class="control-label col-md-2">Financial
+																	year</label>
+																<div class="col-md-4">     
+																	<input type="text" class="form-control"
+																		data-ng-model="data3.object.financial_year">
+																</div>  
+																<br> <br> <br> <br> <label
+																	class="control-label col-md-2">Cader</label>
+																<div class="col-md-4">
+																	<input type="text" class="form-control"
+																		data-ng-model="data3.object.caderid">
+																</div>
+																<label class="control-label col-md-2">Grade</label>
+																<div class="col-md-4">
+																	<input type="text" class="form-control"
+																		data-ng-model="data3.object.gradeid">
+																</div>
+																<br> <br> <br> <br>
+
+																<div class="panel-heading" style="top: 55px;">Earnings</div>
+																<div class="panel-body">
+																	<table style="width: 50%">
+																		<tr>
+																			<th>Payslip Heads</th>
+																			<th>Entity Type</th>
+																			<th>value</th>
+																		</tr>
+																		
+																		<tr
+																			data-ng-repeat="data in userdetails1">
+																			<td>{{data.payslip_head}}</td>
+																			<td>{{data.entity}}</td>
+																			<td>{{data.entity_value}}</td>
+																		</tr>
+
+																	</table>
+
+																	<br> <br> <br> <br> <br> <br>
+
+
+																	<div class="panel-heading"
+																		style="margin-left: 56%; margin-top: -33%;">Deductions</div>
+																	<div class="panel-body">
+																		<table style="width: 50%; margin-left: 56%">
+																			<tr>
+																				<th>Payslip Heads</th>
+																				<th>Entity Type</th>
+																				<th>value</th>
+																			</tr>
+																			<tr
+																				data-ng-repeat="userdata in deductiondetails">
+																				<td>{{userdata.paysliphead}}</td>
+																				<td>{{userdata.entitytype}}</td>
+																				<td>{{userdata.entityvalue}}</td>
+																			</tr>
+																		</table>
+																	</div>
+																</div>
+
+															</form>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-warning"
+															style="margin-right: 70px; width: 100px"
+															data-dismiss="modal">Close</button>
+													</div>
+
+												</div>
+											</div>
+										</div>
+
+
+
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+<!-- for two tables -->
+<script>
+	/*      $('#simpletable1').DataTable(); */
+	jQuery(document).ready(function() {
+		$("#add").hide();
+		$("#update").hide();
+		angular.bootstrap(jQuery("#Ctcid"), [ 'CtcModule' ]);
+	});
+	jQuery("#register").click(function() {
+		$("#update").hide();
+		$("#add").show();
+	});
+	jQuery(document).on('click', "#editData", function() {
+		$("#update").show();
+		$("#add").hide();
+	});
+</script>
+

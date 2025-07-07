@@ -1,0 +1,125 @@
+
+
+ <script
+	src="/erp/files/assets/js/erp-scripts/Assets/pogrn.js"></script>
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+<div id="pogrnId" data-ng-controller="POGrnController">	
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>PO GRN</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Procurements</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Asset Management</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">PO GRN</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Purchase Order vs GRN Report</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-xl-2 m-b-30">Purchase Order
+                                                                <label class="col-sm-3 col-form-label"></label>
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                <select name="select" class="form-control" data-ng-model="data.object.po_id">
+	  
+	   <option data-ng-repeat="detail in details" value="{{detail.purchaseorder_id}}">{{detail.purchaseorder_id}}</option>
+	  </select> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                        <button class="btn btn-primary" data-ng-click="getByIdpurchaseorderReport(data.purchaseorder_id);">Submit</button>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                                <div class="card-header"></div>
+                                                <div class="card-body">
+                                                    <div class="dt-responsive table-responsive">
+                                                        <table class="table table-hover table-bordered" id="simpletable">
+                                                            <thead class="btn-grd-primary">
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>GRN #</th>
+                                                                    <th>Amount</th>
+                                                                    <th>View</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                               <tr data-ng-repeat="userdata in filteredResult =(pogrndetails | filter:search)">   
+        <td>{{$index+1}}</td> 
+		<td>{{userdata.grn_id}}</td>  
+		<td>{{userdata.amount}}</td>
+                                                                    <td><button><i class="ti-eye "></i></button></td>
+
+                                                                </tr>
+                                                               
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>    
+                                    </div>
+                               
+
+   
+    <!-- Data Table -->
+    <script src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+         
+    <script>
+        $('#simpletable1').DataTable();   
+    </script>       
+ <script>
+	jQuery(document).ready(function() {
+		angular.bootstrap(jQuery("#pogrnId"), [ 'POGrn' ]);
+	});	
+</script>
+  

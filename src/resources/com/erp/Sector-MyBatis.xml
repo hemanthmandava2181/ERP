@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Sector">
+
+	<insert id="Insert" parameterType="map">
+		insert into	procurements.createsector_mst(sector_id,sector_name,status)
+		values(#{p.sector_id},#{p.sector_name},#{p.status});
+	</insert>
+	
+
+	 <select id="getAll" resultType="Sector">
+		SELECT sector_id,sector_name,created_date,status from procurements.createsector_mst;
+	  </select> 
+	  <delete id="deleteData" parameterType="java.lang.String">
+		delete from procurements.createsector_mst where sector_name=#{p.sector_name};    
+	</delete>   
+	    
+	<update id="updateData"  parameterType="map">
+		update procurements.createsector_mst SET sector_id=#{p.sector_id},status=#{p.status} WHERE sector_name=#{p.sector_name};
+	</update>
+	    <select id="getById" resultType="Sector">   
+		SELECT sector_id,created_date,status  from procurements.createsector_mst WHERE sector_name=#{p.sector_name};
+	  </select>
+	  </mapper>

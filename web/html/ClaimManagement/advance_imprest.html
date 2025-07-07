@@ -1,0 +1,139 @@
+<script src="/erp/files/assets/js/erp-scripts/Claimmanagement/advanceorimprestform.js"></script>
+	
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="advanceorimprestformId" data-ng-controller="advanceorimprestformController">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Advance Form</h5>
+					</div>
+					<div class="page-header-breadcrumb">     
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i class="ti-home"></i></a></li>
+							<li class="breadcrumb-item"><a href="#!"></a>Claim Management</li>
+							<li class="breadcrumb-item"><a href="#!"></a>My Claims</li>
+							<li class="breadcrumb-item"><a href="#!"></a>Advance Form</li>
+						</ul>
+					</div>
+				</div>
+			</div>   
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<div style="margin-top: 35px;"
+						class="panel panel-heading media mar_t2 ">
+						<div class="media-left ">
+							<img height="81 " width="81 " style="border: 2px solid #ccc;"
+								class="media-object img-circle " alt=" "
+								src="/files/assets/images/default_Muser.png ">
+						</div>
+						<div class="media-body ">
+							<h5 style="margin: 0; padding: 0; font-weight: 400;">Admin</h5>
+							<small>Emp.ID : AO0116397 </small><br>
+							<small>Designation : Administrative Officer </small><br>
+							<small>Work Location : APSSDC Head Office </small><br>
+						</div>
+					</div>   
+				</div>
+			</div>
+		</div>
+	</div>
+   
+   <div class = "row">
+	   	<div class = "col-sm-12">
+		   	<div class = "card">
+		   		<div class = "card-body">
+		   			<div class = "row">
+		   				<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+			   			<label class = "font-weight-bold">Project</label>    
+						<select class = "form-control" data-ng-model = "data.object.project">
+							<option data-ng-repeat = "project in projects" value = "{{project.project}}">{{project.project_name}}</option>
+						</select>
+				   		</div>
+				   		<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+				   			<label class = "font-weight-bold">Purpose Of Request</label>
+							<select class = "form-control" data-ng-model = "data.object.purpose">
+								<option value = "1">Travel Advance</option>
+								<option value = "2">Others</option>
+							</select>  
+				   		</div>
+				   		<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+				   			<label class = "font-weight-bold">Financial Year</label>
+				   			<select class = "form-control" data-ng-model = "data.object.financialyear">
+								<option data-ng-repeat="year in years" value="{{year.yearid}}">{{year.years}}</option>
+							</select> 
+				   		</div>
+		   			</div>   
+		   			<div class = "row">   
+				   		<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+				   			<label class = "font-weight-bold">Amount</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.amount" placeholder = "Enter Amount" />
+				   		</div>
+		   				<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+				   			<label class = "font-weight-bold">From Date</label>
+							<input type = "date" data-ng-model = "data.object.from_date" id = "fromdate" class = "form-control" />
+				   		</div>
+				   		<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+				   			<label class= "font-weight-bold">To Date</label>
+							<input type = "date" class = "form-control" data-ng-model = "data.object.to_date" id = "todate" /> 
+				   		</div>     
+		   			</div>   
+		   			<div class = "row">
+				   		<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+				   			<label class = "font-weight-bold">Description</label>
+							<textarea type = "text" class = "form-control" data-ng-model = "data.object.description" placeholder = "description"></textarea>
+				   		</div>
+		   				<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+				   			<label class = "font-weight-bold">Attachment</label>
+							<input type = "file" data-ng-model = "data.object.file" onchange = "angular.element(this).scope().uploadFiles(this)" multiple = "multiple" class = "form-control" />
+				   		</div>
+		   			</div>
+		   			<div class="row">
+						<div class="col-sm-12 mt-1 text-center">
+							<button class="btn btn-grd-primary hor-grd" data-ng-click = "submitclaimadvance(data.object);">Submit</button>
+						</div>
+					</div>   
+		   		</div>
+		   	</div>	   		
+	   	</div>
+	</div>	
+</div>
+
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+<script>
+	jQuery(document).ready(function() 
+		{
+			angular.bootstrap(jQuery("#advanceorimprestformId"),[ 'advanceorimprestform' ]);
+		});
+</script>

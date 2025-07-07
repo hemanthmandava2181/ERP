@@ -1,0 +1,209 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/HRReports/cfmsreport.js"></script> 
+	<link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+           
+<div id="CFMSDIV" data-ng-controller="CFMSController">
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>CFMS Reports</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home">HRMS</i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">HR Reports</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">CFMS</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">CFMS Reports</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">CFMS Reports</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-1">
+                                                                <label>Financial Year<b class="text-danger">*</b></label></div>
+                                                            <div class="col-md-2">
+                                                            	<select class="form-control"
+								data-ng-model="data.object.financial_year">
+								<option></option>
+								<option data-ng-repeat="year in years"
+									value="{{year.id}}">{{year.name}}</option>
+							</select>
+                                                            
+                                                            </div>
+
+                                                            <div class="col-md-1">
+                                                                <label>Month<b class="text-danger">*</b></label></div>
+                                                            <div class="col-md-2"><select class="form-control"
+								data-ng-model="data.object.payroll_month">
+								<option></option>
+								<option data-ng-repeat="month in months"
+									value="{{month.id}}">{{month.name}}</option>
+							</select></div>
+
+                                                            <div class="col-xs-5 col-md-5 text-center">
+                                                                <label>Employee Type<span class="text-danger">*</span></label>&nbsp;&nbsp;
+                                                                <input class="radiobutton" tabindex="3" checked="true" value="0" name="employeeTypeId" type="radio" id="staffs">&nbsp;
+                                                                <label>Staff</label>&nbsp;&nbsp;
+                                                                <input class="radiobutton" tabindex="4" value="1" name="employeeTypeId" type="radio" id="others">
+                                                                <label style="margin-right: 10px; padding-left: 5px;">Others</label>
+                                                                <input class="radiobutton" tabindex="5" value="3" name="employeeTypeId" type="radio" id="deputations">
+                                                                <label>Deputations</label></div>
+
+                                                        </div>
+                                                        
+                                                         <div class="row">
+                                                            <div class="col-md-4">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                  <button class="btn btn-primary" style="margin-bottom: 15px;margin-top: 24px;" id="staffssubmit"  data-ng-click = "getCfmsReport(data.object);">SUBMIT</button>
+                                                                  <button class="btn btn-primary" style="margin-bottom: 15px;margin-top: 24px;" id="otherssubmit" data-ng-click = "getCfmsReportOthers(data.object);">SUBMIT</button>
+                                                                  <button class="btn btn-primary" style="margin-bottom: 15px;margin-top: 24px;"   id="deputationssubmit"data-ng-click = "getCfmsReportDeputations(data.object);">SUBMIT</button>
+                                                            </div>
+                                                            <div class="col-md-4"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">CFMS Reports</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="dt-responsive table-responsive">
+                                                            <table id="order-table" class="table table-striped table-bordered nowrap">
+                                                                <thead class="btn-grd-primary">
+                                                                    <tr>
+                                                                        <th>S.No</th>
+                                                                        <th>Employee Id</th>
+                                                                        <th>Employee Name</th>
+                                                                        <th>Net Salary</th>
+                                                                        <th>Bank Account Number</th>
+                                                                        <th>Bank Name</th>
+                                                                        <th>Branch</th>
+                                                                        <th>PAN Number</th>
+                                                                        <th>Beneficiary</th>
+                                                                        <th>IFSC Code</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr data-ng-repeat="emp in cfmsdetails | filter:search">
+									<td >{{$index+1}}</td>
+									<td >{{emp.empid}}</td>
+									<td >{{emp.name}}</td>
+									<td >{{emp.amount}}</td>
+									<td >{{emp.bank_acno}}</td>
+									<td >{{emp.bank_name}}</td>
+									<td >{{emp.branch}}</td>
+									<td >{{emp.pan_no}}</td>
+									<td >{{emp.cfms_code}}</td>
+									<td >{{emp.ifsc_code}}</td>
+									
+								</tr>                     
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        <script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+      <script>                                             
+		jQuery(document).ready(function() {     
+			$("#otherssubmit").hide();                 
+			$("#deputationssubmit").hide();
+			$("#staffssubmit").show();                 
+			
+	    });
+		jQuery(document).on('click',"#staffs",function(){
+			$("#otherssubmit").hide();                 
+			$("#deputationssubmit").hide();
+			$("#staffssubmit").show();    
+			
+	    });
+		jQuery(document).on('click',"#others",function(){
+			$("#otherssubmit").show();                 
+			$("#deputationssubmit").hide();
+			$("#staffssubmit").hide(); 	
+			
+	    });
+		jQuery(document).on('click',"#deputations",function(){
+			$("#otherssubmit").hide();                 
+			$("#deputationssubmit").show();
+			$("#staffssubmit").hide(); 	
+			
+	    });
+		
+		</script>
+      
+      
+      
+      
+      
+      
+                                        
+<script>
+jQuery(document).ready(function() {
+	angular.bootstrap(jQuery("#CFMSDIV"), [ 'CFMSModule' ]);
+});      
+</script>
+
+
+
+	    
+	    
+	

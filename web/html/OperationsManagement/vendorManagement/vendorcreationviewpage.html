@@ -1,0 +1,387 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/VendorManagement/vendorcreationviewpage.js"></script>
+    <!-- Data Tables -->
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+    
+    
+    <script src="/erp/files/assets/js/erp-scripts/main.js"></script>
+<div id="vendorviewID" data-ng-controller="vendorviewController">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">       
+			<div class="card">
+				<div class="card-block caption-breadcrumb">  
+					<div class="breadcrumb-header">
+						<h5></h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!">Vendor Creation<i
+									class="ti-home"></i>
+				   			</a></li>
+							<li class="breadcrumb-item"><a href="#!"></a>Procurements</li>
+							<li class="breadcrumb-item"><a href="#!"></a>Vendor Management</li>
+							<li class="breadcrumb-item"><a href="#!"></a>Vendor creation view page</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">View Vendor</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-xs-12 col-md-6 col-xl-6 col-lg-6 mt-2">
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Vendor Type :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Vendor Name :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.name}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Mobile No:</span>    
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.mobile}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">  
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Phone No :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.phone}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Email :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.email}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Website :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.web_site}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Address</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.address}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Name of Authorized
+										Representative :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.contact_person_name}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Authorized Person
+										Designation</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.contact_person_designation}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Authorized Person
+										MobileNo:</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.contact_person_mobile}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Authorized Person Email :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.contact_person_mail}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Name Of Registering
+										Authority</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.registering_authority}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Registration NO :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.registration_no}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-12 col-xs-12 col-md-6 col-xl-6 col-lg-6 mt-2">
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Date Of Registration</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.date_of_registration}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Place Of Registration</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.place_of_registration}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">No Of Years Of Experience</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.experience}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Annual TurnOver</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.annual_turnover}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">NSDC Affiliation :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.nsdc_number}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">SSC Affiliation :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.ssc_number}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">PAN No. :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.pan_no}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">TAN No. :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.tan_no}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Service Tax No :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.service_tax}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">GST No :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.gst_no}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">GST Registered Date. :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.gst_reg_date}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">GST Registered State. :</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.service_status}}</span>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1">
+									<span class="font-weight-bold">Nature of Services:</span>
+								</div>
+								<div class="col-md-6 col-xl-6 col-lg-6 col-xs-12 col-sm-12 mt-1"
+									style="border-bottom: 1px solid #247fe9">
+									<span class="font-weight-light">{{data.object.nature_of_service}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">Vendor Bank Details</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label>Bank Account NO :</label> {{data.object.account_no}}
+						</div>
+
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label>IFSC Code :</label>{{data.object.account_no}}
+						</div>
+
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label>Bank Name</label> <select name="select" data-ng-model="data.object.bank_name"
+								class="form-control">
+								<option value="opt1"></option>
+								<option value="opt2">Type 2</option>
+							</select>
+						</div>
+
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label>Branch</label> <select name="select" data-ng-model="data.object.branch" class="form-control">
+								<option value="opt1"></option>
+								<option value="opt2">Type 2</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">Document Information</div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table class="table table-hover table-bordered" id="simpletable">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th>Document Name</th>
+									<th>Document Type</th>
+									<th>Description</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>   
+								<tr>
+									<td>1</td>
+									<td>756010294090</td>
+									<td>1,32,284</td>
+									<td>Salary For the Month of March 2019</td>
+									<td><button class="btn btn-grd-success ver-grd">Download</button></td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>756010294090</td>
+									<td>1,32,284</td>
+									<td>Salary For the Month of March 2019</td>
+									<td><button class="btn btn-grd-success ver-grd">DownLoad</button></td>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Data Tables -->
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+<script>
+
+jQuery(document).ready(function() {
+			
+			angular.bootstrap(jQuery("#vendorviewID"), [ 'Vendorcreationviewpage' ]);
+		});
+</script>

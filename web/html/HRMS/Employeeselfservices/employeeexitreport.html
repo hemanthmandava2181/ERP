@@ -1,0 +1,215 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/EmployeeSelfServices/exitemployeereport.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="exitemployeesId" data-ng-controller="ExitReportController">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Exit Employees Reports</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Employee Self
+									Services</a></li>
+							<li class="breadcrumb-item"><a href="#!">e-Exit</a></li>
+							<li class="breadcrumb-item"><a href="#!">Exit Employees
+									Reports</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header btn-grd-primary">
+					<h6 class="card-title">Exit Employees Report</h6>
+				</div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="simpletable"
+							class="table table-hover table-bordered nowrap">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th>Employee</th>
+									<th>Employee ID</th>
+									<th>Designation</th>
+									<th>Resignation Date</th>
+									<th>Relieving Date</th>
+									<th>Submission Date</th>
+									<th>Status</th>
+									<!-- <th>Action</th> -->
+								</tr>
+							</thead>
+							<tbody>
+
+
+								<tr data-ng-repeat="data in exitemployeesdata">
+									<td>{{$index+1}}</td>
+									<td>{{data.employeename}}</td>
+									<td>{{data.empid}}</td>
+									<td>{{data.designation_name}}</td>
+									<td>{{data.resignation_date}}</td>
+									<td>{{data.relieving_date}}</td>
+									<td>{{data.created_date|date:'dd:mm:yyyy'}}</td>
+									<td>{{data.name}}</td>
+									<!-- <td>
+												<button class="btn  ver-grd waves-effect"
+													data-toggle="modal" data-target="#large-Modal"
+													data-ng-click="getByIdemployeeexit(data.empid);">Action
+												
+												</button>
+											</td> -->
+
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- modal -->
+	<div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-primary">Update</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-primary" style="border-color: #4099ff;">
+								<div class="panel-body p-3">
+									<div class="row">
+
+
+										<div
+											class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+											<div class="form-group">
+												<label class="text-dark">Resignation
+													Date&nbsp;&nbsp;<span class="text-danger">*</span>
+												</label> <input class="form-control" type="date"
+													data-ng-model="data.object.resignation_date" disabled />
+											</div>
+										</div>
+										<div
+											class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+											<div class="form-group">
+												<label class="text-dark">Actual Notice Period(Days)</label>
+												<input type="text" class="form-control"
+													data-ng-model="data.object.notice_period" disabled>
+											</div>
+										</div>
+										<div
+											class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+											<div class="form-group">
+												<label class="text-dark">Relieving Date</label> <input
+													class="form-control" type="date"
+													data-ng-model="data.object.relieving_date" disabled />
+											</div>
+										</div>
+										<div
+											class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+											<div class="form-group">
+												<label class="text-dark">Desired Notice Period
+													(Days)&nbsp;&nbsp;<span class="text-danger">*</span>
+												</label> <input type="number" class="form-control"
+													placeholder="Enter No of Days"
+													data-ng-model="data.object.hr_desired_notice_period"
+													disabled>
+											</div>
+										</div>
+										<div
+											class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xs-12 mt-1">
+											<div class="form-group">
+												<label class="text-dark">Reason&nbsp;&nbsp;<span
+													class="text-danger">*</span></label>
+												<textarea class="form-control"
+													data-ng-model="data.object.reason" rows="2" disabled></textarea>
+											</div>
+										</div>
+
+										<div
+											class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xs-12 mt-1">
+											<div class="form-group">
+												<label class="text-dark">Comments&nbsp;&nbsp;<span
+													class="text-danger">*</span></label>
+												<textarea class="form-control"
+													data-ng-model="data.object.reason" rows="2"></textarea>
+											</div>
+										</div>
+
+
+
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default waves-effect"
+							data-dismiss="modal">Close</button>
+						<button type="button"
+							class="btn btn-primary waves-effect waves-light"
+							data-ng-click="updateData(data.object)">Update</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+jQuery(document).ready(function() {
+	
+	 angular.bootstrap(jQuery("#exitemployeesId"), [ 'exitreportModule' ]); 
+});
+
+	</script>

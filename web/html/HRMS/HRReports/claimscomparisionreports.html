@@ -1,0 +1,172 @@
+<script src="/erp/scripts/general/reports/claimscomparisionreport.js"></script>
+<!-- BreadCrumb Start -->
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-block caption-breadcrumb">
+				<div class="breadcrumb-header">
+					<h5>Claims Comparision Report</h5>
+				</div>
+				<div class="page-header-breadcrumb">
+					<ul class="breadcrumb-title">
+						<li class="breadcrumb-item"><a href="#!"> <i
+								class="ti-home">HRMS</i>
+						</a></li>
+						<li class="breadcrumb-item"><a href="#!">HR Reports</a></li>
+						<li class="breadcrumb-item"><a href="#!">Claims
+								Comparision Reports</a></li>
+		
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- BreadCrumb End -->
+<div id="claimComparisionDIV"
+	data-ng-controller="ClaimCompareController">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Claims Comparision Report</h6>
+				</div>
+				<div class="card-body">
+
+					<div class="row">
+						<div class="col-sm-4">
+							<label>From Date <span class="text-danger ">*</span></label>
+							<div>
+								<input type="date" id="from" class="form-control"
+									name="fromdate" data-ng-model="data.object.from_date">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<label>To Date <span class="text-danger ">*</span></label>
+							<div>
+								<input type="date" id="to" class="form-control" name="fromdate"
+									data-ng-model="data.object.to_date">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<label>Cadre <span class="text-danger ">*</span></label> <select
+								class="form-control" data-ng-model="data.object.caderid">
+								<option></option>
+								<option data-ng-repeat="cader in caders" value="{{cader.id}}">{{cader.description}}</option>
+							</select>
+						</div>
+						<div class="col-sm-4">
+							<label>Grade</label> <select class="form-control"
+								data-ng-model="data.object.gradeid">
+								<option></option>
+								<option data-ng-repeat="grade in grades" value="{{grade.id}}">{{grade.grade_name}}</option>
+							</select>
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col-md-4"></div>
+						<div class="col-md-4">
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button class="btn btn-primary"
+								style="margin-bottom: 15px; margin-top: 24px;" value="Get"
+								type="Submit" data-ng-click="getclaminscompare(data.object);">Submit</button>
+							>
+						</div>
+						<div class="col-md-4"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Claim Status Report Based on Grade</h6>
+				</div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<div class="row">
+							<div class="col-md-2">From Date:</div>
+							{{data.from_date}}
+							<div class="col-md-3"></div>
+							<div class="col-md-2">To Date:</div>
+							{{to_date}}
+							<div class="col-md-3"></div>
+						</div>
+						<br>
+						<table id="order-table"
+							class="table table-striped table-bordered nowrap">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th>Cader Name</th>
+									<th>Grade Name</th>
+									<th>Claim Advance Amount(₹)</th>
+									<th>Clain Reimbursement Amount(₹)</th>
+									<th>Imprest Advance Amount(₹)</th>
+									<th>Imprest Details Amount(₹)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="emp in allclaimscompare | filter:search">
+									<td>{{$index+1}}</td>
+									<td>{{emp.cader}}</td>
+									<td>{{emp.grade}}</td>
+									<td>{{emp.claimadvance}}</td>
+									<td>{{emp.claimreimbursment}}</td>
+									<td>{{emp.imprestadvance}}</td>
+									<td>{{emp.imprestdetails}}</td>
+
+
+								</tr>
+
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Advance And Reimbursement Amount
+						Summary</h6>
+				</div>
+				<div class="card-body">
+					<div id="line-example"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	
+	
+	<script>
+jQuery(document).ready(function() {
+	
+/* 	$("#dataDiv").show(); */
+	/* $("#dataDiv").hide(); */
+	angular.bootstrap(jQuery("#claimComparisionDIV"), [ 'claimcomparemodule' ]);
+	
+});   
+                 
+	
+  
+            
+</script>
+	
+	
+	

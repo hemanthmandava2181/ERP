@@ -1,0 +1,270 @@
+
+<script
+	src="/erp/files/assets/js/erp-scripts/operationAdmin/location.js"></script>
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+    <div id="locationId" data-ng-controller="locationController">
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Create Location</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Operation Admin Control</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!"></a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Create Location</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4 class="card-title">Create Location</h4>
+                                                <div class="card">
+                                                    <div class="card-header">
+
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            
+
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">Location Name
+                                                                <input class="form-control" type="text" />
+                                                            </div>
+
+                                                            
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">District Name
+                                                                <select name="select" class="form-control">
+                                                                    <option value="opt1">--Select--</option>
+                                                                    <option value="opt2">Type 2</option>
+                                                                </select>
+                                                            </div>
+                                                            
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">Constituency Name
+                                                                <select name="select" class="form-control">
+                                                                    <option value="opt1">--Select--</option>
+                                                                    <option value="opt2">Type 2</option>
+                                                                </select>
+                                                            </div>
+                                                            
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">Mandal Name
+                                                                <select name="select" class="form-control">
+                                                                    <option value="opt1">--Select--</option>
+                                                                    <option value="opt2">Type 2</option>
+                                                                </select>
+                                                            </div>
+                                                          
+
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">Address1
+                                                                <textarea rows="1" cols="5" class="form-control" placeholder="Enter Address1"></textarea>
+                                                            </div>
+                                                           
+
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">Address2
+                                                                <textarea rows="1" cols="5" class="form-control" placeholder="Enter Address2"></textarea>
+                                                            </div>
+                                                           
+
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">PinCode
+                                                                <input class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>     
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                        <button class="btn btn-primary">Submit</button>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h4>Location List</h4>
+                                            <div class="card">
+
+                                                <div class="card-header"></div>
+                                                <div class="card-body">
+                                                    <div class="dt-responsive table-responsive">
+                                                        <table class="table table-hover table-bordered" id="simpletable">
+                                                            <thead class="btn-grd-primary">
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Location Name</th>
+                                                                    <th>District</th>
+                                                                    <th>Constituency</th>
+                                                                    <th>Mandal</th>
+                                                                    <th>Address1</th>
+                                                                    <th>Address2</th>
+                                                                    <th>PinCode</th>
+                                                                    <th>Status</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>Location Name</td>
+                                                                    <td>District</td>
+                                                                    <td>constituency</td>
+                                                                    <td>mandal</td>
+                                                                    <td>address1</td>
+                                                                    <td>address2</td>
+                                                                    <td>pincode</td>
+                                                                    <td>status</td>
+                                                                    <td><button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal"><i class="ti-pencil-alt text-primary"></i></button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Update</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+
+                                                                        
+
+                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Location Name
+                                                                            <input class="form-control" type="text" />
+                                                                        </div>
+
+                                                                       
+                                                                        <div class="col-sm-12 col-xl-3 m-b-30">District Name
+                                                                            <select name="select" class="form-control">
+                                                                                <option value="opt1">--Select--</option>
+                                                                                <option value="opt2">Type 2</option>
+                                                                            </select>
+                                                                        </div>
+                                                                       
+                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Constituency Name
+                                                                            <select name="select" class="form-control">
+                                                                                <option value="opt1">--Select--</option>
+                                                                                <option value="opt2">Type 2</option>
+                                                                            </select>
+                                                                        </div>
+                                                                      
+                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Mandal Name
+                                                                            <select name="select" class="form-control">
+                                                                                <option value="opt1">--Select--</option>
+                                                                                <option value="opt2">Type 2</option>
+                                                                            </select>
+                                                                        </div>
+                                                                       
+
+                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Address1
+                                                                            <textarea rows="1" cols="5" class="form-control" placeholder="Enter Address1"></textarea>
+                                                                        </div>
+                                                                       
+
+                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Address2
+                                                                            <textarea rows="1" cols="5" class="form-control" placeholder="Enter Address2"></textarea>
+                                                                        </div>
+                                                                        
+
+                                                                        <div class="col-sm-12 col-xl-3 m-b-30">PinCode
+                                                                            <input class="form-control" type="text" />
+                                                                        </div>
+                                                                        
+                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Status
+                                                                            <select name="select" class="form-control">
+                                                                                <option value="opt1">--Select--</option>
+                                                                                <option value="opt2">Active</option>
+                                                                                <option value="opt2">In-Active</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                        <button type="button" class="btn btn-primary waves-effect waves-light ">Submit</button>
+                                                                    </div>
+
+
+                                                                    <!--  Modal End -->
+
+
+
+
+
+
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                        
+    <!-- Data Table -->
+    <script src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+      
+
+    <script>
+        $('#simpletable1').DataTable();
+    </script>
+
+<script>
+		jQuery(document).ready(function() { 
+			angular.bootstrap(jQuery("#locationId"), [ 'locationModule' ]);
+		});
+	</script>

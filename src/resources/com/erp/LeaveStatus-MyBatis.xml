@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+
+	<!--getting LeaveStatus-->
+	<select id="getAllLeaves" resultType="UserModel">	
+	select distinct concat(first_name,' ',last_name,' ',middle_name) as employeename,c.from_date,c.to_date,c.created_date,c.leave_type,c.leave_nature,c.comp_date,
+c.no_days,c.approved_date,c.leavestatus,d.type,e.name  from
+	(select * from hrms.employee_personal_details)a
+	inner join
+	(select * from hrms.employee_employment_details )b on a.empid=b.empid inner join
+	
+	 (SELECT empid,from_date,to_date,created_date,leave_type,leave_nature,comp_date,no_days,approved_date,leavestatus from hrms.leaves )c on c.empid=b.empid inner join
+	 (select * from  hrms.leave_types_mst)d on d.id=c.leave_type  inner join
+	 (select * from hrms.request_status_mst)e on e.id=c.leavestatus
+	  where 
+	  a.empid={empid}
+
+	     
+	  </select>  
+	     
+</mapper>	

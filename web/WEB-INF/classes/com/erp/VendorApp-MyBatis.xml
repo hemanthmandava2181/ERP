@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="VendorDataApp">
+
+  
+<select id="getAll" resultType="map">
+		SELECT distinct vendor_id,name,email,phone,contact_person_name,created_date from procurements.vendors;
+	</select>  
+	<select id="getById" resultType="vendorApp">       
+		SELECT vendor_type,name,mobile,  
+		phone,email,web_site,address,contact_person_name,contact_person_designation,contact_person_mobile,contact_person_mail,
+		income_status,service_status,registering_authority,registration_no,date_of_registration,place_of_registration,experience,
+		annual_turnover,nsdc_number,ssc_number,pan_no,tan_no,service_tax,account_no,ifsc,swift,bank_name,branch,gst_no,vendor_id,
+		gst_reg_date,nature_of_service from procurements.vendors                
+		WHERE vendor_id = #{vendor_id} ;        
+	  </select>  
+	         <select id="getNameWiseData" resultType="vendorApp">    
+		SELECT name,email,phone,vendor_id from procurements.vendors where  name=#{name};
+	  </select>
+	  <select id="getIdWiseData" resultType="vendorApp">
+		SELECT name,email,phone,vendor_id from procurements.vendors where  vendor_id=#{vendor_id};
+	  </select>
+	</mapper>            

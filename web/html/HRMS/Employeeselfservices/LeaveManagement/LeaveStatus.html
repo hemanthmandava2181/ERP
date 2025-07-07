@@ -1,0 +1,90 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/leaves/leavestatus.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="leavestatusId" data-ng-controller="LeaveStatusController">
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Leave Status</h6>
+				</div>
+				<div class="card-body">
+
+					<div class="dt-responsive table-responsive">
+						<table id="simpletable"
+							class="table table-hover table-bordered nowrap">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.NO</th>
+									<th>Year</th>
+									<th>Leave Type</th>
+									<th>Leave Nature</th>
+									<th>From Date</th>
+									<th>To Date</th>
+									<th>Comp Off Date</th>
+									<th>No.Of Days</th>
+									<th>Request Raised Date</th>
+									<th>Approved/Rejected Date</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									data-ng-repeat="userdata in filteredResult =(userdetails | filter:search)">
+									<td>{{$index+1}}</td>
+									<td>{{userdata.created_date|date:"yyyy"}}</td>
+									<td>{{userdata.type}}</td>
+									<td>{{userdata.leave_nature}}</td>
+									<td>{{userdata.from_date|date:"dd-mm-yyyy"}}</td>
+									<td>{{userdata.to_date|date:"dd-mm-yyyy"}}</td>
+									<td>{{userdata.comp_date|date:"dd-mm-yyyy"}}</td>
+									<td>{{userdata.no_days}}</td>
+									<td>{{userdata.created_date|date:"dd-mm-yyyy"}}</td>
+									<td>{{userdata.approved_date|date:"dd-mm-yyyy"}}</td>
+									<td>{{userdata.name}}</td>
+									<!--                                        <td><button type="button" class="btn btn-success btn-sm ">Pending</button></td> -->
+								</tr>
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+<script>
+	jQuery(document).ready(function() {
+
+		angular.bootstrap(jQuery("#leavestatusId"), [ 'LeaveStatusModule']);
+
+	});
+</script>

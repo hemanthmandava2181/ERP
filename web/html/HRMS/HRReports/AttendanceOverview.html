@@ -1,0 +1,155 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/HRReports/attendanceoverviewreport.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+<div id="AttendanceDIV"
+	data-ng-controller="AttendanceOverviewReportController">
+
+
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Daily Login Status</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!"></a></li>
+							<li class="breadcrumb-item"><a href="#!"></a></li>
+							<li class="breadcrumb-item"><a href="#!"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+
+	<div id="display">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header bg-primary">
+						<h6 class="card-title">Daily Login Status</h6>
+					</div>
+					<div class="card-body">
+						<div class="row">
+						<div class="row">
+							<div class="col-sm-6">
+								<label>From Date <span class="text-danger ">*</span></label>
+								<div>
+									<input type="date" id="from" class="form-control"
+										name="fromdate" data-ng-model="data.object.from_date">
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<label>To Date <span class="text-danger ">*</span></label>
+								<div>
+									<input type="date" id="to" class="form-control" name="todate"
+										data-ng-model="data.object.to_date">
+								</div>
+							</div>
+						</div>
+							<div class="col-sm-3">
+								<button class="btn btn-primary" style="margin-left: 415px;"
+									value="Submit" type="Submit"
+									data-ng-click="getattendanceoverviewreport(data.object)">SUBMIT</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="order-table"
+							class="table table-striped table-bordered nowrap">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th>Date</th>
+									<th>Login</th>
+									<th>Missed Login</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="emp in Getattendancereport">
+									<td>{{$index+1}}</td>
+									<td>{{emp.Date}}</td>
+									<td>{{emp.login}}</td>
+									<td>{{emp.missedlogin}}</td>
+									<td>	<button class="btn btn-primary" style="margin-left: 415px;"
+									value="Submit" type="Submit"
+									data-ng-click="getloginreport(data.object);getLoginafter11(data.object);getMissedlogin(data.object);
+									getLoginbefore11(data.object);getAllReports(data.object);getLeavesReport(data.object);getDefaultLogins(data.object);"
+									>Details</button></td>
+
+
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+<script>
+jQuery(document).ready(function() {    
+	document.getElementById("mainpage").style.display = "block";
+	document.getElementById("profilepage").style.display = "none";
+
+	angular.bootstrap(jQuery("#AttendanceDIV"), [ 'attendanceoverviewReportModule' ]);
+	
+	$(document).on('click', "#profilepagebtn", function() {
+		document.getElementById("mainpage").style.display = "none";
+		document.getElementById("profilepage").style.display = "block";
+	});
+	
+});   
+                 
+	 
+  
+            
+</script>

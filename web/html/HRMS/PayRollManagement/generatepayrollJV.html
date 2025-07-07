@@ -1,0 +1,762 @@
+<!-- BreadCrumb Start -->
+
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/PayrollManagement/generatepayrolljv.js"></script>
+
+<div id="generatepayJV" data-ng-controller="GenaretePayrollJVController">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">   
+				<div class="card-block caption-breadcrumb">   
+					<div class="breadcrumb-header">
+						<h5>Generate PayRoll</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">   
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">HRMS</a></li>
+							<li class="breadcrumb-item"><a href="#!">PayRoll
+									Management</a></li>
+							<li class="breadcrumb-item"><a href="#!">Payroll JV</a></li>
+						</ul>
+					</div>
+				</div>        
+			</div>   
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+	<!-- Content Start -->
+	<div id="display">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-body">
+
+						<div class="row">
+
+
+							<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+								<div class="form-group">
+									<label>Financial Year</label> <select class="form-control"
+										data-ng-model="data.object.financial_year">
+										<option></option>
+										<option data-ng-repeat="financialyear in financialyears"
+											value="{{financialyear.id}}">{{financialyear.name}}</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+								<div class="form-group">
+									<label>Payroll Month</label><select class="form-control"
+										data-ng-model="data.object.payroll_month">
+
+										<option value="1">January</option>
+										<option value="2">February</option>
+										<option value="3">March</option>
+										<option value="4">April</option>
+										<option value="5">May</option>
+										<option value="6">June</option>
+										<option value="7">July</option>
+										<option value="8">August</option>
+										<option value="9">September</option>
+										<option value="10">October</option>
+										<option value="11">November</option>
+										<option value="12">December</option>
+									</select>
+								</div>
+							</div>
+
+
+							</div>
+
+						<div class="row">
+							<div class="col-md-12 mt-4 text-center">
+								<button class="btn btn-grd-primary hor-grd text-center"
+									data-ng-click="getJVPayrollDetails(data.object);GenerateJVPayroll(data.object);">Submit</button>
+							</div>
+						</div>
+
+
+
+					</div>
+
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+
+	<div id="display1">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card card-body">
+   
+					<div class="row mb-3">
+						<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12">
+
+							 <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+								<div class="form-group">
+							
+									<label>Financial Year:&nbsp;&nbsp;&nbsp;</label> {{payrollDetails2.financial_year}}
+									
+								</div>
+							</div>
+							
+							 <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+								<div class="form-group">
+							
+									<label>Payroll Month:&nbsp;&nbsp;&nbsp;</label> {{payrollDetails.payroll_month}}
+									
+								</div>
+							</div>
+							
+							
+						
+						</div>        
+					</div>
+      
+					<div class="row mt-3">   
+						<div class="col-md-6 col-xl-3">
+							<div class="card bg-c-blue notification-card">
+								<div class="card-block">
+									<div class="row align-items-center">
+										<div class="col-12 notify-cont">
+											<h6 class="card-title">{{payrollDetails.payroll_month}}-{{payrollDetails.financial_year}}</h6>
+											<small><em>Cutoff from {{payrollDetails.from_date | date:"dd-MM-yyyy"}} to {{payrollDetails.to_date | date:"dd-MM-yyyy"}}</em></small>
+									</div>
+								</div>
+							</div>
+						</div>   
+						</div>
+						<div class="col-md-6 col-xl-3">   
+							<div class="card bg-c-green notification-card">
+								<div class="card-block">
+									<div class="row align-items-center">
+										<div class="col-4 notify-icon">
+											<img src="files/assets/images/calender.png" width="36px">
+										</div>
+										<div class="col-8 notify-cont">
+											<h6 class="card-title">
+												<span>Working Days</span>
+											</h6>
+											<strong><em></em>{{payrollDetails1.month_days}}</strong>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+						<div class="col-md-6 col-xl-3">
+							<div class="card bg-c-pink notification-card">
+								<div class="card-block">
+									<div class="row align-items-center">
+										<div class="col-4 notify-icon">
+											<img src="files/assets/images/users.png" width="36px">
+										</div>
+										<div id="all" class="col-8 notify-cont">
+											<h6 class="card-title">
+												<span>No of Employees</span>
+											</h6>
+											<div class="amd-bignumber-value" id="totalEmployees"></div>
+										</div>
+									</div>
+								</div>               
+							</div>        
+						</div>      
+					<!-- 	<div class="col-md-12 col-xl-12 text-right">
+							<img src="files/assets/images/info.png" width="36px" />
+							<div >{{payrollDetails4.financial_year}}</div>
+							<div >{{payrollDetails4.payroll_month}}</div>
+							<div >{{payrollDetails4.from_date}}</div>   
+							<div style="visibility: hidden">{{payrollDetails4.to_date}}</div>
+							<div style="visibility: hidden">{{payrollDetails4.month_days}}</div>
+							<button type="button" id="generate"
+								data-ng-click="GeneratePayroll(payrollDetails4);GeneratePayrollStatus(payrollDetails4)"
+								class="btn btn-info btn-sm waves-effect waves-light">Process
+								PayRoll</button>   
+							<button type="button" id="validate"   
+								data-ng-click="ValidatePayroll(payroll4);"
+								class="btn btn-warning btn-sm waves-effect waves-light">Validate
+								PayRoll</button>   
+							<button type="button" id="approve"
+								data-ng-click="ApprovePayroll(payroll4);"
+								class="btn btn-success btn-sm waves-effect waves-light">Approve Payroll</button>
+							<button type="button" id="reject"
+								data-ng-click="RejectPayroll(payroll4);RejectPayrollStatus(payroll4);"
+								class="btn btn-danger btn-sm waves-effect waves-light">Reject Payroll</button>  
+						</div>    -->                          
+					</div>      
+   
+					<div class="row mt-3">
+						<div class="col-md-3 col-sm-12 col-xl-3 col-xs-12 col-lg-3 mt-1">
+							<ul class="list-group list-group-bordered">
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									<img src="files/assets/images/money-bag.png" width="50px">
+									<h6 class="card-title">
+										<span>Gross Pay</span>
+									</h6> <strong><em>RS.</em>{{payrollDetails5.grosspay | number : fractionSize}}</strong>
+								</li>
+								<li   
+									class="list-group-item d-flex justify-content-between align-items-center">
+									<img src="files/assets/images/money-bag.png" width="50px">
+									<h6 class="card-title">
+										<span>Deductions</span>
+									</h6> <strong><em>RS.</em>{{payrollDetails5.deductions | number : fractionSize}}</strong>
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									<img src="files/assets/images/money-bag.png" width="50px">
+									<h6 class="card-title">
+										<span>Net Pay</span>
+									</h6> <strong><em>RS.</em>{{payrollDetails5.netpay | number : fractionSize}}</strong>
+								</li>
+							</ul>
+						</div>
+						<div class="col-md-4 col-sm-12 col-xl-4 col-xs-12 col-lg-4 mt-1">
+							<ul class="list-group list-group-bordered">
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									New Joiners <span class="badge badge-primary badge-pill">1</span>
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									Stop Salary <span class="badge badge-primary badge-pill">1</span>
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									Relieving Employees <span
+									class="badge badge-primary badge-pill">1</span>
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									Salary Revision <span class="badge badge-primary badge-pill">1</span>
+								</li>    
+							</ul>
+						</div>
+						<div class="col-md-5 col-sm-12 col-xl-5 col-xs-12 col-lg-5 mt-1">
+							<ul class="list-group list-group-bordered">
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									Payroll Inputs
+									<div class="btn-group">
+										<button type="button"
+											class="btn btn-outline-warning btn-sm waves-effect waves-light">Release</button>
+										<button type="button"
+											class="btn btn-outline-danger btn-sm waves-effect waves-light">Hold</button>
+									</div>
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									Employee View Release
+									<div class="btn-group">
+										<button type="button"
+											class="btn btn-outline-warning btn-sm waves-effect waves-light">Release</button>
+										<button type="button"
+											class="btn btn-outline-danger btn-sm waves-effect waves-light">Hold</button>
+									</div>
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									IT Statement Employee View
+									<div class="btn-group">
+										<button type="button"
+											class="btn btn-outline-warning btn-sm waves-effect waves-light">Release</button>
+										<button type="button"
+											class="btn btn-outline-danger btn-sm waves-effect waves-light">Hold</button>
+									</div>
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									Payroll
+									<div class="btn-group">
+										<button type="button"
+											class="btn btn-outline-warning btn-sm waves-effect waves-light">UnLock</button>
+										<button type="button"
+											class="btn btn-outline-danger btn-sm waves-effect waves-light">Lock</button>
+									</div>
+								</li>
+
+							</ul>
+						</div>
+					</div>   
+
+					<div class="row mt-3">
+						<div class="col-md-4 col-sm-12 col-xl-4 col-xs-12 col-lg-4 mt-1">
+							<div class="dt-responsive table-responsive">
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr class="btn-grd-primary">
+											<th colspan="2" class="text-center">
+												<h6>Staff</h6>
+											</th>
+										</tr>
+										<tr>    
+											<th>Staff Regular</th>
+											<th>Amount (₹)</th>
+										</tr>
+									</thead>
+									<tbody>   
+										<tr data-ng-repeat="JVpayroll6 in payrollDetails6">
+											<td>{{JVpayroll6.name}}</td>
+											<td class="text-right"><a href="javascript:void(0)" 
+											data-toggle="modal" data-target="#staff-view-page-modal"
+											data-ng-click="getJVModalData(JVpayroll6)">
+													{{JVpayroll6.amount | number : fractionSize}}</a></td>
+										</tr>
+									
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-12 col-xl-4 col-xs-12 col-lg-4 mt-1">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr class="btn-grd-primary">
+										<th colspan="2" class="text-center">
+											<h6>Others</h6>
+										</th>
+									</tr>
+									<tr>
+										<th class="text-center">Staff Regular</th>
+										<th>Amount (₹)</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="JVpayroll7 in payrollDetails7">
+											<td>{{JVpayroll7.name}}</td>
+											<td class="text-right"><a href="javascript:void(0)" 
+											data-toggle="modal" data-target="#others-view-page-modal"
+											data-ng-click="getJVModalDataOthers(JVpayroll7)"
+											>
+													{{JVpayroll7.amount | number : fractionSize}}</a></td>
+										</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-md-4 col-sm-12 col-xl-4 col-xs-12 col-lg-4 mt-1">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr class="btn-grd-primary">
+										<th colspan="2" class="text-center">
+											<h6>Deputation</h6>
+										</th>
+									</tr>
+									<tr>
+										<th class="text-center">Staff Regular</th>
+										<th>Amount (₹)</th>
+									</tr>
+								</thead>   
+								<tbody>   
+							<tr data-ng-repeat="JVpayroll8 in payrollDetails8">
+											<td>{{JVpayroll8.name}}</td>
+											<td class="text-right"><a href="javascript:void(0)"
+												data-toggle="modal" data-target="#deputation-view-page-modal"
+											data-ng-click="getJVModalDataDeputation(JVpayroll8)">
+													{{JVpayroll8.amount | number : fractionSize}}</a></td>
+										</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-md-4 col-sm-12 col-xl-4 col-xs-12 col-lg-4 mt-1">
+							<ul class="list-group list-group-bordered">
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center active text-center">
+									PayRoll CheckList</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									New Joiners <input type="checkbox">
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									Attendance_Leaves_Lop <input type="checkbox">
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									StopSalary <input type="checkbox">
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									SalaryRevision <input type="checkbox">
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									Relieved_Employees <input type="checkbox">
+								</li>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									Arrears <input type="checkbox">
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt-3">
+			<div class="col-sm-12 col-xs-12 col-md-6 col-xl-6 col-lg-6 mt-1">
+				<div class="card">
+					<div class="card-header bg-primary">
+						<h6 class="card-title">Arrears</h6>
+					</div>
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr>
+										<th>Arrears</th>
+										<th>Amount (₹)</th>
+									</tr>
+									<tr class="bg-c-lite-green text-white">
+										<th class="text-center" colspan="2"><strong>Staff</strong></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="JVpayroll9 in payrollDetails9">
+										<td>{{JVpayroll9.name}}</td>
+										<td class="text-right"><a href="javascript:void(0)">
+												{{JVpayroll9.amount | number : fractionSize}}</a></td>
+									</tr>
+									
+								</tbody>
+								<thead class="bg-c-lite-green text-white">
+									<tr>
+										<td class="text-center" colspan="2"><strong>Others</strong></td>
+									</tr>
+								</thead>
+								<tbody> 
+									<tr data-ng-repeat="JVpayroll10 in payrollDetails10">
+										<td>{{JVpayroll10.name}}</td>
+										<td class="text-right"><a href="javascript:void(0)">
+												{{JVpayroll10.amount | number : fractionSize}}</a></td>
+									</tr>
+								</tbody>
+								<thead class="bg-c-lite-green text-white">
+									<tr>
+										<td class="text-center" colspan="2"><strong>Deputation</strong></td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="JVpayroll11 in payrollDetails11">
+										<td>{{JVpayroll11.name}}</td>
+										<td class="text-right"><a href="javascript:void(0)">
+												{{JVpayroll11.amount | number : fractionSize}}</a></td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-xs-12 col-md-6 col-xl-6 col-lg-6 mt-1">
+				<div class="card">
+					<div class="card-header bg-primary">
+						<h6 class="card-title">Payment Summary (Regular+Arrears)</h6>
+					</div>   
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr>
+										<th>Payment Summary (Regular+Arrears)</th>
+										<th>Amount (₹)</th>
+									</tr>
+								</thead>
+						<tbody>
+									<tr data-ng-repeat="JVpayroll12 in payrollDetails12">
+										<td>{{JVpayroll12.name}}</td>
+										<td class="text-right"><a href="javascript:void(0)"
+											data-toggle="modal" data-target="#paymentsummary-view-page-modal"
+											data-ng-click="getJVModalDataPaymentSummary(JVpayroll12)">
+												{{JVpayroll12.amount | number : fractionSize}}</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!--Modals  -->
+		<div class="modal fade" id="staff-view-page-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-primary">Employee Salary By {{payrollDetails6.name}}-{{payrollDetails6.financial_year}}-{{payrollDetails6.payroll_month}} </h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr>
+										<th>S.No</th>
+										<th>Emploee ID</th>
+										<th>Employee Name</th>
+										<th>Amount(₹)</th>
+									</tr>
+								</thead>
+						<tbody>
+									<tr data-ng-repeat="SingleJVpayrollModalData in JVpayrollModalData">
+										<td>{{$index+1}}</td>
+										<td>{{SingleJVpayrollModalData.empid}}</td>
+										<td>{{SingleJVpayrollModalData.empname}}</td>
+										<td class="text-right">{{SingleJVpayrollModalData.amount | number : fractionSize}}</td>
+									</tr>
+									<tr style="background-color: #f5f5f5; color: #333;">
+									<td class="text-center" colspan="3">Total</td>
+									<td align="right"><b>{{ JVpayrollModalData |
+									sumOfValue:'amount'}}</b></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="modal fade" id="others-view-page-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-primary">Employee Salary By {{payrollDetails7.name}}-{{payrollDetails7.financial_year}}-{{payrollDetails7.payroll_month}} </h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr>
+										<th>S.No</th>
+										<th>Emploee ID</th>
+										<th>Employee Name</th>
+										<th>Amount(₹)</th>
+										<th></th>
+									</tr>
+								</thead>
+						<tbody>
+									<tr data-ng-repeat="SingleJVpayrollModal in JVpayrollModalDataOthers">
+										<td>{{$index+1}}</td>
+										<td>{{SingleJVpayrollModal.empid}}</td>
+										<td>{{SingleJVpayrollModal.empname}}</td>
+										<td class="text-right">{{SingleJVpayrollModal.amount | number : fractionSize}}</td>
+										<td></td>
+									</tr>
+										<tr style="background-color: #f5f5f5; color: #333;">
+									<td class="text-center" colspan="3">Total</td>
+									<td align="right"><b>{{ JVpayrollModalDataOthers |
+									sumOfValue:'amount'}}</b></td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="deputation-view-page-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-primary">Employee Salary By {{payrollDetails7.name}}-{{payrollDetails7.financial_year}}-{{payrollDetails7.payroll_month}} </h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr>
+										<th>S.No</th>
+										<th>Emploee ID</th>
+										<th>Employee Name</th>
+										<th>Amount(₹)</th>
+										
+									</tr>
+								</thead>
+						<tbody>
+									<tr data-ng-repeat="SingleJV in JVpayrollModalDataDeputation">
+										<td>{{$index+1}}</td>
+										<td>{{SingleJV.empid}}</td>
+										<td>{{SingleJV.empname}}</td>
+										<td class="text-right">{{SingleJV.amount | number : fractionSize}}</td>
+										
+									</tr>
+									<tr style="background-color: #f5f5f5; color: #333;">
+									<td class="text-center" colspan="3">Total</td>
+									<td align="right"><b>{{ JVpayrollModalDataDeputation |
+									sumOfValue:'amount'}}</b></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="modal fade" id="paymentsummary-view-page-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-primary">Employee Salary By {{payrollDetails7.name}}-{{payrollDetails7.financial_year}}-{{payrollDetails7.payroll_month}} </h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr>
+										<th>S.No</th>
+										<th>Emploee ID</th>
+										<th>Employee Name</th>
+										<th>Amount(₹)</th>
+										
+									</tr>
+								</thead>
+						<tbody>
+									<tr data-ng-repeat="SingleJVpayroll in JVpayrollModalDataPaymentSummary">
+										<td>{{$index+1}}</td>
+										<td>{{SingleJVpayroll.empid}}</td>
+										<td>{{SingleJVpayroll.empname}}</td>
+										<td class="text-right">{{SingleJVpayroll.amount | number : fractionSize}}</td>
+										
+									</tr>
+									
+									<tr style="background-color: #f5f5f5; color: #333;">
+									<td class="text-center" colspan="3">Total</td>
+									<td align="right"><b>{{ JVpayrollModalDataPaymentSummary |
+									sumOfValue:'amount'}}</b></td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- END Modals -->
+</div>   
+      
+      
+   
+<script>   
+	jQuery(document).ready(
+			function() {
+
+				$("#display").show();
+				$("#display1").hide();
+				$("#validate").hide();
+				fillEmpCount();
+
+				const monthNames = [ "January", "February", "March", "April",
+						"May", "June", "July", "August", "September",
+						"October", "November", "December" ];
+				var qntYears = 4;
+				var selectYear = $("#year");
+				var selectMonth = $("#month");
+				var selectDay = $("#day");
+				var currentYear = new Date().getFullYear();
+
+				for (var y = 0; y < qntYears; y++) {
+					let date = new Date(currentYear);
+					var yearElem = document.createElement("option");
+					yearElem.value = currentYear
+					yearElem.textContent = currentYear;
+					selectYear.append(yearElem);
+					currentYear--;
+				}
+
+				for (var m = 0; m < 12; m++) {
+					let monthNum = new Date(2018, m).getMonth()
+					let month = monthNames[monthNum];
+					var monthElem = document.createElement("option");
+					monthElem.value = monthNum;
+					monthElem.textContent = month;
+					selectMonth.append(monthElem);
+				}
+
+				var d = new Date();
+				var month = d.getMonth();
+				var year = d.getFullYear();
+				var day = d.getDate();
+
+				selectYear.val(year);
+				selectYear.on("change", AdjustDays);
+				selectMonth.val(month);
+				selectMonth.on("change", AdjustDays);
+
+				AdjustDays();
+				selectDay.val(day)
+   
+				function AdjustDays() {
+					var year = selectYear.val();   
+					var month = parseInt(selectMonth.val()) + 1;
+					selectDay.empty();   
+   
+					//get the last day, so the number of days in that month
+					var days = new Date(year, month, 0).getDate();
+
+					//lets create the days of that month
+					for (var d = 1; d <= days; d++) {
+						var dayElem = document.createElement("option");
+						dayElem.value = d;
+						dayElem.textContent = d;
+						selectDay.append(dayElem);   
+					}      
+				}
+				  
+         
+				angular
+						.bootstrap(jQuery("#generatepayJV"),
+								[ 'generatepayrollJV' ]);
+			});
+</script>	
+
+

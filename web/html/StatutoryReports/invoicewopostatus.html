@@ -1,0 +1,2850 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/finance/satutaryreports/statusReportModule.js"></script>
+
+<!-- Data Tables -->
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+
+<div class="card-body" id="invoicewopoId"
+	data-ng-controller="invoicewopocontroller">   
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Invoice/W.O/P.O Status Report</h5>   
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Finance &
+									Accounts</a></li>
+							<li class="breadcrumb-item"><a href="#!">Accounts
+									Payable</a></li>
+							<li class="breadcrumb-item"><a href="#!">Invoice/W.O/P.O
+									Status Report</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<!-- Content Starts Here -->
+	<!-- <h5>GRN View</h5>
+                                        <h8>&nbsp;</h8> -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Status Report</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<label class="font-weight-bold"> Type :</label> <select
+								class="form-control" data-ng-model="data.object.type">
+								<option>select</option>
+								<option value="invoices">Invoices</option>
+								<option value="workorder">Work Order</option>
+								<option value="purchase orders">Purchase Orders</option>
+								<option value="MOU">MOU</option>
+								<option value="note file">Note File</option>
+							</select>
+
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12"
+							data-ng-show="data.object.type != 'note file'">
+							<label class="font-weight-bold"> Vendor :</label> <select
+								class="form-control form-control-primary"
+								data-ng-model="data.object.vendor_id"
+								data-ng-change="getInvoiceDetails(data.object);getWorkorderDetails(data.object);
+                                 getPurchaseorderDetails(data.object);getMouDetails(data.object);">
+								<option data-ng-repeat="vendor in vendors" value="{{vendor.vendor_id}}">{{vendor.name}}</option>
+							</select>     
+						</div>               
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12"
+							data-ng-show="data.object.type == 'invoices'">
+							<label class="font-weight-bold"> Invoices</label> <select
+								class="form-control form-control-primary"
+								data-ng-model="data.object.invoiceid">
+								<option data-ng-repeat="invoice in invoices"
+									value="{{invoice.invoiceid}}">{{invoice.voucher_id}}</option>
+							</select>     
+						</div>   
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12"
+							data-ng-show="data.object.type == 'workorder'">
+							<label class="font-weight-bold">Work Order</label> <select
+								class="form-control form-control-primary"
+								data-ng-model="data.object.workorderid">
+								<option data-ng-repeat="workorder in workorders"
+									value="{{workorder.workorderid}}">{{workorder.workorder_id}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12"
+							data-ng-show="data.object.type == 'purchase orders'">
+							<label class="font-weight-bold">Purchase Orders</label> <select
+								class="form-control form-control-primary"
+								data-ng-model="data.object.purchaseorderid">
+								<option data-ng-repeat="purchaseorder in purchaseorders"
+									value="{{purchaseorder.purchaseorderid}}">{{purchaseorder.purchaseorder_id}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12"
+							data-ng-show="data.object.type == 'MOU'">
+							<label class="font-weight-bold">MOU</label> <select
+								class="form-control form-control-primary"
+								data-ng-model="data.object.mouid">
+								<option data-ng-repeat="mou in mous" value="{{mou.mouid}}">{{mou.mou_id}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12"
+							data-ng-show="data.object.type == 'note file'">
+							<label class="font-weight-bold">Note File</label> <select
+								class="form-control form-control-primary"
+								data-ng-model="data.object.notefileid">
+								<option data-ng-repeat="notefile in notefiles"
+									value="{{notefile.notefileid}}">{{notefile.note_generated_id}}</option>
+							</select>
+						</div>   
+					</div>
+				</div>  
+			</div>   
+			<div class="row">
+				<div class="col-sm-12 mt-1 text-center"
+					data-ng-show="data.object.type == 'invoices'">
+					<button class="btn btn-grd-success ver-grd" type="submit"
+						id="submit1" data-ng-click="getInvoiceStatusReport(data.object);">Submit</button>
+
+				</div>
+				<div class="col-sm-12 mt-1 text-center"
+					data-ng-show="data.object.type == 'workorder'">
+					<button class="btn btn-grd-success ver-grd" type="submit"
+						id="submit2"
+						data-ng-click="getWorkorderStatusReport(data.object);">Submit</button>
+
+				</div>
+				<div class="col-sm-12 mt-1 text-center"  
+					data-ng-show="data.object.type == 'purchase orders'">
+					<button class="btn btn-grd-success ver-grd" type="submit"
+						id="submit3"
+						data-ng-click="getPurchaseorderStatusReport(data.object);">Submit</button>
+
+				</div>
+				<div class="col-sm-12 mt-1 text-center"
+					data-ng-show="data.object.type == 'MOU'">
+					<button class="btn btn-grd-success ver-grd" type="submit"
+						id="submit4" data-ng-click="getMOUStatusReport(data.object);">Submit</button>
+
+				</div>
+				<div class="col-sm-12 mt-1 text-center"
+					data-ng-show="data.object.type == 'note file'">
+					<button class="btn btn-grd-success ver-grd" type="submit"
+						id="submit5" data-ng-click="">Submit</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<h5>&nbsp;</h5>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card" id="invoice">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Invoice Status Report</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-xs-12 col-md-5 col-xl-5 col-lg-5 mt-2">
+							<canvas id="pieChart1" width="400" height="400"></canvas>
+						</div>
+						<div class="col-sm-12 col-xs-12 col-md-7 col-xl-7 col-lg-7 mt-2">
+							<div data-ng-if="!invoicecount.length">
+								<button type="button" id="invoice"
+									class="btn btn-primary btn-block waves-effect waves-light"
+									data-toggle="tooltip" data-placement="top" title=""
+									data-original-title=".btn-primary.badge">
+
+									<span class="float-left">Total Invoices :</span> <span
+										class="badge float-right">0</span>
+								</button>
+							</div>
+							<div data-ng-repeat="count in invoicecount">
+								<button type="button" id="sub" value="Register"
+									class="btn btn-md btn-primary"
+									data-ng-click="getInvoiceTotalData(count);"
+									style="margin-left: 5%; width: 70%">Total Invoices:
+									{{count.invoicecount}}</button>
+								<br> <br>
+							</div>
+							<div data-ng-if="!reportingcount.length">
+								<button type="button"
+									class="btn btn-primary btn-block waves-effect waves-light"
+									data-toggle="tooltip" data-placement="top" title=""
+									data-original-title=".btn-primary.badge">
+									<span class="float-left">Pending with Reporting Manager
+										:</span> <span class="badge float-right">1</span>
+								</button>
+							</div>
+							<div data-ng-repeat="reporting in reportingcount">
+								<button type="button" id="sub" value="Register"
+									class="btn btn-md btn-primary"
+									data-ng-click="getTotalReportingData(reporting);"
+									style="margin-left: 5%; width: 70%">Pending With
+									Reporting Manager: {{reporting.reportingcount}}</button>
+								<br> <br>
+							</div>
+
+							<div data-ng-if="!cfocount.length">
+								<button type="button"
+									class="btn btn-primary btn-block waves-effect waves-light"
+									data-toggle="tooltip" data-placement="top" title=""
+									data-original-title=".btn-primary.badge">
+									<span class="float-left">Pending with CFO :</span> <span
+										class="badge float-right">0</span>
+								</button>
+							</div>
+							<div data-ng-repeat="cfo in cfocount">
+								<button type="button" id="sub" value="Register"
+									class="btn btn-md btn-primary"
+									data-ng-click="getTotalPendingData(cfo);"
+									style="margin-left: 5%; width: 70%">Pending With CFO:
+									{{cfo.cfocount}}</button>
+								<br> <br>
+							</div>
+
+							<div data-ng-if="!financecount.length">
+								<button type="button"
+									class="btn btn-primary btn-block waves-effect waves-light"
+									id="sub" value="Register" data-toggle="tooltip"
+									data-placement="top" title=""
+									data-original-title=".btn-primary.badge">
+									<span class="float-left">Pending with Finance :</span> <span
+										class="badge float-right">0</span>
+								</button>
+							</div>
+							<div data-ng-repeat="finance in financecount">
+								<button type="button" id="sub" value="Register"
+									class="btn btn-md btn-primary"
+									data-ng-click="getTotalFinanceData(finance);"
+									style="margin-left: 5%; width: 70%">Pending With
+									Finance: {{finance.financecount}}</button>
+								<br> <br>
+							</div>
+							<div data-ng-if="!paymentcount.length">
+								<button type="button"
+									class="btn btn-primary btn-block waves-effect waves-light"
+									data-toggle="tooltip" data-placement="top" title=""
+									data-original-title=".btn-primary.badge">
+									<span class="float-left">Processed For Payment :</span> <span
+										class="badge float-right">0 </span>
+								</button>
+							</div>     
+							<div data-ng-repeat="payment in paymentcount">
+								<button type="button" id="sub" value="Register"
+									class="btn btn-md btn-primary"
+									data-ng-click="getTotalPaymentData(payment);"
+									style="margin-left: 5%; width: 70%">Processed for
+									Payment: {{payment.paymentcount}}</button>
+								<br> <br>
+							</div>
+							<div data-ng-if="!bookedcount.length">
+								<button type="button"
+									class="btn btn-primary btn-block waves-effect waves-light"
+									id="sub" value="Register" data-toggle="tooltip"
+									data-placement="top" title=""
+									data-original-title=".btn-primary.badge">
+									<span class="float-left">Invoices Booked :</span> <span
+										class="badge float-right">0</span>
+								</button>
+							</div>
+							<div data-ng-repeat="booked in bookedcount">
+								<button type="button" id="sub" value="Register"
+									class="btn btn-md btn-primary"
+									data-ng-click="getTotalBookedData(booked);"
+									style="margin-left: 5%; width: 70%">Invoices Booked:
+									{{booked.bookedcount}}</button>
+								<br> <br>
+							</div>
+							<div data-ng-if="!releasecount.length">
+								<button type="button"
+									class="btn btn-primary btn-block waves-effect waves-light"
+									data-toggle="tooltip" data-placement="top" title=""
+									data-original-title=".btn-primary.badge">
+									<span class="float-left">Released For Payment :</span> <span
+										class="badge float-right">0</span>
+								</button>
+							</div>
+							<div data-ng-repeat="release in releasecount">
+								<button type="button" id="sub" value="Register"
+									class="btn btn-md btn-primary"
+									data-ng-click="getTotalReleasedData(release);"
+									style="margin-left: 5%; width: 70%">Released for
+									Payment: {{release.releasecount}}</button>
+								<br> <br>
+							</div>
+							<div data-ng-if="!holdcount.length">
+								<button type="button"
+									class="btn btn-primary btn-block waves-effect waves-light"
+									data-toggle="tooltip" data-placement="top" title=""
+									data-original-title=".btn-primary.badge">
+									<span class="float-left">Invoices On Hold :</span> <span
+										class="badge float-right">0</span>
+								</button>
+							</div>
+							<div data-ng-repeat="hold in holdcount">
+								<button type="button" id="sub" value="Register"
+									class="btn btn-md btn-primary"
+									data-ng-click="getTotalHoldData(hold);"
+									style="margin-left: 5%; width: 70%">
+									Invoices on Hold: {{hold.holdcount}}
+									<div data-ng-if="!holdcount.length">0</div>
+								</button>
+								<br> <br>
+							</div>
+							<div data-ng-if="!returnedcount.length">
+								<button type="button"
+									class="btn btn-primary btn-block waves-effect waves-light"
+									data-toggle="tooltip" data-placement="top" title=""
+									data-original-title=".btn-primary.badge">
+									<span class="float-left">Returned Invoices :</span> <span
+										class="badge float-right">0</span>
+								</button>
+							</div>
+							<div data-ng-repeat="returned in returnedcount">
+								<button type="button" id="sub" value="Register"
+									class="btn btn-md btn-primary"
+									data-ng-click="getTotalReturnedData(returned);"
+									style="margin-left: 5%; width: 70%">Returned Invoices:
+									{{returned.returnedcount}}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" id="invoice1">
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+								<table id="order-table"
+									class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Invoice Id</th>
+											<th>Invoice Type</th>
+											<th>Created Date</th>
+											<th>Vendor</th>
+											<th>Submitted By</th>
+											<th>Last Approved</th>
+											<th>Next Approval</th>
+											<th>Status</th>
+											<th>Amount</th>
+											<th>View</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="totaldata in totalinvoice">
+											<td>{{index+1}}</td>
+											<td>{{totaldata.voucher_id}}</td>
+											<td>{{totaldata.order_name}}</td>
+											<td>{{totaldata.date_created}}</td>
+											<td>{{totaldata.vendor_name}}</td>
+											<td>{{totaldata.created_by}}</td>
+											<td>{{totaldata.modified_by}}</td>
+											<td>{{totaldata.next_approver}}</td>
+											<td>{{totaldata.status}}</td>
+											<td>{{totaldata.amount}}</td>
+											<td><button class="btn btn-success" id="view1"
+													type="submit">View</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" id="invoice2">
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+								<table id="order-table"
+									class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Invoice Id</th>
+											<th>Invoice Type</th>
+											<th>Created Date</th>
+											<th>Vendor</th>
+											<th>Submitted By</th>
+											<th>Last Approved</th>
+											<th>Next Approval</th>
+											<th>Status</th>
+											<th>Amount</th>
+											<th>View</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="totaldata1 in totalreporting">
+											<td>{{index+1}}</td>
+											<td>{{totaldata1.voucher_id}}</td>
+											<td>{{totaldata1.order_name}}</td>
+											<td>{{totaldata1.date_created}}</td>
+											<td>{{totaldata1.created_by}}</td>
+											<td>{{totaldata1.modified_by}}</td>
+											<td>{{totaldata1.next_approver}}</td>
+											<td>{{totaldata1.status}}</td>
+											<td>{{totaldata1.amount}}</td>
+											<td><button class="btn btn-success" id="view1"
+													type="submit">View</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" id="invoice3">
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+								<table id="order-table"
+									class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Invoice Id</th>
+											<th>Invoice Type</th>
+											<th>Created Date</th>
+											<th>Vendor</th>
+											<th>Submitted By</th>
+											<th>Last Approved</th>
+											<th>Next Approval</th>
+											<th>Status</th>
+											<th>Amount</th>
+											<th>View</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="totaldata2 in totalcfo">
+											<td>{{index+1}}</td>
+											<td>{{totaldata2.voucher_id}}</td>
+											<td>{{totaldata2.order_name}}</td>
+											<td>{{totaldata2.date_created}}</td>
+											<td>{{totaldata2.vendor_name}}</td>
+											<td>{{totaldata2.created_by}}</td>
+											<td>{{totaldata2.modified_by}}</td>
+											<td>{{totaldata.next_approver}}</td>
+											<td>{{totaldata2.status}}</td>
+											<td>{{totaldata2.amount}}</td>
+											<td><button class="btn btn-success" id="view1"
+													type="submit">View</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" id="invoice4">
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+								<table id="order-table"
+									class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Invoice Id</th>
+											<th>Invoice Type</th>
+											<th>Created Date</th>
+											<th>Vendor</th>
+											<th>Submitted By</th>
+											<th>Last Approved</th>
+											<th>Next Approval</th>
+											<th>Status</th>
+											<th>Amount</th>
+											<th>View</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="totaldata3 in totalfinance">
+											<td>{{index+1}}</td>
+											<td>{{totaldata3.voucher_id}}</td>
+											<td>{{totaldata3.order_name}}</td>
+											<td>{{totaldata3.date_created}}</td>
+											<td>{{totaldata3.vendor_name}}</td>
+											<td>{{totaldata3.created_by}}</td>
+											<td>{{totaldata3.modified_by}}</td>
+											<td>{{totaldata3.next_approver}}</td>
+											<td>{{totaldata3.status}}</td>
+											<td>{{totaldata3.amount}}</td>
+											<td><button class="btn btn-success" id="view1"
+													type="submit">View</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" id="invoice5">
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+								<table id="order-table"
+									class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Invoice Id</th>
+											<th>Invoice Type</th>
+											<th>Created Date</th>
+											<th>Vendor</th>
+											<th>Submitted By</th>
+											<th>Last Approved</th>
+											<th>Next Approval</th>
+											<th>Status</th>
+											<th>Amount</th>
+											<th>View</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="totaldata4 in paymentData">
+											<td>{{index+1}}</td>
+											<td>{{totaldata4.voucher_id}}</td>
+											<td>{{totaldata4.order_name}}</td>
+											<td>{{totaldata4.date_created}}</td>
+											<td>{{totaldata4.vendor_name}}</td>
+											<td>{{totaldata4.created_by}}</td>
+											<td>{{totaldata4.modified_by}}</td>
+											<td>{{totaldata4.next_approver}}</td>
+											<td>{{totaldata4.status}}</td>
+											<td>{{totaldata4.amount}}</td>
+											<td><button class="btn btn-success" id="view1"
+													type="submit">View</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" id="invoice6">
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+								<table id="order-table"
+									class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Invoice Id</th>
+											<th>Invoice Type</th>
+											<th>Created Date</th>
+											<th>Vendor</th>
+											<th>Submitted By</th>
+											<th>Last Approved</th>
+											<th>Next Approval</th>
+											<th>Status</th>
+											<th>Amount</th>
+											<th>View</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="totaldata5 in bookedData">
+											<td>{{index+1}}</td>
+											<td>{{totaldata5.voucher_id}}</td>
+											<td>{{totaldata5.order_name}}</td>
+											<td>{{totaldata5.date_created}}</td>
+											<td>{{totaldata5.vendor_name}}</td>
+											<td>{{totaldata5.created_by}}</td>
+											<td>{{totaldata5.modified_by}}</td>
+											<td>{{totaldata5.next_approver}}</td>
+											<td>{{totaldata5.status}}</td>
+											<td>{{totaldata5.amount}}</td>
+											<td><button class="btn btn-success" id="view1"
+													type="submit">View</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" id="invoice7">
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+								<table id="order-table"
+									class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Invoice Id</th>
+											<th>Invoice Type</th>
+											<th>Created Date</th>
+											<th>Vendor</th>
+											<th>Submitted By</th>
+											<th>Last Approved</th>
+											<th>Next Approval</th>
+											<th>Status</th>
+											<th>Amount</th>
+											<th>View</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="totaldata6 in releasedData">
+											<td>{{index+1}}</td>
+											<td>{{totaldata6.voucher_id}}</td>
+											<td>{{totaldata6.order_name}}</td>
+											<td>{{totaldata6.date_created}}</td>
+											<td>{{totaldata6.vendor_name}}</td>
+											<td>{{totaldata6.created_by}}</td>
+											<td>{{totaldata6.modified_by}}</td>
+											<td>{{totaldata6.next_approver}}</td>
+											<td>{{totaldata6.status}}</td>
+											<td>{{totaldata6.amount}}</td>
+											<td><button class="btn btn-success" id="view1"
+													type="submit">View</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" id="invoice8">
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+								<table id="order-table"
+									class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Invoice Id</th>
+											<th>Invoice Type</th>
+											<th>Created Date</th>
+											<th>Vendor</th>
+											<th>Submitted By</th>
+											<th>Last Approved</th>
+											<th>Next Approval</th>
+											<th>Status</th>
+											<th>Amount</th>
+											<th>View</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="totaldata7 in holdData">
+											<td>{{index+1}}</td>
+											<td>{{totaldata7.voucher_id}}</td>
+											<td>{{totaldata7.order_name}}</td>
+											<td>{{totaldata7.date_created}}</td>
+											<td>{{totaldata7.vendor_name}}</td>
+											<td>{{totaldata7.created_by}}</td>
+											<td>{{totaldata7.modified_by}}</td>
+											<td>{{totaldata7.next_approver}}</td>
+											<td>{{totaldata7.status}}</td>
+											<td>{{totaldata7.amount}}</td>
+											<td><button class="btn btn-success" id="view1"
+													type="submit">View</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" id="invoice9">
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+								<table id="order-table"
+									class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Invoice Id</th>
+											<th>Invoice Type</th>
+											<th>Created Date</th>
+											<th>Vendor</th>
+											<th>Submitted By</th>
+											<th>Last Approved</th>
+											<th>Next Approval</th>
+											<th>Status</th>
+											<th>Amount</th>
+											<th>View</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="totaldata8 in totalinvoice8">
+											<td>{{index+1}}</td>
+											<td>{{totaldata8.voucher_id}}</td>
+											<td>{{totaldata8.order_name}}</td>
+											<td>{{totaldata8.date_created}}</td>
+											<td>{{totaldata8.vendor_name}}</td>
+											<td>{{totaldata8.created_by}}</td>
+											<td>{{totaldata8.modified_by}}</td>
+											<td>{{totaldata8.next_approver}}</td>
+											<td>{{totaldata8.status}}</td>
+											<td>{{totaldata8.amount}}</td>
+											<td><button class="btn btn-success" id="view1"
+													type="submit">View</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- work order -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card" id="workorder">
+					<div class="card-header bg-primary">
+						<h6 class="card-title">Work Order Status Report</h6>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-12 col-xs-12 col-md-5 col-xl-5 col-lg-5 mt-2">
+								<canvas id="pieChart2" width="400" height="400"></canvas>
+							</div>
+							<div class="col-sm-12 col-xs-12 col-md-7 col-xl-7 col-lg-7 mt-2">
+								<div data-ng-if="!workordercount.length">
+									<button type="button"
+										class="btn btn-primary btn-block waves-effect waves-light"
+										data-toggle="tooltip" data-placement="top" title=""
+										data-original-title=".btn-primary.badge">
+										<span class="float-left">Total Work orders:</span> <span
+											class="badge float-right">0</span>
+									</button>
+								</div>
+								<div data-ng-repeat="workorder in workordercount">
+									<button type="button" id="sub" value="Register"
+										class="btn btn-md btn-primary"
+										data-ng-click="getWorkorderTotalData(workorder);"
+										style="margin-left: 5%; width: 70%">Total Work
+										orders: {{workorder.workordercount}}</button>
+									<br> <br>
+								</div>
+								<div data-ng-if="!workorderreportingcount.length">
+									<button type="button"
+										class="btn btn-primary btn-block waves-effect waves-light"
+										data-toggle="tooltip" data-placement="top" title=""
+										data-original-title=".btn-primary.badge">
+										<span class="float-left">Pending With Reporting
+											Manager: :</span> <span class="badge float-right">0</span>
+									</button>
+								</div>
+								<div
+									data-ng-repeat="workorderreporting in workorderreportingcount">
+									<button type="button" id="sub" value="Register"
+										class="btn btn-md btn-primary"
+										data-ng-click="getTotalWorkorderReportingData(workorderreporting);"
+										style="margin-left: 5%; width: 70%">Pending With
+										Reporting Manager:
+										{{workorderreporting.workorderreportingcount}}</button>
+									<br> <br>
+								</div>
+								<div data-ng-if="!cfoworkordercount.length">
+									<button type="button"
+										class="btn btn-primary btn-block waves-effect waves-light"
+										data-toggle="tooltip" data-placement="top" title=""
+										data-original-title=".btn-primary.badge">
+										<span class="float-left">Pending with CFO :</span> <span
+											class="badge float-right">0</span>
+									</button>
+								</div>
+								<div data-ng-repeat="workordercfo in cfoworkordercount">
+									<button type="button" id="sub" value="Register"
+										class="btn btn-md btn-primary"
+										data-ng-click="getTotalworkorderPendingData(workordercfo);"
+										style="margin-left: 5%; width: 70%">Pending With CFO:
+										{{workordercfo.workordercfocount}}</button>
+									<br> <br>
+								</div>
+								<div data-ng-if="!workorderceocount.length">
+									<button type="button"
+										class="btn btn-primary btn-block waves-effect waves-light"
+										data-toggle="tooltip" data-placement="top" title=""
+										data-original-title=".btn-primary.badge">
+										<span class="float-left">Pending with CEO :</span> <span
+											class="badge float-right">0</span>
+									</button>
+								</div>
+								<div data-ng-repeat="workorderceo in workorderceocount">
+									<button type="button" id="sub" value="Register"
+										class="btn btn-md btn-primary"
+										data-ng-click="getTotalWorkorderCEOData(workorderceo);"
+										style="margin-left: 5%; width: 70%">Pending With CEO:
+										{{workorderceo.workorderceocount}}</button>
+									<br> <br>
+								</div>
+								<div data-ng-if="!workorderapprovedcount.length">
+									<button type="button"
+										class="btn btn-primary btn-block waves-effect waves-light"
+										data-toggle="tooltip" data-placement="top" title=""
+										data-original-title=".btn-primary.badge">
+										<span class="float-left">Work Order Approved:</span> <span
+											class="badge float-right">0</span>
+									</button>
+								</div>
+								<div
+									data-ng-repeat="workorderapproved in workorderapprovedcount">
+									<button type="button" id="sub" value="Register"
+										class="btn btn-md btn-primary"
+										data-ng-click="getTotalApprovedData(workorderapproved);"
+										style="margin-left: 5%; width: 70%">Work Order
+										Approved: {{workorderapproved.workorderapprovedcount}}</button>
+									<br> <br>
+								</div>
+								<div data-ng-if="!workorderholdcount.length">
+									<button type="button"
+										class="btn btn-primary btn-block waves-effect waves-light"
+										data-toggle="tooltip" data-placement="top" title=""
+										data-original-title=".btn-primary.badge">
+										<span class="float-left">Work Order on Hold :</span> <span
+											class="badge float-right">0</span>
+									</button>
+								</div>
+								<div data-ng-repeat="workorderhold in workorderholdcount">
+									<button type="button" id="sub" value="Register"
+										class="btn btn-md btn-primary"
+										data-ng-click="getTotalWorkorderHoldData(workorderhold);"
+										style="margin-left: 5%; width: 70%">Work Order on
+										Hold: {{workorderhold.workorderholdcount}}</button>
+									<br> <br>
+								</div>
+								<div data-ng-if="!workorderreturnedcount.length">
+									<button type="button"
+										class="btn btn-primary btn-block waves-effect waves-light"
+										data-toggle="tooltip" data-placement="top" title=""
+										data-original-title=".btn-primary.badge">
+										<span class="float-left">Returned Work Order :</span> <span
+											class="badge float-right">0</span>
+									</button>
+								</div>
+								<div
+									data-ng-repeat="workorderreturned in workorderreturnedcount">
+									<button type="button" id="sub" value="Register"
+										class="btn btn-md btn-primary"
+										data-ng-click="getTotalWorkorderReturnedData(workorderreturned);"
+										style="margin-left: 5%; width: 70%">Returned Work
+										Order: {{workorderreturned.workorderreturnedcount}}</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card" id="workorder1">
+							<div class="card-body">
+								<div class="dt-responsive table-responsive">
+									<table id="simpletable"
+										class="table table-striped table-bordered nowrap">
+										<thead>
+											<tr>
+												<th>S.No</th>
+												<th>Work Order Id</th>
+												<th>Created Date</th>
+												<th>Vendor</th>
+												<th>Submitted By</th>
+												<th>Last Approved</th>
+												<th>Next Approval</th>
+												<th>Status</th>
+												<th>Amount</th>
+												<th>View</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="workorder1 in totalworkorders">
+												<td>{{$index+1}}</td>
+												<td>{{workorder1.workorder_id}}</td>
+												<td>{{workorder1.date_created}}</td>
+												<td>{{workorder1.vendor_name}}</td>
+												<td>{{workorder1.created_by}}</td>
+												<td>{{workorder1.modified_by}}</td>
+												<td>{{workorder1.next_approver}}</td>
+												<td>{{workorder1.status}}</td>
+												<td>{{workorder1.amount}}</td>
+												<td><button class="btn btn-success" id="viewworkorder">View</button></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card" id="workorder2">
+							<div class="card-body">
+								<div class="dt-responsive table-responsive">
+									<table id="simpletable"
+										class="table table-striped table-bordered nowrap">
+										<thead>
+											<tr>
+												<th>S.No</th>
+												<th>Work Order Id</th>
+												<th>Created Date</th>
+												<th>Vendor</th>
+												<th>Submitted By</th>
+												<th>Last Approved</th>
+												<th>Next Approval</th>
+												<th>Status</th>
+												<th>Amount</th>
+												<th>View</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="workorder2 in workorderreporting">
+												<td>{{$index+1}}</td>
+												<td>{{workorder2.workorder_id}}</td>
+												<td>{{workorder2.date_created}}</td>
+												<td>{{workorder2.vendor_name}}</td>
+												<td>{{workorder2.created_by}}</td>
+												<td>{{workorder2.modified_by}}</td>
+												<td>{{workorder2.next_approver}}</td>
+												<td>{{workorder2.status}}</td>
+												<td>{{workorder2.amount}}</td>
+												<td><button class="btn btn-success" id="viewworkorder">View</button></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card" id="workorder3">
+							<div class="card-body">
+								<div class="dt-responsive table-responsive">
+									<table id="simpletable"
+										class="table table-striped table-bordered nowrap">
+										<thead>
+											<tr>
+												<th>S.No</th>
+												<th>Work Order Id</th>
+												<th>Created Date</th>
+												<th>Vendor</th>
+												<th>Submitted By</th>
+												<th>Last Approved</th>
+												<th>Next Approval</th>
+												<th>Status</th>
+												<th>Amount</th>
+												<th>View</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="workorder3 in workordercfo">
+												<td>{{$index+1}}</td>
+												<td>{{workorder3.workorder_id}}</td>
+												<td>{{workorder3.date_created}}</td>
+												<td>{{workorder3.vendor_name}}</td>
+												<td>{{workorder3.created_by}}</td>
+												<td>{{workorder3.modified_by}}</td>
+												<td>{{workorder3.next_approver}}</td>
+												<td>{{workorder3.status}}</td>
+												<td>{{workorder3.amount}}</td>
+												<td><button class="btn btn-success" id="viewworkorder">View</button></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card" id="workorder4">
+							<div class="card-body">
+								<div class="dt-responsive table-responsive">
+									<table id="simpletable"
+										class="table table-striped table-bordered nowrap">
+										<thead>
+											<tr>
+												<th>S.No</th>
+												<th>Work Order Id</th>
+												<th>Created Date</th>
+												<th>Vendor</th>
+												<th>Submitted By</th>
+												<th>Last Approved</th>
+												<th>Next Approval</th>
+												<th>Status</th>
+												<th>Amount</th>
+												<th>View</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="workorder4 in workorderceo">
+												<td>{{$index+1}}</td>
+												<td>{{workorder4.workorder_id}}</td>
+												<td>{{workorder4.date_created}}</td>
+												<td>{{workorder4.vendor_name}}</td>
+												<td>{{workorder4.created_by}}</td>
+												<td>{{workorder4.modified_by}}</td>
+												<td>{{workorder4.next_approver}}</td>
+												<td>{{workorder4.status}}</td>
+												<td>{{workorder4.amount}}</td>
+												<td><button class="btn btn-success" id="viewworkorder">View</button></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card" id="workorder5">
+							<div class="card-body">
+								<div class="dt-responsive table-responsive">
+									<table id="simpletable"
+										class="table table-striped table-bordered nowrap">
+										<thead>
+											<tr>
+												<th>S.No</th>
+												<th>Work Order Id</th>
+												<th>Created Date</th>
+												<th>Vendor</th>
+												<th>Submitted By</th>
+												<th>Last Approved</th>
+												<th>Next Approval</th>
+												<th>Status</th>
+												<th>Amount</th>
+												<th>View</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="workorder5 in workorderapproved">
+												<td>{{$index+1}}</td>
+												<td>{{workorder5.workorder_id}}</td>
+												<td>{{workorder5.date_created}}</td>
+												<td>{{workorder5.vendor_name}}</td>
+												<td>{{workorder5.created_by}}</td>
+												<td>{{workorder5.modified_by}}</td>
+												<td>{{workorder5.next_approver}}</td>
+												<td>{{workorder5.status}}</td>
+												<td>{{workorder5.amount}}</td>
+												<td><button class="btn btn-success" id="viewworkorder">View</button></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card" id="workorder6">
+							<div class="card-body">
+								<div class="dt-responsive table-responsive">
+									<table id="simpletable"
+										class="table table-striped table-bordered nowrap">
+										<thead>
+											<tr>
+												<th>S.No</th>
+												<th>Work Order Id</th>
+												<th>Created Date</th>
+												<th>Vendor</th>
+												<th>Submitted By</th>
+												<th>Last Approved</th>
+												<th>Next Approval</th>
+												<th>Status</th>
+												<th>Amount</th>
+												<th>View</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="workorder6 in workorderhold">
+												<td>{{$index+1}}</td>
+												<td>{{workorder6.workorder_id}}</td>
+												<td>{{workorder6.date_created}}</td>
+												<td>{{workorder6.vendor_name}}</td>
+												<td>{{workorder6.created_by}}</td>
+												<td>{{workorder6.modified_by}}</td>
+												<td>{{workorder6.next_approver}}</td>
+												<td>{{workorder6.status}}</td>
+												<td>{{workorder6.amount}}</td>
+												<td><button class="btn btn-success" id="viewworkorder">View</button></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card" id="workorder7">
+							<div class="card-body">
+								<div class="dt-responsive table-responsive">
+									<table id="simpletable"
+										class="table table-striped table-bordered nowrap">
+										<thead>
+											<tr>
+												<th>S.No</th>
+												<th>Work Order Id</th>
+												<th>Created Date</th>
+												<th>Vendor</th>
+												<th>Submitted By</th>
+												<th>Last Approved</th>
+												<th>Next Approval</th>
+												<th>Status</th>
+												<th>Amount</th>
+												<th>View</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="workorder7 in workorderreturned">
+												<td>{{$index+1}}</td>
+												<td>{{workorder7.workorder_id}}</td>
+												<td>{{workorder7.date_created}}</td>
+												<td>{{workorder7.vendor_name}}</td>
+												<td>{{workorder7.created_by}}</td>
+												<td>{{workorder7.modified_by}}</td>
+												<td>{{workorder7.next_approver}}</td>
+												<td>{{workorder7.status}}</td>
+												<td>{{workorder7.amount}}</td>
+												<td><button class="btn btn-success" id="viewworkorder">View</button></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Purchase Orders -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card" id="purchase">
+							<div class="card-header bg-primary">
+								<h6 class="card-title">Purchase Order Status Report</h6>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div
+										class="col-sm-12 col-xs-12 col-md-5 col-xl-5 col-lg-5 mt-2">
+										<canvas id="pieChart3" width="400" height="400"></canvas>
+									</div>
+									<div
+										class="col-sm-12 col-xs-12 col-md-7 col-xl-7 col-lg-7 mt-2">
+										<div data-ng-if="!purchaseordercount.length">
+											<button type="button"
+												class="btn btn-primary btn-block waves-effect waves-light"
+												data-toggle="tooltip" data-placement="top" title=""
+												data-original-title=".btn-primary.badge">
+												<span class="float-left">Total Purchase orders :</span> <span
+													class="badge float-right">0</span>
+											</button>
+										</div>
+										<div data-ng-repeat="purchaseorder in purchaseordercount">
+											<button type="button" id="sub" value="Register"
+												class="btn btn-md btn-primary"
+												data-ng-click="getPurchaseorderTotalData(purchaseorder);"
+												style="margin-left: 5%; width: 70%">Total Purchase
+												orders: {{purchaseorder.purchaseordercount}}</button>
+											<br> <br>
+										</div>
+										<div data-ng-if="!purchaseorderreportingcount.length">
+											<button type="button"
+												class="btn btn-primary btn-block waves-effect waves-light"
+												data-toggle="tooltip" data-placement="top" title=""
+												data-original-title=".btn-primary.badge">
+												<span class="float-left">Pending with Reporting
+													Manager :</span> <span class="badge float-right">0</span>
+											</button>
+										</div>
+										<div
+											data-ng-repeat="purchaseorderreporting in purchaseorderreportingcount">
+											<button type="button" id="sub" value="Register"
+												class="btn btn-md btn-primary"
+												data-ng-click="getTotalPurchaseorderReportingData(purchaseorderreporting);"
+												style="margin-left: 5%; width: 70%">Pending With
+												Reporting Manager:
+												{{purchaseorderreporting.purchaseorderreportingcount}}</button>
+											<br> <br>
+										</div>
+										<div data-ng-if="!cfopurchaseordercount.length">
+											<button type="button"
+												class="btn btn-primary btn-block waves-effect waves-light"
+												data-toggle="tooltip" data-placement="top" title=""
+												data-original-title=".btn-primary.badge">
+												<span class="float-left">Pending with CFO :</span> <span
+													class="badge float-right">0</span>
+											</button>
+										</div>
+										<div
+											data-ng-repeat="purchaseordercfo in cfopurchaseordercount">
+											<button type="button" id="sub" value="Register"
+												class="btn btn-md btn-primary"
+												data-ng-click="getTotalpurchaseorderPendingData(purchaseordercfo);"
+												style="margin-left: 5%; width: 70%">Pending With
+												CFO: {{purchaseordercfo.purchaseordercfocount}}</button>
+											<br> <br>
+										</div>
+										<div data-ng-if="!purchaseorderceocount.length">
+											<button type="button"
+												class="btn btn-primary btn-block waves-effect waves-light"
+												data-toggle="tooltip" data-placement="top" title=""
+												data-original-title=".btn-primary.badge">
+												<span class="float-left">Pending With CEO :</span> <span
+													class="badge float-right">0</span>
+											</button>
+										</div>
+										<div
+											data-ng-repeat="purchaseorderceo in purchaseorderceocount">
+											<button type="button" id="sub" value="Register"
+												class="btn btn-md btn-primary"
+												data-ng-click="getTotalPurchaseorderCEOData(purchaseorderceo);"
+												style="margin-left: 5%; width: 70%">Pending With
+												CEO: {{purchaseorderceo.purchaseorderceocount}}</button>
+											<br> <br>
+										</div>
+										<div data-ng-if="!purchaseorderapprovedcount.length">
+											<button type="button"
+												class="btn btn-primary btn-block waves-effect waves-light"
+												data-toggle="tooltip" data-placement="top" title=""
+												data-original-title=".btn-primary.badge">
+												<span class="float-left">Purchase Order Approved :</span> <span
+													class="badge float-right">2</span>
+											</button>
+										</div>
+										<div
+											data-ng-repeat="purchaseorderapproved in purchaseorderapprovedcount">
+											<button type="button" id="sub" value="Register"
+												class="btn btn-md btn-primary"
+												data-ng-click="getTotalPurchaseApprovedData(purchaseorderapproved);"
+												style="margin-left: 5%; width: 70%">Purchase Order
+												Approved:
+												{{purchaseorderapproved.purchaseorderapprovedcount}}</button>
+											<br> <br>
+										</div>
+										<div data-ng-if="!purchaseorderholdcount.length">
+											<button type="button"
+												class="btn btn-primary btn-block waves-effect waves-light"
+												data-toggle="tooltip" data-placement="top" title=""
+												data-original-title=".btn-primary.badge">
+												<span class="float-left">Purchase Order on Hold:</span> <span
+													class="badge float-right">0</span>
+											</button>
+										</div>
+										<div
+											data-ng-repeat="purchaseorderhold in purchaseorderholdcount">
+											<button type="button" id="sub" value="Register"
+												class="btn btn-md btn-primary"
+												data-ng-click="getTotalPurchaseorderHoldData(purchaseorderhold);"
+												style="margin-left: 5%; width: 70%">Purchase Order
+												on Hold: {{purchaseorderhold.purchaseorderholdcount}}</button>
+											<br> <br>
+										</div>
+										<div data-ng-if="!purchaseorderreturnedcount.length">
+											<button type="button"
+												class="btn btn-primary btn-block waves-effect waves-light"
+												data-toggle="tooltip" data-placement="top" title=""
+												data-original-title=".btn-primary.badge">
+												<span class="float-left">Returned Purchase Order :</span> <span
+													class="badge float-right">3</span>
+											</button>
+										</div>
+										<div
+											data-ng-repeat="purchaseorderreturned in purchaseorderreturnedcount">
+											<button type="button" id="sub" value="Register"
+												class="btn btn-md btn-primary"
+												data-ng-click="getTotalPurchaseorderReturnedData(purchaseorderreturned);"
+												style="margin-left: 5%; width: 70%">Returned
+												Purchase Order:
+												{{purchaseorderreturned.purchaseorderreturnedcount}}</button>
+										</div>
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card" id="purchaseorder1">
+									<div class="card-body">
+										<div class="dt-responsive table-responsive">
+											<table id="simpletable3"
+												class="table table-striped table-bordered nowrap">
+												<thead>
+													<tr>
+														<th>S.No</th>
+														<th>Purchase Order ID</th>
+														<th>Created Date</th>
+														<th>Vendor</th>
+														<th>Submitted By</th>
+														<th>Last Approved</th>
+														<th>Next Approval</th>
+														<th>Status</th>
+														<th>Amount</th>
+														<th>View</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="purchaseorder1 in totalpurchaseorders">
+														<td>{{$index+1}}</td>
+														<td>{{purchaseorder1.purchaseorder_id}}</td>
+														<td>{{purchaseorder1.date_created}}</td>
+														<td>{{purchaseorder1.vendor_name}}</td>
+														<td>{{purchaseorder1.created_by}}</td>
+														<td>{{purchaseorder1.modified_by}}</td>
+														<td>{{purchaseorder1.next_approver}}</td>
+														<td>{{purchaseorder1.status}}</td>
+														<td>{{purchaseorder1.amount}}</td>
+
+														<td><button class="btn btn-success"
+																id="viewpurchaseorder">View</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card" id="purchaseorder2">
+									<div class="card-body">
+										<div class="dt-responsive table-responsive">
+											<table id="simpletable3"
+												class="table table-striped table-bordered nowrap">
+												<thead>
+													<tr>
+														<th>S.No</th>
+														<th>Purchase Order ID</th>
+														<th>Created Date</th>
+														<th>Vendor</th>
+														<th>Submitted By</th>
+														<th>Last Approved</th>
+														<th>Next Approval</th>
+														<th>Status</th>
+														<th>Amount</th>
+														<th>View</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="purchaseorder3 in purchaseordercfo">
+														<td>{{$index+1}}</td>
+														<td>{{purchaseorder3.purchaseorder_id}}</td>
+														<td>{{purchaseorder3.date_created}}</td>
+														<td>{{purchaseorder3.vendor_name}}</td>
+														<td>{{purchaseorder3.created_by}}</td>
+														<td>{{purchaseorder3.modified_by}}</td>
+														<td>{{purchaseorder3.next_approver}}</td>
+														<td>{{purchaseorder3.status}}</td>
+														<td>{{purchaseorder3.amount}}</td>
+
+														<td><button class="btn btn-success"
+																id="viewpurchaseorder">View</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card" id="purchaseorder4">
+									<div class="card-body">
+										<div class="dt-responsive table-responsive">
+											<table id="simpletable3"
+												class="table table-striped table-bordered nowrap">
+												<thead>
+													<tr>
+														<th>S.No</th>
+														<th>Purchase Order ID</th>
+														<th>Created Date</th>
+														<th>Vendor</th>
+														<th>Submitted By</th>
+														<th>Last Approved</th>
+														<th>Next Approval</th>
+														<th>Status</th>
+														<th>Amount</th>
+														<th>View</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="purchaseorder4 in purchaseorderceo">
+														<td>{{$index+1}}</td>
+														<td>{{purchaseorder4.purchaseorder_id}}</td>
+														<td>{{purchaseorder4.date_created}}</td>
+														<td>{{purchaseorder4.vendor_name}}</td>
+														<td>{{purchaseorder4.created_by}}</td>
+														<td>{{purchaseorder4.modified_by}}</td>
+														<td>{{purchaseorder4.next_approver}}</td>
+														<td>{{purchaseorder4.status}}</td>
+														<td>{{purchaseorder4.amount}}</td>
+
+														<td><button class="btn btn-success"
+																id="viewpurchaseorder">View</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card" id="purchaseorder5">
+									<div class="card-body">
+										<div class="dt-responsive table-responsive">
+											<table id="simpletable3"
+												class="table table-striped table-bordered nowrap">
+												<thead>
+													<tr>
+														<th>S.No</th>
+														<th>Purchase Order ID</th>
+														<th>Created Date</th>
+														<th>Vendor</th>
+														<th>Submitted By</th>
+														<th>Last Approved</th>
+														<th>Next Approval</th>
+														<th>Status</th>
+														<th>Amount</th>
+														<th>View</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr
+														data-ng-repeat="purchaseorder5 in purchaseorderapproved">
+														<td>{{$index+1}}</td>
+														<td>{{purchaseorder5.purchaseorder_id}}</td>
+														<td>{{purchaseorder5.date_created}}</td>
+														<td>{{purchaseorder5.vendor_name}}</td>
+														<td>{{purchaseorder5.created_by}}</td>
+														<td>{{purchaseorder5.modified_by}}</td>
+														<td>{{purchaseorder5.next_approver}}</td>
+														<td>{{purchaseorder5.status}}</td>
+														<td>{{purchaseorder5.amount}}</td>
+
+														<td><button class="btn btn-success"
+																id="viewpurchaseorder">View</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card" id="purchaseorder6">
+									<div class="card-body">
+										<div class="dt-responsive table-responsive">
+											<table id="simpletable3"
+												class="table table-striped table-bordered nowrap">
+												<thead>
+													<tr>
+														<th>S.No</th>
+														<th>Purchase Order ID</th>
+														<th>Created Date</th>
+														<th>Vendor</th>
+														<th>Submitted By</th>
+														<th>Last Approved</th>
+														<th>Next Approval</th>
+														<th>Status</th>
+														<th>Amount</th>
+														<th>View</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="purchaseorder6 in purchaseorderhold">
+														<td>{{$index+1}}</td>
+														<td>{{purchaseorder6.purchaseorder_id}}</td>
+														<td>{{purchaseorder6.date_created}}</td>
+														<td>{{purchaseorder6.vendor_name}}</td>
+														<td>{{purchaseorder6.created_by}}</td>
+														<td>{{purchaseorder6.modified_by}}</td>
+														<td>{{purchaseorder6.next_approver}}</td>
+														<td>{{purchaseorder6.status}}</td>
+														<td>{{purchaseorder6.amount}}</td>
+
+														<td><button class="btn btn-success"
+																id="viewpurchaseorder">View</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card" id="purchaseorder7">
+									<div class="card-body">
+										<div class="dt-responsive table-responsive">
+											<table id="simpletable3"
+												class="table table-striped table-bordered nowrap">
+												<thead>
+													<tr>
+														<th>S.No</th>
+														<th>Purchase Order ID</th>
+														<th>Created Date</th>
+														<th>Vendor</th>
+														<th>Submitted By</th>
+														<th>Last Approved</th>
+														<th>Next Approval</th>
+														<th>Status</th>
+														<th>Amount</th>
+														<th>View</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr
+														data-ng-repeat="purchaseorder7 in purchaseorderreturned">
+														<td>{{$index+1}}</td>
+														<td>{{purchaseorder7.purchaseorder_id}}</td>
+														<td>{{purchaseorder7.date_created}}</td>
+														<td>{{purchaseorder7.vendor_name}}</td>
+														<td>{{purchaseorder7.created_by}}</td>
+														<td>{{purchaseorder7.modified_by}}</td>
+														<td>{{purchaseorder7.next_approver}}</td>
+														<td>{{purchaseorder7.status}}</td>
+														<td>{{purchaseorder7.amount}}</td>
+
+														<td><button class="btn btn-success"
+																id="viewpurchaseorder">View</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<!-- MOU -->
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card" id="mou">
+									<div class="card-header bg-primary">
+										<h6 class="card-title">MOU Status Report</h6>
+									</div>
+									<div class="card-body">
+										<div class="row">
+											<div
+												class="col-sm-12 col-xs-12 col-md-5 col-xl-5 col-lg-5 mt-2">
+												<canvas id="pieChart4" width="400" height="400"></canvas>
+											</div>
+											<div
+												class="col-sm-12 col-xs-12 col-md-7 col-xl-7 col-lg-7 mt-2">
+												<div data-ng-if="!moucount.length">
+													<button type="button"
+														class="btn btn-primary btn-block waves-effect waves-light"
+														data-toggle="tooltip" data-placement="top" title=""
+														data-original-title=".btn-primary.badge">
+														<span class="float-left">Total MOU's :</span> <span
+															class="badge float-right">0</span>
+													</button>
+												</div>
+												<div data-ng-repeat="mou in moucount">
+													<button type="button" id="sub" value="Register"
+														class="btn btn-md btn-primary"
+														data-ng-click="getMOUTotalData(mou);"
+														style="margin-left: 5%; width: 70%">Total MOU's:
+														{{mou.moucount}}</button>
+													<br> <br>
+												</div>
+												<div data-ng-if="!moureportingcount.length">
+													<button type="button"
+														class="btn btn-primary btn-block waves-effect waves-light"
+														data-toggle="tooltip" data-placement="top" title=""
+														data-original-title=".btn-primary.badge">
+														<span class="float-left">Pending with Reporting
+															Manager :</span> <span class="badge float-right">0</span>
+													</button>
+												</div>
+												<div data-ng-repeat="moureporting in moureportingcount">
+													<button type="button" id="sub" value="Register"
+														class="btn btn-md btn-primary"
+														data-ng-click="getTotalMOUReportingData(moureporting);"
+														style="margin-left: 5%; width: 70%">Pending With
+														Reporting Manager: {{moureporting.moureportingcount}}</button>
+													<br> <br>
+												</div>
+												<div data-ng-if="!cfomoucount.length">
+													<button type="button" id="sub" value="Register"
+														class="btn btn-md btn-primary"
+														style="margin-left: 5%; width: 70%">Pending With
+														CFO: 0</button>
+													<br> <br>
+												</div>
+												<div data-ng-repeat="moucfo in cfomoucount">
+													<button type="button" id="sub" value="Register"
+														class="btn btn-md btn-primary"
+														data-ng-click="getTotalMOUPendingData(moucfo);"
+														style="margin-left: 5%; width: 70%">Pending With
+														CFO: {{moucfo.moucfocount}}</button>
+													<br> <br>
+												</div>
+
+												<div data-ng-if="!mouceocount.length">
+													<button type="button"
+														class="btn btn-primary btn-block waves-effect waves-light"
+														data-toggle="tooltip" data-placement="top" title=""
+														data-original-title=".btn-primary.badge">
+														<span class="float-left">Pending With CEO :</span> <span
+															class="badge float-right">0</span>
+													</button>
+												</div>
+												<div data-ng-repeat="mouceo in mouceocount">
+													<button type="button" id="sub" value="Register"
+														class="btn btn-md btn-primary"
+														data-ng-click="getTotalMOUCEOData(mouceo);"
+														style="margin-left: 5%; width: 70%">Pending With
+														CEO: {{mouceo.mouceocount}}</button>
+													<br> <br>
+												</div>
+												<div data-ng-if="!mouapprovedcount.length">
+													<button type="button"
+														class="btn btn-primary btn-block waves-effect waves-light"
+														data-toggle="tooltip" data-placement="top" title=""
+														data-original-title=".btn-primary.badge">
+														<span class="float-left">MOU's Approved :</span> <span
+															class="badge float-right">2</span>
+													</button>
+												</div>
+												<div data-ng-repeat="mouapproved in mouapprovedcount">
+													<button type="button" id="sub" value="Register"
+														class="btn btn-md btn-primary"
+														data-ng-click="getTotalMOUApprovedData(mouapproved);"
+														style="margin-left: 5%; width: 70%">MOU's
+														Approved: {{mouapproved.mouapprovedcount}}</button>
+													<br> <br>
+												</div>
+												<div data-ng-if="!mouholdcount.length">
+													<button type="button"
+														class="btn btn-primary btn-block waves-effect waves-light"
+														data-toggle="tooltip" data-placement="top" title=""
+														data-original-title=".btn-primary.badge">
+														<span class="float-left">MOU's on Hold :</span> <span
+															class="badge float-right">0</span>
+													</button>
+												</div>
+												<div data-ng-repeat="mouhold in mouholdcount">
+													<button type="button" id="sub" value="Register"
+														class="btn btn-md btn-primary"
+														data-ng-click="getTotalMOUHoldData(mouhold);"
+														style="margin-left: 5%; width: 70%">MOU's on
+														Hold: {{mouhold.mouholdcount}}</button>
+													<br> <br>
+												</div>
+												<div data-ng-if="!moureturnedcount.length">
+													<button type="button"
+														class="btn btn-primary btn-block waves-effect waves-light"
+														data-toggle="tooltip" data-placement="top" title=""
+														data-original-title=".btn-primary.badge">
+														<span class="float-left">Returned MOU's:</span> <span
+															class="badge float-right">3</span>
+													</button>
+												</div>
+												<div data-ng-repeat="moureturned in moureturnedcount">
+													<button type="button" id="sub" value="Register"
+														class="btn btn-md btn-primary"
+														data-ng-click="getTotalMOUReturnedData(moureturned);"
+														style="margin-left: 5%; width: 70%">Returned
+														MOU's: {{moureturned.moureturnedcount}}</button>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="card" id="mou1">
+											<div class="card-body">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable2"
+														class="table table-striped table-bordered nowrap">
+														<thead>
+															<tr>
+																<th>S.No</th>
+																<th>MOU id</th>
+																<th>Created Date</th>
+																<th>Vendor</th>
+																<th>Submitted By</th>
+																<th>Last Approved</th>
+																<th>Next Approval</th>
+																<th>Status</th>
+																<th>Amount</th>
+																<th>View</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="mou1 in totalmous">
+																<td>{{$index+1}}</td>
+																<td>{{mou1.mou_id}}/td>
+																<td>{{mou1.date_created}}</td>
+																<td>{{mou1.vendor_name}}</td>
+																<td>{{mou1.created_by}}</td>
+																<td>{{mou1.modified_by}}</td>
+																<td>{{mou1.next_approver}}</td>
+																<td>{{mou1.status}}</td>
+																<td>{{mou1.amount}}</td>
+																<td><button class="btn btn-success" id="viewmou">View</button></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="card" id="mou2">
+											<div class="card-body">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable2"
+														class="table table-striped table-bordered nowrap">
+														<thead>
+															<tr>
+																<th>S.No</th>
+																<th>MOU id</th>
+																<th>Created Date</th>
+																<th>Vendor</th>
+																<th>Submitted By</th>
+																<th>Last Approved</th>
+																<th>Next Approval</th>
+																<th>Status</th>
+																<th>Amount</th>
+																<th>View</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="mou2 in moureporting">
+																<td>{{$index+1}}</td>
+																<td>{{mou2.mou_id}}/td>
+																<td>{{mou2.date_created}}</td>
+																<td>{{mou2.vendor_name}}</td>
+																<td>{{mou2.created_by}}</td>
+																<td>{{mou2.modified_by}}</td>
+																<td>{{mou2.next_approver}}</td>
+																<td>{{mou2.status}}</td>
+																<td>{{mou2.amount}}</td>
+																<td><button class="btn btn-success" id="viewmou">View</button></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="card" id="mou3">
+											<div class="card-body">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable2"
+														class="table table-striped table-bordered nowrap">
+														<thead>
+															<tr>
+																<th>S.No</th>
+																<th>MOU id</th>
+																<th>Created Date</th>
+																<th>Vendor</th>
+																<th>Submitted By</th>
+																<th>Last Approved</th>
+																<th>Next Approval</th>
+																<th>Status</th>
+																<th>Amount</th>
+																<th>View</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="mou3 in moucfo">
+																<td>{{$index+1}}</td>
+																<td>{{mou3.mou_id}}/td>
+																<td>{{mou3.date_created}}</td>
+																<td>{{mou3.vendor_name}}</td>
+																<td>{{mou3.created_by}}</td>
+																<td>{{mou3.modified_by}}</td>
+																<td>{{mou3.next_approver}}</td>
+																<td>{{mou3.status}}</td>
+																<td>{{mou3.amount}}</td>
+																<td><button class="btn btn-success" id="viewmou">View</button></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="card" id="mou4">
+											<div class="card-body">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable2"
+														class="table table-striped table-bordered nowrap">
+														<thead>
+															<tr>
+																<th>S.No</th>
+																<th>MOU id</th>
+																<th>Created Date</th>
+																<th>Vendor</th>
+																<th>Submitted By</th>
+																<th>Last Approved</th>
+																<th>Next Approval</th>
+																<th>Status</th>
+																<th>Amount</th>
+																<th>View</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="mou4 in mouceo">
+																<td>{{$index+1}}</td>
+																<td>{{mou4.mou_id}}/td>
+																<td>{{mou4.date_created}}</td>
+																<td>{{mou4.vendor_name}}</td>
+																<td>{{mou4.created_by}}</td>
+																<td>{{mou4.modified_by}}</td>
+																<td>{{mou4.next_approver}}</td>
+																<td>{{mou4.status}}</td>
+																<td>{{mou4.amount}}</td>
+																<td><button class="btn btn-success" id="viewmou">View</button></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="card" id="mou5">
+											<div class="card-body">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable2"
+														class="table table-striped table-bordered nowrap">
+														<thead>
+															<tr>
+																<th>S.No</th>
+																<th>MOU id</th>
+																<th>Created Date</th>
+																<th>Vendor</th>
+																<th>Submitted By</th>
+																<th>Last Approved</th>
+																<th>Next Approval</th>
+																<th>Status</th>
+																<th>Amount</th>
+																<th>View</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="mou5 in mouapproved">
+																<td>{{$index+1}}</td>
+																<td>{{mou5.mou_id}}/td>
+																<td>{{mou5.date_created}}</td>
+																<td>{{mou5.vendor_name}}</td>
+																<td>{{mou5.created_by}}</td>
+																<td>{{mou5.modified_by}}</td>
+																<td>{{mou5.next_approver}}</td>
+																<td>{{mou5.status}}</td>
+																<td>{{mou5.amount}}</td>
+																<td><button class="btn btn-success" id="viewmou">View</button></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="card" id="mou6">
+											<div class="card-body">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable2"
+														class="table table-striped table-bordered nowrap">
+														<thead>
+															<tr>
+																<th>S.No</th>
+																<th>MOU id</th>
+																<th>Created Date</th>
+																<th>Vendor</th>
+																<th>Submitted By</th>
+																<th>Last Approved</th>
+																<th>Next Approval</th>
+																<th>Status</th>
+																<th>Amount</th>
+																<th>View</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="mou6 in mouhold">
+																<td>{{$index+1}}</td>
+																<td>{{mou6.mou_id}}/td>
+																<td>{{mou6.date_created}}</td>
+																<td>{{mou6.vendor_name}}</td>
+																<td>{{mou6.created_by}}</td>
+																<td>{{mou6.modified_by}}</td>
+																<td>{{mou6.next_approver}}</td>
+																<td>{{mou6.status}}</td>
+																<td>{{mou6.amount}}</td>
+																<td><button class="btn btn-success" id="viewmou">View</button></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="card" id="mou7">
+											<div class="card-body">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable2"
+														class="table table-striped table-bordered nowrap">
+														<thead>
+															<tr>
+																<th>S.No</th>
+																<th>MOU id</th>
+																<th>Created Date</th>
+																<th>Vendor</th>
+																<th>Submitted By</th>
+																<th>Last Approved</th>
+																<th>Next Approval</th>
+																<th>Status</th>
+																<th>Amount</th>
+																<th>View</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="mou7 in moureturned">
+																<td>{{$index+1}}</td>
+																<td>{{mou7.mou_id}}/td>
+																<td>{{mou7.date_created}}</td>
+																<td>{{mou7.vendor_name}}</td>
+																<td>{{mou7.created_by}}</td>
+																<td>{{mou7.modified_by}}</td>
+																<td>{{mou7.next_approver}}</td>
+																<td>{{mou7.status}}</td>
+																<td>{{mou7.amount}}</td>
+																<td><button class="btn btn-success" id="viewmou">View</button></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!-- Note File -->
+									<div class="row" id="notefile">
+										<div class="col-sm-12">
+											<div class="card">
+												<div class="card-header bg-primary">
+													<h6 class="card-title">Note File Status Report</h6>
+												</div>
+												<div class="card-body">
+													<div class="row">
+														<div
+															class="col-sm-12 col-xs-12 col-md-5 col-xl-5 col-lg-5 mt-2">
+															<canvas id="pieChart5" width="400" height="400"></canvas>
+														</div>
+														<div
+															class="col-sm-12 col-xs-12 col-md-7 col-xl-7 col-lg-7 mt-2">
+															<button type="button"
+																class="btn btn-primary btn-block waves-effect waves-light"
+																data-ng-click="updateHelpDeskData(data.object);"
+																data-toggle="tooltip" data-placement="top" title=""
+																data-original-title=".btn-primary.badge">
+																<span class="float-left">Total Work Orders:</span> <span
+																	class="badge float-right">0</span>
+															</button>
+															<button type="button"
+																class="btn btn-primary btn-block waves-effect waves-light"
+																data-ng-click="updateHelpDeskData(data.object);"
+																data-toggle="tooltip" data-placement="top" title=""
+																data-original-title=".btn-primary.badge">
+																<span class="float-left">Pending with Reporting
+																	Manager :</span> <span class="badge float-right">0</span>
+															</button>
+															<button type="button"
+																class="btn btn-primary btn-block waves-effect waves-light"
+																data-ng-click="updateHelpDeskData(data.object);"
+																data-toggle="tooltip" data-placement="top" title=""
+																data-original-title=".btn-primary.badge">
+																<span class="float-left">Pending with CFO :</span> <span
+																	class="badge float-right">0</span>
+															</button>
+															<button type="button"
+																class="btn btn-primary btn-block waves-effect waves-light"
+																data-ng-click="updateHelpDeskData(data.object);"
+																data-toggle="tooltip" data-placement="top" title=""
+																data-original-title=".btn-primary.badge">
+																<span class="float-left">Pending With CEO :</span> <span
+																	class="badge float-right">0</span>
+															</button>
+															<button type="button"
+																class="btn btn-primary btn-block waves-effect waves-light"
+																data-ng-click="updateHelpDeskData(data.object);"
+																data-toggle="tooltip" data-placement="top" title=""
+																data-original-title=".btn-primary.badge">
+																<span class="float-left">Work Order Approved :</span> <span
+																	class="badge float-right">0</span>
+															</button>
+															<button type="button"
+																class="btn btn-primary btn-block waves-effect waves-light"
+																data-ng-click="updateHelpDeskData(data.object);changecolor();"
+																data-toggle="tooltip" data-placement="top" title=""
+																data-original-title=".btn-primary.badge">
+																<span class="float-left">Work Order On Hold :</span> <span
+																	class="badge float-right">0</span>
+															</button>
+															<button type="button"
+																class="btn btn-primary btn-block waves-effect waves-light"
+																data-ng-click="updateHelpDeskData(data.object);"
+																data-toggle="tooltip" data-placement="top" title=""
+																data-original-title=".btn-primary.badge">
+																<span class="float-left">Returned Work Order :</span> <span
+																	class="badge float-right">0</span>
+															</button>
+
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="card">
+													<div class="card-body">
+														<div class="dt-responsive table-responsive">
+															<table id="simpletable1"
+																class="table table-striped table-bordered nowrap">
+																<thead>
+																	<tr>
+																		<th>S.No</th>
+																		<th>MOU ID</th>
+																		<th>MOU Type</th>
+																		<th>Created Date</th>
+																		<th>Vendor</th>
+																		<th>Submitted By</th>
+																		<th>Last Approved</th>
+																		<th>Next Approval</th>
+																		<th>Status</th>
+																		<th>Amount</th>
+																		<th>View</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td>S.No</td>
+																		<td>Invoice id</td>
+																		<td>Invoice Type</td>
+																		<td>Created Date</td>
+																		<td>Vendor</td>
+																		<td>Submitted By</td>
+																		<td>Last Approved</td>
+																		<td>Next Approval</td>
+																		<td>Status</td>
+																		<td>Amount</td>
+																		<td><button class="btn btn-success">View</button></td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+									<!-- Content Ends Here -->
+
+								</div>
+								<!-- purchase order view page -->
+								<div id="purchaseview">
+									<h3>Purchase Order View</h3>
+									<div class="panel panel-primary">
+										<div class="panel-body">
+											<div class="form-group col-md-3">
+												<label>Financial Year&nbsp;</label> <input type="text"
+													class="form-control" placeholder="financial year"
+													data-ng-model="data.object.fincial_year" />
+											</div>
+											<div class="form-group col-md-3">
+												<label>Purchase Order Type&nbsp;</label> <input type="text"
+													class="form-control" placeholder="purchase order type"
+													data-ng-model="data.object.purchaseorder_type" />
+											</div>
+											<div class="form-group col-md-3">
+												<label>Purchase Type&nbsp;</label> <input type="text"
+													class="form-control" placeholder="purchase type"
+													data-ng-model="data.object.purchase_type" />
+											</div>
+											<div class="form-group col-md-3">
+												<label>Service Type&nbsp;</label> <input type="text"
+													class="form-control" placeholder="service type"
+													data-ng-model="data.object.service_type" />
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<b>Purchase Order Details</b>
+										</div>
+										<div class="panel-body">
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Purchase Order No.:&nbsp;</label> <input type="text"
+														class="form-control" placeholder="service type"
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Sector:&nbsp;</label> <input type="text"
+														class="form-control" placeholder="service type"
+														data-ng-model="data.object.service_type" />
+												</div>
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<div class="form-group col-md-5">
+													<label>Existing PO No.:&nbsp;</label> <input type="text"
+														class="form-control" placeholder="service type"
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Purchase Order Date:&nbsp;</label> <input
+														type="text" class="form-control"
+														placeholder="service type"
+														data-ng-model="data.object.service_type" />
+												</div>
+												<div class="form-group col-md-5">
+													<label>Need By Date:&nbsp;</label> <input type="text"
+														class="form-control" placeholder="service type"
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Programs:&nbsp;</label> <input type="text"
+														class="form-control" placeholder="service type"
+														data-ng-model="data.object.service_type" />
+												</div>
+												<div class="form-group col-md-5">
+													<label>Vendor Name:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=""
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Description:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+												<div class="form-group col-md-5">
+													<label>Delivery Address:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Amount In Words:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+												<div class="form-group col-md-5">
+													<label>Total Amount(Rs):&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<b>Line Item Details</b>
+										</div>
+										<div class="panel-body">
+											<div id="dataDiv" style="overflow-x: auto;">
+												<table class="table table-bordered">
+													<thead>
+														<tr style='background-color: CornflowerBlue'>
+															<th>S.No</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Consumables
+																/ Assets</th>
+															<th>Brand</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Specifications</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Quantity
+																/ No</th>
+															<th
+																style="min-width: 100px; max-width: 100px; text-align: center;">Rate(Rs.)</th>
+															<th
+																style="min-width: 100px; max-width: 100px; text-align: center;">Value(Rs.)</th>
+															<th
+																style="min-width: 100px; max-width: 100px; text-align: center;">Location</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Installation
+																Status</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Installation
+																Amount(Rs.)</th>
+														</tr>
+														<tr>
+															<td style="text-align: center;">1</td>
+															<td style="text-align: center;">ID</td>
+															<td style="text-align: center;">created date</td>
+															<td style="text-align: center;">vendor</td>
+															<td style="text-align: center;">submitted by</td>
+															<td style="text-align: center;">last approved</td>
+															<td style="text-align: center;">next approved</td>
+															<td style="text-align: center;">status</td>
+															<td style="text-align: center;">amount</td>
+															<td style="text-align: center;">Amount</td>
+
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</div>
+									</div>
+
+									<div class="panel panel-primary">
+										<div class="panel-body">
+											<div class="form-group col-md-5">
+												<label>Instructions:&nbsp;</label> <input type="text"
+													class="form-control" placeholder=" "
+													data-ng-model="data.object.service_type" />
+											</div>
+										</div>
+									</div>
+
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<b>Payment Terms</b>
+										</div>
+										<div class="panel-body">
+											<table class="table table-bordered">
+												<thead>
+													<tr style='background-color: CornflowerBlue'>
+														<th>S.No</th>
+														<th
+															style="min-width: 300px; max-width: 300px; text-align: center;">Title</th>
+														<th
+															style="min-width: 300px; max-width: 300px; text-align: center;">Rate(Rs.)</th>
+														<th
+															style="min-width: 300px; max-width: 300px; text-align: center;">Condition</th>
+													</tr>
+													<tr>
+														<td style="text-align: center;">1</td>
+														<td style="text-align: center;">ID</td>
+														<td style="text-align: center;">created date</td>
+														<td style="text-align: center;">vendor</td>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<b>Approval History</b>
+										</div>
+										<div class="panel-body">
+											<div id="dataDiv" style="overflow-x: auto;">
+												<table class="table table-bordered">
+													<thead>
+														<tr style='background-color: CornflowerBlue'>
+															<th>S.No</th>
+															<th
+																style="min-width: 100px; max-width: 100px; text-align: center;">PO
+																Date</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">PO#</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Vendor
+																Name</th>
+															<th
+																style="min-width: 100px; max-width: 100px; text-align: center;">Amount(Rs.)</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Rate(Rs.)</th>
+															<th
+																style="min-width: 100px; max-width: 100px; text-align: center;">Status</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Approved
+																By</th>
+															<th
+																style="min-width: 100px; max-width: 100px; text-align: center;">Comments</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Date</th>
+														</tr>
+														<tr>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</div>
+									</div>
+
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<b>Documents</b>
+										</div>
+										<div class="panel-body">
+											<table class="table table-bordered">
+												<thead>
+													<tr style='background-color: CornflowerBlue'>
+														<th>S.No</th>
+														<th
+															style="min-width: 400px; max-width: 400px; text-align: center;">Document
+															Name</th>
+														<th
+															style="min-width: 400px; max-width: 400px; text-align: center;">Attatchment</th>
+													</tr>
+													<tr>
+														<td style="text-align: center;">1</td>
+														<td style="text-align: center;">Document</td>
+														<td style="text-align: center;">Attachment</td>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+
+								<!-- work order -->
+								<div id="workorderview">
+									<h3>Work Order Id Have to display View</h3>
+									<div class="panel panel-primary">
+										<div class="panel-body">
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Financial Year:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<div class="form-group col-md-5">
+													<label>Scheme Code:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Work Order Type:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+												<div class="form-group col-md-5">
+													<label>Program:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Work Order No:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+												<div class="form-group col-md-5">
+													<label>Sector:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=""
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Work Order Date:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+												<div class="form-group col-md-5">
+													<label>Districts:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Start Date:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<div class="form-group col-md-5">
+													<label>Budget Type:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>End Date:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+												<div class="form-group col-md-5">
+													<label>Inclusive Tax:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Vendor Name:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+												<div class="form-group col-md-5">
+													<label>Subject:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=""
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Work Status:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+												<div class="form-group col-md-5">
+													<label>Reference:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Service:&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+												<div class="form-group col-md-5">
+													<label>Amount(Rs.):&nbsp;</label> <input type="text"
+														class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="form-group col-md-5">
+													<label>Existing Work Order No:&nbsp;</label> <input
+														type="text" class="form-control" placeholder=" "
+														data-ng-model="data.object.service_type" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-primary">
+										<div class="panel-heading">Description</div>
+										<div class="panel-body">
+											<div class="form-group col-md-5">
+												<label>Description:&nbsp;</label> <input type="text"
+													class="form-control" placeholder=" "
+													data-ng-model="data.object.service_type" />
+											</div>
+										</div>
+									</div>
+									<div class="panel paenl-primary">
+										<div class="panel-heading">
+											<b>Submitted Documents</b>
+										</div>
+										<div class="panel-body"></div>
+									</div>
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<b>Payment Base Type</b>
+										</div>
+										<div class="panel-body">
+											<div id="dataDiv" style="overflow-x: auto;">
+												<table class="table table-bordered">
+													<thead>
+														<tr style='background-color: CornflowerBlue'>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Name</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Description</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Location</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">No.Of
+																Trainees</th>
+															<th
+																style="min-width: 100px; max-width: 100px; text-align: center;">Rate(Rs.)</th>
+															<th
+																style="min-width: 100px; max-width: 100px; text-align: center;">Value</th>
+														</tr>
+														<tr>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<b>Payment Terms</b>
+										</div>
+										<div class="panel-body">
+											<div id="dataDiv" style="overflow-x: auto;">
+												<table class="table table-bordered">
+													<thead>
+														<tr style='background-color: CornflowerBlue'>
+															<th>S.No</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Title</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Rate(Rs.)</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Description</th>
+														</tr>
+														<tr>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<b>Additional Expenses</b>
+										</div>
+										<div class="panel-body">
+											<div id="dataDiv" style="overflow-x: auto;">
+												<table class="table table-bordered">
+													<thead>
+														<tr style='background-color: CornflowerBlue'>
+															<th>Type</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Description</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Rate(Rs.)</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">No.Of
+																Day</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">No.Of
+																Trainer/Trainee</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Amount(Rs.)</th>
+														</tr>
+														<tr>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<b>Approvals History</b>
+										</div>
+										<div class="panel-body">
+											<div id="dataDiv" style="overflow-x: auto;">
+												<table class="table table-bordered">
+													<thead>
+														<tr style='background-color: CornflowerBlue'>
+															<th>S.No</th>
+															<th
+																style="min-width: 100px; max-width: 100px; text-align: center;">WO
+																Date</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">WO#</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Vendor
+																Name</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Amount(Rs.)</th>
+															<th
+																style="min-width: 100px; max-width: 100px; text-align: center;">Status</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Approved
+																By</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Comments</th>
+															<th
+																style="min-width: 200px; max-width: 200px; text-align: center;">Status</th>
+														</tr>
+														<tr>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+															<td style="text-align: center;"></td>
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel panel-primary" style="width: 50%">
+											<div class="panel-heading">
+												<b>Documents Information</b>
+											</div>
+											<div class="panel-body">
+												<div id="dataDiv" style="overflow-x: auto;">
+													<table class="table table-bordered">
+														<thead>
+															<tr style='background-color: CornflowerBlue'>
+																<th
+																	style="min-width: 200px; max-width: 200px; text-align: center;">Doc
+																	Name</th>
+																<th
+																	style="min-width: 200px; max-width: 200px; text-align: center;">Uploaded
+																	Attachment</th>
+																<th>Download</th>
+															</tr>
+															<tr>
+																<td style="text-align: center;">11</td>
+																<td style="text-align: center;">111</td>
+																<td style="text-align: center;">
+																	<button type="submit" class="btn btn-primary">Download</button>
+																</td>
+															</tr>
+														</thead>
+													</table>
+												</div>
+											</div>
+										</div>
+										<button class="btn btn-primary"
+											style="margin-left: 53%; margin-top: -46%" type="submit">Download
+											PDF</button>
+										<button class="btn btn-primary" style="margin-top: -46%"
+											type="submit">Download DS PDF</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+<script src="/erp/files/bower_components/chart.js/js/Chart.js"></script>
+
+<script src="/erp/files/assets/pages/chart/chartjs/ex-dashboard.js"></script>
+
+<script src="/erp/files/assets/js/classie.js"></script>
+<script src="/erp/files/assets/js/modalEffects.js"></script>
+
+<script>
+	$("#invoice").hide();
+	$("#workorder").hide();
+	$("#purchase").hide();
+	$("#mou").hide();
+	$("#notefile").hide();
+	$("#purchaseview").hide();
+	$("#mainpage").show();
+	$("#workorderview").hide();
+	$("#invoice1").hide();
+	$("#invoice2").hide();
+	$("#invoice3").hide();
+	$("#invoice4").hide();
+	$("#invoice5").hide();
+	$("#invoice6").hide();
+	$("#invoice7").hide();
+	$("#invoice8").hide();
+	$("#invoice9").hide();
+	$("#workorder1").hide();
+	$("#workorder2").hide();
+	$("#workorder3").hide();
+	$("#workorder4").hide();
+	$("#workorder5").hide();
+	$("#workorder6").hide();
+	$("#workorder7").hide();
+	$("#purchaseorder1").hide();
+	$("#purchaseorder2").hide();
+	$("#purchaseorder3").hide();
+	$("#purchaseorder4").hide();
+	$("#purchaseorder5").hide();
+	$("#purchaseorder6").hide();
+	$("#purchaseorder7").hide();
+	$("#mou1").hide();
+	$("#mou2").hide();
+	$("#mou3").hide();
+	$("#mou4").hide();
+	$("#mou5").hide();
+	$("#mou6").hide();
+	$("#mou7").hide();
+	jQuery(document).ready(function() {
+		angular.bootstrap(jQuery("#invoicewopoId"), [ 'invoicewopostatus' ]);
+	});
+
+	$(document).on('click', "#submit1", function() {
+		$("#invoice").show();
+		$("#workorder").hide();
+		$("#purchase").hide();
+		$("#mou").hide();
+		$("#notefile").hide();
+	});
+	$(document).on('click', "#submit2", function() {
+		$("#workorder").show();
+		$("#invoice").hide();
+		$("#purchase").hide();
+		$("#mou").hide();
+		$("#notefile").hide();
+	});
+	$(document).on('click', "#submit3", function() {
+		$("#purchase").show();
+		$("#invoice").hide();
+		$("#workorder").hide();
+		$("#mou").hide();
+		$("#notefile").hide();
+	});
+	$(document).on('click', "#submit4", function() {
+		$("#mou").show();
+		$("#invoice").hide();
+		$("#workorder").hide();
+		$("#purchase").hide();
+		$("#notefile").hide();
+	});
+	$(document).on('click', "#submit5", function() {
+		$("#notefile").show();
+		$("#invoice").hide();
+		$("#workorder").hide();
+		$("#purchase").hide();
+		$("#mou").hide();
+	});
+
+	$(document).on('click', "#viewpurchase", function() {
+		$("#purchaseview").show();
+		$("#notefile").hide();
+		$("#invoice").hide();
+		$("#workorder").hide();
+		$("#purchase").hide();
+		$("#mou").hide();
+		$("#mainpage").hide();
+	});
+	$(document).on('click', "#viewworkorder", function() {
+		$("#workorderview").show();
+		$("#purchaseview").hide();
+		$("#notefile").hide();
+		$("#invoice").hide();
+		$("#workorder").hide();
+		$("#purchase").hide();
+		$("#mou").hide();
+		$("#mainpage").hide();
+	});
+</script>

@@ -1,0 +1,238 @@
+
+<script
+	src="/erp/files/assets/js/erp-scripts/financeadmin/costcenter.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="costcenterId" data-ng-controller="costcenterController">
+
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Create Cost Center</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Admin Control</a></li>
+							<li class="breadcrumb-item"><a href="#!">Finance Admin</a></li>
+							<li class="breadcrumb-item"><a href="#!">Cost Center</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 col-xs-6">
+							<div class="row">
+								<div class="col-sm-12 col-md-10 col-xl-10 col-lg-10 col-xs-12">
+									<div class="form-group">
+										<label class="font-weight-bold">Create Cost
+											Center&nbsp;&nbsp;<span class="text-danger">*</span> :
+										</label> <input type="text" class="form-control form-control-primary"
+											data-ng-model="data.object.name"
+											placeholder="Enter Cost Center Name ">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12 col-md-10 col-xl-10 col-lg-10 col-xs-12">
+									<div class="form-group">
+										<label class="font-weight-bold">Location&nbsp;&nbsp;<span
+											class="text-danger">*</span> :
+										</label> <input type="text" class="form-control form-control-primary"
+											data-ng-model="data.object.location"
+											placeholder="Enter Location">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 col-xs-6">
+							<div class="row">
+								<div class="col-sm-12 col-md-10 col-xl-10 col-lg-10 col-xs-12">
+									<div class="form-group">
+										<label class="font-weight-bold">Address</label>
+										<textarea class="form-control form-control-primary row-5"
+											data-ng-model="data.object.address" placeholder="Address"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col-sm-12 text-center mt-1">
+							<button class="btn btn-grd-success ver-grd"
+								data-ng-click="createcostcenter(data.object);">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Cost Center List</h6>
+				</div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="order-table"
+							class="table table-striped table-bordered nowrap">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th>Cost Center Name</th>
+									<th>Address</th>
+									<th>Location</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>APSSDC</td>
+									<td>Begumpet</td>
+									<td>Hyderabad</td>
+									<td>Active</td>
+									<td><button type="button"
+											class="btn btn-primary waves-effect updates md-trigger"
+											data-toggle="modal" data-target="#large-Modal">Update</button></td>
+								</tr>
+								<tr data-ng-repeat="costcenterdata in userdetails">
+									<td>{{$index+1}}</td>
+									<td>{{costcenterdata.name}}</td>
+									<td>{{costcenterdata.address}}</td>
+									<td>{{costcenterdata.location}}</td>
+									<td>{{costcenterdata.status}}</td>
+									<td><button type="button"
+											class="btn btn-primary waves-effect updates md-trigger"
+											data-toggle="modal" data-target="#large-Modal"
+											data-ng-click="getcostcenterdata(costcenterdata.name);">Update</button></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="modal fade md-effect-2" id="large-Modal" tabindex="-1"
+							role="dialog">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Update Data</h4>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<div class="card-body">
+											<div class="row">
+												<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+													<div class="form-group">
+														<label class="font-weight-bold">Cost Center
+															Name&nbsp;&nbsp;<span class="text-danger">*</span> :
+														</label> <input type="text"
+															class="form-control form-control-primary"
+															data-ng-model="data.object.name"
+															placeholder="Enter Cost Center Name">
+													</div>
+												</div>
+												<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+													<div class="form-group">
+														<label class="font-weight-bold">Location&nbsp;&nbsp;<span
+															class="text-danger">*</span> :
+														</label> <input type="text"
+															class="form-control form-control-primary"
+															data-ng-model="data.object.location"
+															placeholder="Enter Location">
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+													<div class="form-group">
+														<label class="font-weight-bold">Address</label>
+														<textarea class="form-control form-control-primary row-5"
+															data-ng-model="data.object.address" placeholder="Address"></textarea>
+													</div>
+												</div>
+												<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+													<div class="form-group">
+														<label class="font-weight-bold">Status&nbsp;&nbsp;<span
+															class="text-danger">*</span> :
+														</label> <select class="form-control form-control-primary"
+															data-ng-model="data.object.status">
+															<option value="select">select</option>
+															<option value="Active">Active</option>
+															<option value="InActive">InActive</option>
+
+														</select>
+													</div>
+												</div>
+											</div>
+
+											<h3>&nbsp;</h3>
+
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default waves-effect "
+											data-dismiss="modal">Close</button>
+										<button type="button"
+											class="btn btn-primary waves-effect waves-light "
+											data-ng-click="updatecostcenter(data.object);"
+											data-dismiss="modal">Update</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script
+	src="erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+<script>
+	jQuery(document).ready(function() {
+		angular.bootstrap(jQuery("#costcenterId"), [ 'costcenter' ]);
+	});
+</script>

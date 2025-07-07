@@ -1,0 +1,216 @@
+
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/PayrollManagement/employeemonthlypayrollreconcilation.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="monthlypayrollDIV"
+	data-ng-controller="MonthlyPayrollReconcilationController">
+
+	<div id="display">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-block caption-breadcrumb">
+						<div class="breadcrumb-header">
+							<h5>Employee PayRoll Summary</h5>
+						</div>
+						<div class="page-header-breadcrumb">
+							<ul class="breadcrumb-title">
+								<li class="breadcrumb-item"><a href="#!"> <i
+										class="ti-home"></i>
+								</a></li>
+								<li class="breadcrumb-item"><a href="#!">HRMS</a></li>
+								<li class="breadcrumb-item"><a href="#!">PayRoll
+										Management</a></li>
+								<li class="breadcrumb-item"><a href="#!">Employee
+										Monthly Payroll Reconcilation</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- BreadCrumb End -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header bg-primary">
+						<h6 class="card-title">Employee Monthly Payroll Reconcilation</h6>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-12 col-xl-2 m-b-30">
+								Financial year <label class="col-sm-3 col-form-label"></label>
+							</div>
+							<div class="col-sm-12 col-xl-3 m-b-30">
+								<select class="form-control"
+									data-ng-model="data.object.financial_year">
+									<option></option>
+									<option data-ng-repeat="financialyear in financialyears"
+										value="{{financialyear.id}}">{{financialyear.name}}</option>
+								</select>
+							</div>
+							<div class="col-sm-12 col-xl-2 m-b-30">
+								Month <label class="col-sm-3 col-form-label"></label>
+							</div>
+							<div class="col-sm-12 col-xl-3 m-b-30">
+								<select class="form-control"
+									data-ng-model="data.object.payroll_month">
+									<option></option>
+									<option data-ng-repeat="month in months" value="{{month.id}}">{{month.name}}</option>
+								</select>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-3">
+				<button class="btn btn-primary" style="margin-left: 415px;"
+					value="submit" type="submit"
+					data-ng-click="getEmployeeMonthlyRecouncilation(data.object);">SUBMIT</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="displaydata">
+
+
+
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header"></div>
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table class="table table-hover table-bordered" id="simpletable">
+								<thead class="btn-grd-primary">
+									<tr>
+										<th>S.No</th>
+										<th>NAME</th>
+										<th>Previous Month Amount</th>
+										<th>Current Month Amount</th>
+										<th>Difference</th>
+
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr data-toggle="modal" data-target="#payslipwise-modal" 
+									data-ng-repeat="emp in employeemonthlyrecouncilation | filter:search" data-ng-click="getSingleEmpData(emp)">
+										<td>{{$index+1}}</td>
+										<td>{{emp.name}}</td>
+										<td>{{emp.prev}}</td>
+										<td>{{emp.curr}}</td>
+										<td>{{emp.difference}}</td>
+										
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<div class="modal fade" id="payslipwise-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-primary">Employee Earnings</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr>
+										<th>S.No</th>
+										<th>Emploee ID</th>
+										<th>Earning Type</th>
+										<th>Previous Month Amount(₹)</th>
+										<th>Current Month Amount(₹)</th>
+										<th>Difference</th>
+									</tr>
+								</thead>
+						<tbody>
+									<tr data-ng-repeat="SingleEmpReconData in empReconData">
+										<td>{{$index+1}}</td>
+										<td>{{SingleEmpReconData.empid}}</td>
+										<td>{{SingleEmpReconData.payslip_head}}</td>
+										<td class="text-right">{{SingleEmpReconData.prev_amount | number : fractionSize}}</td>
+										<td class="text-right">{{SingleEmpReconData.present_amount | number : fractionSize}}</td>
+										<td class="text-right">{{SingleEmpReconData.present_amount-SingleEmpReconData.prev_amount}}</td>
+									</tr>
+									<tr style="background-color: #f5f5f5; color: #333;">
+									<td class="text-center" colspan="3">Total</td>
+									<td align="right"><b>{{ empReconData |
+									sumOfValue:'prev_amount'}}</b></td>
+									<td align="right"><b>{{ empReconData |
+									sumOfValue:'present_amount'}}</b></td>
+									<!-- <td align="right"><b>{{ empReconData |
+									sumOfValue:'present_amount'- sumOfValue:'prev_amount'}}</b></td> -->
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+</div>
+
+     
+<script
+	src="files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+  
+
+<script>
+	jQuery(document).ready(
+			function() {
+
+				$("#display").show();
+				$("#displaydata").hide();
+				$("#simpletable").DataTable();
+				angular.bootstrap(jQuery("#monthlypayrollDIV"),
+						[ 'monthlypayrollrecouncilModule' ]);
+
+			});
+</script>
+

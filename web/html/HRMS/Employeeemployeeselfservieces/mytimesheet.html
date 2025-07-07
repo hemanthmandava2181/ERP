@@ -1,0 +1,283 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/employeeemployeeselfserviece/mytimesheet.js"></script>
+<!-- Data Tables -->
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="timesheetid" data-ng-controller="MytimesheetController">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>My Timesheet</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Employee Self
+									Services</a></li>
+							<li class="breadcrumb-item"><a href="#!">Time &
+									Attendance</a></li>
+							<li class="breadcrumb-item"><a href="#!">My Timesheet</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<!-- Content Starts Here -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label class="font-weight-bold">From Date&nbsp;&nbsp;<span
+								class="text-danger">*</span> :
+							</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<input class="form-control" type="date" id="pincodeId"
+								data-ng-model="data.object.from_date" placeholder="" />
+						</div>
+						<div class="col-sm-12 col-md-1 col-xl-1 col-lg-1 col-xs-12">
+							<label>&nbsp;</label>
+						</div>
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label class="font-weight-bold">To Date&nbsp;&nbsp;<span
+								class="text-danger">*</span> :
+							</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<input class="form-control" type="date" id="pincodeId"
+								data-ng-model="data.object.to_date" placeholder="" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 mt-4 text-center">
+							<button type="button" class="btn btn-primary" id="b1"
+								data-ng-click="getdata(data.object);">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label>From Date:</label>
+						</div>
+						<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+							{{data.object.from_date | date:"dd-MM-yyyy"}}</div>
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label>To Date:</label>
+						</div>
+						<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+							{{data.object.to_date | date:"dd-MM-yyyy"}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="order-table"
+							class="table table-striped table-bordered nowrap">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th>Employee Name</th>
+									<th>Date</th>
+									<th>Start Time</th>
+									<th>End Time</th>
+									<th>Task</th>
+									<th>Description</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="userdata in userdetails | filter:search">
+									<td>{{$index+1}}</td>
+									<td>{{userdata.name}}</td>
+									<td>{{userdata.timesheet_date}}</td>
+									<td>{{userdata.start_time}}</td>
+									<td>{{userdata.end_time}}</td>
+									<td>{{userdata.task}}</td>
+									<td>{{userdata.description}}</td>
+									<td>{{userdata.status}}</td>
+									<td>&nbsp;&nbsp;&nbsp;
+										<button type="button" id="viewData"
+											class="btn btn-success btn-md" data-toggle="modal"
+											data-ng-click="getByIddata(userdata.task)"
+											data-target="#large-Modal">View/Edit</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#large-Modal">Large</button> -->
+	<div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+											<div class="form-group">
+												<label class="font-weight-bold">Time Sheet
+													Date&nbsp;&nbsp;<span class="text-danger">*</span> :
+												</label> <input class="form-control" type="date" id="pincodeId"
+													data-ng-model="data.object.timesheet_date" placeholder="" />
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+											<div class="form-group">
+												<label class="font-weight-bold">Location&nbsp;&nbsp;<span
+													class="text-danger">*</span> :
+												</label> <input class="form-control" type="text" id="pincodeId"
+													data-ng-model="data.object.location" placeholder="" />
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+											<div class="form-group">
+												<label class="font-weight-bold">Status&nbsp;&nbsp;<span
+													class="text-danger">*</span> :
+												</label> <select class="form-control"
+													data-ng-model="data.object.status">
+													<option value="true">Complete</option>
+													<option value="false">In-Complete</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="dt-responsive table-responsive">
+										<table class="table table-striped table-bordered nowrap">
+											<thead class="btn-grd-primary">
+												<tr>
+													<th>#</th>
+													<th>Task</th>
+													<th>Description</th>
+													<th>Start Time</th>
+													<th>End Time</th>
+													<th>Duration</th>
+												</tr>
+											</thead>   
+											<tbody>
+												<tr>
+													<td><input class="form-control" type="text" id="task"
+														data-ng-model="data.object.task" /></td>
+													<td><textarea class="form-control" type="text"
+															data-ng-model="data.object.description"></textarea></td>
+													<td><input class="form-control" type="time"
+														id="starttime" data-ng-model="data.object.start_time" />
+													</td>
+													<td><input class="form-control" type="time"
+														id="endtime" data-ng-model="data.object.end_time" /></td>
+													<td><input class="form-control" type="time"
+														id="duration" data-ng-model="data.object.duration"
+														disabled /></td>
+													<td>
+														<button type="button" class="btn btn-danger"
+															id="removebtn" data-ng-click="removeData(data.object)">Delete</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+					<button class="btn btn-primary"
+						data-ng-click="updatedata(data.object);">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+
+<script>
+	jQuery(document).ready(function() {
+
+		$("#display").show();
+		$("#report").hide();
+		angular.bootstrap(jQuery("#timesheetid"), [ 'mytimesheet' ]);
+	});
+
+	jQuery("#b1").click(function() {
+		$("#display").show();
+		$("#report").show();
+	});
+</script>
+<!-- for two tables -->
+<script>
+	$('#simpletable1').DataTable();
+</script>

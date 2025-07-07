@@ -1,0 +1,328 @@
+
+
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/EmployeeSelfServices/leaveEncashment.js"></script>
+<!-- Data Tables -->
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+
+<div id="leaveEncashmentDiv"
+	data-ng-controller="leaveEncashmentController">
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Employee Leave Encashment</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">HRMS</a></li>
+							<li class="breadcrumb-item"><a href="#!">Leave
+									Encashment</a></li>
+							<li class="breadcrumb-item"><a href="#!">Leave
+									Encashment</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Employee Leave Encashment</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>Year</label> <select name="year" class="form-control"
+									data-ng-model="data.object.calendar_year">
+									<option>--Select--</option>
+									<option data-ng-repeat="yeardata in years" value="{{yeardata.id}}">{{yeardata.name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>Quarter</label> <select name="Quarter"
+									class="form-control" data-ng-model="data.object.quarter">
+									<option>--Select--</option>
+									<option data-ng-repeat="quarter in quarters"
+										value="{{quarter.id}}">{{quarter.name}}</option>
+								</select>
+							</div>
+						</div>
+					</div>    
+					<div class="row">
+						<div class="col-sm-12 mt-1 text-center">
+							<button class="btn btn-default" style="margin-bottom: 15px;"
+								value="submit" type="submit" id="s1"
+								data-ng-click="getLeaveEncashmentDetails(data.object);getInactiveLeaveEncashmentDetails(data.object);">Get</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="row">
+								<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+									<button class="btn btn-info btn-block" type="button"
+										data-toggle="collapse" data-target="#activeemployeesExample"
+										aria-expanded="false" aria-controls="collapseExample">
+										Active Employees</button>
+								</div>
+								<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+									<button class="btn btn-warning btn-block" type="button"
+										data-toggle="collapse" data-target="#inactiveemployeesExample"
+										aria-expanded="false" aria-controls="collapseExample">
+										Inactive Employees</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Active Employees -->
+			<div class="row collapse show mt-2" id="activeemployeesExample">
+				<div class="col-sm-12 col-md-12">
+					<div class="card">
+						<div class="card-header bg-info">
+							<h6 class="card-title">Active Employees</h6>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xs-12 mt-1">
+									<label class="font-weight-bold">Financial Year:</label>
+								</div>
+								<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+									<input type="text" class="form-control"
+										data-ng-model="data.object.financial_year" required="required">
+								</div>
+								<div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xs-12 mt-1">
+									<label>&nbsp;</label>
+								</div>
+								<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xs-12 mt-1">
+									<label class="font-weight-bold">Payroll Month&nbsp;<span
+										class="text-danger">*</span>:
+									</label>
+								</div>
+								<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+									<select name="month" class="form-control"
+										data-ng-model="data.object.payroll_month">
+										<option>--Select--</option>
+										<option data-ng-repeat="month in months"
+											value="{{month.payroll_id}}">{{month.payroll_month}}</option>
+									</select>
+								</div>
+							</div>
+							<hr>
+							<div class=" dt-responsive table-responsive ">
+								<table id="simpletable"
+									class="table table-striped table-bordered nowrap ">
+									<thead>
+										<tr style='background-color: CornflowerBlue'>
+											<th>Employee Id</th>
+											<th>Employee Name</th>
+											<th>OP BAL</th>
+											<th>Leaves Availed</th>
+											<th>Leaves Forwarded</th>
+											<th>Leaves Encashed</th>
+											<th>Basic Salary($)</th>
+											<th>Special Allowance($)</th>
+											<th>Encash Amount($)</th>
+											<th><input type="checkbox"
+												data-ng-model="leaveEncashment" data-ng-true-value="true"
+												data-ng-false-value="false"
+												data-ng-click="setAllRegIds(leaveEncashment);"
+												checked="checked">&nbsp;Select</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											data-ng-repeat="leave in (filteredItems = (leaves | filter : search))">
+											<td>{{leave.empid}}</td>
+											<td>{{leave.employeename}}</td>
+											<td>{{leave.opbal}}</td>
+											<td>{{leave.availed_leaves}}</td>
+											<td>{{leave.forwarded_leaves}}</td>
+											<td>{{leave.encashed_leaves}}</td>
+											<td>{{leave.basic_salary}}</td>
+											<td>{{leave.special_allowance}}</td>
+											<td>{{leave.encash_amount}}</td>
+											<td><input type="checkbox"
+												data-ng-model="studentsPresentArr[leave.empid]"
+												data-ng-checked="allSelected()"></td>
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<button type="button" class="btn btn-primary" type="submit"
+								name="theme_submit"
+								data-ng-click="saveLeaveEncashmentDetails(leaves,studentsPresentArr);">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Inactive Employees -->
+			<div class="row collapse mt-2" id="inactiveemployeesExample">
+				<div class="col-sm-12 col-md-12">
+					<div class="card">
+
+						<div class="card-header bg-warning">
+							<h6 class="card-title">Inactive Employees</h6>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xs-12 mt-1">
+									<label class="font-weight-bold">Financial Year:</label>
+								</div>
+								<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+									<input type="text" class="form-control"
+										data-ng-model="data.object.financial_year" required="required">
+								</div>
+								<div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xs-12 mt-1">
+									<label>&nbsp;</label>
+								</div>
+								<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xs-12 mt-1">
+									<label class="font-weight-bold">Payroll Month&nbsp;<span
+										class="text-danger">*</span>:
+									</label>
+								</div>
+								<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+									<select name="month" class="form-control"
+										data-ng-model="data.object.payroll_month">
+										<option>--Select--</option>
+										<option data-ng-repeat="month in months"
+											value="{{month.payroll_id}}">{{month.payroll_month}}</option>
+									</select>
+								</div>
+							</div>
+
+
+
+
+
+
+
+							<div class=" dt-responsive table-responsive ">
+								<table id="order-table"
+									class="table table-striped table-bordered nowrap ">
+									<thead>
+										<tr style='background-color: CornflowerBlue'>
+											<th>Employee Id</th>
+											<th>Employee Name</th>
+											<th>OP BAL</th>
+											<th>Leaves Availed</th>
+											<th>Leaves Forwarded</th>
+											<th>Leaves Encashed</th>
+											<th>Basic Salary($)</th>
+											<th>Special Allowance($)</th>
+											<th>Encash Amount($)</th>
+											<th><input type="checkbox"
+												data-ng-model="inactiveleaveEncashment"
+												data-ng-true-value="true" data-ng-false-value="false"
+												data-ng-click="setAllInactiveRegIds(inactiveleaveEncashment);">&nbsp;Select
+											</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											data-ng-repeat="inactiveleave in (filtereditems = (inactiveleaves | filter : search))">
+											<td>{{inactiveleave.empid}}</td>
+											<td>{{inactiveleave.employeename}}</td>
+											<td>{{inactiveleave.opbal}}</td>
+											<td>{{inactiveleave.availed_leaves}}</td>
+											<td>{{inactiveleave.forwarded_leaves}}</td>
+											<td>{{inactiveleave.encashed_leaves}}</td>
+											<td>{{inactiveleave.basic_salary}}</td>
+											<td>{{inactiveleave.special_allowance}}</td>
+											<td>{{inactiveleave.encash_amount}}</td>
+											<td><input type="checkbox"
+												data-ng-model="studentsInactivePresentArr[inactiveleave.empid]"></td>
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<center>
+								<button type="button" class="btn btn-primary" type="submit"
+									name="theme_submit"
+									data-ng-click="saveInactiveLeaveEncashmentDetails(inactiveleaves,studentsInactivePresentArr);">Submit</button>
+							</center>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+
+<script>
+jQuery(document).ready(function() {
+	
+	$("#attendance").show();
+	$("#display").hide();
+	$("#th3").hide();
+	angular.bootstrap(jQuery("#leaveEncashmentDiv"), [ 'leaveEncashmentModule' ]);
+});                
+jQuery("#s1").click(function() {
+   
+	$("#display").show();
+	$("#th3").show();   
+	      
+	   
+});
+
+</script>

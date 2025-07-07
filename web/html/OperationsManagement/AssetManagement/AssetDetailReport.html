@@ -1,0 +1,186 @@
+
+<script src="/erp/files/assets/js/erp-scripts/Assets/assetdet.js"></script>
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+
+        
+    
+
+    <style>
+        .mt-mid {
+            margin-top: 4.5%;
+        }
+    </style>
+
+<div id="assetdetId" data-ng-controller="assetdetController">
+
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Asset Detail Reports</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Procurements</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Asset Management</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Assets Detail Reports</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Location wise Report</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-xl-3 col-sm-2">
+                                                                <label class="font-weight-bold">Cost Center<span class="text-danger">*</span></label>
+                                                                <select name="select" class="form-control form-control-default" data-ng-model="data.object.location_id">
+						
+						<option data-ng-repeat="location in locations"
+							value="{{location.id}}">{{location.location_name}}</option>
+					</select>
+                                                         
+                                                            </div>
+                                                            <div class="mr-5 mt-mid"><input type="radio" class="mx-2">Summary</div>
+                                                            <div class="mr-5 mt-mid"><input type="radio" class="mx-2">Detailed</div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-xl-12 m-b-30 text-center mt-3"> <button type="submit" class="btn btn-primary">Submit</button></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Location Wise List</h6>
+                                                    </div>
+                                                    <div class="card-body">
+
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="dt-responsive table-responsive ">
+                                                                    <table id="simpletable" class="table table-hover table-bordered nowrap">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>S.No</th>
+                                                                                <th>Location Name</th>
+                                                                                <th>Asset Count</th>
+                                                                                <th>Total Amount</th>
+
+
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                          <tr data-ng-repeat="data in filteredResult =(assdetlocdetails | filter:search)">   
+        <td>{{$index+1}}</td>  
+		<td>{{data.location_name}}</td>	 
+		<td>{{data.assetcount}}</td>	 
+		<td>{{data.totalamount}}</td>	 
+                  </tr>
+                                                                        </tbody>
+
+                                                                    </table>
+                                                                </div>
+
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Location Wise List</h6>
+                                                    </div>
+                                                    <div class="card-body">
+
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="dt-responsive table-responsive ">
+                                                                    <table id="simpltable" class="table table-hover table-bordered nowrap">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>S.No</th>
+                                                                                <th>Location</th>
+                                                                                <th>Type of Asset</th>
+                                                                                <th>Count value</th>
+
+
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                           <tr data-ng-repeat="userdata in filteredResult =(pogrndetails | filter:search)">   
+                 <td>{{$index+1}}</td>  
+		<td>{{data.location_name}}</td>	 
+		<td>{{data.assetcount}}</td>	 
+		<td>{{data.totalamount}}</td>
+		<td>{{data.totalamount}}</td>	 	 
+          </tr>   
+                                                                        </tbody>
+
+                                                                    </table>
+                                                                </div>
+
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                               
+
+    
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+    
+    <script>     
+        $('#simpltable').DataTable();
+    </script>
+<script> 
+jQuery(document).ready(function() { 
+	
+	angular.bootstrap(jQuery("#assetdetId"), [ 'assetdet' ]);
+});</script>

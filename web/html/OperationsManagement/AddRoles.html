@@ -1,0 +1,137 @@
+
+	<div id="AddRoleId" data-ng-controller="AddRoleController">                
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5></h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Admin Control</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">HRMS Admin</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Add Roles</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->     
+
+                                        <div class="row">
+
+                                            <div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12 ">
+                                                <div class="form-group">
+
+                                                    <select class="js-example-basic-single select2">
+                                                                
+                                                                         <option value="AL">Alabama</option>
+                                                                            
+                                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header bg-primary">
+				<h6 class="card-title">Roles</h6>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-md-7 col-xl-7 col-lg-7 col-xs-12">
+					
+						<div class="form-group">
+							<label class="font-weight-bold">Employee Id:</label> <input type="text"
+								class="form-control form-control-primary"  data-ng-model="data.object.empid">
+						</div>
+				
+						<div class="form-group">
+							<label class="font-weight-bold">Roles</label> <select 
+								class="js-example-basic-multiple col-sm-12 form-control form-control-primary"
+								multiple="multiple" id="roleselect" data-ng-model="data.object.roles">
+								  <option data-ng-repeat = "role in roles" value = "{{role.id}}">{{role.role_name}}</option>  
+							</select> 
+							<select hidden="true" data-ng-model="data.object.roles">
+								  <option></option>
+								  <option></option>  
+							</select> 
+						</div>
+					</div>
+				</div>
+				<h6>&nbsp;</h6>
+				<div class="row">
+					<div class="col-sm-12 mt-1 text-center">
+						<button class="btn btn-grd-success blacks hor-grd " data-ng-click="submit(data.object)">Add Roles</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-5 col-xl-5 col-lg-5 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Employee
+                                                                        ID&nbsp;&nbsp;<span class="text-danger">*</span>
+                                                                        :</label>
+                                                                    <input type="text" class="form-control form-control-primary" placeholder="Enter Employee ID">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-5 col-xl-5 col-lg-5 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">ADD
+                                                                        Roles&nbsp;&nbsp;<span
+                                                                            class="text-danger">*</span> :</label>
+                                                                    <select class="js-example-basic-multiple" multiple="multiple">
+                                                                        <option value="AL">Alabama</option>
+                                                                        <option value="WY">Wyoming</option>
+                                                                        <option value="WY">Coming</option>
+                                                                        <option value="WY">Hanry Die</option>
+                                                                        <option value="WY">John Doe</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                          			</div>
+                          			
+                 
+	
+     <script src="/erp/files/assets/js/erp-scripts/AddRolesModule.js"></script>
+
+
+   
+ 	
+<script>                        
+		jQuery(document).ready(function() {         
+			
+			angular.bootstrap(jQuery("#AddRoleId"), [ 'AddRolesModule' ]);
+	    });
+		
+	</script>
+	

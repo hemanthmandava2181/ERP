@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Payroll">
+	<select id="locationCount" resultType="LocationCount">
+		select count(*) AS all
+		from hrms.employee_employment_details where status=0;
+
+	</select>
+	<select id="getFinancialYear" resultType="map">
+		select id,name from
+		hrms.financial_year_mst;
+	</select>
+	<insert id="savePayrollSettings" parameterType="map">
+		insert into
+		hrms.payroll_settings(financial_year,from_date,to_date,payroll_month,month_days)
+		values
+		(#{p.financial_year},#{p.from_date},#{p.to_date},    
+		#{p.payroll_month},#{p.month_days})
+	</insert>
+	<select id="getPayrollDetails1" resultType="java.util.Map">
+		select
+		a.from_date,a.to_date,(case when a.payroll_month=1 then 'January'
+		when
+		a.payroll_month=2 then 'February'
+		when a.payroll_month=3 then 'March'
+		when a.payroll_month=4 then 'April'
+		when a.payroll_month=5 then 'May'
+		when a.payroll_month=6 then 'June'
+		when a.payroll_month=7 then 'July'
+		when a.payroll_month=8 then 'August'
+		when a.payroll_month=9 then
+		'September'
+		when a.payroll_month=10 then 'October'
+		when
+		a.payroll_month=11 then 'November'
+		when a.payroll_month=12 then
+		'December' end) as payroll_month,a.month_days,b.name as
+		financial_year
+		from
+		(select
+		id,from_date,to_date,payroll_month,financial_year,month_days from
+		hrms.payroll_settings)a inner join(select id,name from
+		hrms.financial_year_mst)b
+		on a.financial_year=b.id where
+		payroll_month=#{payroll_month} and
+		financial_year=#{financial_year} and
+		from_date=#{from_date} and
+		to_date=#{to_date}
+	</select>
+	
+	<select id="getJVPayrollDetails1" resultType="java.util.Map">
+		select
+		a.from_date,a.to_date,(case when a.payroll_month=1 then 'January'
+		when
+		a.payroll_month=2 then 'February'
+		when a.payroll_month=3 then 'March'
+		when a.payroll_month=4 then 'April'
+		when a.payroll_month=5 then 'May'
+		when a.payroll_month=6 then 'June'
+		when a.payroll_month=7 then 'July'
+		when a.payroll_month=8 then 'August'
+		when a.payroll_month=9 then
+		'September'
+		when a.payroll_month=10 then 'October'
+		when
+		a.payroll_month=11 then 'November'
+		when a.payroll_month=12 then
+		'December' end) as payroll_month,a.month_days,b.name as
+		financial_year
+		from
+		(select
+		id,from_date,to_date,payroll_month,financial_year,month_days from
+		hrms.payroll_settings)a inner join(select id,name from
+		hrms.financial_year_mst)b
+		on a.financial_year=b.id where
+		payroll_month=#{payroll_month} and
+		financial_year=#{financial_year}
+	</select>
+	<select id="getPayrollDetails2" resultType="java.util.Map">
+		select month_days
+		from hrms.payroll_settings where
+		payroll_month=#{payroll_month} and
+		financial_year=#{financial_year}
+		and from_date=#{from_date} and
+		to_date=#{to_date}
+	</select>
+	
+	<select id="getJVPayrollDetails2" resultType="java.util.Map">
+		select month_days
+		from hrms.payroll_settings where
+		payroll_month=#{payroll_month} and
+		financial_year=#{financial_year}
+		
+	</select>
+	<select id="getPayrollDetails3" resultType="java.util.Map">
+		select b.name as
+		financial_year from
+		(select
+		id,from_date,to_date,payroll_month,financial_year from
+		hrms.payroll_settings)a inner join(select id,name from
+		hrms.financial_year_mst)b
+		on a.financial_year=b.id where
+		payroll_month=#{payroll_month} and
+		financial_year=#{financial_year} and
+		from_date=#{from_date} and
+		to_date=#{to_date}
+	</select>
+	
+	<select id="getJVPayrollDetails3" resultType="java.util.Map">
+		select b.name as
+		financial_year from
+		(select
+		id,from_date,to_date,payroll_month,financial_year from
+		hrms.payroll_settings)a inner join(select id,name from
+		hrms.financial_year_mst)b
+		on a.financial_year=b.id where
+		payroll_month=#{payroll_month} and
+		financial_year=#{financial_year} 
+	</select>
+	<select id="getPayrollDetails4" resultType="java.util.Map">
+		select
+		payroll_month,month_days from hrms.payroll_settings where
+		payroll_month=#{payroll_month} and financial_year=#{financial_year}
+		and from_date=#{from_date} and to_date=#{to_date}
+	</select>
+	
+	<select id="getJVPayrollDetails4" resultType="java.util.Map">
+		select
+		payroll_month,month_days from hrms.payroll_settings where
+		payroll_month=#{payroll_month} and financial_year=#{financial_year}
+
+	</select>
+	<select id="getPayrollDetails5" resultType="java.util.Map">
+		select
+		payroll_month,financial_year,from_date,to_date,month_days from
+		hrms.payroll_settings where payroll_month=#{payroll_month} and
+		financial_year=#{financial_year} and from_date=#{from_date} and
+		to_date=#{to_date}
+	</select>
+	
+	<select id="getJVPayrollDetails5" resultType="java.util.Map">
+		select
+		payroll_month,financial_year,from_date,to_date,month_days from
+		hrms.payroll_settings where payroll_month=#{payroll_month} and
+		financial_year=#{financial_year} 
+	</select>
+	<select id="getPayrollTotal1" resultType="java.util.Map">
+
+		select
+		a.financial_year,a.payroll_month,a.grosspay,a.deductions,(a.grosspay-a.deductions)
+		as netpay from (select a.financial_year,a.payroll_month,sum(a.amount)
+		as grosspay,
+		sum(case when b.heads_nature=1 then amount end) as
+		deductions from
+		hrms.employee_payroll a inner join
+		hrms.payslip_heads_mst b on
+		(a.payslip_head=b.id) group by
+		a.financial_year,a.payroll_month) a
+		where
+		a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month}
+	</select>
+	
+		<select id="getJVPayrollTotal1" resultType="java.util.Map">
+
+		select
+		a.financial_year,a.payroll_month,a.grosspay,a.deductions,(a.grosspay-a.deductions)
+		as netpay from (select a.financial_year,a.payroll_month,sum(a.amount)
+		as grosspay,
+		sum(case when b.heads_nature=1 then amount end) as
+		deductions from
+		hrms.employee_payroll a inner join
+		hrms.payslip_heads_mst b on
+		(a.payslip_head=b.id) group by
+		a.financial_year,a.payroll_month) a
+		where
+		a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month}
+	</select>
+
+	<select id="getPayrollTotal2" resultType="java.util.Map">
+
+		select c.id,
+		b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_payroll a inner join hrms.employee_employment_details b
+		on (a.empid=b.empid) inner join hrms.payslip_heads_mst c on
+		(a.payslip_head=c.id) where b.employee_type=0 and
+		a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by
+		b.employee_type,c.name,c.id
+
+	</select> 
+	
+	<select id="getJVPayrollTotal2" resultType="java.util.Map">
+		select
+		c.id,b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_payroll a inner join hrms.employee_employment_details b
+		on (a.empid=b.empid) inner join hrms.payslip_heads_mst c on
+		(a.payslip_head=c.id) where b.employee_type=0 and
+		a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by
+		b.employee_type,c.name,c.id
+	</select>
+	<select id="getPayrollTotal3" resultType="java.util.Map">
+
+		select c.id,
+		b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_payroll a inner join hrms.employee_employment_details b
+		on (a.empid=b.empid) inner join hrms.payslip_heads_mst c on
+		(a.payslip_head=c.id) where b.employee_type=1 and
+		a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by
+		b.employee_type,c.name,c.id
+
+	</select>
+	
+	<select id="getJVPayrollTotal3" resultType="java.util.Map">
+
+		select
+		c.id,b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_payroll a inner join hrms.employee_employment_details b
+		on (a.empid=b.empid) inner join hrms.payslip_heads_mst c on
+		(a.payslip_head=c.id) where b.employee_type=1 and
+		a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by
+		b.employee_type,c.name,c.id
+
+	</select>
+
+	<select id="getPayrollTotal4" resultType="java.util.Map">
+
+		select c.id,
+		b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_payroll a inner join hrms.employee_employment_details b
+		on (a.empid=b.empid) inner join hrms.payslip_heads_mst c on
+		(a.payslip_head=c.id) where b.employee_type=3 and
+		a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by
+		b.employee_type,c.name,c.id
+
+	</select>
+	
+	<select id="getJVPayrollTotal4" resultType="java.util.Map">
+
+		select c.id,
+		b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_payroll a inner join hrms.employee_employment_details b
+		on (a.empid=b.empid) inner join hrms.payslip_heads_mst c on
+		(a.payslip_head=c.id) where b.employee_type=3 and
+		a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by
+		b.employee_type,c.name,c.id
+
+	</select>
+
+	<select id="getPayrollTotal5" resultType="java.util.Map">
+		select c.id,
+		b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_arrears_payroll a inner join
+		hrms.employee_employment_details b on (a.empid=b.empid) inner join
+		hrms.payslip_heads_mst c on (a.payslip_heads=c.id) where
+		b.employee_type=0 and a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by b.employee_type,c.name,c.id
+
+	</select>
+	
+	<select id="getJVPayrollTotal5" resultType="java.util.Map">
+		select c.id,
+		b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_arrears_payroll a inner join
+		hrms.employee_employment_details b on (a.empid=b.empid) inner join
+		hrms.payslip_heads_mst c on (a.payslip_heads=c.id) where
+		b.employee_type=0 and a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by b.employee_type,c.name,c.id
+
+	</select>
+
+	<select id="getPayrollTotal6" resultType="java.util.Map">
+		select c.id,
+		b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_arrears_payroll a inner join
+		hrms.employee_employment_details b on (a.empid=b.empid) inner join
+		hrms.payslip_heads_mst c on (a.payslip_heads=c.id) where
+		b.employee_type=1 and a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by b.employee_type,c.name,c.id
+
+	</select>
+	
+	<select id="getJVPayrollTotal6" resultType="java.util.Map">
+		select c.id,
+		b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_arrears_payroll a inner join
+		hrms.employee_employment_details b on (a.empid=b.empid) inner join
+		hrms.payslip_heads_mst c on (a.payslip_heads=c.id) where
+		b.employee_type=1 and a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by b.employee_type,c.name,c.id
+
+	</select>
+	<select id="getPayrollTotal7" resultType="java.util.Map">
+		select c.id,
+		b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_arrears_payroll a inner join
+		hrms.employee_employment_details b on (a.empid=b.empid) inner join
+		hrms.payslip_heads_mst c on (a.payslip_heads=c.id) where
+		b.employee_type=3 and a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by b.employee_type,c.name,c.id
+	</select>
+	
+	<select id="getJVPayrollTotal7" resultType="java.util.Map">
+		select c.id,
+		b.employee_type,c.name,sum(a.amount) as amount from
+		hrms.employee_arrears_payroll a inner join
+		hrms.employee_employment_details b on (a.empid=b.empid) inner join
+		hrms.payslip_heads_mst c on (a.payslip_heads=c.id) where
+		b.employee_type=3 and a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by b.employee_type,c.name,c.id
+	</select>
+
+	<select id="getPayrollTotal8" resultType="java.util.Map">
+		select b.id,
+		b.name,sum(amount) as amount from hrms.employee_payroll a inner join
+		hrms.payslip_heads_mst b on (a.payslip_head=b.id) where
+		a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by b.name,b.id
+
+	</select>
+	
+		<select id="getJVPayrollTotal8" resultType="java.util.Map">
+		select b.id,
+		b.name,sum(amount) as amount from hrms.employee_payroll a inner join
+		hrms.payslip_heads_mst b on (a.payslip_head=b.id) where
+		a.financial_year=#{financial_year} and
+		a.payroll_month=#{payroll_month} group by b.name,b.id
+
+	</select>
+	<insert id="GeneratePayroll" parameterType="map">
+	insert into
+	hrms.employee_payroll(financial_year,payroll_month,empid,payslip_head,amount)
+	(select #{p.financial_year},#{p.payroll_month},a.empid as
+	employeeid,a.payslip_heads,sum(a.amount) from (with total_paydays as
+	(select e.empid,(case when e.qtrleaves> e.total_leaves then
+	e.totaldays-(e.pleaves+e.naleaves)
+
+	when
+	(e.pleaves+e.naleaves)>=total_leaves and e.total_leaves > e.qtrleaves
+	then e.totaldays-(e.pleaves+e.naleaves+qtrleaves-total_leaves)
+
+	when
+	(e.pleaves+e.naleaves+e.qtrleaves)>e.total_leaves and total_leaves >
+	e.qtrleaves then
+	e.total_leaves-(e.pleaves+e.naleaves+e.qtrleaves)+e.total_leaves
+
+	else
+	e.totaldays end)as paydays from
+
+
+	(
+
+	select
+	a.empid,a.totaldays,a.workingdays,a.holidays,a.attended,Coalesce(b.pls,0)
+	pleaves,Coalesce(b.cos,0)cleaves,Coalesce(b.fls,0)fleaves,Coalesce(b.notapplied,0)
+	naleaves,Coalesce(c.qtrleaves,0) qtrleaves,Coalesce(d.total_leaves,0)
+	total_leaves from
+
+	(select empid,(select count(*) from(select
+	generate_series(#{p.from_date},#{p.to_date},interval '1 Day'))a)
+	totaldays,(select count(*) from (select
+	generate_series(#{p.from_date},#{p.to_date},interval '1 Day') as
+	days)a
+	where 6 > extract('ISODOW' from a.days)) workingdays,(select
+	count(*)
+	from hrms.calender_mst where date between #{p.from_date} and
+	#{p.to_date} and holiday_type=0) holidays,count(*) attended from
+	hrms.employee_login_details where 6 > extract ('ISODOW' from
+	login_date
+	) and login_date between #{p.from_date} and #{p.to_date}
+	group by empid)
+	a
+
+	left join
+
+	(select a.empid,sum(case when leave_type=1 then 1 else 0 end)
+	as pls,sum(case
+	when leave_type=4 then 1 else 0 end) as cos,sum(case
+	when leave_type=6
+	then 1 else 0 end) as fls,sum(case when leave_type=9
+	then 1 else 0
+	end) as notapplied from (select
+	empid,generate_series(from_date,to_date,interval '1 Day') as
+	leave_date,leave_type,leavestatus from hrms.leaves ) a where
+	a.leave_date between #{p.from_date} and #{p.to_date} and
+	a.leavestatus=1 and 6 > extract ('ISODOW' from leave_date ) group by
+	a.empid) b
+
+	on (a.empid=b.empid)
+
+	left join
+
+	(select a.empid,count(*)
+	qtrleaves from (select
+	empid,generate_series(from_date,to_date,interval
+	'1 Day') as
+	leave_date from hrms.leaves where leave_type=1 and
+	leavestatus=1 and
+	#{p.from_date} > from_date and extract(quarter from
+	from_date)=extract(quarter from #{p.from_date}::date) and extract(year
+	from from_date)=extract(year from #{p.from_date}::date))a group by
+	a.empid) c
+
+	on (a.empid=c.empid)
+
+	left join
+
+	(select
+	empid,calendar_year,quarter,total_leaves from
+	hrms.employee_leave_summary where quarter=extract(quarter from
+	#{p.from_date}::date) and calendar_year=extract(year from
+	#{p.from_date}::date)) d
+
+	on (a.empid=d.empid)) e),ctc as(select
+	a.empid,a.ctc_calculator,b.payslip_heads,b.entity_type,b.value,((a.annual_salary/12)/(select
+	month_days from hrms.payroll_settings where
+	financial_year=#{p.financial_year} and
+	payroll_month=#{p.payroll_month})) daysal from
+	hrms.employee_ctc_association a inner join hrms.ctc_calculator_details
+	b on (a.ctc_calculator=b.ctc_calculator) where b.entity_type!=2 ),
+
+	spl
+	as (select
+	a.empid,a.ctc_calculator,a.payslip_heads,b.entity_type,b.value,a.daysal
+	from (select
+	a.empid,a.ctc_calculator,b.payslip_heads,b.entity_type,b.value,unnest(string_to_array(b.subtractheads,','))as
+	heads,((a.annual_salary/12)/(select month_days from
+	hrms.payroll_settings where financial_year=#{p.financial_year} and
+	payroll_month=#{p.payroll_month})) daysal from
+	hrms.employee_ctc_association a inner join hrms.ctc_calculator_details
+	b on (a.ctc_calculator=b.ctc_calculator) where b.entity_type=2 )a
+	inner
+	join
+
+	hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator
+	and
+	a.heads::int=b.payslip_heads)),lop as (select
+	a.empid,a.payslip_heads,a.amount from (select
+	a.empid,a.financial_year,a.month,33 as payslip_heads,sum(a.amount) as
+	amount from hrms.employee_lop_payroll a inner join
+	hrms.payslip_heads_mst b on (a.payslip_heads=b.id) where
+	b.heads_nature=0 group by a.empid,a.financial_year,a.month
+
+	union
+
+	select
+	a.empid,a.financial_year,a.month,payslip_heads,a.amount from
+	hrms.employee_lop_payroll a inner join hrms.payslip_heads_mst b on
+	(a.payslip_heads=b.id) where b.heads_nature=1 and a.amount>0 group by
+	a.empid,a.financial_year,a.month,payslip_heads
+
+	union
+
+	select empid,(select
+	id from hrms.financial_year_mst where #{p.to_date} >
+	from_date and
+	to_date > #{p.to_date} ),calendar_month,13 as
+	payslip_heads,lop_amount    
+	from hrms.employee_lop where
+	calendar_year=extract(year from
+	#{to_date}::date) ) a where
+	a.financial_year=#{p.financial_year} and
+	a.month=#{p.payroll_month}),
+
+	stopsal as (select
+	a.empid,a.payslip_heads,a.amount from (select
+	a.empid,a.financial_year,a.payroll_month,8 as
+	payslip_heads,sum(a.amount) as amount from
+	hrms.employee_stop_salary_payroll a inner join hrms.payslip_heads_mst
+	b
+	on (a.payslip_heads=b.id) where b.heads_nature=0 group by
+	a.empid,a.financial_year,a.payroll_month
+
+	union
+
+	select
+	a.empid,a.financial_year,a.payroll_month,payslip_heads,a.amount from
+	hrms.employee_stop_salary_payroll a inner join hrms.payslip_heads_mst
+	b
+	on (a.payslip_heads=b.id) where b.heads_nature=1 and a.amount>0
+	group by
+	a.empid,a.financial_year,a.payroll_month,payslip_heads) a
+	where
+	a.financial_year=#{p.financial_year} and
+	a.payroll_month=#{p.payroll_month}),
+
+	arrears as (select
+	a.empid,a.payslip_heads,a.amount from (select
+	a.empid,a.financial_year,a.payroll_month,a.revise_month,8 as
+	payslip_heads,sum(a.amount) as amount from
+	hrms.employee_arrears_payroll a inner join hrms.payslip_heads_mst b on
+	(a.payslip_heads=b.id) where b.heads_nature=0 group by
+	a.empid,a.financial_year,a.payroll_month,a.revise_month
+
+	union
+
+	select
+	a.empid,a.financial_year,a.payroll_month,a.revise_month,payslip_heads,a.amount
+	from hrms.employee_arrears_payroll a inner join hrms.payslip_heads_mst
+	b on (a.payslip_heads=b.id) where b.heads_nature=1 and a.amount>0
+	group
+	by
+	a.empid,a.financial_year,a.payroll_month,a.revise_month,a.payslip_heads)
+	a where a.financial_year=#{p.financial_year} and
+	a.payroll_month=#{p.payroll_month})
+
+
+
+	select a.empid,ctc.payslip_heads,
+
+	(case when ctc.entity_type=1 then
+	round(((ctc.daysal*a.paydays)/100)*ctc.value)
+
+	when ctc.entity_type=0
+	then ctc.value end)as amount from total_paydays a
+	inner join ctc on
+	(a.empid=ctc.empid)
+
+	union
+
+	select
+	a.empid,a.payslip_heads,a.amount-(round((a.paydays*a.daysal))) as
+	amount from (select
+	a.empid,spl.daysal,a.paydays,spl.payslip_heads,sum(case when
+	spl.entity_type=1 then round(((spl.daysal*a.paydays)/100)*spl.value)
+
+	when spl.entity_type=0 then spl.value end)as amount from total_paydays
+	a inner join spl on (a.empid=spl.empid) group by
+	a.empid,spl.daysal,a.paydays,spl.payslip_heads) a
+
+
+
+	union
+
+	select empid,payslip_heads,amount from lop
+
+	union
+
+	select
+	empid,payslip_heads,amount from stopsal
+
+	union
+
+	select
+	empid,payslip_heads,amount from arrears
+	union
+	select a.empid,9 as
+	payslip_heads,round((0.75/100)*(a.paydays*b.daysal)) as
+	amount from
+	total_paydays a inner join ctc b on (a.empid=b.empid) inner
+	join (select
+	a.empid,b.annual_salary from
+	hrms.employee_employment_details a inner
+	join
+	hrms.employee_ctc_association b on (a.empid=b.empid and
+	a.employee_type=0 and status=0 ) where   250000>=b.annual_salary) c on
+	(a.empid=c.empid)
+	union
+	select a.empid,21 as
+	payslip_heads,round((3.25/100)*(a.paydays*b.daysal)) as
+	amount from
+	total_paydays a inner join ctc b on (a.empid=b.empid) inner
+	join (select
+	a.empid,b.annual_salary from
+	hrms.employee_employment_details a inner
+	join
+	hrms.employee_ctc_association b on (a.empid=b.empid and
+	a.employee_type=0 and status=0 ) where  250000>= b.annual_salary) c on
+	(a.empid=c.empid)
+
+
+
+	) a group by a.empid,a.payslip_heads) 
+	
+	
+	
+	<!-- insert into
+	hrms.employee_payroll(financial_year,payroll_month,empid,payslip_head,amount)
+	(select #{p.financial_year},#{p.payroll_month},a.empid as
+	employeeid,a.payslip_heads,sum(a.amount)
+
+	 from (with
+	total_paydays as (select e.empid,(case when e.qtrleaves >
+	e.total_leaves then e.totaldays-(e.pleaves+e.naleaves)
+	when (e.pleaves+e.naleaves)>=total_leaves and e.qtrleaves < e.total_leaves
+	then e.totaldays-(e.pleaves+e.naleaves+qtrleaves-total_leaves)
+	when (e.pleaves+e.naleaves+e.qtrleaves)>e.total_leaves and e.qtrleaves <
+	total_leaves then
+	e.total_leaves-(e.pleaves+e.naleaves+e.qtrleaves)+e.total_leaves
+	else e.totaldays end)as paydays from
+
+	(
+	select
+	a.empid,a.totaldays,a.workingdays,a.holidays,a.attended,Coalesce(b.pls,0)
+	pleaves,Coalesce(b.cos,0)cleaves,Coalesce(b.fls,0)fleaves,Coalesce(b.notapplied,0)
+	naleaves,Coalesce(c.qtrleaves,0) qtrleaves,Coalesce(d.total_leaves,0)
+	total_leaves from
+	(select empid,(select count(*) from(select
+	generate_series(#{p.from_date},#{p.to_date},interval '1 Day'))a)
+	totaldays,(select count(*) from (select
+	generate_series(#{p.from_date},#{p.to_date},interval '1 Day') as days)a
+	where 6 > extract('ISODOW' from a.days)) workingdays,(select count(*)
+	from hrms.calender_mst where date between #{p.from_date} and #{p.to_date}
+	and holiday_type=0) holidays,count(*) attended from
+	hrms.employee_login_details where 6 >  extract ('ISODOW' from login_date )
+	 and login_date between #{p.from_date} and #{p.to_date} group by empid)
+	a
+	left join
+	(select a.empid,sum(case when leave_type=1 then 1 else 0 end) as pls,sum(case
+	when leave_type=4 then 1 else 0 end) as cos,sum(case when leave_type=6
+	then 1 else 0 end) as fls,sum(case when leave_type=9 then 1 else 0 end)
+	as notapplied from (select
+	empid,generate_series(from_date,to_date,interval '1 Day') as
+	leave_date,leave_type,leavestatus from hrms.leaves ) a where
+	a.leave_date between #{p.from_date} and #{p.to_date}and a.leavestatus=1
+	and 6 > extract ('ISODOW' from leave_date )  group by a.empid) b
+	on (a.empid=b.empid)
+	left join
+	(select a.empid,count(*) qtrleaves from (select
+	empid,generate_series(from_date,to_date,interval '1 Day') as leave_date
+	from hrms.leaves where leave_type=1 and leavestatus=1 and
+	from_date<'2020-08-25' and extract(quarter from
+	from_date)=extract(quarter from #{p.from_date}::date) and extract(year
+	from from_date)=extract(year from #{p.from_date}::date))a group by
+	a.empid) c
+	on (a.empid=c.empid)
+	left join
+	(select empid,calendar_year,quarter,total_leaves from
+	hrms.employee_leave_summary where quarter=extract(quarter from
+	#{p.from_date}::date) and calendar_year=extract(year from
+	#{p.from_date}::date)) d
+	on (a.empid=d.empid)) e),ctc as(select
+	a.empid,a.ctc_calculator,b.payslip_heads,b.entity_type,b.value,
+	((a.annual_salary/12)/(select
+	month_days from hrms.payroll_settings where
+	financial_year=#{p.financial_year} and
+	payroll_month=#{p.payroll_month})) daysal from hrms.employee_ctc_association a inner join
+	hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator)
+	where b.entity_type!=2 ),
+	spl as (select
+	a.empid,a.ctc_calculator,a.payslip_heads,b.entity_type,b.value,a.daysal
+	from (select
+	a.empid,a.ctc_calculator,b.payslip_heads,b.entity_type,b.value,unnest(string_to_array(b.subtractheads,','))as
+	heads,((a.annual_salary/12)/(select count(*) from
+	generate_series(#{p.from_date},#{p.to_date},interval '1 Day'))) daysal
+	from hrms.employee_ctc_association a inner join
+	hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator)
+	where b.entity_type=2 )a inner join
+	hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator and
+	a.heads::int=b.payslip_heads)),lop as (select
+	a.empid,a.payslip_heads,a.amount from (select
+	a.empid,a.financial_year,a.month,33 as payslip_heads,sum(a.amount) as
+	amount from hrms.employee_lop_payroll a inner join
+	hrms.payslip_heads_mst b on (a.payslip_heads=b.id) where
+	b.heads_nature=0 group by a.empid,a.financial_year,a.month
+	union
+	select a.empid,a.financial_year,a.month,payslip_heads,a.amount from
+	hrms.employee_lop_payroll a inner join hrms.payslip_heads_mst b on
+	(a.payslip_heads=b.id) where b.heads_nature=1 and a.amount>0 group by
+	a.empid,a.financial_year,a.month,payslip_heads
+	union
+	select empid,(select id from hrms.financial_year_mst where from_date <
+	#{p.to_date}  and to_date > #{p.to_date}  ),calendar_month,13 as
+	payslip_heads,lop_amount from hrms.employee_lop where
+	calendar_year=extract(year from #{p.to_date} ::date) ) a where
+	a.financial_year=#{p.financial_year} and a.month=#{p.payroll_month}),
+	stopsal as (select a.empid,a.payslip_heads,a.amount from (select
+	a.empid,a.financial_year,a.payroll_month,8 as
+	payslip_heads,sum(a.amount) as amount from
+	hrms.employee_stop_salary_payroll a inner join hrms.payslip_heads_mst b
+	on (a.payslip_heads=b.id) where b.heads_nature=0 group by
+	a.empid,a.financial_year,a.payroll_month
+	union
+	select a.empid,a.financial_year,a.payroll_month,payslip_heads,a.amount from
+	hrms.employee_stop_salary_payroll a inner join hrms.payslip_heads_mst b
+	on (a.payslip_heads=b.id) where b.heads_nature=1 and a.amount>0 group
+	by a.empid,a.financial_year,a.payroll_month,payslip_heads) a where
+	a.financial_year= #{p.financial_year} and a.payroll_month=#{p.payroll_month}),
+	arrears as (select a.empid,a.payslip_heads,a.amount from (select
+	a.empid,a.financial_year,a.payroll_month,a.revise_month,8 as
+	payslip_heads,sum(a.amount) as amount from
+	hrms.employee_arrears_payroll a inner join hrms.payslip_heads_mst b on
+	(a.payslip_heads=b.id) where b.heads_nature=0 group by
+	a.empid,a.financial_year,a.payroll_month,a.revise_month
+	union
+	select
+	a.empid,a.financial_year,a.payroll_month,a.revise_month,payslip_heads,a.amount
+	from hrms.employee_arrears_payroll a inner join hrms.payslip_heads_mst
+	b on (a.payslip_heads=b.id) where b.heads_nature=1 and a.amount>0 group
+	by
+	a.empid,a.financial_year,a.payroll_month,a.revise_month,a.payslip_heads)
+	a where a.financial_year= #{p.financial_year} and a.payroll_month=#{p.payroll_month})
+
+
+	select a.empid,ctc.payslip_heads,
+	(case when ctc.entity_type=1 then
+	round(((ctc.daysal*a.paydays)/100)*ctc.value)
+	when ctc.entity_type=0 then ctc.value end)as amount from total_paydays a
+	inner join ctc on (a.empid=ctc.empid)
+	union
+	select a.empid,a.payslip_heads,a.amount-(round((a.paydays*a.daysal))) as
+	amount from (select
+	a.empid,spl.daysal,a.paydays,spl.payslip_heads,sum(case when
+	spl.entity_type=1 then round(((spl.daysal*a.paydays)/100)*spl.value)
+	when spl.entity_type=0 then spl.value end)as amount from total_paydays
+	a inner join spl on (a.empid=spl.empid) group by
+	a.empid,spl.daysal,a.paydays,spl.payslip_heads) a
+	union
+	select empid,payslip_heads,amount from lop
+	union
+	select empid,payslip_heads,amount from stopsal
+	union
+	select empid,payslip_heads,amount from arrears
+	union
+	select empid,51 as payslip_heads,amount from hrms.employee_allowances
+	union
+	select a.empid,9 as payslip_heads,round((0.75/100)*(a.paydays*b.daysal)) as
+	amount from total_paydays a inner join ctc b on (a.empid=b.empid) inner
+	join (select a.empid,b.annual_salary from
+	hrms.employee_employment_details a inner join
+	hrms.employee_ctc_association b on (a.empid=b.empid and
+	a.employee_type=0 and status=0 ) where b.annual_salary<=250000) c on
+	(a.empid=c.empid)
+	union
+	select a.empid,21 as payslip_heads,round((3.25/100)*(a.paydays*b.daysal)) as
+	amount from total_paydays a inner join ctc b on (a.empid=b.empid) inner
+	join (select a.empid,b.annual_salary from
+	hrms.employee_employment_details a inner join
+	hrms.employee_ctc_association b on (a.empid=b.empid and
+	a.employee_type=0 and status=0 ) where b.annual_salary<=250000) c on
+	(a.empid=c.empid)
+
+	) a group by a.empid,a.payslip_heads) -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</insert>
+	<insert id="ValidatePayroll" parameterType="map">
+		insert into
+		hrms.payroll_status(financial_year,payroll_month,status,approved_by,modified_by)
+		values
+		(#{p.financial_year},#{p.payroll_month},(select id from
+		hrms.payroll_approvals where
+		id=1),#{p.approved_by},#{p.modified_by})
+	</insert>
+	<insert id="RejectPayroll" parameterType="map">
+		insert into
+		hrms.payroll_status(financial_year,payroll_month,status,approved_by,modified_by)
+		values
+		(#{p.financial_year},#{p.payroll_month},(select id from
+		hrms.payroll_approvals where
+		id=3),#{p.approved_by},#{p.modified_by})
+	</insert>
+	<delete id="RejectPayrollStatus" parameterType="map">
+		delete from
+		hrms.employee_payroll where payroll_month=#{p.payroll_month} and
+		financial_year=#{p.financial_year}
+	</delete>
+
+	<insert id="ApprovePayroll" parameterType="map">
+		insert into
+		hrms.payroll_status(financial_year,payroll_month,status,approved_by,modified_by)
+		values
+		(#{p.financial_year},#{p.payroll_month},(select id from
+		hrms.payroll_approvals where
+		id=2),#{p.approved_by},#{p.modified_by})
+	</insert>
+	<insert id="GeneratePayrollStatus" parameterType="map">
+		insert into
+		hrms.payroll_status(financial_year,payroll_month,status,approved_by,modified_by)
+		values
+		(#{p.financial_year},#{p.payroll_month},(select id from
+		hrms.payroll_approvals where
+		id=0),#{p.approved_by},#{p.modified_by})
+	</insert>
+	
+	<select id="getPayRollJVModelData" resultType="java.util.Map">
+		select a.empid,a.amount,concat(b.first_name,' ',b.middle_name,' ',b.last_name)as empname 
+		from hrms.employee_payroll as a 
+		inner join hrms.employee_personal_details as b ON a.financial_year=#{p.financial_year} 
+		and a.payroll_month=#{p.payroll_month} and a.payslip_head=#{p.payslip_head} and a.empid=b.empid
+	</select>
+	
+	<select id="getPayRollJVModelDataOthers" resultType="java.util.Map">
+		select a.empid,a.amount,concat(b.first_name,' ',b.middle_name,' ',b.last_name)as empname 
+		from hrms.employee_payroll as a 
+		inner join hrms.employee_personal_details as b ON a.financial_year=#{p.financial_year} 
+		and a.payroll_month=#{p.payroll_month} and a.payslip_head=#{p.payslip_head} and a.empid=b.empid
+	</select>
+	
+	
+	<select id="getJVModalDataPaymentSummary" resultType="java.util.Map">
+		select a.empid,a.amount,concat(b.first_name,' ',b.middle_name,' ',b.last_name)as empname 
+		from hrms.employee_payroll as a 
+		inner join hrms.employee_personal_details as b ON a.financial_year=#{p.financial_year} 
+		and a.payroll_month=#{p.payroll_month} and a.payslip_head=#{p.payslip_head} and a.empid=b.empid
+	</select>
+	
+	<select id="getJVModalDataDeputation" resultType="java.util.Map">
+		select a.empid,a.amount,concat(b.first_name,' ',b.middle_name,' ',b.last_name)as empname 
+		from hrms.employee_payroll as a 
+		inner join hrms.employee_personal_details as b ON a.financial_year=#{p.financial_year} 
+		and a.payroll_month=#{p.payroll_month} and a.payslip_head=#{p.payslip_head} and a.empid=b.empid
+	</select>
+
+
+	
+	
+</mapper>                                

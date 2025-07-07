@@ -1,0 +1,412 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/Claimmanagement/advancelist.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+  
+<div id="advancelistId" data-ng-controller="advancelistController">
+	<div id = "mainpage">
+		<!-- BreadCrumb Start -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-block caption-breadcrumb">
+						<div class="breadcrumb-header">
+							<h5>Claim Advance List</h5>
+						</div>
+						<div class="page-header-breadcrumb">
+							<ul class="breadcrumb-title">
+								<li class="breadcrumb-item"><a href="#!"> <i
+										class="ti-home"></i>
+								</a></li>
+								<li class="breadcrumb-item"><a href="#!"></a>Claim Management</li>
+								<li class="breadcrumb-item"><a href="#!"></a>My Claims</li>
+								<li class="breadcrumb-item"><a href="#!"></a>Claim Advance List</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- BreadCrumb End -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header bg-primary">
+						<h6 class="card-title">Claim Advance List</h6>
+					</div>
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table id="order-table"
+								class="table table-striped table-bordered nowrap">
+								<thead class="btn-grd-primary">
+									<tr>
+										<th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">S.No</th>        
+									<th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">Request ID</th>   
+									<th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">Date Of Submission</th>    
+									<th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">From Date</th>    
+									<th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">To Date</th>  
+									<th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">Amount(Rs.)</th>
+									<th valign="middle" style="vertical-align: middle !important; min-width: 200px;max-width: 200px;" class="text-center">Description</th>
+									<th valign="middle" style="vertical-align: middle !important; min-width: 200px;max-width: 200px;" class="text-center">Project</th>
+									<th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">Approver</th>
+									<th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">Status</th> 
+									<th valign="middle" style="vertical-align: middle !important; min-width: 100px;max-width: 100px;" class="text-center">View</th>	
+									<th valign="middle" style="vertical-align: middle !important; min-width: 100px;max-width: 100px;" class="text-center">Action</th>
+									<!-- <th valign="middle" style="vertical-align: middle !important; min-width: 100px;max-width: 100px;" class="text-center">PDF</th> -->
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="advancedata in advanceListdetails">   
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{$index+1}}</td>   
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{advancedata.claim_advance_id}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{advancedata.created_date}}</td>    
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{advancedata.from_date}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{advancedata.to_date}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-right">{{advancedata.amount}}</td>    
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{advancedata.description}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{advancedata.project_name}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{advancedata.approved_by}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{advancedata.approvestatus}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">
+											<button class = "btn btn-primary" data-ng-click = "getadvanceviewpgedata(advancedata.claim_advance_id);" id = "viewpagebtn" type = "submit">View</button>
+										</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">
+											<button class = "btn btn-primary" id = "viewupdatebtn" data-toggle="modal" data-target="#large-Modal" type = "submit"
+												data-ng-click = "getpopupdata(advancedata.claim_advance_id);">Update</button>
+										</td>
+										<!-- <td valign="middle" style="vertical-align: middle !important;" class="text-center">
+											<button class = "btn btn-primary" id = "pdf" type = "submit" data-ng-click = "">PDF</button>
+										</td>  -->
+									</tr> 
+								</tbody> 
+							</table>   
+						</div>
+						
+						<!-- modal -->
+						<div class="modal fade md-effect-2" id="large-Modal" tabindex="-1"
+							role="dialog">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Update</h4>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<div class="card-body">
+											<div class="row">
+												<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+													<div class="form-group">
+														<label>Project&nbsp;</label>   
+											   			<select class = "form-control" data-ng-model = "data.object.project">
+															<option data-ng-repeat = "project in projects" 
+																value = "{{project.project}}">{{project.project_name}}</option>
+														</select> 
+													</div>
+												</div>
+												<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+													<div class="form-group">
+														<label>Purpose Of Request&nbsp;</label>   
+											   			<select class = "form-control" data-ng-model = "data.object.purpose">
+															<option value = "1">Travel Advance</option>
+															<option value = "2">Others</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+													<div class="form-group">
+														<label>Financial Year&nbsp;</label>   
+								   						<input type = "text" class = "form-control" disabled data-ng-model = "data.object.years"/> 
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+													<div class="form-group">
+														<label>Claim ID</label>       
+									   					<input type = "text" class = "form-control" disabled data-ng-model = "data.object.claim_advance_id"/> 
+													</div>
+												</div>
+												<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+													<div class="form-group">
+														<label>Amount</label>
+														<input type = "text" class = "form-control" data-ng-model = "data.object.amount"/>
+													</div>
+												</div>
+												<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+													<div class="form-group">
+														<label>Description</label>
+														<textarea type = "text" class = "form-control" data-ng-model = "data.object.description" ></textarea> 
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+													<div class="form-group">
+														<label>From Date</label>
+														<input type = "text" class = "form-control" data-ng-model = "data.object.from_date" /> 
+													</div>
+												</div>
+												<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+													<div class="form-group">
+														<label>To Date</label>
+														<input type = "text" class = "form-control" data-ng-model = "data.object.to_date" />
+													</div>
+												</div>
+												<!-- <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+													<div class="form-group">
+														<label>Attachments</label>
+														<input type = "file" data-ng-model = "data.object.file" 
+															onchange = "angular.element(this).scope().uploadFiles(this)" multiple = "multiple" class = "form-control" /> 
+													</div>
+												</div> -->
+											</div>     
+	
+											<h3>&nbsp;</h3>    
+	
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default waves-effect "
+											data-dismiss="modal">Close</button>
+										<button type="button"
+											class="btn btn-primary waves-effect waves-light " type = "submit" data-ng-click = "updateadvanceclaimdata(data.object);"
+											data-dismiss="modal">Update</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- view page -->
+	<div id = "viewpage">
+		<!-- BreadCrumb Start -->   
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-block caption-breadcrumb">
+						<div class="breadcrumb-header">
+							<h5>Advance List View Page</h5>
+						</div>
+						<div class="page-header-breadcrumb">
+							<ul class="breadcrumb-title">
+								<li class="breadcrumb-item"><a href="#!"> <i
+										class="ti-home"></i>
+								</a></li>
+								<li class="breadcrumb-item"><a href="#!">Claimmanagement</a>
+								</li>
+								<li class="breadcrumb-item"><a href="#!">My Claims</a></li>
+								<li class="breadcrumb-item"><a href="#!">Imprest
+										Reimbursement List</a></li>
+							</ul>
+						</div>
+					</div>   
+				</div>
+			</div>   
+		</div>    
+		<!-- BreadCrumb End -->
+	
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-body">
+						<div style="margin-top: 35px;"
+							class="panel panel-heading media mar_t2 ">
+							<div class="media-left ">
+								<img height="81 " width="81 " style="border: 2px solid #ccc;"
+									class="media-object img-circle " alt=" "
+									src="/files/assets/images/default_Muser.png ">
+							</div>
+							<div class="media-body ">
+								<h5 style="margin: 0; padding: 0; font-weight: 400;">Admin</h5>
+								<small>Emp.ID : AO0116397 </small><br> <small>Designation
+									: Administrative Officer </small><br> <small>Work Location
+									: APSSDC Head Office </small><br>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label class="font-weight-bold">Claim ID</label>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+								<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.claim_advance_id}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label class="font-weight-bold">Purpose Of Request</label>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+								<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.purposename}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label class="font-weight-bold">Applied On</label>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+								<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.created_date}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label class="font-weight-bold">From Date</label>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+								<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.from_date}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label class="font-weight-bold">To Date</label>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+								<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.to_date}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label class="font-weight-bold">Amount</label>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+								<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.amount}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label class="font-weight-bold">Status</label>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+								<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.approvestatus}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label class="font-weight-bold">Next Approver</label>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+								<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.next_approver}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label class="font-weight-bold">Project</label>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+								<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.project_name}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label class="font-weight-bold">Description</label>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+								<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.description}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table id="order-table"
+								class="table table-striped table-bordered nowrap">
+								<thead class="btn-grd-primary">
+									<tr>
+										<th valign="middle"
+											style="vertical-align: middle !important; min-width: 50px; max-width: 50px;"
+											class="text-center">S.No</th>
+										<th valign="middle"
+											style="vertical-align: middle !important; min-width: 200px; max-width: 200px;"
+											class="text-center">Approved Date</th>
+										<th valign="middle"
+											style="vertical-align: middle !important; min-width: 200px; max-width: 200px;"
+											class="text-center">Name</th>
+										<th valign="middle"
+											style="vertical-align: middle !important; min-width: 200px; max-width: 200px;"
+											class="text-center">Status</th>
+										<th valign="middle"
+											style="vertical-align: middle !important; min-width: 100px; max-width: 100px;"
+											class="text-center">Comments</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat = "historyview in viewhistorydetails">
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{$index+1}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{historyview.created_date}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{historyview.name}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{historyview.approvestatus}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">
+											<button class = "btn btn-primary" id = "veiwpagebtn" type = "submit">View</button> 
+										</td>
+									</tr>  
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+   
+
+
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+<script>             
+	jQuery(document).ready(function() {
+		document.getElementById("mainpage").style.display = "block";
+		document.getElementById("viewpage").style.display = "none";
+		angular.bootstrap(jQuery("#advancelistId"), [ 'advancelist' ]);
+	});
+	
+	$(document).on('click', "#viewpagebtn", function() {
+		document.getElementById("mainpage").style.display = "none";
+		document.getElementById("viewpage").style.display = "block";
+	}); 
+	
+</script>

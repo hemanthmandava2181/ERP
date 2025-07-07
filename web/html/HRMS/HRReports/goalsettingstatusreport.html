@@ -1,0 +1,208 @@
+<script src="/erp/scripts/general/reports/goalsettingsstatusreport.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="goalsettingDIV"
+	data-ng-controller="GoalSettingsStatusController">
+
+	
+
+
+						<!-- BreadCrumb Start -->
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card">
+									<div class="card-block caption-breadcrumb">
+										<div class="breadcrumb-header">
+											<h5>Goals Setting Status Report</h5>
+										</div>
+										<div class="page-header-breadcrumb">
+											<ul class="breadcrumb-title">
+												<li class="breadcrumb-item"><a href="#!"> <i
+														class="ti-home">HRMS</i>
+												</a></li>
+												<li class="breadcrumb-item"><a href="#!">HR Reports</a>
+												</li>
+												<li class="breadcrumb-item"><a href="#!">Goals
+														Setting Status Report</a></li>
+												<!--  <li class="breadcrumb-item">
+                                                                    <a href="#!"></a>
+                                                                </li>-->
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- BreadCrumb End -->
+						<div id="display">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="card">
+										<div class="card-header bg-primary">
+											<h6 class="card-title">Goals Setting Status Report</h6>
+										</div>
+										<div class="card-body">
+											<div class="row">
+												<div class="col-md-4">
+													<label>Financial Year<b class="text-danger">*</b></label> <select
+														class="form-control"
+														data-ng-model="data.object.financial_year">
+														<option></option>
+														<option data-ng-repeat="financialyear in financialyears"
+															value="{{financialyear.id}}">{{financialyear.name}}</option>
+													</select>
+												</div>
+												<div class="col-md-4">
+													<label>Employee Type<b class="text-danger">*</b></label> <select
+														class="form-control"
+														data-ng-model="data.object.employee_type">
+														<option></option>
+														<option data-ng-repeat="employeetype in employeetypes"
+															value="{{employeetype.id}}">{{employeetype.type}}</option>
+													</select>
+												</div>
+												<div class="col-md-4">
+													<label>Department<b class="text-danger">*</b></label> <select
+														class="form-control"
+														data-ng-model="data.object.department">
+														<option></option>
+														<option data-ng-repeat="department in departments"
+															value="{{department.id}}">{{department.name}}</option>
+													</select>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<label>Designation<b class="text-danger">*</b></label> <select
+														class="form-control"
+														data-ng-model="data.object.designation">
+														<option></option>
+														<option data-ng-repeat="designation in designations"
+															value="{{designation.id}}">{{designation.name}}</option>
+													</select>
+												</div>
+												<div class="col-md-4">
+													<label>Devision<b class="text-danger">*</b></label> <select
+														class="form-control" data-ng-model="data.object.division">
+														<option></option>
+														<option data-ng-repeat="division in divisions"
+															value="{{division.id}}">{{division.name}}</option>
+													</select>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-md-4"></div>
+												<div class="col-md-4">
+													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													&nbsp;&nbsp;&nbsp;&nbsp;
+													<button class="btn btn-primary" value="submit"
+														type="submit"
+														data-ng-click="getEmployeeGoalSettingStatus(data.object);">submit</button>
+												</div>
+												<div class="col-md-4"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="display1">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="card">
+										<div class="card-header bg-primary">
+											<h6 class="card-title">Sample Page</h6>
+										</div>
+										<div class="card-body">
+											<div class="dt-responsive table-responsive">
+												<table id="order-table"
+													class="table table-striped table-bordered nowrap">
+													<thead class="btn-grd-primary">
+														<tr>
+															<th>S.No</th>
+															<th>Name</th>
+															<th>Employee ID</th>
+															<th>Department</th>
+															<th>Designation</th>
+															<th>Employee Type</th>
+															<th>Cader</th>
+															<th>Grade</th>
+															<th>Part-A Status</th>
+															<th>Part-B Status</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr data-ng-repeat="emp in empstatus | filter:search">
+															<td>{{$index+1}}</td>
+															<td>{{emp.employeename}}</td>
+															<td>{{emp.employeeid}}</td>
+															<td>{{emp.department}}</td>
+															<td>{{emp.designation}}</td>
+															<td>{{emp.employee_type}}</td>
+															<td>{{emp.cader}}</td>
+															<td>{{emp.grade}}</td>
+															<td>{{emp.PartA_status}}</td>
+															<td>{{emp.PartB_status}}</td>
+
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+
+
+<script
+	src="files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="files/assets/pages/data-table/js/data-table-custom.js"></script>
+<script src="files/bower_components/raphael/js/raphael.min.js"></script>
+<script src="files/bower_components/morris.js/js/morris.js"></script>
+
+
+<script>
+	jQuery(document).ready(function() {
+
+		$("#display").show();
+		$("#display1joining").hide();
+		$("#display1relieving").hide();
+		$("#display1stop").hide();
+
+		$("#joining").DataTable();
+		$("#relieving").DataTable();
+		$("#stop").DataTable();
+
+		angular.bootstrap(jQuery("#goalsettingDIV"), [ 'goalstatusModule' ]);
+
+	});
+</script>
+
+

@@ -1,0 +1,388 @@
+
+<script src="/erp/files/assets/js/erp-scripts/HRMS/PayrollManagement/payrollsummary.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="payrollsummaryDIV"  data-ng-controller="PayrollSummmaryController">
+
+<div id="display">
+<div class="row">    
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-block caption-breadcrumb">
+				<div class="breadcrumb-header">
+					<h5>Employee PayRoll Summary</h5>
+				</div>
+				<div class="page-header-breadcrumb">
+					<ul class="breadcrumb-title">
+						<li class="breadcrumb-item"><a href="#!"> <i
+								class="ti-home"></i>
+						</a></li>
+						<li class="breadcrumb-item"><a href="#!">HRMS</a></li>
+						<li class="breadcrumb-item"><a href="#!">PayRoll
+								Management</a></li>
+						<li class="breadcrumb-item"><a href="#!">PayRoll
+								Summary</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- BreadCrumb End -->
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header bg-primary">
+				<h6 class="card-title">PayRoll Summary</h6>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-xl-2 m-b-30">
+						Financial year <label class="col-sm-3 col-form-label"></label>
+					</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+											<select class="form-control"
+												data-ng-model="data.object.financial_year">
+												<option></option>
+												<option data-ng-repeat="financialyear in financialyears"
+													value="{{financialyear.id}}">{{financialyear.name}}</option>
+											</select>
+										</div>
+					<div class="col-sm-12 col-xl-2 m-b-30">
+						Month <label class="col-sm-3 col-form-label"></label>
+					</div>
+					<div class="col-sm-12 col-xl-3 m-b-30">
+										<select class="form-control"
+								data-ng-model="data.object.payroll_month">
+								<option></option>
+								<option data-ng-repeat="month in months"
+									value="{{month.id}}">{{month.name}}</option>
+							</select>
+										</div>
+
+					<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+						Employee Type : <label class="mr-3"></label> <label class="mr-3">
+							<input type="radio" name="radio" checked="checked" value="ST" data-ng-model="data.object.type"><i
+							class="helper mr-2"></i>Staff
+						</label> <label class="mr-3"> <input type="radio" name="radio" value="OT" data-ng-model="data.object.type"><i
+							class="helper mr-2"></i>Others
+						</label> <label class="mr-3"> <input type="radio" name="radio" value="DP" data-ng-model="data.object.type"><i
+							class="helper mr-2"></i>Deputation
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<div class="row" data-ng-show="data.object.type == 'ST'">
+							<div class="col-sm-3">
+								<button class="btn btn-primary" style="margin-left: 415px;"
+									value="submit" type="submit"
+									data-ng-click="getEmployeeStaff(data.object);">SUBMIT</button>
+							</div>
+						</div>
+
+						<div class="row" data-ng-show="data.object.type == 'OT'">
+							<div class="col-sm-3">
+								<button class="btn btn-primary" style="margin-left: 415px;"
+									value="submit" type="submit"
+									data-ng-click="getEmployeeOthers(data.object);">SUBMIT</button>
+							</div>
+						</div>
+
+						<div class="row" data-ng-show="data.object.type == 'DP'">
+							<div class="col-sm-3">
+								<button class="btn btn-primary" style="margin-left: 415px;"
+									value="submit" type="submit"
+									data-ng-click="getEmployeeDeputation(data.object);">SUBMIT</button>
+							</div>
+						</div>
+			
+
+
+
+
+
+</div>
+
+<div id="displaystaff">
+
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header"></div>
+			<div class="card-body">
+				<div class="dt-responsive table-responsive">
+					<table class="table table-hover table-bordered" id="simpletable">
+						<thead class="btn-grd-primary">
+							<tr>
+							<td >S.NO</td>
+								<th>EMPLOYEE NAME</th>
+								<th>BASIC(+)</th>
+								<th>HRA(+)</th>
+								<th>CONVEYANCE(+)</th>
+								<th>MEDICAL ALLOWANCE(+)</th>
+								<th>SPECIAL ALLOWANCE(+)</th>
+								<th>LTA(+)</th>
+								<th>ARREARS(+)</th>
+								<th>ESI(-)</th>
+								<th>PROFESSIONAL TAX(-)</th>
+								<th>PF(-)</th>
+								<th>INCOME TAX(-)</th>
+								<th>EMPLOYER CONTRIBUTION PF(-)</th>
+								<th>EMPLOYER CONTRIBUTION ESI(-)</th>
+								<th>LOP DAYS</th>
+								<th>GROSS</th>
+								<th>DEDUCTIONS</th>
+								<th>NET SALARY</th>
+								<th>EMPLOYEE TYPE</th>
+								<th>BANK NAME</th>
+								<th>ACCOUNT NUMBER</th>
+								<th>IFSC CODE</th>
+								<th>BRANCH NAME</th>
+								<th>PAN NUMBER</th>
+								<!-- <th>Update Income</th> -->
+							</tr>
+						</thead>
+						<tbody>
+						
+							<tr data-ng-repeat="emp in employeestaff | filter:search">
+											<td>{{$index+1}}</td>
+											<td>{{emp.name}}</td>
+											<td>{{emp.basic}}</td>
+											<td>{{emp.hra}}</td>
+											<td>{{emp.conveyance}}</t>
+											<td>{{emp.medical_allowance}}</td>
+											<td>{{emp.special_allowance}}</td>
+											<td>{{emp.lta}}</td>
+											<td>{{emp.arrears}}</td>
+											
+											<td>{{emp.esi}}</td>
+											<td>{{emp.professiontax}}</td>
+											<td>{{emp.pf}}</td>
+											<td>{{emp.incometax}}</td>
+											<td>{{emp.employeecontributionpf}}</td>
+											<td>{{emp.employeecontributionesi}}</td>
+											<td>{{emp.lopdays}}</td>
+											<td>{{emp.gross}}</td>
+											<td>{{emp.dedutions}}</td>
+											<td>{{emp.netsalary}}</td>
+											<td>{{emp.employeetype}}</td>
+											<td>{{emp.bankname}}</td>
+											<td>{{emp.accountnumber}}</td>
+											<td>{{emp.ifsccode}}</td>
+											<td>{{emp.branchname}}</td>
+											<td>{{emp.pannumber}}</td>
+											
+										
+						
+								<!-- <td><button class="btn btn-secondary">
+										<i class="ti-eye"></i>
+									</button></td> -->
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<div id="displayothers">
+ <h6>Employee Salary Statement</h6>{{payroll_month}}  {{financial_year}}
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header"></div>
+			<div class="card-body">
+				<div class="dt-responsive table-responsive">
+					<table class="table table-hover table-bordered" id="simpletable">
+						<thead class="btn-grd-primary">
+							<tr>
+								<th>EMPLOYEE NAME</th>
+								<th>AMOUNT PAYABLE(GROSS)(+)</th>
+								<th>ARREARS(+)</th>
+								<th>LOP AMOUNT(-)</th>
+								<th>TDS(-)</th>
+								<th>LOP DAYS</th>
+								<th>GROSS</th>
+								<th>DEDUCTIONS</th>
+								<th>NET SALARY</th>
+								<th>EMPLOYEE TYPE</th>
+								<th>BANK NAME</th>
+								<th>ACCOUNT NUMBER</th>
+								<th>IFSC CODE</th>
+								<th>BRANCH NAME</th>
+								<th>PAN NUMBER</th>
+								<th>VIEW PAYSLIP</th>
+							</tr>
+						</thead>
+						<tbody>
+						
+						<tr data-ng-repeat="emp in employeeother | filter:search">
+											<td>{{$index+1}}</td>
+											<td>{{emp.employeename}}</td>
+											<td>{{emp.gross}}</td>
+											<td>{{emp.arrears}}</td>
+											<td>{{emp.lopdays}}</td>
+											<td>{{emp.tds}}</td>
+											<td>{{emp.gross}}</td>
+											<td>{{emp.deductions}}</td>
+											<td>{{emp.netsalary}}</td>
+											
+											<td>{{emp.employeetype}}</td>
+											<td>{{emp.bankname}}</td>
+											<td>{{emp.accountnumber}}</td>
+											<td>{{emp.ifsccode}}</td>
+											<td>{{emp.branch}}</td>
+											<td>{{emp.pannumber}}</td>
+							
+								<td><button class="btn btn-secondary">
+										<i class="ti-eye"></i>
+									</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+
+<div id="displayDeputation">
+ <h6>Employee Salary Statement</h6>{{payroll_month}}  {{financial_year}}
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header"></div>
+			<div class="card-body">
+				<div class="dt-responsive table-responsive">
+					<table class="table table-hover table-bordered" id="simpletable">
+						<thead class="btn-grd-primary">
+							<tr>
+								<th>EMPLOYEE NAME</th>
+								<th>HRA(+)</th>
+								<th>ACCOUNT PAYABLE(GROSS)(+)</th>
+								<th>PROFESSIONAL TAX(-)</th>
+								<th>PF(-)</th>
+								<th>INCOME TAX(-)</th>
+								<th>DA(+)</th>
+								<th>GIS(-)</th>
+								<th>DEPUTATION ALLOWANCE(+)</th>
+								<th>CCA(+)</th>
+								<th>EHS(-)</th>
+								<th>EMPLOYER CONTRIBUTION ESI(-)</th>
+								<th>LOP DAYS</th>
+								<th>GROSS</th>
+								<th>DEDUCTIONS</th>
+								<th>NET SALARY</th>
+								<th>EMPLOYEE TYPE</th>
+								<th>BANK NAME</th>
+								<th>ACCOUNT NUMBER</th>
+								<th>IFSC CODE</th>
+								<th>BRANCH NAME</th>
+								<th>PAN NUMBER</th>
+								<th>VIEW PAYSLIP</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="emp in employeedeputation | filter:search">
+											<td>{{$index+1}}</td>
+											<td>{{emp.employeename}}</td>
+											<td>{{emp.basic}}</td>
+											<td>{{emp.hra}}</td>
+											<td>{{emp.conveyance}}</td>
+											<td>{{emp.medicalallowance}}</td>
+											<td>{{emp.specialallowance}}</td>
+											<td>{{emp.lta}}</td>
+											<td>{{emp.arrears}}</td>
+											
+											<td>{{emp.esi}}</td>
+											<td>{{emp.professiontax}}</td>
+											<td>{{emp.pf}}</td>
+											<td>{{emp.incometax}}</td>
+											<td>{{emp.employeecontributionpf}}</td>
+											<td>{{emp.employeecontributionesi}}</td>
+											<td>{{emp.lopdays}}</td>
+											<td>{{emp.gross}}</td>
+											<td>{{emp.dedutions}}</td>
+											<td>{{emp.netsalary}}</td>
+											<td>{{emp.employeetype}}</td>
+											<td>{{emp.bankname}}</td>
+											<td>{{emp.accountnumber}}</td>
+											<td>{{emp.ifsccode}}</td>
+											<td>{{emp.branchname}}</td>
+											<td>{{emp.pannumber}}</td>
+											
+										
+						
+								<td><button class="btn btn-secondary">
+										<i class="ti-eye"></i>
+									</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+</div>
+</div>
+
+<script
+	src="files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+
+
+<script>
+jQuery(document).ready(
+		function() {
+
+			$("#display").show();
+			$("#displaystaff").hide();
+			$("#displayothers").hide();   
+			$("#displayDeputation").hide();
+			
+			$("#joining").DataTable();
+			$("#relieving").DataTable();
+			$("#stop").DataTable();
+			
+			angular.bootstrap(jQuery("#payrollsummaryDIV"),
+					[ 'payrollsummaryModule' ]);
+
+		});
+    </script>
+
+
+

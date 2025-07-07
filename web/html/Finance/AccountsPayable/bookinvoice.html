@@ -1,0 +1,373 @@
+
+<script src="/erp/files/assets/js/erp-scripts/finance/accountspayable/bookinvoice.js"></script>
+
+<!-- Data Tables -->
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="bookinvoiceId" data-ng-controller="bookinvoicecontroller">
+
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">   
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Create Invoice</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Finance</a></li>
+							<li class="breadcrumb-item"><a href="#!">Account Payable</a>
+							</li>
+							<li class="breadcrumb-item"><a href="#!">Create Invoice</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Create Invoice</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+							<div class="form-group">
+								<label class="font-weight-bold">Order Type</label> <select
+									name="select" class="form-control form-control-primary"
+									data-ng-model="data.object.order_type">
+									<option value="0" selected="selected">Work Order</option>
+									<option value="1">Others</option>
+								</select>
+							</div>
+						</div>
+						<!-- <div data-ng-show="data.object.order_type != '1'"> -->
+						<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12"
+							data-ng-show="data.object.order_type != '1'">
+							<div class="form-group">
+								<label class="font-weight-bold">Work Order No</label> <select
+									name="select" class="form-control form-control-primary"
+									data-ng-model="data.object.work_order"
+									data-ng-change="getDetailsofWO(data.object);">
+									<option data-ng-repeat="order in orders" value="{{order.id}}">{{order.workorder_id}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12"
+							data-ng-show="data.object.order_type != '1'">
+							<div class="form-group">
+								<label class="font-weight-bold">Cost Center</label> <select
+									name="select" class="form-control form-control-primary"
+									data-ng-model="data.object.cost_center">
+									<option data-ng-repeat="cost_center in cost_centers"
+										value="{{cost_center.id}}">{{cost_center.name}}</option>
+								</select>
+							</div>
+						</div>
+						<!-- </div> -->
+						<!-- <div data-ng-show="data.object.order_type == '1'"> -->
+						<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12"
+							data-ng-show="data.object.order_type == '1'">
+							<div class="form-group">
+								<label class="font-weight-bold">Cost Center&nbsp;</label> <select
+									class="form-control form-control-primary"
+									data-ng-model="data.object.cost_center">
+									<option data-ng-repeat="cost_center in cost_centers"
+										value="{{cost_center.id}}">{{cost_center.name}}</option>
+								</select>
+							</div>
+						</div>
+						<!-- </div> -->
+					</div>
+					<div data-ng-show="data.object.order_type == '1'">
+						<div class="row">
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold">Vendor</label> <select
+									class="form-control form-control-primary"
+									data-ng-model="data.object.vendor">
+									<option data-ng-repeat="vendor in vendors"
+										value="{{vendor.vendorid}}">{{vendor.vendorname}}</option>
+								</select>
+							</div>
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold">Program</label> <select
+									class="form-control form-control-primary"
+									data-ng-model="data.object.program">
+									<option data-ng-repeat="program in programs"
+										value="{{program.programid}}">{{program.programname}}</option>
+								</select>
+							</div>
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold">Service</label> <select
+									class="form-control form-control-primary"
+									data-ng-model="data.object.service">
+									<option data-ng-repeat="service in services"
+										value="{{service.serviceid}}">{{service.servicename}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div data-ng-show="data.object.order_type != '1'">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header bg-primary">Work Order Details</div>
+					<div class="card-body">
+
+						<div class="row">
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold">Vendor : </label>
+							</div>
+
+
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<label class="font-weight-bold">Program : </label>
+							</div>
+
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<label class="font-weight-bold">Service : </label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<label class="font-weight-bold">Amount : </label>
+							</div>
+
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<label class="font-weight-bold">Start Date : </label>
+							</div>
+
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<label class="font-weight-bold">Start Date : </label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div data-ng-show="data.object.order_type != '1'">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header bg-primary">Payment Terms</div>
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table id="simpletable"
+								class="table table-striped table-bordered nowrap">
+								<thead class="btn-grd-primary">
+									<tr>
+										<th>S.No</th>
+										<th>Title</th>
+										<th>Rate($)</th>
+										<th>Condition</th>
+										<th>Amount</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="referencedata in referenceDetails">
+										<td style="text-align: left;">{{referencedata.vendor_name}}</td>
+										<td style="text-align: left;">{{referencedata.vendor_name}}</td>
+										<td style="text-align: left;">{{referencedata.vendor_name}}</td>
+										<td style="text-align: left;">{{referencedata.vendor_name}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div data-ng-show="data.object.order_type != '1'">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header bg-primary">Invoice</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<div class="form-group">
+									<label class="font-weight-bold">Invoice#</label> <input
+										type="text" class="form-control form-control-primary"
+										placeholder=" ">
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<div class="form-group">
+									<label class="font-weight-bold">Invoice Date</label> <input
+										type="date" class="form-control form-control-primary"
+										placeholder=" ">
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<div class="form-group">
+									<label class="font-weight-bold">Due Date</label> <input
+										type="date" class="form-control form-control-primary"
+										placeholder=" ">
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<div class="form-group">
+									<label class="font-weight-bold">Amount</label> <input
+										type="text" class="form-control form-control-primary"
+										placeholder=" ">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 mt-1">
+								<div class="form-group">
+									<label class="font-weight-bold">Description</label>
+								 	<textarea class="form-control form-control-primary"></textarea>
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 mt-1">
+								<div class="form-group">
+									<label class="font-weight-bold">Attachments</label> <input
+										type="File" class="form-control form-control-primary"
+										placeholder=" ">
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xs-12 mt-1">
+								<button class="btn btn-success float-right">Add Items</button>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="panel panel-primary" style="border-color: #4099ff">
+									<div class="panel-heading btn-primary">Line Items</div>
+
+									<div class="panel-body p-3">
+										<h6>Invoice Line Items</h6>
+										<div class="dt-responsive table-responsive">
+											<table class="table table-hover table-bordered">
+												<thead class="btn-primary">
+													<tr>
+														<th>GL Account</th>
+														<th>Description</th>
+														<th>HSN/SAC Code</th>
+														<th>No of resources</th>
+														<th>No of Hours</th>
+														<th>Rate</th>
+														<th>value</th>
+														<th>Location</th>
+														<th>Documents</th>
+
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td><select name="select" class="form-control">
+																<option value="opt1"></option>
+																<option value="opt2"></option>
+																<option value="opt2">Type 1</option>
+														</select></td>
+														<td><input type="text" class="form-control"
+															placeholder=" "></td>
+														<td><input type="text" class="form-control"
+															placeholder=" "></td>
+														<td><input type="text" class="form-control"
+															placeholder=" "></td>
+														<td><input type="text" class="form-control"
+															placeholder=" "></td>
+														<td>650</td>
+														<td><input type="text" class="form-control"
+															placeholder=" "></td>
+														<td><select name="select" class="form-control">
+																<option value="opt1"></option>
+																<option value="opt2"></option>
+																<option value="opt2">Type 1</option>
+														</select></td>
+														<td><input type="file" class="form-control"
+															placeholder=" "></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<h3>&nbsp</h3>
+										<div class="dt-responsive table-responsive">
+											<table class="table table-hover table-bordered">
+												<thead class="btn-primary">
+													<tr>
+														<th>GL Account</th>
+														<th>Item Description</th>
+														<th>HSN/SAC Code</th>
+														<th>Amount</th>
+														<th>value</th>
+														<th>Location</th>
+														<th>Upload Documents</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+
+										<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+											<button class="btn btn-success">Submit</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+
+<script>
+	jQuery(document).ready(function() {
+		angular.bootstrap(jQuery("#bookinvoiceId"), [ 'bookinvoice' ]);
+	});
+</script>

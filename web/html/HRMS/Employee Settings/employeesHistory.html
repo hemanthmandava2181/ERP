@@ -1,0 +1,355 @@
+
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/EmployeeSettings/Employeehistory.js"></script>
+    <!-- Data Tables -->
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+    <div id="HistoryId" data-ng-controller="HistoryController">
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Employees History</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Admin Control Panel</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Employee Settings</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Employees History</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        <!-- <h5>Employees List</h5> -->
+                               <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Employees List</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Department&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary" data-ng-model="data.object.departmentid">
+                                                                   
+			
+<option data-ng-repeat="department in departments"
+value="{{department.id}}">{{department.department_name}}</option>
+</select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Cadre&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary" data-ng-model="data.object.caderid">
+                                                                   
+
+<option data-ng-repeat="cader in caders"
+value="{{cader.id}}">{{cader.cader_name }}</option>
+</select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Grade&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                   <select class="form-control form-control-primary" data-ng-model="data.object.gradeid">
+                                                                  
+
+<option data-ng-repeat="grade in grades"
+value="{{grade.id}}">{{grade.grade_name }}</option>
+</select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Employee Type&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                   <select class="form-control form-control-primary" data-ng-model="data.object.employee_type">
+                                                                   
+
+<option data-ng-repeat="type in types"
+value="{{type.id}}">{{type.type}}</option>
+</select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Designation&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary" data-ng-model="data.object.designationid">
+                                                                   
+                                                                       <option data-ng-repeat="designation in designations"
+value="{{designation.id}}">{{designation.designation_name}}</option>
+</select>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 mt-1 text-center">
+                                                <button class="btn btn-grd-success hor-grd" data-ng-click="getEmployeeHistory(data.object);">Submit</button>
+                                            </div>
+                                        </div>
+                                        
+                                       
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="dt-responsive table-responsive">
+                                                            <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>S.No</th>
+                                                                        <th>Name</th>
+                                                                        <th>Employee ID</th>
+                                                                        <th>Mobile</th>
+                                                                        <th>Email</th>
+                                                                        <th>Department</th>
+                                                                        <th>Designation</th>
+                                                                        <th>Employee Type</th>
+                                                                        <th>Cadre</th>
+                                                                        <th>Grade</th>
+                                                                        <th>Status</th>
+                                                                        <th>Details</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                   <tr data-ng-repeat="data in historydetails">
+                                                                        <td>{{$index+1}}</td>
+                                                                        <td>{{data.employeename}}</td>
+                                                                        <td>{{data.empid}}</td>
+                                                                        <td>{{data.mobile}}</td>
+                                                                        <td>{{data.company_email}}</td>
+                                                                        <td>{{data.department}}</td>
+                                                                        <td>{{data.designation}}</td>
+                                                                        <td>{{data.type}}</td>
+                                                                        <td>{{data.cader}}</td>
+                                                                        <td>{{data.grade}}</td>
+                                                                        <td>{{data.status}}</td>
+                                                                        <td><button class="btn btn-grd-primary hor-grd waves-effect" data-toggle="modal" data-target="#large-Modal" data-ng-click="getByIdEmployeeHistory(data.empid)">View</button></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                        
+
+                                        <!-- modal -->
+                                        <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title text-primary">Employee History</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="panel panel-primary" style="border-color: #4099ff;">
+                                                                    <div class="panel-body p-3">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">
+                                                          
+                                                            <label class="font-weight-bold">{{data.employeename}}</label><br>
+                                                            <label>EMP Id : {{data.empid}}</label><br>
+                                                            <label>Designation :{{data.designation}} </label><br>
+                                                            <label>Work Location :{{data.location}} </label>
+                                                            
+                                                        </h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="dt-responsive table-responsive">
+                                                            <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Cadre</th>
+                                                                        <th>Grade</th>
+                                                                        <th>Designation</th>
+                                                                        <th>Department</th>
+                                                                        <th>Location</th>
+                                                                        <th>Reporting To</th>
+                                                                        <th>Modified By</th>
+                                                                        <th>Modified Date</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                  <tr data-ng-repeat="data in basicdetails">
+                                                                   		<td>{{data.cadre}}</td>
+                                                                        <td>{{data.grade}}</td>
+                                                                        <td>{{data.designation}}</td>
+                                                                        <td>{{data.department}}</td>
+                                                                        <td>{{data.location}}</td>
+                                                                        <td>{{data.reporting_to}}</td>
+                                                                        <td>{{data.modified_by}}</td>
+                                                                        <td>{{data.modified_date}}</td>
+                                                                   </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <h6>&nbsp;</h6>
+                                                        <div class="panel panel-primary" style="border-color: #4099ff;">
+                                                            <div class="panel-heading btn-grd-primary">
+                                                                <h6 class="card-title">Employee Project Details</h6>
+                                                            </div>
+                                                            <div class="panel-body p-3">
+                                                                <div class="dt-responsive table-responsive">
+                                                                    <table id="simpletable1" class="table table-striped table-bordered nowrap">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Project</th>
+                                                                                <th>Work Location</th>
+                                                                                <th>From Date</th>
+                                                                                <th>To Date</th>
+                                                                                <th>Status</th>
+                                                                                <th>Modified By</th>
+                                                                                <th>Modified Date</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                           <tr data-ng-repeat="data in projectdetails">
+                                                                           
+                                                                                <td>{{data.project}}</td>
+                                                                                <td>{{data.location}}</td>
+                                                                                <td>{{data.from_date}}</td>
+                                                                                <td>{{data.to_date}}</td>
+                                                                                <td>{{data.status}}</td>
+                                                                                <td>{{data.modified_by}}</td>
+                                                                                <td>{{data.modified_date}}</td>
+                                                                           
+                                                                           </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h6>&nbsp;</h6>
+                                                        <div class="panel panel-primary" style="border-color: #4099ff;">
+                                                            <div class="panel-heading btn-grd-primary">
+                                                                <h6 class="card-title">Employee Salary Details</h6>
+                                                            </div>
+                                                            <div class="panel-body p-3">
+                                                                <div class="dt-responsive table-responsive">
+                                                                    <table id="simpletable2" class="table table-striped table-bordered nowrap">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Employee</th>
+                                                                                <th>Salary</th>
+                                                                                <th>From Date</th>
+                                                                                <th>Modified By</th>
+                                                                                <th>Modified Date</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr data-ng-repeat="data in salarydetails">
+                                                                                <td>{{data.employeename}}</td>
+                                                                                <td>{{data.salary}}</td>
+                                                                                <td>{{data.from_date}}</td>
+                                                                                <td>{{data.modified_by}}</td>
+                                                                                <td>{{data.modified_date}}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                                            
+                                                                            
+                                                                        </div>  
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light" data-ng-click="updateData(data.object)">Update</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Data Tables -->
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+<script>
+	jQuery(document).ready(function() {
+		
+				angular.bootstrap(jQuery("#HistoryId"), [ 'HistoryModule' ]);
+	});
+</script>
+   

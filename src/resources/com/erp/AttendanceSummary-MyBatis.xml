@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AttendanceSummary">
+	   
+	<select id="getsummary" resultType="AttendanceSummary" parameterType="map">
+
+	 select distinct concat(first_name,' ',last_name,' ',middle_name) as employeename,a.empid,c.login_time,c.logout_time,c.login_date,c.created_date from
+	(select * from hrms.employee_personal_details)a
+	inner join
+	(select * from hrms.employee_employment_details )b on a.empid=b.empid inner join
+	 (select empid,login_date,login_time,logout_time,created_date from hrms.employee_login_details)c on a.empid=c.empid
+	  where c.created_date>=#{p.from_date}::timestamp and #{p.to_date}::timestamp>=c.created_date
+	 and a.empid=#{p.empid};
+    </select>
+	
+	</mapper>                              

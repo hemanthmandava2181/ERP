@@ -1,0 +1,416 @@
+
+
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/Ecommunications/Notificationmobile.js"></script>
+   
+
+
+
+
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/css/sweetalert.css">
+<link rel="stylesheet"
+	href="/erp/files/bower_components/select2/css/select2.min.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+
+
+
+
+
+
+
+
+<!-- BreadCrumb Start -->
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-block caption-breadcrumb">
+				<div class="breadcrumb-header">
+					<h5>E-communication</h5>
+				</div>
+				<div class="page-header-breadcrumb">
+					<ul class="breadcrumb-title">
+						<li class="breadcrumb-item"><a href="#!"> <i
+								class="ti-home"></i>
+						</a></li>
+						<li class="breadcrumb-item"><a href="#!">E-Communications</a>
+						</li>
+						<li class="breadcrumb-item"><a href="#!">Notification
+								Mobile</a></li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- BreadCrumb End -->
+
+
+
+<h4>Mobile Notifications</h4>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-block caption-breadcrumb">
+
+				<label>Select Type<span class="text-danger">*</span></label>
+				<div class="radio-group">
+					<label>Criteria</label> <input type="radio" id="radio1" name="radi">
+					<label>Groups</label> <input type="radio" id="radio2" name="radi">
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div id="criteria">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+
+					<div id="CreateJEId" data-ng-controller="MobileController">
+
+						<div class="row">
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<label>Department<span class="text-danger">*</span></label> <select
+									class="form-control" data-ng-model="data.object.departmentid">
+									<option></option>
+									<option data-ng-repeat="department in departments"
+										value="{{department.id}}">{{department.department_name}}</option>
+								</select>
+							</div>
+
+
+
+
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<label>Designation<span class="text-danger">*</span></label><select
+									class="form-control " data-ng-model="data.object.designationid">
+									<option></option>
+									<option data-ng-repeat="designation in designations"
+										value="{{designation.id}}">{{designation.designation_name}}</option>
+								</select>
+							</div>
+
+
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<label>Cadre<span class="text-danger">*</span></label> <select
+									class="form-control" data-ng-model="data.object.caderid">
+									<option></option>
+									<option data-ng-repeat="cader in caders" value="{{cader.id}}">{{cader.description}}</option>
+								</select>
+							</div>
+
+
+
+
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<label>Grade<span class="text-danger">*</span></label> <select
+									class="form-control" data-ng-model="data.object.gradeid">
+									<option></option>
+									<option data-ng-repeat="grade in grades" value="{{grade.id}}">{{grade.grade_name}}</option>
+								</select>
+							</div>
+
+
+
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<label>Employee Type<span class="text-danger">*</span></label> <select
+									class="form-control" data-ng-model="data.object.employee_type">
+									<option></option>
+									<option data-ng-repeat="type in types" value="{{type.id}}">{{type.type}}</option>
+								</select>
+							</div>
+
+
+						</div>
+
+
+
+
+
+
+						<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+							<button type="button"
+								data-ng-click="getemployeedatabased(data.object);"
+								class="btn btn-primary">search</button>
+						</div>
+
+
+						<div class="row">
+							<div class="col-sm-12">
+
+								<div class="card">
+									<div class="row">
+										<div class="card-header"></div>
+										<div class="card-body">
+
+											<label>Compose sms</label>
+											<div>
+												<textarea class="col-sm-7" cols="60" rows="5"
+													class="form-control" placeholder="Please Type Here"
+													data-ng-model="data.object.needbydate">
+
+                                                         </textarea>
+											</div>
+										</div>
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="col-sm-12">
+
+								<div class="card">
+
+									<div class="card-header"></div>
+									<div class="card-body">
+										<div class="dt-responsive table-responsive">
+											<table class="table table-hover table-bordered"
+												id="simpletable">
+												<thead class="btn-grd-primary">
+													<tr>
+														<th>S.No</th>
+														<th><input type="checkbox"
+															data-ng-model="checkemployees" data-ng-true-value="true"
+															data-ng-false-value="false"
+															data-ng-click="setAllRegId(checkemployees);"></th>
+
+
+														<th>Employee Id</th>
+														<th>Name</th>
+														<th>Mobile</th>
+														<th>Department</th>
+														<th>Designation</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr
+														data-ng-repeat="data in filteredResult =(linedetails | filter:search)">
+
+														<td>{{$index+1}}</td>
+														<td><input type="checkbox"
+															data-ng-model="projectEmp[data.mobile]" id="test"
+															data-ng-checked="allSelected()"></td>
+														<td>{{data.empid}}</td>
+														<td>{{data.name}}</td>
+														<td>{{data.mobile}}</td>
+														<td>{{data.department_name}}</td>
+														<td>{{data.designation}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+							<button type="submit" class="btn btn-primary"
+								class="btn btn-primary" type="submit" name="theme_submit"
+								data-ng-click="sendSMS(projectEmp,data.object);">submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="groups">
+
+	<div class="row">
+		<div class="col-sm-12">
+
+			<div class="card">
+				<div class="row">
+					<div class="card-header"></div>
+					<div class="card-body">
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<label>Group<span class="text-danger">*</span></label> <label>Group
+								Name <b style="color: red">*</b>
+							</label> <select class="form-control" data-ng-model="data.object.id"
+								data-ng-change="getGroupDetails(data.object);">
+								<option></option>
+								<option data-ng-repeat="group in groups" value="{{group.id}}">{{group.group_name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+	<div class="row">
+		<div class="col-sm-12">
+
+			<div class="card">
+
+				<div class="card-header"></div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table class="table table-hover table-bordered" id="simpletable">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th><input type="checkbox"
+										data-ng-model="checkgroupemployees" data-ng-true-value="true"
+										data-ng-false-value="false"
+										data-ng-click="setAllRegIds(checkgroupemployees);"></th>
+									<th>Employee Id</th>
+									<th>Name</th>
+									<th>Mobile</th>
+									<th>Department</th>
+									<th>Designation</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									data-ng-repeat="data in filteredResults =(groupdetails | filter:search)">
+									<td>{{$index+1}}</td>
+									<td><input type="checkbox"
+										data-ng-model="projectEmp1[data.mobile]" id="test"
+										data-ng-checked="allSelected()"></td>
+									<td>{{data.empid}}</td>
+									<td>{{data.name}}</td>
+									<td>{{data.mobile}}</td>
+									<td>{{data.department_name}}</td>
+									<td>{{data.designation_name}}</td>
+
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="row">
+		<div class="col-sm-12">
+
+			<div class="card">
+				<div class="row">
+					<div class="card-header"></div>
+					<div class="card-body">
+
+						<div class="form-group">
+							<label>Compose Here <b style="color: red">*</b></label>
+							<textarea cols="60" rows="5" class="form-control"
+								placeholder="Please Type Here"
+								data-ng-model="data.object.needbydate1"></textarea>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+		<button type="submit" class="btn btn-primary"
+			data-ng-click="sendGroupSMS(projectEmp1,data.object);">submit</button>
+	</div>
+</div>
+
+
+
+
+
+
+
+<!-- Data Table -->
+<script
+	src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+<script src="/erp/files/bower_components/select2/js/select2.full.min.js"></script>
+
+<script
+	src="/erp/files/bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js">
+    </script>
+<script
+	src="/erp/files/bower_components/multiselect/js/jquery.multi-select.js"></script>
+
+
+<script src="/erp/files/assets/pages/advance-elements/select2-custom.js"></script>
+
+
+<script>
+        $('#simpletable1').DataTable();
+    </script>
+
+
+<script>
+        jQuery(document).ready(function() {
+            $("#criteria").hide();
+            $("#groups").hide();
+
+
+        });
+        jQuery("#radio1").click(function() {
+            $("#criteria").show();
+            $("#groups").hide();
+        });
+        jQuery("#radio2").click(function() {
+            $("#groups").show();
+            $("#criteria").hide();
+         
+        });
+    </script>
+
+<script>                         
+		jQuery(document).ready(function() {   
+			angular.bootstrap(jQuery("#CreateJEId"), [ 'NotificationmobileModule' ]);
+			
+  			/*  angular.bootstrap(jQuery("#CreateJEId"), [ 'CreateJE' ]); */ 
+	    });
+		
+	</script>

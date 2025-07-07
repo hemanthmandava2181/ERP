@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Segment">
+
+	<insert id="Insert" parameterType="map">
+		insert into	procurements.createsegment_mst(segment_id,segment_name,status)
+		values(#{p.segment_id},#{p.segment_name},#{p.status});
+	</insert>
+	
+
+	 <select id="getAll" resultType="Segment">
+		SELECT segment_id,segment_name,created_date,status from procurements.createsegment_mst;
+	  </select> 
+	  <delete id="deleteData" parameterType="java.lang.String">
+		delete from procurements.createsegment_mst where segment_name=#{p.segment_name};    
+	</delete>   
+	    
+	<update id="updateData"  parameterType="map">
+		update procurements.createsegment_mst SET segment_id=#{p.segment_id}, status=#{p.status} WHERE segment_name=#{p.segment_name};
+	</update>
+	    <select id="getById" resultType="Segment">   
+		SELECT segment_id,created_date,status  from procurements.createsegment_mst WHERE segment_name=#{p.segment_name};
+	  </select>
+	  </mapper>

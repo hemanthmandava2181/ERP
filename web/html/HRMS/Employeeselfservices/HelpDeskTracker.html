@@ -1,0 +1,490 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/EmployeeSelfServices/helpdesktracker.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="HelpDeskTracker" data-ng-controller="TrackerController">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Help Desk Tracker</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">HRMS</a></li>
+							<li class="breadcrumb-item"><a href="#!">HelpDesk</a></li>
+							<li class="breadcrumb-item"><a href="#!">HelpDeskTracker</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<h5>HelpDeskTracker</h5>
+
+	<!--   <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row">
+                                                              <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+                                                                <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#pendingExample" aria-expanded="false" aria-controls="collapseExample">
+                                                            Pending List
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+                                                                <button class="btn btn-warning btn-block" type="button" data-toggle="collapse" data-target="#rejectedExample" aria-expanded="false" aria-controls="collapseExample">
+                                                                    Assigned List
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+                                                                <button class="btn btn-success btn-block" type="button" data-toggle="collapse" data-target="#approvedExample" aria-expanded="false" aria-controls="collapseExample">
+                                                                    Closed List
+                                                                </button>
+                                                            </div>
+                                                           
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+
+	<div class="row collapse show mt-2" id="pendingExample">
+		<div class="col-sm-12 col-md-12">
+			<div class="card">
+				<div class="card-header bg-info">
+					<h6 class="card-title">Help Desk Tracker</h6>
+				</div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="sampletable"
+							class="table table-striped table-bordered nowrap">
+							<thead>
+								<tr>
+									<th>S.NO</th>
+									<th>Request ID</th>
+									<th>Request Category</th>
+									<th>Request Type</th>
+									<th>Requested By</th>
+									<th>Requested Date</th>
+									<th>Assigned To</th>
+									<th>Assigned Date</th>
+									<th>Closed Date</th>
+									<th>Attachments</th>
+									<th>Action</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="trackdata in pendingdetails">
+									<td>{{$index+1}}</td>
+									<td>{{trackdata.request_id}}</td>
+									<td>{{trackdata.categoryname}}</td>
+									<td>{{trackdata.requestname}}</td>
+									<td>{{trackdata.requested_by}}</td>
+									<td>{{trackdata.createddate || 'dd-mm-YYYY'}}</td>
+									<td>{{trackdata.assigned_to}}</td>
+									<td>{{trackdata.assigned_date}}</td>
+									<td>{{trackdata.closed_date}}</td>
+									<td><button class="btn  ver-grd waves-effect"
+											data-toggle="modal" data-target="#large-Modal">
+											<i class="ti-printer text-primary"></i>
+										</button></td>
+									<td><button class="btn  ver-grd waves-effect"
+											data-toggle="modal" data-target="#large-Modal1"
+											data-ng-click="getByIdviews(trackdata);">
+											<i class="ti-eye text-primary"></i>
+										</button></td>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--      <div class="row collapse mt-2" id="rejectedExample">
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-warning">
+                                                        <h6 class="card-title">Assigned List</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="dt-responsive table-responsive">
+                                                            <table id="simpletable1" class="table table-striped table-bordered nowrap">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>S.NO</th>
+                                                                        <th>Request ID</th>
+                                                                        <th>Request Category</th>
+                                                                        <th>Request Type</th>
+                                                                        <th>Requested By</th>
+                                                                        <th>Assigned To</th>
+                                                                        <th>Assigned Date</th>
+                                                                        <th>Attachments</th>
+                                                                        <th>Action</th>
+                                                                       
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr data-ng-repeat="data in assigneddetails ">
+                                                                        <td>{{$index+1}}</td>
+                                                                        <td>{{data.existing_poid}}</td>
+                                                                        <td>{{data. purchaseorder_id}}</td>
+                                                                        <td>{{data.order_date}}</td>
+                                                                        <td>{{data.date_created}}</td>
+                                                                        <td>{{data.program_id}}</td>
+                                                                        <td>{{data. vendor_id}}</td>
+                                                                        <td><button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal2"><i class="ti-eye text-primary"></i></button>
+                                                                        </td>
+                                                                        <td><button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal2"><i class="ti-printer text-primary"></i></button>
+                                                                        </td>
+
+                                                                       
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+ -->
+	<!--   <div class="row collapse mt-2" id="approvedExample">
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-success">
+                                                        <h6 class="card-title">Closed List</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="dt-responsive table-responsive">
+                                                            <table id="simpletable2" class="table table-striped table-bordered nowrap">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>S.NO</th>
+                                                                        <th></th>
+                                                                        <th>PO#</th>
+                                                                        <th>PO Date</th>
+                                                                        <th>Created Date</th>
+                                                                        <th>Program</th>
+                                                                        <th>Vendor Name</th>
+                                                                        <th>Created BY</th>
+                                                                        <th>Approved BY</th>
+                                                                        <th>Amount</th>
+                                                                        <th>Status</th>
+                                                                        <th>View</th>
+                                                                        <th>PDF/Print</th>
+
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr data-ng-repeat="data in closeddetails">
+                                                                        <td>{{$index+1}}</td>
+                                                                        <td>{{data.existing_poid}}</td>
+                                                                        <td>{{data. purchaseorder_id}}</td>
+                                                                        <td>{{data.order_date}}</td>
+                                                                        <td>{{data.created_date}}</td>
+                                                                        <td>{{data.program_id}}</td>
+                                                                        <td>{{data.vendor_id}}</td>
+                                                                        <td>{{data.created_by}}</td>
+                                                                        <td>{{data.approved_by}}</td>
+                                                                        <td>{{data.amount}}</td>
+                                                                        <td>{{data.status}}</td>
+
+                                                                        <td><button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal1"><i class="ti-eye text-primary"></i></button>
+                                                                        </td>
+                                                                        <td><button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal1"><i class="ti-printer text-primary"></i></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+ -->
+	<!-- Modal For View Documents -->
+	<div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">View Documents</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="dt-responsive table-responsive">
+										<table id="simpletable2"
+											class="table table-hover table-bordered nowrap">
+											<thead class="btn-grd-primary">
+												<tr>
+													<th>Document Name</th>
+													<th>Download</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>{{data.docname}}</td>
+													<td><button class="btn btn-grd-primary ver-grd btn-sm">
+															<i class="ti-arrow-down"></i>Download
+														</button></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal  For View -->
+	<div class="modal fade" id="large-Modal1" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Request Details</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<label class="col-sm-3 col-form-label">Request ID</label>
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<input class="form-control" type="text"
+												data-ng-model="trackerdata.object.request_id" disabled />
+										</div>
+										<label class="col-sm-3 col-form-label">Request
+											Category</label>
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<input class="form-control" type="text"
+												data-ng-model="trackerdata.object.name" disabled />
+										</div>
+										<label class="col-sm-3 col-form-label">Request Type</label>
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<input type="text" class="form-control"
+												data-ng-model="trackerdata.object.request_typename" disabled>
+										</div>
+										<label class="col-sm-3 col-form-label">Request Status</label>
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<input type="text" class="form-control"
+												data-ng-model="trackerdata.object.request_statusname"
+												disabled>
+										</div>
+										<label class="col-sm-3 col-form-label">Created By</label>
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<input type="text" class="form-control"
+												data-ng-model="trackerdata.object.fullname" disabled>
+										</div>
+										<label class="col-sm-3 col-form-label">Date Created</label>
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<input type="text" class="form-control"
+												data-ng-model="trackerdata.object.createddate" disabled>
+										</div>
+										<label class="col-sm-3 col-form-label">Assigned To</label>
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<input type="text" class="form-control"
+												data-ng-model="trackerdata.object.assigned_to" disabled>
+										</div>
+										<label class="col-sm-12 col-form-label">Description</label>
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<input type="text" class="form-control"
+												data-ng-model="trackerdata.object.description" disabled>
+										</div>
+
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="card">
+												<div class="card-header bg-primary">
+													<h6 class="card-title">Assigned Section</h6>
+												</div>
+												<div class="card-body">
+
+													<div class="col-sm-12 col-xl-3 m-b-30">
+														Assigned To <label class="col-sm-3 col-form-label"></label>
+													</div>
+													<div class="col-sm-12 col-xl-3 m-b-30">
+														<select name="select" class="form-control"
+															data-ng-model="data.object.assigned_to">
+															<option></option>
+															<option data-ng-repeat="assign in assigns "
+																value="{{assign.empid}}">{{assign.fullname}}</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-12 mt-4 text-center">
+											<button class="btn btn-grd-primary hor-grd text-center"
+												data-ng-click="updateDataAssign(trackerdata);">Submit</button>
+										</div>
+									</div>
+									<br>
+
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="card">
+												<div class="card-header bg-primary">
+													<h6 class="card-title">Place Your Comments</h6>
+												</div>
+												<div class="card-body">
+													<label class="col-sm-12 col-form-label">Comments</label>
+													<div class="col-sm-12 col-xl-6 m-b-30">
+														<textarea rows="5" cols="5" class="form-control"
+															data-ng-model="data.object.emp_comments"
+															placeholder="Enter Comments Here"></textarea>
+													</div>
+
+													<div class="col-sm-12 col-xl-3 m-b-30">
+														Status <label class="col-sm-3 col-form-label"></label>
+													</div>
+													<div class="col-sm-12 col-xl-3 m-b-30">
+														<select name="select" class="form-control"
+															data-ng-model="data.object.request_status">
+															<option></option>
+															<option data-ng-repeat="status in statuss"
+																value="{{status.id}}">{{status.name}}</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-12 mt-4 text-center">
+											<button class="btn btn-grd-primary hor-grd text-center"
+												data-ng-click="updateDataEmpcomm(trackerdata);">Submit</button>
+										</div>
+									</div>
+									<br>
+
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="card">
+												<div class="card-header bg-primary">
+													<h6 class="card-title">Status Details</h6>
+												</div>
+												<div class="card-body">
+													<div class="dt-responsive table-responsive">
+														<table id="order-table"
+															class="table table-hover table-bordered nowrap">
+															<thead class="btn-grd-primary">
+																<tr>
+																	<th>S.No</th>
+																	<th>Comments</th>
+																	<th>Commented By</th>
+																	<th>Attachments</th>
+																	<th>Commented Date</th>
+
+
+																</tr>
+															</thead>
+															<tbody>
+																<tr
+																	data-ng-repeat="datas in filteredResult =(linedetails | filter:search)">
+																	<td>{{$index+1}}</td>
+																	<td>{{datas.emp_comments}}</td>
+																	<td>{{datas.comment_by}}</td>
+																	<td>{{datas.attachements}}</td>
+																	<td>{{datas.createddate}}</td>
+
+																</tr>
+
+
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- View Modal End -->
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- Content Ends Here -->
+</div>
+
+
+
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+<script>
+        $('simpletable1').DataTable();
+        $('simpletable2').DataTable();
+        $('simpletable').DataTable();
+        $('simpletable3').DataTable();
+    </script>
+<script>
+jQuery(document).ready(function() { 
+	 angular.bootstrap(jQuery("#HelpDeskTracker"), [ 'TrackerModule' ]); 
+});
+
+</script>

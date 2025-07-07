@@ -1,0 +1,289 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/attendanceReportModule.js"></script>
+
+<!-- Form Select -->
+
+<link rel="stylesheet"
+	href="/erp/files/bower_components/select2/css/select2.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/bootstrap-multiselect/css/bootstrap-multiselect.css" />
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/multiselect/css/multi-select.css" />
+  
+
+<!-- Data Table -->
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<!-- Date Picker -->
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datedropper/css/datedropper.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/spectrum/css/spectrum.css" />
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/jquery-minicolors/css/jquery.minicolors.css" />
+
+<!-- Data Table -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+<!-- Form Select -->
+<script
+	src="/erp/files/bower_components/select2/js/select2.full.min.js"></script>
+<script
+	src="/erp/files/bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+<script
+	src="/erp/files/bower_components/multiselect/js/jquery.multi-select.js"></script>
+<script src="/erp/files/assets/js/jquery.quicksearch.js"></script>
+<script    
+	src="/erp/files/assets/pages/advance-elements/select2-custom.js"></script>
+
+
+<!-- Date Picker -->
+
+<script
+	src="/erp/files/assets/pages/advance-elements/moment-with-locales.min.js"></script>
+<script
+	src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="/erp/files/assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
+<script
+	src="/erp/files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js"></script>
+<script
+	src="/erp/files/bower_components/datedropper/js/datedropper.min.js"></script>
+<script src="/erp/files/bower_components/spectrum/js/spectrum.js"></script>
+<script src="/erp/files/bower_components/jscolor/js/jscolor.js"></script>
+<script
+	src="/erp/files/bower_components/jquery-minicolors/js/jquery.minicolors.min.js"></script>
+<script
+	src="/erp/files/assets/pages/advance-elements/custom-picker.js"></script>
+
+
+</head>
+<!-- BreadCrumb End -->
+<div id="attendanceReportDiv"
+	data-ng-controller="attendanceReportController">
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Attendance Report-Login/Logout</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-xl-2 m-b-30">   
+							From Date <label class="col-sm-3x col-form-label"></label>
+						</div>
+
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<input class="form-control" data-ng-model="data.object.from_date"
+								id="dropper-animation" type="text" />
+						</div>
+						<div class="col-sm-12 col-xl-2 m-b-30">
+							To Date <label class="col-sm-3 col-form-label"></label>
+						</div>
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<input class="form-control" data-ng-model="data.object.to_date"
+								id="dropper-animation" type="text" />
+						</div>
+						<div class="col-sm-12 col-xl-2 m-b-30">
+							Department <label class="col-sm-3 col-form-label"></label>
+						</div>
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<select name="select" class="form-control"
+								data-ng-model="data.object.department">
+								<option></option>
+								<option data-ng-repeat="department in departments"
+									value="{{department.departmentid}}">{{department.department_name}}</option>
+							</select>
+
+						</div>
+						<div class="col-sm-12 col-xl-2 m-b-30">
+							Designation <label class="col-sm-3 col-form-label"></label>
+						</div>
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<select name="designation" class="form-control"
+								data-ng-model="designation_id">
+								<option></option>
+								<option data-ng-repeat="designation in designations"
+									value="{{designation.designation_id}}">{{designation.designation_name}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-xl-2 m-b-30">
+							Staff Type <label class="col-sm-3 col-form-label"></label>
+						</div>
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<select name="stafftype" class="form-control" data-ng-model="id">
+								<option></option>
+								<option data-ng-repeat="staff in staffs" value="{{staff.id}}">{{staff.staff_type}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+		<button class="btn btn-primary"
+			onclick="getCalendarDetailsdet(data.object);">Find</button>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header"></div>
+				<div class="card-body">
+
+					<div class="row">
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							From Date: <label class="col-sm-3 col-form-label"></label>
+							<div class="col-sm-12 col-xl-3 m-b-30">{{data.object.from_date
+								| date:"dd-MM-yyyy"}}</div>
+						</div>
+
+
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							To Date: <label class="col-sm-3 col-form-label"></label>
+							<div class="col-sm-12 col-xl-3 m-b-30">{{data.object.to_date
+								| date:"dd-MM-yyyy"}}</div>
+						</div>
+
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Department: <label class="col-sm-3 col-form-label"></label>
+							<div class="col-sm-12 col-xl-3 m-b-30">{{departmentid}}</div>
+						</div>
+
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Designation: <label class="col-sm-3 col-form-label"></label>
+							<div class="col-sm-12 col-xl-3 m-b-30">{{designation_id}}</div>
+						</div>
+
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Staff Type: <label class="col-sm-3 col-form-label"></label>
+							<div class="col-sm-12 col-xl-3 m-b-30">{{id}}</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header"></div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table class="table table-hover table-bordered" id="simpletable">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th>Employee Name</th>
+									<th data-ng-repeat="x in calendarDetails">{{x.date|date:'dd-MM-yyyy'
+										}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="emp in regdetails | filter:search">
+									<td align="left">{{$index+1}}</td>
+									<td align="left">{{emp.first_name}}</td>
+									<td data-ng-repeat="x in calendarDetails">{{emp.login_time}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	jQuery(document).ready(
+			function() {
+				angular.bootstrap(jQuery("#attendanceReportDiv"),
+						[ 'attendanceReportModule' ]);
+			});
+</script>
+
+<!-- 
+
+angular.bootstrap(jQuery("#attendanceReportDiv"), [ 'attendanceReportModule' ]);
+<script src="erp/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="erp/files/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
+<script src="erp/files/bower_components/popper.js/js/popper.min.js"></script>
+<script src="erp/files/bower_components/bootstrap/js/bootstrap.min.js"></script>
+
+<script
+	src="erp/files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+
+<script src="erp/files/bower_components/modernizr/js/modernizr.js"></script>
+<script
+	src="erp/files/bower_components/modernizr/js/css-scrollbars.js"></script>
+Data Table
+<script
+	src="erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script
+	src="erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+<script src="erp/files/assets/js/pcoded.min.js"></script>
+<script src="erp/files/assets/js/vertical/vertical-layout.min.js"></script>
+<script
+	src="erp/files/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="erp/files/assets/js/sweetalert.js"></script>
+
+<script src="erp/files/assets/js/script.js"></script>
+
+<script>
+        $('#simpletable1').DataTable();
+    </script>
+
+</body>
+
+</html> -->

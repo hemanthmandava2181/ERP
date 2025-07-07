@@ -1,0 +1,155 @@
+
+
+ <script
+	src="/erp/files/assets/js/erp-scripts/operationAdmin/itemgroup.js"></script>
+	
+
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div   id="itemgroupId" data-ng-controller="itemgroupController">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4 class="card-title">Item Groups</h4>
+                                                <div class="card">
+                                                    <div class="card-header">
+
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                          
+
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">Item Group Name
+                                                                <input class="form-control" type="text" placeholder="Enter Item Group Name" data-ng-model = "data.object.group_name" />
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                    <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                        <button class="btn btn-primary" data-ng-click ="additemgroup(data.object);">Submit</button>
+                                    </div>
+                                    <br>
+                                    <div class="row">   
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                                <div class="card-header"></div>
+                                                <div class="card-body">
+                                                    <div class="dt-responsive table-responsive">
+                                                        <table class="table table-hover table-bordered" id="simpletable">
+                                                            <thead class="btn-grd-primary">
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Item Group Name</th>
+                                                                    <th>Update</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+															<tr data-ng-repeat="data in filteredResult =(itemgroupdetails | filter:search)">
+															<td>{{$index+1}}</td>
+															<td>{{data.group_name}}</td>
+															 <td><button class="btn  ver-grd waves-effect" data-ng-click="getByIditemgroup(data.group_name);" data-toggle="modal" data-target="#large-Modal"><i class="ti-pencil-alt text-primary"></i></button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        </div>  
+                                    </div>
+
+
+
+                                    <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Update</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                           Item Group Name
+                                                                            <input type="text" class="form-control" placeholder="Enter Group Name" data-ng-model = "data.object.group_name" >
+                                                                        </div>
+
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Status
+                                                                          
+                                                                            <select class = "form-control" name="select" data-ng-model = "data.object.status">
+											   			<option value = "active">Active</option>
+											   			<option value = "inactive">In-Active</option>
+											   		</select>  
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                                                        <button type="button" class="btn btn-primary waves-effect waves-light" data-ng-click="UpdateDataitemgroup(data.object);">Submit</button>
+                                                                    </div>
+
+
+                                                                    <!--  Modal End -->
+
+
+
+
+
+
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                         </div>    
+    
+    <!-- Data Table -->
+    <script src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+       
+    <script>
+		jQuery(document).ready(function() { 
+			angular.bootstrap(jQuery("#itemgroupId"), [ 'itemgroupModule' ]);
+		});
+	</script>
+
+    <script>
+        $('#simpletable1').DataTable();
+    </script>
+

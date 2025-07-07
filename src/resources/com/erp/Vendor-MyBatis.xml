@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="VendorData">
+         
+  
+
+	<insert id="Insert" parameterType="map">
+				insert into procurements.vendors(vendor_type,name,mobile,
+		phone,email,web_site,address,contact_person_name,contact_person_designation,contact_person_mobile,contact_person_mail,
+		income_status,service_status,registering_authority,registration_no,date_of_registration,place_of_registration,experience,
+		annual_turnover,nsdc_number,ssc_number,pan_no,tan_no,service_tax,account_no,ifsc,swift,bank_name,branch,gst_no,
+		gst_reg_date,nature_of_service,created_date) values (#{p.vendor_type},#{p.name},#{p.mobile},
+		#{p.phone},#{p.email},#{p.web_site},
+		#{p.address},#{p.contact_person_name},#{p.contact_person_designation},#{p.contact_person_mobile},
+		#{p.contact_person_mail},#{p.income_status},#{p.service_status},
+		#{p.registering_authority},#{p.registration_no},#{p.date_of_registration},#{p.place_of_registration},#{p.experience},
+		#{p.annual_turnover},#{p.nsdc_number},#{p.ssc_number},#{p.pan_no},#{p.tan_no},#{p.service_tax},#{p.account_no},#{p.ifsc},#{p.swift},#{p.bank_name},#{p.branch},#{p.gst_no},#{p.gst_reg_date},#{p.nature_of_service},current_timestamp)
+		       
+		</insert>
+		<!--<insert id="Insert" parameterType="map">
+				insert into procurements.vendors(vendor_type,name,nature_of_service,phone,mobile,
+		email,web_site,pan_no,address,contact_person_name,contact_person_designation,contact_person_mobile,contact_person_mail,
+		income_status,service_status,registering_authority,registration_no,date_of_registration,place_of_registration,experience,
+		annual_turnover,nsdc_number,ssc_number,tan_no,service_tax,account_no,ifsc,swift,bank_name,branch,gst_no,
+		gst_reg_date,created_date) values (#{p.vendor_type},#{p.name},#{p.nature_of_service},#{p.phone},#{p.mobile},
+		#{p.email},#{p.web_site},#{p.pan_no},
+		#{p.address},#{p.contact_person_name},#{p.contact_person_designation},#{p.contact_person_mobile},
+		#{p.contact_person_mail},#{p.income_status},#{p.service_status},
+		#{p.registering_authority},#{p.registration_no},#{p.date_of_registration},#{p.place_of_registration},#{p.experience},
+		#{p.annual_turnover},#{p.nsdc_number},#{p.ssc_number},#{p.tan_no},#{p.service_tax},#{p.account_no},#{p.ifsc},#{p.swift},#{p.bank_name},#{p.branch},#{p.gst_no},#{p.gst_reg_date},current_timestamp)
+		       
+		</insert>-->
+		 
+		 <select id="count" resultType="java.lang.Integer">        
+		SELECT count(id)+1 as count from procurements.vendors
+	  </select>   
+	  <select id="getNameWiseData" resultType="Vendor">
+		SELECT name,email,phone,vendor_id from procurements.vendors where  name=#{name};
+	  </select>
+	  <select id="getIdWiseData" resultType="Vendor">
+		SELECT name,email,phone,vendor_id from procurements.vendors where  vendor_id=#{vendor_id};
+	  </select>
+		
+		<update id="updateDetails"  parameterType="map">    
+		update procurements.vendors SET
+		vendor_id = concat('VN',#{p.year},'1771',lpad(CAST( #{count} AS character varying ),4,'0')) 
+		WHERE email=#{p.email};    
+	</update>   
+		  
+		
+		
+		<select id="getAll" resultType="map">
+		SELECT distinct vendor_type,name,mobile,
+		phone,email,web_site,address,contact_person_name,contact_person_designation,contact_person_mobile,contact_person_mail,
+		income_status,service_status,registering_authority,registration_no,date_of_registration,place_of_registration,experience,
+		annual_turnover,nsdc_number,ssc_number,pan_no,tan_no,service_tax,account_no,ifsc,swift,bank_name,branch,gst_no,
+		gst_reg_date,nature_of_service,created_date,vendor_id from procurements.vendors;
+	</select> 
+	
+	<!--grn details-->
+	<select id="getAll3" resultType="map">
+		SELECT distinct po_id from procurements.asset_names order by po_id;
+	</select>  
+	  
+	  
+	   
+	  
+	    <select id="getYear" resultType="String" parameterType="java.lang.String">                          
+	     SELECT 
+             (cast(split_part(cast(EXTRACT(year FROM CURRENT_TIMESTAMP) as varchar), '0', 2) as integer)) as year;
+		    </select>
+	  
+	<select id="getById" resultType="vendor">       
+		SELECT distinct vendor_type,name,mobile,  
+		phone,email,web_site,address,contact_person_name,contact_person_designation,contact_person_mobile,contact_person_mail,
+		income_status,service_status,registering_authority,registration_no,date_of_registration,place_of_registration,experience,
+		annual_turnover,nsdc_number,ssc_number,pan_no,tan_no,service_tax,account_no,ifsc,swift,bank_name,branch,gst_no,vendor_id,
+		gst_reg_date,nature_of_service from procurements.vendors                
+		WHERE vendor_id = #{p.vendor_id} ;     
+	  </select>           
+	  
+	  <update id="updateData"  parameterType="map">
+		update procurements.vendors SET vendor_type = #{p.vendor_type},name = #{p.name},mobile = #{p.mobile},phone = #{p.phone},email = #{p.email},web_site =#{p.web_site},
+		address = #{p.address},contact_person_name = #{p.contact_person_name},contact_person_designation = #{p.contact_person_designation},contact_person_mobile = #{p.contact_person_mobile},contact_person_mail = #{p.contact_person_mail},income_status =#{p.income_status},service_status = #{p.service_status},registering_authority = #{p.registering_authority},
+		registration_no = #{p.registration_no},date_of_registration = #{p.date_of_registration},place_of_registration = #{p.place_of_registration},experience =#{p.experience},annual_turnover = #{p.annual_turnover},nsdc_number =#{p.nsdc_number},ssc_number =#{p.ssc_number},pan_no = #{p.pan_no},tan_no =#{p.tan_no},service_tax = #{p.service_tax},account_no = #{p.account_no},ifsc = #{p.ifsc},swift = #{p.swift},
+		bank_name = #{p.bank_name},branch = #{p.branch},gst_no = #{p.gst_no},gst_reg_date = #{p.gst_reg_date},nature_of_service = #{p.nature_of_service} WHERE vendor_id=#{p.vendor_id};                        
+	</update> 
+	
+	<select id="getByPo" resultType="CreatePo">
+	select purchaseorder_id,financial_year,po_type,sector_id,order_no,program_id,order_date,amount,vendor_id from procurements.purchase_order where purchaseorder_id=#{purchaseorder_id};
+	</select>
+	<select id="getVendor" resultType="map">
+		SELECT distinct vendor_id,name from procurements.vendors;
+	</select>  
+	
+	<!--grn details-->
+	<select id="getAllpo" resultType="map">
+		SELECT distinct purchaseorder_id from procurements.purchase_order order by purchaseorder_id;
+	</select>  
+	
+	<select id="checkedBy" resultType="map">
+		SELECT distinct empid,first_name from hrms.employee_personal_details;
+	</select>
+	
+	
+	<select id="getServices" resultType="map">
+		
+		select service_name,id from operations.vender_service_nature_mst;
+		
+	</select>
+	
+	</mapper>                          

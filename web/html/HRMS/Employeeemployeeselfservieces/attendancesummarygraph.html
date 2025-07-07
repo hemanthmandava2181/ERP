@@ -1,0 +1,185 @@
+<script src="/erp/files/assets/js/erp-scripts/HRMS/employeeemployeeselfserviece/attendancesummarygraph.js"></script>
+
+
+<!-- Data Tables -->   
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet"
+	href="/erp/files/bower_components/chartist/css/chartist.css" type="text/css"
+	media="all">
+
+<div id="attendance" data-ng-controller="AttendanceSummary">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Attendance Summary Graph</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Employee Self
+									Services</a></li>
+							<li class="breadcrumb-item"><a href="#!">Time &
+									Attendance</a></li>
+							<li class="breadcrumb-item"><a href="#!">Attendance
+									Summary Graph</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<!-- Content Starts Here -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Attendance Summary Graph</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label class="font-weight-bold">From Date&nbsp;&nbsp;<span
+								class="text-danger">*</span> :
+							</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<input
+										class="form-control" type="date" id="fromdate"
+										data-ng-model="data.object.from_date" placeholder="" />
+						</div>
+						<div class="col-sm-12 col-md-1 col-xl-1 col-lg-1 col-xs-12">
+							<label>&nbsp;</label>
+						</div>
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label class="font-weight-bold">To Date&nbsp;&nbsp;<span
+								class="text-danger">*</span> :
+							</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<input
+										class="form-control" type="date" id="todate"
+										data-ng-model="data.object.to_date" placeholder="" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 mt-4 text-center">
+							<button type="button" class="btn btn-primary" id="submit" data-ng-click="getsummary(data.object);" >Find</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div
+							class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xs-12 text-center">
+							<label class="font-weight-bold">Employee Attendance
+								Summary</label> <i class="ti-view-list text-primary float-right"></i>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-12 co6l-xl-12 col-lg-12 col-xs-12"
+							style="height: 500px; overflow: scroll;">
+							<div class="ct-chart1 ct-perfect-fourth"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>    
+	</div>
+
+	<h5>Attendance Report</h5>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="order-table"  
+							class="table table-striped table-bordered nowrap">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th>Date</th>
+									<th>Attendance Status</th>
+									<th>Login Time</th>
+									<th>Logout Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="attdata in regdetails"> 
+				     <td >{{$index+1}}</td>          
+					 <td >{{attdata.login_date|date:'dd:MM:yyyy'}}</td>  
+					  <td>{{attdata.leavestatus}}</td>  
+					 <td >{{attdata.login_time|date:'hh:mm:ss'}}</td>  
+					 <td>{{attdata.logout_time|date:'hh:mm:ss'}}</td> 
+				</tr> 
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+<script src="/erp/files/assets/js/modalEffects.js"></script>
+
+<script src="/erp/files/bower_components/chartist/js/chartist.js"></script>
+<script
+	src="/erp/files/assets/pages/chart/chartlist/js/chartist-plugin-threshold.js"></script>
+
+<script src="/erp/files/assets/pages/chart/chartlist/chartlist-custom.js"></script>
+
+<script src="/erp/files/assets/js/pcoded.min.js"></script>
+<script src="/erp/files/assets/js/vertical/vertical-layout.min.js"></script>
+<script src="/erp/files/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script>
+	jQuery(document).ready(function() {
+		angular.bootstrap(jQuery("#attendance"), [ 'attendancesummarygraph' ]);
+	});
+</script>
+
+<script>
+	$('#simpletable1').DataTable();
+</script>

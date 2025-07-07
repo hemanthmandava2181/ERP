@@ -1,0 +1,547 @@
+
+
+<script src="/erp/files/assets/js/erp-scripts/Assets/CreateGrn.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+<div id="grnId" data-ng-controller="CreateGrnController">
+
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>GRN</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Procurements</a></li>
+							<li class="breadcrumb-item"><a href="#!">Asset
+									Management</a></li>
+							<li class="breadcrumb-item"><a href="#!">Create GRN</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Create GRN</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-xl-3 col-sm-2">
+							<label class="font-weight-bold">PO#<span
+								class="text-danger">*</span>
+							</label>
+							 <select class="form-control" data-ng-model="data.object.po_id" data-ng-change="getPODetails(data.object);getDraftgrn(data.object);">
+								<option></option>
+								<option data-ng-repeat="detail in details" value="{{detail.purchaseorder_id}}">{{detail.purchaseorder_id}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-xl-2">
+							<label>&nbsp; </label>
+							<button type="submit"
+								class="btn btn-grd-primary hor-grd waves-effect"
+								data-ng-click="Getpoiddata(data.object.purchaseorder_id)"
+								data-toggle="modal" data-target="#large-Modal">PO
+								Details</button>
+						</div>
+						<div class="col-sm-12 col-xl-3 col-sm-2">
+							<label class="font-weight-bold">Vendor Invoice#<span
+								class="text-danger">*</span></label> <input type="text"
+								class="form-control" data-ng-model="data.object.invoice"></input>
+							<!-- <select name="select"
+								class="form-control form-control-default"
+								data-ng-model="data.object.vendor_id"
+								data-ng-change="getVendorId(data.object);">
+								<option data-ng-repeat="vendor  in vendors"
+									value="{{vendor.vendor_id}}">{{vendor.vendor_id}}</option>
+							</select> -->
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							<label class="font-weight-bold">PO Date</label> <input
+								type="text" class="form-control"
+								data-ng-model="data.object.order_date" readonly>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							<label class="font-weight-bold">Need by date</label> <input
+								type="text" class="form-control"
+								data-ng-model="data.object.need_by_date" readonly>
+						</div>
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<label class="font-weight-bold">Vendor</label> <input type="text"
+								class="form-control" data-ng-model="data.object.vendorname"
+								readonly>
+						</div>
+
+						<div class="col-sm-12 col-xl-3 col-sm-2">
+							<label class="font-weight-bold">District</label> <select
+								name="select" class="form-control form-control-default"
+								data-ng-model="data.object.delivery_location">
+								<option></option>
+								<option data-ng-repeat="district in districts"
+									value="{{district.districtid}}">{{district.districtname}}</option>
+							</select>
+						</div>
+
+
+
+
+						<div class="col-sm-12 col-xl-3 col-sm-2">
+							<label class="font-weight-bold">Draft GRNs</label> <select
+								name="select" class="form-control form-control-default"
+								data-ng-model="data.object.grn_id">
+								<option></option>
+								<option data-ng-repeat="draftgrn in draftgrns"
+									value="{{draftgrn.grn_id}}">{{draftgrn.grn_id}}</option>
+							</select>
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+		<button type="submit"
+			data-ng-click="getLineItemDetails(data.purchaseorder_id);"
+			class="btn btn-primary">Get Details</button>
+	</div>
+
+	<!--< div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Vendor Comment</h6>
+				</div>
+				<div class="card-body">
+					<label class="font-weight-bold">Comment</label>
+					<textarea data-ng-model="data.object.vendor_comment"></textarea>
+				</div>
+				<div>
+
+
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="dt-responsive table-responsive ">
+								<table id="simpletable"
+									class="table table-hover table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+
+											<th>Documents</th>
+											<th>Download</th>
+
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											data-ng-repeat="data in filteredResult =(documentdetails | filter:search)">
+											<td>{{$index+1}}</td>
+											<td>{{data.documents}}</td>
+											<td>{{data.download}}</td>
+										</tr>
+
+									</tbody>
+
+								</table>
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Line Items</h6>
+				</div>
+				<div class="card-body">
+
+					<div>
+
+
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="dt-responsive table-responsive">
+									<table id="simple"
+										class="table table-hover table-bordered nowrap">
+										<thead>
+											<tr>
+												<th>S.No</th>
+												<th><input onclick="selectAllGRNLineItems(this)"
+								id="selectAll" type="checkbox"></th>
+												<th>Name</th>
+												<th>Brand</th>
+												<th>Installation</th>
+												<th>Inst. Date</th>
+												<th>PO Quantity</th>
+												<th>Remaining Qty</th>
+												<th>Received Qty</th>
+												<th>Inspected Qty</th>
+												<th>Rejected Qty</th>
+												<th>QC okay Qty</th>
+												<th>Location</th>
+												<th>Documents</th>
+
+
+
+											</tr>
+										</thead>
+										<tbody>
+											<tr
+												data-ng-repeat="data in filteredResult =(lineitemdetails | filter:search)">
+												<td>{{$index+1}}</td>
+												<td><input onclick="selectAllGRNLineItems(this)"
+													id="selectAll" type="checkbox"></td>
+												<td>{{data.item_name}}</td>
+												<td>{{data.brand}}</td>
+												<td>{{data.installation_status}}</td>
+												<td>{{data.installation_date}}</td>
+												<td>{{data.qty}}</td>
+												<td><input type="text"></td>
+												<td><input type="text"></td>
+												<td><input type="text"></td>
+												<td><input type="text"></td>
+												<td>{{data.location}}</td>
+												<td>{{data.documents}}</td>
+											</tr>
+										</tbody>
+
+									</table>
+								</div>
+
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Saved Line Items</h6>
+				</div>
+				<div class="card-body">
+
+					<div>
+
+
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="dt-responsive table-responsive">
+									<table id="simpletable2"
+										class="table table-hover table-bordered nowrap">
+										<thead>
+											<tr>
+												<th>S.No</th>
+												<th><input onclick="selectAllDraftGRNLineItems(this)"
+								id="selectAll" type="checkbox"></th>
+												<th>Name</th>
+												<th>Brand</th>
+												<th>Installation</th>
+												<th>Inst. Date</th>
+												<th>PO Quantity</th>
+												<th>Remaining Qty</th>
+												<th>Received Qty</th>
+												<th>Inspected Qty</th>
+												<th>Rejected Qty</th>
+												<th>QC okay Qty</th>
+												<th>Location</th>
+												<th>Documents</th>
+
+
+
+											</tr>
+										</thead>
+										<tbody>
+											<tr
+												data-ng-repeat="userdata in filteredResult =(savedlinedetails | filter:search)">
+												<td>{{$index+1}}</td>
+												<td><input onclick="selectAllGRNLineItems(this)"
+													id="selectAll" type="checkbox"></td>
+												<td>{{userdata.item_name}}</td>
+												<td>{{userdata.brand}}</td>
+												<td>{{userdata.installation_status}}</td>
+												<td>{{userdata.installation_date}}</td>
+												<td>{{userdata.po_qty}}</td>
+												<td>{{userdata.received_qty}}</td>
+												<td>{{userdata.remaining_qty}}</td>
+												<td>{{userdata.inspected_qty}}</td>
+												<td>{{userdata.rejected_qty}}</td>
+												<td>{{userdata.qc_qty}}</td>
+												<td>{{userdata.submitted_by}}</td>
+												<td>{{userdata.location}}</td>
+											</tr>
+										</tbody>
+
+									</table>
+								</div>
+
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+
+				<div class="card-body">
+
+					<div class="row">
+						<label class="font-weight-bold">Checked By</label>
+						<div class="col-sm-12 col-xl-4   m-b-30">
+
+							<select name="select" class="form-control form-control-default"
+								data-ng-model="data.object.checked_by">
+								<option>--select--</option>
+								<option data-ng-repeat="empname in empnames"
+									value="{{empname.empid}}">{{empname.fullname}}</option>
+							</select>
+						</div>
+						<div>
+
+							<textarea placeholder="comments"
+								data-ng-model="data.object.comment" placeholder="Comment Here "> </textarea>
+						</div>
+					</div>
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+		<button type="submit" class="btn btn-primary"
+			data-ng-click="addgrnid(data.object);getGrnIDs(data.object);">Save
+			GRN</button>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Assosciated GRN's</h6>
+				</div>
+				<div class="card-body">
+					<div>
+
+
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="dt-responsive table-responsive">
+									<table id="simpletable3"
+										class="table table-hover table-bordered nowrap">
+										<thead>
+											<tr>
+												<th>S.No</th>
+
+												<th>GRN ID</th>
+												<th>GRN Date</th>
+												<th>Comments</th>
+												<th>View</th>
+
+
+
+
+											</tr>
+										</thead>
+										<tbody>
+											<tr
+												data-ng-repeat="data in filteredResult =(grndetails | filter:search)">
+												<td>{{$index+1}}</td>
+												<td>{{data.grn_id}}</td>
+												<td>{{data.grn_date}}</td>
+												<td>{{data.comments}}</td>
+												<td></td>
+
+											</tr>
+										</tbody>
+
+									</table>
+								</div>
+
+
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">PODetails</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-xl-6 m-b-30">Financial Year:{{data.financialyear}}
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-6 m-b-30">Purchase Order Type:{{data.purchaseordertype}}  
+                                                                        </div>
+  <div class="col-sm-12 col-xl-6 m-b-30">Sector:{{data.sector}}
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-6 m-b-30">Purchase Order No:{{data.purcahseorderno}}
+                                                                        </div>
+                                                                          <div class="col-sm-12 col-xl-6 m-b-30">Program:{{data.program}}
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-6 m-b-30">Purchase Order Date:{{data.podate}}  
+                                                                        </div>
+                                                                          <div class="col-sm-12 col-xl-6 m-b-30">Total Amount:{{data.amount}}
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-6 m-b-30">Vendor Name:{{data.vendorname}}                                                                          
+                                                                        </div>    
+                                                                    </div>
+                                                                   
+                                                                    <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Items</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div>
+
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="dt-responsive table-responsive">
+                                                                        <table id="simpletable4" class="table table-hover table-bordered nowrap">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Consumables/Assets</th>
+                                                                                    <th>Quantity/No</th>
+                                                                                    <th>Rate</th>
+                                                                                    <th>Value</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                              <tr data-ng-repeat="data in filteredResult =(grndetails | filter:search)">  
+															        <td>{{$index+1}}</td>
+															<td>{{data.grn_id}}</td>  
+															<td>{{data.grn_date}}</td>
+															<td>{{data.comments}}</td>
+															                                                                                   
+	                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+</div>
+
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                       
+                                                                    </div>
+
+
+                                                                    <!--  Modal End -->
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+</div>
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+<script>
+        $('#simple').DataTable();
+        $('#simpletable2').DataTable();
+        $('#simpletable3').DataTable();     
+    </script>
+<script>
+		jQuery(document).ready(function() {
+			
+			angular.bootstrap(jQuery("#grnId"), [ 'CreateGrn' ]);
+		});
+		
+	</script>

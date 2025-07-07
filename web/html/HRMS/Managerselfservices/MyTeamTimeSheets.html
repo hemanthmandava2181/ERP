@@ -1,0 +1,255 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/managerselfservices/MyTeamTimesheets.js"></script>
+
+    <!-- Data Tables -->
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="myteam" data-ng-controller="sheetsController" >
+                                        <div class="row">
+                                            <div class="col-sm-12">        
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>My Team Time Sheets</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">HRMS</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Manager Self Services</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">My Team Time Sheets</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        <h5>Time Sheet Report</h5>
+                                       
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+                                                                <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#pendingExample" aria-expanded="false" aria-controls="collapseExample">
+                                                        Attendance
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+                                                                <button class="btn btn-warning btn-block" type="button" data-toggle="collapse" data-target="#rejectedExample" aria-expanded="false" aria-controls="collapseExample">
+                                                                Time Sheet
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row collapse show mt-2" id="pendingExample">
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-info">
+                                                        <h6 class="card-title">Attendance</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">From Date<span class="text-danger">*</span> :</label>
+                                                                    <input class="form-control" type="date" data-ng-model="data.object.from_date"  />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">To Date<span class="text-danger">*</span> :</label>
+                                                                    <input class="form-control" type="date" data-ng-model="data.object.to_date" />
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12 mt-4 text-center">
+                                                            <button class="btn btn-grd-primary hor-grd text-center" data-ng-click="getAttSheets(data.object); getCalendarDetails(data.object)">Submit</button>
+                                                        </div>
+                                                    </div><br>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="panel panel-primary" style="border-color: #4099ff;">
+                                                                <div class="panel-body p-6">
+                                                                    <div class="dt-responsive table-responsive">
+                                                                        <table id="simpletable" class="table table-hover table-bordered nowrap">
+                                                                            <thead class="btn-grd-primary">
+                                                                                <tr>
+                                                                                    <th>S.No</th>
+                                                                                    <th>Employee Name</th>
+                                                                                   <th>Login Time</th>
+                                                                                   <th>Logout Time</th>
+                                                                                    <!-- <th data-ng-repeat="emp in calendarDetails">{{emp.day}}</th> -->
+                                                                                </tr>  
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr data-ng-repeat="emp in attdetails"> 
+                                                                                <td>{{$index+1}}</td> 
+                                                                                <td>{{emp.employeename}}</td> 
+                                                                               <td>{{emp.login_time}}</td> 
+                                                                               <td>{{emp.logout_time}}</td> 
+                                                                                </tr> 
+                                                                               
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row collapse mt-2" id="rejectedExample">
+                                                <div class="col-sm-12 col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-header bg-warning">
+                                                            <h6 class="card-title">Time Sheet</h6>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="font-weight-bold">From Date<span class="text-danger">*</span> :</label>
+                                                                        <input class="form-control" type="date" data-ng-model="data.object.from_date" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="font-weight-bold">To Date<span class="text-danger">*</span> :</label>
+                                                                        <input class="form-control" type="date" data-ng-model="data.object.to_date"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="font-weight-bold">Select Employee<span class="text-danger">*</span> :</label>
+                                                                        <select name="select" class="form-control"data-ng-model="data.object.reporting_to">
+                                                                         <option data-ng-repeat="report in reportings"value="{{report.empid}}">{{report.fullname}}</option>
+                                                                          </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="row">
+                                                            <div class="col-md-12 mt-4 text-center">
+                                                                <button class="btn btn-grd-primary hor-grd text-center" data-ng-click="getTeamSheets(data.object);" >Submit</button>
+                                                            </div>
+                                                        </div><br>
+
+
+
+
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="panel panel-primary" style="border-color: #4099ff;">
+                                                                    <div class="panel-body p-6">
+                                                                        <div class="dt-responsive table-responsive">
+                                                                            <table id="simpletable1" class="table table-hover table-bordered nowrap">
+                                                                                <thead class="btn-grd-primary">
+                                                                                    <tr>
+                                                                                        <th>S.no</th>
+                                                                                        <th>EmployeeName</th>
+                                                                                        <th>Date</th>
+                                                                                        <th>StartTime</th>
+                                                                                        <th>EndTime</th>
+                                                                                        <th>Task</th>
+                                                                                        <th>Description</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Approve</th>
+                                                                                        <th>Rejects</th>
+
+                                                                                    </tr>
+                                                                                   
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                   <tr data-ng-repeat="emp in empdetails | filter:search">
+                                                                                        <td>{{$index+1}}</td>
+                                                                                        <td>{{emp.employeename}}</td>
+                                                                                        <td>{{emp.created_date|date:"dd-MM-yyyy"}}</td>
+                                                                                        <td>{{emp.start_time}}</td>
+                                                                                        <td>{{emp.end_time}}</td>
+                                                                                        <td>{{emp.task}}</td>
+                                                                                        <td>{{emp.description}}</td>
+                                                                                        <td>{{emp.status}}</td>
+                                                                                        <td>
+                                                                                            <button id="editData" data-ng-click="updateDataapprove(emp)" class="btn btn-success btn-sm">Approved
+                                                                                                   </button></td>
+                                                                                        <td><button class="btn btn-danger btn-sm" data-ng-click="updateDataapprove(emp)">Rejects
+                                                                                                   </button>
+                                                                                        </td>
+
+                                                                                    </tr>
+
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+</div>
+                                
+
+
+
+            <!-- Data Tables -->
+            <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+            <script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+            <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+            <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+            <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+          
+           
+            <script>
+                $('simpletable1').DataTable();
+                $('simpletable2').DataTable();
+                $('simpletable').DataTable();
+            </script>
+<script> 
+jQuery(document).ready(function() { 
+	angular.bootstrap(jQuery("#myteam"), [ 'sheetsModule' ]);
+});
+  </script>

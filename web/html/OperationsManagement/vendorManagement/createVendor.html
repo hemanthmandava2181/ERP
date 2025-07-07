@@ -1,0 +1,491 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/VendorManagement/VendorModule.js"></script>
+<div class="container" id="vendorId"
+	data-ng-controller="VendorController">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5></h5>
+					</div>   
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home">Create Vendor</i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!"></a>Procurements</li>
+							<li class="breadcrumb-item"><a href="#!"></a>Vendor Management</li>
+							<li class="breadcrumb-item"><a href="#!"></a>create vendor</li>
+						</ul>
+					</div> 
+				</div>
+			</div>
+		</div>
+	</div>    
+	<!-- BreadCrumb End -->
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Vendor List</h6>
+				</div>
+				<div class="card-body">
+					<div class="row align-items-center mb-2">
+						<div class="col-sm-12 col-md-6 ml-auto text-right">
+							<button class="btn btn-success btn-sm waves-effect waves-light"
+								data-toggle="modal" data-target="#modal-report">
+								<i class="feather icon-plus"></i>Create New Vendor
+							</button>
+						</div>
+					</div>
+					<div class="row">   
+						<div class="col-sm-12">
+							<div class="table-responsive">
+								<table id="simpletable"   
+									class="table table-bordered mb-0 table-xs">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Vendor Id</th>
+											<th>Vendor Name</th>
+											<th>Address</th>
+											<th>Contact Name</th>
+											<th>Email</th>
+											<th>GST No</th>
+											<th>GST Registration</th>
+											<th>State</th>
+											<th>Bank Name</th>
+											<th>IFSC Code</th>
+											<th>Bank Account Number</th>
+											<th>Status</th>
+											<th>Options</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="data in filteredResult=(regdetails | filter:search)" >   
+											<td>{{$index+1}}</td>
+											<td>{{data.vendor_id}}</td>
+											<td>{{data.name}}</td>
+											<td>{{data.address}}</td>   
+											<td>{{data.mobile}}</td>
+											<td>{{data.email}}</td> 
+											<td>{{data.gst_no}}</td> 
+											<td>{{data.registration_no}}</td>	
+											<td>{{data.state}}</td> 
+				  	  						<td>{{data.bank_name}}</td>
+											<td>{{data.ifsc}}</td>
+											<td>{{data.account_no}}</td>
+											<td>{{data.status}}</td>
+											<td><a  class="btn btn-warning btn-sm" data-ng-click="getById(data.vendor_id);"><i
+													class="feather icon-eye" ></i></a> <a href="#!"
+												class="btn btn-info btn-sm"><i class="feather icon-edit"></i></a>
+												<a href="#!" class="btn btn-danger btn-sm"><i
+													class="feather icon-trash"></i></a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>     
+						</div>
+					</div>
+
+  
+					<div class="modal fade" id="modal-report" tabindex="-1"
+						role="dialog" aria-labelledby="myExtraLargeModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog modal-lg modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header bg-primary">
+									<h5 class="modal-title text-white">Create Vendor</h5>
+									<button type="button" class="close text-white"
+										data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true" class="text-white">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form>
+										<div class="row">
+											<div class="col-12 mb-2">
+												<h5>Personal Information</h5>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<labelfor="vendor-type">Vendor Type&nbsp;<span
+														class="text-danger">*</span> </label> <select
+														class="form-control form-control-sm" data-ng-model="data.object.vendor_type" id="vendortype">
+														<option value=""></option>
+														<option value="domestic">Domestic</option>
+														<option value="international">International</option>
+													</select>
+												</div>
+											</div>   
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<labelfor="vendorName">Vendor Name&nbsp;<span
+														class="text-danger">*</span> </label> <input type="text"
+														placeholder="Enter Customer Name"
+														data-ng-model="data.object.name"
+														class="form-control" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="mobileNo">Mobile Number&nbsp;<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Enter Valid Land Number"
+														data-ng-model="data.object.mobile" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="altNo">Alternate Number&nbsp;<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control"
+														placeholder="Enter Valid Mobile Number"
+														data-ng-model="data.object.phone" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="email">Email&nbsp;<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Enter Valid Email"
+														data-ng-model="data.object.email" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="website">Website&nbsp;<span
+														class="text-danger">*</span></label><input type="text"
+														class="form-control" placeholder="www.example.com"
+														data-ng-model="data.object.web_site" />
+												</div>
+											</div>
+											<div class="col-md-5 col-sm-12">
+												<div class="form-group">
+													<label for="address">Address&nbsp;<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control form-control-sm" data-ng-model="data.object.address" id="address"
+														placeholder="">
+												</div>
+											</div>
+											<div class="col-12 mb-2">
+												<hr>
+												<h5>Authorized Person Information</h5>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authPersonName">Name of Authorized
+														Person&nbsp;<span class="text-danger">*</span>
+													</label> <input type="text" class="form-control"
+														placeholder="Enter Contact Person name"
+														data-ng-model="data.object.contact_person_name" />
+												</div>
+											</div>
+											
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authPersonName">Registration Type
+														Person&nbsp;<span class="text-danger">*</span>
+													</label> 
+													 <select class="form-control form-control-sm" data-ng-model="data.object.registration_type">
+														<option data-ng-repeat="type in types"
+														value="{{type.id}">{{type.name}}</option>
+													</select>
+												</div>
+											</div>
+											
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authoPersonDesig">Authorized Person
+														Designation&nbsp;<span class="text-danger">*</span>
+													</label> <select class="form-control form-control-sm" data-ng-model="data.object.contact_person_designation"
+														id="authoPersonDesig">
+														<option value=""></option>
+														<option value="">B.Tech</option>
+														<option value="">M.Tech</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authMobileNo">Authorized Person Mobile
+														Number&nbsp;<span class="text-danger">*</span>
+													</label> <input type="text" class="form-control"
+														placeholder="Designation Of Authorized Person"
+														data-ng-model="data.object.contact_person_mobile" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authPersonEmail">Authorized Person
+														Email Id&nbsp;<span class="text-danger">*</span>
+													</label> <input type="text" class="form-control"
+														placeholder="Enter Valid Email"
+														data-ng-model="data.object.contactperson_mail" />
+												</div>
+											</div>
+											<div class="col-12 mb-2">
+												<hr>
+												<h5>Registering Authority Information</h5>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authName">Name of Registering
+														Authority&nbsp;<span class="text-danger">*</span>
+													</label> <input type="text" class="form-control"
+														data-ng-model="data.object.registering_authority" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authRegNo">Registering No&nbsp;<span
+														class="text-danger">*</span></label><input type="text"
+														class="form-control" placeholder="Enter Registration no"
+														data-ng-model="data.object.registration_no" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authRegDate">Date of Registration&nbsp;<span
+														class="text-danger">*</span></label> <input type="date"
+														class="form-control"
+														data-ng-model="data.object.date_of_registration"
+														placeholder="Select Registartion Date" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authRegPlace">Place of
+														Registration&nbsp;<span class="text-danger">*</span>
+													</label><input type="text" class="form-control"
+														data-ng-model="data.object.place_of_registration"
+														placeholder="Enter Place of Registration" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authYearsExp">No Of Years of
+														Experience&nbsp;<span class="text-danger">*</span>
+													</label><input type="text" placeholder="0"
+														data-ng-model="data.object.experience"
+														class="form-control" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authAnnualTurnOver">Annual Turn
+														Over&nbsp;<span class="text-danger">*</span>
+													</label><input type="text" class="form-control"
+														placeholder="Annual Turnover"
+														data-ng-model="data.object.annual_turnover" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authNSDC">NSDC Affiliation&nbsp;<span
+														class="text-danger">*</span></label> <select class="form-control"
+														data-ng-model="data.object.nsdc_number">
+					   									<option value="1">Yes</option>
+														<option value="2">No</option>
+													</select>
+												</div>
+											</div>
+											
+											
+											<div class="col-md-4 col-sm-12" data-ng-show="data.object.nsdc_number == '1'">
+												<div class="form-group">
+													<label for="authNSDC">NSDC Affiliation No&nbsp;<span
+														class="text-danger">*</span></label> 
+														<input class="form-control" data-ng-model="data.object.nsdc_number" type="text">
+												</div>
+											</div>
+											
+											<div class="col-md-4 col-sm-12" data-ng-show="data.object.nsdc_number == '1'">
+												<div class="form-group">
+													<label for="authNSDC">NSDC Affiliation Validity&nbsp;<span
+														class="text-danger">*</span></label> 
+														 <input class="form-control"
+														data-ng-model="data.object.nsdc_number" type="date">
+														
+												</div>
+											</div>
+											
+											
+											
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authSSC">SSC Affiliation No&nbsp;<span
+														class="text-danger">*</span></label><select class="form-control"
+														data-ng-model="data.object.ssc_number">
+														<option value="1">Yes</option>
+														<option value="2">No</option>
+													</select>
+												</div>
+											</div>
+											
+											
+											<div class="col-md-4 col-sm-12" data-ng-show="data.object.ssc_number == '1'">
+												<div class="form-group">
+													<label for="authNSDC">SSC Affiliation No&nbsp;<span
+														class="text-danger">*</span></label> <input class="form-control"
+														data-ng-model="data.object.ssc_number_no" type="text">
+												</div>
+											</div>
+											
+											<div class="col-md-4 col-sm-12" data-ng-show="data.object.ssc_number == '1'">
+												<div class="form-group">
+													<label for="authNSDC">SSC Affiliation Validity&nbsp;<span
+														class="text-danger">*</span></label> 
+														 <input class="form-control"
+														data-ng-model="data.object.ssc_number_no" type="date">
+														
+												</div>
+											</div>
+
+											
+
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authPAN">PAN No&nbsp;<span
+														class="text-danger">*</span></label><input type="text"
+														placeholder="Enter PAN Number" class="form-control"
+														data-ng-model="data.object.pan_no" />
+												</div>
+											</div>
+
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authBank">Bank Name&nbsp;<span
+														class="text-danger">*</span></label><input type="text"
+														class="form-control" data-ng-model="data.object.bank_name"
+														placeholder="Enter Bank Name" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authAccNo">Bank Account No&nbsp;<span
+														class="text-danger">*</span></label><input type="text"
+														class="form-control"
+														placeholder="Enter Bank Account Number"
+														data-ng-model="data.object.account_no" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authIFSC">IFSC Code&nbsp;<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control form-control-sm" data-ng-model="data.object.ifsc" id="authIFSC"
+														placeholder="">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authBranch">Branch&nbsp;<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control form-control-sm" data-ng-model="data.object.branch" id="authBranch"
+														placeholder="">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authGSTN">GST No&nbsp;<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control form-control-sm" data-ng-model="data.object.gst_no" id="authGSTN"
+														placeholder="">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authGSTRegDate">GST Registered
+														Date&nbsp;<span class="text-danger">*</span>
+													</label> <input type="text"
+														class="form-control form-control-sm date" data-ng-model="data.object.gst_reg_date"
+														data-mask="99/99/9999" id="authGSTRegDate" placeholder="">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authGSTReg">GST Registration&nbsp;<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control form-control-sm" data-ng-model="data.object.service_status" id="authGETReg"
+														placeholder="">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12">
+												<div class="form-group">
+													<label for="authServices">Nature of Services&nbsp;<span
+														class="text-danger">*</span></label> <select
+														class="form-control form-control-sm" data-ng-model="data.object.nature_of_service" id="statServices">
+														<option data-ng-repeat="service in services"
+														value="{{service.id}">{{service.service_name}}</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-sm-12">
+												<button
+													class="btn btn-primary btn-sm waves-effect waves-light float-right mr-2"
+													data-ng-click="save(data.object);">Submit</button>
+												<button
+													class="btn btn-danger btn-sm waves-effect waves-light float-right mr-2">Clear</button>
+											</div>
+
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+<script src="/erp/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="/erp/files/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
+<script src="/erp/files/bower_components/popper.js/js/popper.min.js"></script>
+<script src="/erp/files/bower_components/bootstrap/js/bootstrap.min.js"></script>
+
+<script
+	src="/erp/files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+
+<script src="/erp/files/bower_components/modernizr/js/modernizr.js"></script>
+<script src="/erp/files/bower_components/modernizr/js/css-scrollbars.js"></script>
+
+<script  
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+<!-- <script src="/erp/files/assets/js/modal.js"></script> -->
+<script src="/erp/files/assets/js/classie.js"></script>
+<script src="/erp/files/assets/js/modalEffects.js"></script>
+
+
+<script>
+
+jQuery(document).ready(function() {
+			   
+			angular.bootstrap(jQuery("#vendorId"), [ 'VendorModule' ]);
+		});
+</script>

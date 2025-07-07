@@ -1,0 +1,345 @@
+
+<script src="/erp/files/assets/js/erp-scripts/HRMS/PayrollManagement/paymentsummary.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="PaymentSummaryDIV" data-ng-controller="PaymentSummmaryController">
+
+<div id="display">
+
+			  		<!-- BreadCrumb Start -->
+					<div class="row">
+						<div class="col-sm-12">   
+							<div class="card">
+								<div class="card-block caption-breadcrumb">
+									<div class="breadcrumb-header">
+										<h5>Payment Summary</h5>
+									</div>
+									<div class="page-header-breadcrumb">
+										<ul class="breadcrumb-title">
+											<li class="breadcrumb-item"><a href="#!"> <i
+													class="ti-home"></i>
+											</a></li>
+											<li class="breadcrumb-item"><a href="#!">HRMS</a></li>
+											<li class="breadcrumb-item"><a href="#!">PayRoll
+													Management</a></li>
+											<li class="breadcrumb-item"><a href="#!">Payment
+													Summary</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- BreadCrumb End -->
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card">
+								<div class="card-header bg-primary">
+									<h6 class="card-title">Payment Summary</h6>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12 col-xl-2 m-b-30">
+											Financial year <label class="col-sm-3 col-form-label"></label>
+										</div>
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<select class="form-control"
+												data-ng-model="data.object.financial_year">
+												<option></option>
+												<option data-ng-repeat="financialyear in financialyears"
+													value="{{financialyear.id}}">{{financialyear.name}}</option>
+											</select>
+										</div>
+										<div class="col-sm-12 col-xl-2 m-b-30">
+											Month <label class="col-sm-3 col-form-label"></label>
+										</div>
+											<div class="col-sm-12 col-xl-3 m-b-30">
+										<select class="form-control"
+								data-ng-model="data.object.payroll_month">
+								<option></option>
+								<option data-ng-repeat="month in months"
+									value="{{month.id}}">{{month.name}}</option>
+							</select>
+										</div>
+										<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+											<label class="mr-3"> <input type="radio" name="radio" value="Staff Type Wise" data-ng-model="data.object.type"
+												checked="checked"><i class="helper mr-2"></i>Staff
+												Type Wise
+											</label> <label class="mr-3"> <input type="radio" value="Pay type Wise" data-ng-model="data.object.type"
+												name="radio"><i class="helper mr-2"></i>Pay Type
+												Wise
+											</label> <label class="mr-3"> <input type="radio" value="Saturation Deductions" data-ng-model="data.object.type"
+												name="radio"><i class="helper mr-2"></i>Satuatory
+												Deductions
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			
+			<div class="row" data-ng-show="data.object.type == 'Staff Type Wise'">
+							<div class="col-sm-3">
+								<button class="btn btn-primary" style="margin-left: 415px;"
+									value="submit" type="submit"
+									data-ng-click="getEmployeeStaffwise(data.object);">SUBMIT</button>
+							</div>
+						</div>
+
+						<div class="row" data-ng-show="data.object.type == 'Pay type Wise'">
+							<div class="col-sm-3">
+								<button class="btn btn-primary" style="margin-left: 415px;"
+									value="submit" type="submit"
+									data-ng-click="getEmployeePaytype(data.object);">SUBMIT</button>
+							</div>
+						</div>
+
+						<div class="row" data-ng-show="data.object.type == 'Saturation Deductions'">
+							<div class="col-sm-3">
+								<button class="btn btn-primary" style="margin-left: 415px;"
+									value="submit" type="submit"
+									data-ng-click="getEmployeeSaturation(data.object);">SUBMIT</button>
+							</div>
+						</div>
+			
+			
+			
+			
+			
+			
+			<div id="displaystaff">
+			
+							<!-- <div class="row">
+					<div class="col-sm-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Year: <label class="col-sm-3 col-form-label"></label>{{financial_year}}
+									</div>
+
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Month: <label class="col-sm-3 col-form-label"></label>{{month}}
+									</div>
+
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Type: <label class="col-sm-3 col-form-label"></label>{{type}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+				<div class="row">
+					<div class="col-sm-8">
+						<div class="card">
+							<div class="card-header"></div>
+							<div class="card-body">
+								<div class="dt-responsive table-responsive">
+									<table id="joining"
+									class="table table-striped table-bordered nowrap">
+									<thead class="btn-grd-primary">
+										<tr>
+											<th>S.No</th>
+											<th>Employee Type</th>
+											<th>Count</th>
+											<th>Amount</th>
+											
+
+										</tr>
+
+
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="emp in employeestaffwise | filter:search">
+											<td>{{$index+1}}</td>
+											<td>{{emp.employeetypes}}</td>
+											<td>{{emp.count}}</td>
+											<td>{{emp.amount}}</td>
+											
+										</tr>
+									</tbody>
+								</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div id="displayPaytype">
+			<!-- <div class="row">
+					<div class="col-sm-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Year: <label class="col-sm-3 col-form-label"></label>{{financial_year}}
+									</div>
+
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Month: <label class="col-sm-3 col-form-label"></label>{{month}}
+									</div>
+
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Type: <label class="col-sm-3 col-form-label"></label>{{type}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+
+			<div class="row">
+				<div class="col-sm-7">
+					<div class="card">
+						<div class="card-header"></div>
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+									<table id="joining"
+									class="table table-striped table-bordered nowrap">
+									<thead class="btn-grd-primary">
+										<tr  >
+											<th>S.No</th>
+											<th>Name</th>
+											<th>Type</th>
+											<th>Amount</th>
+										</tr>
+   
+
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="emp in employeepaytype | filter:search">
+											<td>{{$index+1}}</td>
+											<td>{{emp.name}}</td>
+											<td>{{emp.type}}</td>
+											<td>{{emp.amount}}</td>
+											
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+<div id="displaysaturation">
+<!-- <div class="row">
+					<div class="col-sm-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Year: <label class="col-sm-3 col-form-label"></label>{{financial_year}}
+									</div>
+
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Month: <label class="col-sm-3 col-form-label"></label>{{month}}
+									</div>
+
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Type: <label class="col-sm-3 col-form-label"></label>{{type}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="card">
+					<div class="card-header"></div>
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table id="joining"
+									class="table table-striped table-bordered nowrap">
+									<thead class="btn-grd-primary">
+										<tr>
+											<th>S.No</th>
+											<th>paymenthead</th>
+										
+											<th>Amount</th>
+											
+
+										</tr>
+
+
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="emp in employeesaturation | filter:search">
+											<td>{{$index+1}}</td>
+											<td>{{emp.name}}</td>
+											<td>{{emp.amount}}</td>
+										
+											
+										</tr>
+									</tbody>
+								</table>
+						</div>
+					</div>
+				</div>
+			</div>
+</div>
+</div>
+
+</div>
+
+<!-- Data Table -->
+<script
+	src="files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="files/assets/pages/data-table/js/data-table-custom.js"></script>
+<script>
+	jQuery(document).ready(
+			function() {
+
+				$("#display").show();
+				$("#displaystaff").hide();
+				$("#displayPaytype").hide();   
+				$("#displaysaturation").hide();
+				
+				$("#joining").DataTable();
+				$("#relieving").DataTable();
+				$("#stop").DataTable();
+				
+				angular.bootstrap(jQuery("#PaymentSummaryDIV"),
+						[ 'paymentsummaryModule' ]);
+
+			});
+</script>
+
+
+
+     
+    
+

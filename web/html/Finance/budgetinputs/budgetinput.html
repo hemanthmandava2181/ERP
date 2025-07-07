@@ -1,0 +1,642 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/finance/BudgetInputs/budgetinput.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="budgetinputId" data-ng-controller="budgetinputController">
+	<!-- BreadCrumb Start -->       
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Budget Inputs</h5>   
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Budget Inputs</a></li>
+							<li class="breadcrumb-item"><a href="#!"></a>Budget Input</li>
+							<!-- <li class="breadcrumb-item"><a href="#!"></a></li> -->
+						</ul>
+					</div>
+				</div>  
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+	<div class="row">
+		<div class="col-sm-12">   
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Budget Inputs</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label class = "font-weight-bold">Financial Year<b class="text-danger">*</b></label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<select class = "form-control form-control-primary" data-ng-model = "data.object.financialyear">
+								<option data-ng-repeat="year in years" value="{{year.yearid}}">{{year.years}}</option>
+							</select> 
+						</div>
+						<div class="col-sm-12 col-md-1 col-xl-1 col-lg-1 col-xs-12">
+							<label>&nbsp;</label>
+						</div>
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label class = "font-weight-bold">SDEI Group<b class="text-danger">*</b></label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<select class = "form-control form-control-primary" data-ng-model = "data.object.sdeigroup">
+								<option data-ng-repeat = "group in groups" value = "{{group.id}}">{{group.group_name}}</option>
+							</select>
+
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label class = "font-weight-bold">Scheme Name<b class="text-danger">*</b></label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<select class = "form-control form-control-primary" data-ng-model = "data.object.schemename">
+								<option data-ng-repeat="scheme in schemes" value="{{scheme.scheme_id}}">{{scheme.scheme_name}}</option>
+							</select> 
+						</div>
+						<div class="col-sm-12 col-md-1 col-xl-1 col-lg-1 col-xs-12">
+							<label>&nbsp;</label>
+						</div>
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label class = "font-weight-bold">Segment</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<select class = "form-control form-control-primary" data-ng-model = "data.object.segmentname">
+								<option data-ng-repeat = "segment in segments" value = "{{segment.id}}">{{segment.segment_name}}</option>
+							</select>
+						</div>
+   
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label class = "font-weight-bold">Sector</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<select class = "form-control form-control-primary" data-ng-model = "data.object.sectorname">
+								<option data-ng-repeat="sector in sectors" value="{{sector.sector_id}}">{{sector.sector_name}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-md-1 col-xl-1 col-lg-1 col-xs-12">
+							<label>&nbsp;</label>
+						</div>
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label class = "font-weight-bold">Description</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<textarea data-ng-model = "data.object.descriptions" class = "form-control form-control-primary" placeholder = "description" ></textarea>
+						</div>
+
+					</div>  
+					<br>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-primary" style="border-color: #4099ff;">
+	                             <div class="panel-heading btn-grd-primary">
+	                                 <h6 class="card-title">CAPEX</h6>
+	                             </div>  
+								<div class="panel-body p-3">
+									<div class="row">
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<label class = "font-weight-bold">Capex Planned Budget<b class="text-danger">*</b>
+												<br> <small>(AMOUNT IN LAKHS (₹))</small>
+											</label>
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<input type = "text" data-ng-model = "data.object.capex_planned" class = "form-control form-control-primary" 
+												id = "capexplanned" onkeyup="sumCapex()" value = "" placeholder = "ENTER CAPEX PLANNED BUDGET"/>
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<label class = "font-weight-bold">Capex Non-Planned Budget<br> <small>
+													(AMOUNT IN LAKHS (₹))</small></label>
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<input type = "text" class = "form-control form-control-primary" id = "capexnonplanned" 
+											data-ng-model = "data.object.capex_non_planned" onkeyup="sumCapex()" value = "" placeholder = "ENTER CAPEX NON PLANNED BUDGET" />
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<label class = "font-weight-bold">Capex Additional Budget<br> <small>(AMOUNT
+													IN LAKHS (₹))</small>
+											</label>
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<input type = "text" class = "form-control form-control-primary" data-ng-model = "data.object.capex_adnn_budget" 
+												onkeyup="sumCapex()" id = "capexadditional" placeholder = "ENTER CAPEX ADDITIONAL BUDGET" />
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<label class = "font-weight-bold">Capex Total Budget<br> <small>(AMOUNT IN LAKHS (₹))</small></label>
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<input type = "text" class = "form-control form-control-primary" data-ng-model = "data.object.capextotal_budget" 
+												id = "capextotalbudget" value = "" disabled placeholder = "0.00" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>   
+					</div>
+					<h3>&nbsp;</h3>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-primary" style="border-color: #4099ff;">
+	                             <div class="panel-heading btn-grd-primary">
+	                                 <h6 class="card-title">OPEX</h6>
+	                             </div>  
+								<div class="panel-body p-3">
+									<div class="row">
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<label class = "font-weight-bold">Opex Planned Budget<b class="text-danger">*</b>
+												<br> <small>(AMOUNT IN LAKHS (₹))</small>
+											</label>
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<input type = "text" class = "form-control form-control-primary" data-ng-model = "data.object.opexplanned" 
+												id = "opexplanned" onkeyup="sumOpex();" placeholder = "ENTER OPEX PLANNED BUDGET" />
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<label class = "font-weight-bold">Opex Non-Planned Budget<br> <small>
+													(AMOUNT IN LAKHS (₹))</small></label>
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-123">
+											<input type="text" class = "form-control form-control-primary" data-ng-model = "data.object.opexnon_planned"
+											 id = "opexnonplanned" onkeyup="sumOpex();" placeholder="ENTER OPEX NON PLANNED BUDGET" />
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<label class = "font-weight-bold">Opex Additional Budget<br> <small>
+													(AMOUNT IN LAKHS (₹))</small>
+											</label>
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<input type="text" class = "form-control form-control-primary" data-ng-model = "data.object.opexadnn_planned"
+											 onkeyup="sumOpex();sumTotal();" id = "opexadditional" placeholder="ENTER OPEX ADDITIONAL BUDGET" />
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<label class = "font-weight-bold">Opex Total Budget<br> <small>(AMOUNT IN LAKHS (₹))</small></label>
+										</div>
+										<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+											<input type="text" class = "form-control form-control-primary" data-ng-model = "data.object.opextotal_budget"
+											 id = "opextotal" value = "" disabled placeholder="0.00" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>   
+					<br>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<label class = "font-weight-bold">Total Budget<br> <small> (AMOUNT IN
+									LAKHS (₹))</small></label>
+
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<input type="text" class = "form-control" disabled id = "totalBudget" data-ng-model = "data.object.totalbudget" placeholder = "0.00" />
+						</div>
+					</div>
+					<br>
+					<div class="row">  
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<label class = "font-weight-bold">HC Planned</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<input type = "text" class = "form-control" data-ng-model = "data.object.hcplanned" placeholder = "Enter HC Planned" />
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<label class = "font-weight-bold">Physical Output</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<input type = "text" class = "form-control" data-ng-model = "data.object.physicaloutput" placeholder = "Enter Pysical Output" />
+						</div>
+					</div>
+					<br> <br>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<label class = "font-weight-bold">From Date<b class="text-danger">*</b></label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<input type = "date" class = "form-control" data-ng-model = "data.object.fromdate" />
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<label class = "font-weight-bold">To Date<b class="text-danger">*</b></label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<input type = "date" class = "form-control" data-ng-model = "data.object.todate" />
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Note Description</h6>
+				</div>
+				<div class="card-body">
+
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<label class = "font-weight-bold">Title<br> Max Size:100 characters
+							</label>
+						</div>
+						<div class="col-sm-12 col-md-9 col-xl-9 col-lg-9 col-xs-12">
+							<input class="form-control" type="text" maxlength="100" />
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-sm-12 col-md-1 col-xl-1 col-lg-1 col-xs-12"></div>
+						<div>
+							<textarea rows="15" cols="100"></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-5 col-xl-5 col-lg-5 col-xs-12"></div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<button class="btn-primary">Add Note</button>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label class = "font-weight-bold">Upload Document</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<button class="form-control btn btn-primary">Add
+								Documents</button>
+						</div>
+						<br>
+
+
+						<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+							<div class="row">
+								<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+									<label class = "font-weight-bold">L3 Approver<b class="text-danger">*</b></label>
+								</div>
+								<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+									<select class="form-control">
+										<option>Select</option>
+										<option>ROLE_DY_CEO</option>
+										<OPTION>ROLE_CFO</OPTION>
+										<option>ROLE_COO</option>
+										<option>ROLE_HEAD_HR</option>
+									</select>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+
+									<label class = "font-weight-bold">L2 Approver<b class="text-danger">*</b></label>
+								</div>
+								<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+									<select class="form-control">
+										<option>Select</option>
+										<option>ROLE_DY_CEO</option>
+										<OPTION>ROLE_CFO</OPTION>
+										<option>ROLE_COO</option>
+										<option>ROLE_HEAD_HR</option>
+									</select>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+
+									<label class = "font-weight-bold">L1 Approver<b class="text-danger">*</b></label>
+								</div>
+								<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+									<select class="form-control">
+										<option>Select</option>
+										<option>ROLE_CEO</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+                         <div class="col-sm-12 mt-1 text-center">
+                             <button class="btn btn-grd-success" id = "submit"  data-ng-click = "createBudgetinput(data.object);" 
+                             	type = "submit">Submit</button>
+                         </div>
+                     </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Budget Inputs List</h6>
+				</div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="order-table"
+							class="table table-striped table-bordered nowrap">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th style="min-width: 150px;max-width: 150px;text-align: center;">Item Code</th>   
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">SDEI Group</th>    
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">Scheme Name</th>    
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">Segment</th>  
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">Sector</th>
+									<th style="min-width: 250px;max-width: 250px;text-align: center;">Description</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">CAPEX Planned Budget</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">CAPEX Non-Planned Budget</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">CAPEX Additional Budget</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">CAPEX Total Budget</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">OPEX Planned Budget</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">OPEX Non-Planned Budget</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">OPEX Additional Budget</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">OPEX Total Budget</th> 
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">Planned HC</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">Physical Output</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">From Date</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">To Date</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">Created By</th>
+									<th style="min-width: 200px;max-width: 200px;text-align: center;">Status</th>
+									<th style="min-width: 100px;max-width: 100px;text-align: center;">View</th>
+								</tr>
+							</thead>   
+							<tbody>
+								<tr data-ng-repeat="budgetinput in budgetInputData">
+									<td style = "text-align: center;">{{$index+1}}</td> 
+									<td style = "text-align: center;">{{budgetinput.budget_id}}</td>     
+									<td style = "text-align: center;">{{budgetinput.sdei_groupname}}</td>    
+									<td style = "text-align: center;">{{budgetinput.scheme_name}}</td>   
+									<td style = "text-align: center;">{{budgetinput.segment_name}}</td>
+									<td style = "text-align: center;">{{budgetinput.sector_name}}</td>    
+									<td style = "text-align: center;">{{budgetinput.description}}</td>
+									<td style = "text-align: right;">{{budgetinput.planned}}</td>     
+									<td style = "text-align: right;">{{budgetinput.non_planned}}</td>
+									<td style = "text-align: right;">{{budgetinput.adnn_budget}}</td>
+									<td style = "text-align: right;">{{budgetinput.capex_total_budget}}</td>
+									<td style = "text-align: right;">{{budgetinput.opex_planned}}</td>
+									<td style = "text-align: right;">{{budgetinput.opex_non_planned}}</td>
+									<td style = "text-align: right;">{{budgetinput.opex_adnn_planned}}</td>
+									<td style = "text-align: right;">{{budgetinput.opex_total_budget}}</td>
+									<td style = "text-align: right;">{{budgetinput.hc_planned}}</td>
+									<td style = "text-align: right;">{{budgetinput.physical_output}}</td>
+									<td style = "text-align: center;">{{budgetinput.from_date}}</td>
+									<td style = "text-align: center;">{{budgetinput.to_date}}</td>
+									<td style = "text-align: center;">{{budgetinput.created_by}}</td>
+									<td style = "text-align: center;">{{budgetinput.approvestatus}}</td>
+									<td>
+										<button class = "btn btn-primary" data-toggle="modal" id = "view" type = "submit"
+											data-toggle="modal" data-target="#large-Modal" data-ng-click = "viewbudgetpopupdata(budgetinput.budget_id);">View</button>
+									</td>   
+								</tr> 
+							</tbody>
+						</table>   
+					</div>
+					   
+					<!-- modal -->
+					
+					<div class="modal fade md-effect-2" id="large-Modal" tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title">Budget Input Details</h4>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label class="font-weight-bold">Budget ID</label> 
+													<input type = "text" class = "form-control" data-ng-model = "data.object.budget_id" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>SDEI Group</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.group_name" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>Scheme</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.scheme_name" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>Segment</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.segment_name" disabled />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>Sector</label> 
+													<input type = "text" class = "form-control" data-ng-model = "data.object.sector_name" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>Description</label>
+													<textarea type = "text" class = "form-control" data-ng-model = "data.object.description" disabled></textarea>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>CAPEX Planned Budget</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.planned" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>CAPEX Non-Planned Budget</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.non_planned" disabled />
+												</div>
+											</div>     
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>CAPEX Additional Budget</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.adnn_budget" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>CAPEX Total Budget</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.capex_total_budget" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>OPEX Planned Budget</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.opex_planned" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>OPEX Non-Planned Budget</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.opex_non_planned" disabled />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>OPEX Additional Budget</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.opex_adnn_planned" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>OPEX Total Budget</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.opex_total_budget" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>Planned HC</label>
+													<input type = "text"class = "form-control" data-ng-model = "data.object.hc_planned" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>Physical Output</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.physical_output" disabled />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>From Date</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.from_date" disabled />
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+												<div class="form-group">
+													<label>To Date</label>
+													<input type = "text" class = "form-control" data-ng-model = "data.object.to_date" disabled />
+												</div>
+											</div>											
+										</div>
+
+										<h3>&nbsp;</h3>
+
+									</div>   
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default waves-effect "
+										data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div> 
+						
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+<script>
+	jQuery(document).ready(function() {
+   
+		angular.bootstrap(jQuery("#budgetinputId"), [ 'budgetinput' ]);
+	});
+</script>
+
+<script type="text/javascript">
+    function sumCapex() {
+        var txtFirstNo = document.getElementById('capexplanned').value;
+        var txtSecondNo = document.getElementById('capexnonplanned').value;
+        var txtThirdNo = document.getElementById('capexadditional').value;
+        var result1 = parseFloat(txtFirstNo) + parseFloat(txtSecondNo) + parseFloat(txtThirdNo);
+        if (!isNaN(result1)) {   
+            document.getElementById('capextotalbudget').value = result1;
+        }   
+    }   
+</script>
+
+<script type="text/javascript">     
+    function sumOpex() {
+        var txtFirstNo = document.getElementById('opexplanned').value;
+        var txtSecondNo = document.getElementById('opexnonplanned').value;
+        var txtThirdNo = document.getElementById('opexadditional').value;
+        var result2= parseFloat(txtFirstNo) + parseFloat(txtSecondNo) + parseFloat(txtThirdNo);
+        if (!isNaN(result2)) {   
+            document.getElementById('opextotal').value = result2;
+        }   
+    }   
+</script>      
+
+<script type="text/javascript">  
+    function sumTotal() { 
+    	var txtFirstNo1 = document.getElementById('capexplanned').value;
+        var txtSecondNo1 = document.getElementById('capexnonplanned').value;
+        var txtThirdNo1 = document.getElementById('capexadditional').value;
+        var result1 = parseFloat(txtFirstNo1) + parseFloat(txtSecondNo1) + parseFloat(txtThirdNo1);
+        
+        var txtFirstNo = document.getElementById('opexplanned').value;
+        var txtSecondNo = document.getElementById('opexnonplanned').value;
+        var txtThirdNo = document.getElementById('opexadditional').value;
+        var result2= parseFloat(txtFirstNo) + parseFloat(txtSecondNo) + parseFloat(txtThirdNo);
+        
+        var totalresult = parseFloat(result1) + parseFloat(result2);    
+        if (!isNaN(totalresult)) {   
+            document.getElementById('totalBudget').value = totalresult;   
+        }   
+    }   
+</script>

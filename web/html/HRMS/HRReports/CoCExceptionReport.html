@@ -1,0 +1,97 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/HRReports/cocexceptionreport.js"></script>
+<div id="COCExceptionDIV" data-ng-controller="COCExceptionController">
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>CoC Accepted List</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">              
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!"></a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!"></a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!"></a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">CoC Accepted List</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="dt-responsive table-responsive">
+                                                            <table id="order-table" class="table table-striped table-bordered nowrap">
+                                                                <thead class="btn-grd-primary">
+                                                                    <tr>
+                                                                        <th>S.No</th>
+                                                                        <th>Employee Name</th>
+                                                                        <th>Employee ID</th>
+                                                                        <th>Accepted Date</th>
+                                                                        <th>Cader</th>
+                                                                        <th>Designation</th>
+                                                                        <th>Employee Type</th>
+                                                                        <th>Status</th>
+                                                    <th>View</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                
+                                                                <tr data-ng-repeat="emp in allcocexceptions | filter:search">
+									<td>{{$index+1}}</td>
+									<td>{{emp.name}}</td>
+									<td>{{emp.empid}}</td>
+									<td>{{emp.joining_date}}</td>
+									<td>{{emp.cader}}</td>
+									<td>{{emp.designation}}</td>
+									<td>{{emp.type}}</td>
+									<td>{{emp.status}}</td>
+<td>
+ <button class="btn btn-grd-primary hor-grd text-center" >View</button>
+</td>
+
+								</tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+        <script>
+jQuery(document).ready(function() {
+	
+
+	angular.bootstrap(jQuery("#COCExceptionDIV"), [ 'cocexceptionmodule' ]);
+	
+});   
+                 
+	
+  
+            
+</script>                            
+                                    
+     

@@ -1,0 +1,816 @@
+<script src="/erp/files/assets/js/erp-scripts/HRMS/ctc/modifyctc.js"></script>
+
+<!-- Data Tables -->
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="modifyctcId" data-ng-controller="modifyctccontroller">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Modify CTC</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">    
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">HRMS</a></li>
+							<li class="breadcrumb-item"><a href="#!">OnBoarding</a></li>
+							<li class="breadcrumb-item"><a href="#!">MOdify CTC</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Modify CTC</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>Employee Name/ID</label> <select class="form-control"
+									data-ng-model="data.object.empid">
+									<option data-ng-repeat="report in reportings"
+										value="{{report.empid}}">{{report.fullname}}</option>
+								</select>
+								<!-- <input type="text"
+									class="form-control" placeholder="Enter Employee Name/ID"
+									data-ng-model="data.object.empid" /> -->
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>Cader</label> <select class="form-control"
+									data-ng-model="data.object.caderid">
+									<option value="all">All</option>
+									<option data-ng-repeat="cader in caders" value="{{cader.id}}">{{cader.description}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>Grade</label> <select class="form-control"
+									data-ng-model="data.object.gradeid">
+									<option>All</option>
+									<option data-ng-repeat="grade in grades" value="{{grade.id}}">{{grade.grade_name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>Department</label><select class="form-control"
+									data-ng-model="data.object.departmentid">
+									<option>All</option>
+									<option data-ng-repeat="department in departments"
+										value="{{department.id}}">{{department.department_name}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 mt-1 text-center">
+
+							<button class="btn btn-primary" id="search1"
+								data-ng-show="data.object.caderid != 'all'"
+								data-ng-click="getemployeedata(data.object);"
+								style="cursor: pointer">Search</button>
+
+							<button class="btn btn-primary" id="search2"
+								data-ng-show="data.object.caderid == 'all'"
+								data-ng-click="getallemployees();" style="cursor: pointer">Search</button>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="simpletable"
+							class="table table-striped table-bordered nowrap">
+							<thead>
+								<tr>
+									<th>S.No</th>
+									<th>Employee ID</th>
+									<th>Name</th>
+									<th>Department</th>
+									<th>Designation</th>
+									<th>Cader</th>
+									<th>Grade</th>
+									<th>CTC Calculator</th>
+									<th>Effective Date</th>
+									<th>Annual CTC($)</th>
+									<!-- 	<th>Update Profile</th> -->
+									<th>Revise CTC($)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									data-ng-repeat="userdata in (filteredResult =(ctcdetails | filter:search))">
+									<td align="left">{{$index+1}}</td>
+									<td>{{userdata.empid}}</td>
+									<td>{{userdata.name}}</td>
+									<td>{{userdata.department_name}}</td>
+									<td>{{userdata.designation}}</td>
+									<td>{{userdata.cader_name}}</td>
+									<td>{{userdata.grade_name}}</td>
+									<td>{{userdata.ctc_calculator}}</td>
+									<td>{{userdata.effective_date}}</td>
+									<td>{{userdata.ctc}}</td>
+
+									<td>
+										<button class="btn  ver-grd waves-effect" data-toggle="modal"
+											data-target="#large-Modal2"
+											data-ng-click="getctcDetails(userdata.empid);">
+											Update CTC</button>
+
+									</td>   
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="modal fade" id="large-Modal2" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Employee On Duty Request</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<label><b>Employee Name:</b></label>&nbsp;&nbsp;<b>{{data.object.name}}</b>
+										</div>
+
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<label><b>Employee Id:</b></label>&nbsp;&nbsp;<b>{{data.object.empid}}</b>
+										</div>
+
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<label><b>Joining Date:</b></label>&nbsp;&nbsp;<b>{{data.object.joining_date
+												| date:"dd-MM-yyyy"}}</b>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<label>CTC Calculator&nbsp;</label>
+											<!-- <input type="text" class="form-control" placeholder="Enter CTC Calculator name" data-ng-model="data.object.ctc_calculatorname"/> -->
+						  					<select class="form-control"
+												data-ng-model="data.object.ctc_calculatorid">
+												<option data-ng-repeat="ctc in ctcs" value="{{ctc.id}}">{{ctc.name}}</option>
+											</select>
+										</div>
+
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<label>Current CTC&nbsp;</label> <input type="text"
+												class="form-control" placeholder="Enter Current CTC"
+												disabled data-ng-model="data.object.ctc_amount" />
+										</div>
+
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<label>Revised CTC&nbsp;</label> <input type="text"
+												class="form-control" placeholder="Enter Revised CTC"
+												data-ng-model="data.object.revised_ctc" />
+										</div>
+
+										<div class="col-sm-12 col-xl-3 m-b-30">
+											<label>Effective Date <span class="text-danger ">*</span></label>
+											<div>
+												<input type="date" class="form-control" id="effective" name="effictivedate"
+													data-ng-model="data.object.effective_date">
+				 							</div>
+										</div>
+
+
+
+									</div>
+
+									<div class="modal-footer">
+										<button type="button"
+											class="btn btn-primary waves-effect waves-light" data-dismiss="modal" id="validate" data-ng-click="updateCTC(data.object)">Validate</button>
+									</div>
+
+
+									<!-- View Modal End -->
+
+
+
+								</div>
+							</div>
+							
+							
+							
+							
+							
+							
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- Content Ends Here -->
+	
+	<!-- Arrear View Data  -->
+	<div class="modal fade" id="large-Modal3" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Employee  Revised Salary Details</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+	
+	 <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Revise Salary Details</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="card-body">
+                                                            <div class="dt-responsive table-responsive">
+                                                                <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Components</th>
+                                                                            <th colspan="3">January</th>
+                                                                            <th colspan="3">February</th>
+                                                                            <th colspan="3">March</th>
+                                                                            <th colspan="3">April</th>
+                                                                            <th colspan="3">May</th>
+                                                                            <th colspan="3">June</th>
+                                                                            <th colspan="3">July</th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th></th>
+                                                                            <th>Existing</th>
+                                                                            <th>Revision</th>
+                                                                            <th>Arrear</th>
+                                                                            <th>Existing</th>
+                                                                            <th>Revision</th>
+                                                                            <th>Arrear</th>
+                                                                            <th>Existing</th>
+                                                                            <th>Revision</th>
+                                                                            <th>Arrear</th>
+                                                                            <th>Existing</th>
+                                                                            <th>Revision</th>
+                                                                            <th>Arrear</th>
+                                                                            <th>Existing</th>
+                                                                            <th>Revision</th>
+                                                                            <th>Arrear</th>
+                                                                            <th>Existing</th>
+                                                                            <th>Revision</th>
+                                                                            <th>Arrear</th>
+                                                                            <th>Existing</th>
+                                                                            <th>Revision</th>
+                                                                            <th>Arrear</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <h6>Earnings</h6>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>SPECIAL ALLOWANCE</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>BASIC</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>HRA</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>CONVEYANCE</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>MEDICAL ALLOWANCE</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <h6>Deductions</h6>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>PROFESSIONAL TAX</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>PF</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Employer Contribution PF</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                            <td>Existing</td>
+                                                                            <td>Revision</td>
+                                                                            <td>Arrear</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mt-1">
+                                                        <h5>Net Pay :</h5>{{data.object.net_pay}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+                                                                <label class="font-weight-bold">Revised CTC Calculator :</label>{{}}
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+                                                                <label class="font-weight-bold">Revised CTC :</label>{{}}
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+                                                                <label class="font-weight-bold">Financial Year :</label>{{}}
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+                                                                <label class="font-weight-bold">Effective From :</label>{{}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Employee Arrears</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                                                                <label class="font-weight-bold">Financial Year</label>
+                                                                <input type="text" class="form-control" disabled />
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                                                                <label class="font-weight-bold">Month</label>
+                                                                <input type="text" class="form-control" disabled />
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                                                                <label class="font-weight-bold">Arrear Amount</label>
+                                                                <input type="text" class="form-control" disabled />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Content Ends Here -->
+
+                                    </div>
+	
+	
+	
+	
+	
+		</div>
+
+			</div>
+		</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+	<div id="updatectcPage">
+		<div class="mainhome">
+			<div class="panel panel-primary"
+				style="margin-left: 18%; position: absolute; top: 176px; width: 1020px">
+
+				<div class="panel-heading">
+					<div class="form-group row">
+						<div class="form-group col-md-4">
+							<label><b>Employee Name:</b></label>&nbsp;&nbsp;<b>{{data.object.name}}</b>
+						</div>
+						<!-- <div class="form-group col-md-2" ><b>{{data.object.name}}</b></div> -->
+						<div class="form-group col-md-4">
+							<label><b>Employee Id:</b></label>&nbsp;&nbsp;<b>{{data.object.empid}}</b>
+						</div>
+						<!-- <div class="form-group col-md-2"><b>{{data.object.empid}}</b></div> -->
+						<div class="from-group col-md-4">
+							<label><b>Joining Date:</b></label>&nbsp;&nbsp;<b>{{data.object.joining_date
+								| date:"dd-MM-yyyy"}}</b>
+						</div>
+						<!-- <div class = "from-group col-md-2"><b>{{data.object.joining_date | date:"dd-MM-yyyy"}}</b></div> -->
+					</div>
+
+				</div>
+				<div class="panel-body">
+					<form class="form" data-role="form">
+						<div class="form-group row">
+							<div class="form-group col-md-4">
+								<label>CTC Calculator&nbsp;</label>
+								<!-- <input type="text" class="form-control" placeholder="Enter CTC Calculator name" data-ng-model="data.object.ctc_calculatorname"/> -->
+								<select class="form-control"
+									data-ng-model="data.object.ctc_calculatorid">
+									<option data-ng-repeat="ctc in ctcs" value="{{ctc.id}}">{{ctc.name}}</option>
+								</select>
+							</div>
+							<div class="form-group col-md-4">
+								<label>Current CTC&nbsp;</label> <input type="text"
+									class="form-control" placeholder="Enter Current CTC" disabled
+									data-ng-model="data.object.ctc_amount" />
+							</div>
+							<div class="form-group col-md-4">
+								<label>Revised CTC&nbsp;</label> <input type="text"
+									class="form-control" placeholder="Enter Revised CTC"
+									data-ng-model="data.object.revised_ctc" />
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="form-group col-md-4">
+								<label>Effective From&nbsp;</label> <input type="date"
+									class="form-control" data-ng-model="data.object.effective_from" />
+							</div>
+						</div>
+						
+							<button class="btn btn-primary" id="search1"
+								data-ng-click="getemployeedata(data.object);"
+								style="cursor: pointer">Validate Revision</button>
+						
+						
+					</form>
+				</div>
+			</div>
+
+			<div class="panel panel-primary"
+				style="margin-left: 18%; position: absolute; top: 540px; width: 1020px">
+				<div class="panel-heading">
+					<h4>Revise Salary Details</h4>
+				</div>
+				<div class="panel-body">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<center>Components</center>
+						</div>
+						<div class="panel-body">
+							<div class="form-group row">
+								<div class="form-group col-md-2">
+									<label>Earnings</label>
+								</div>
+								<div class="form-group col-md-2"></div>
+							</div>
+							<div class="form-group row">
+								<div class="form-group col-md-2">
+									<label>Deductions</label>
+								</div>
+								<div class="form-group col-md-2"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="form-group col-md-4">         
+		<label>Net Pay:&nbsp;</label>
+				<input type="date" class="form-control" data-ng-model="data.object.effective_from"/>			    
+</div> -->
+			<div class="panel panel-primary"
+				style="margin-left: 18%; position: absolute; top: 890px; width: 1020px">
+				<div class="panel-body">
+					<div class="form-group row">
+						<div class="form-group col-md-3">
+							<label>Revised CTC Calculator:</label>
+						</div>
+						<div class="form-group col-md-1"></div>
+
+						<div class="form-group col-md-2">
+							<label>Revised CTC:</label>
+						</div>
+						<div class="form-group col-md-2"></div>
+
+						<div class="form-group col-md-2">
+							<label>Effective From:</label>
+						</div>
+						<div class="form-group col-md-2"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-primary"
+				style="margin-left: 18%; position: absolute; top: 1020px; width: 1020px">
+				<div class="panel-heading">
+					<h4>Employee Arrears</h4>
+				</div>
+				<div class="panel-body">
+					<div class="form-group row">
+						<div class="form-group col-md-4">
+							<label>Financial Year&nbsp;</label> <input type="text"
+								class="form-control" disabled
+								data-ng-model="data.object.financial_year" />
+						</div>
+						<div class="form-group col-md-4">
+							<label>Month&nbsp;</label> <input type="text"
+								class="form-control" disabled data-ng-model="data.object.month" />
+						</div>
+						<div class="form-group col-md-4">
+							<label>Arrear Amount&nbsp;</label> <input type="text"
+								class="form-control" disabled
+								data-ng-model="data.object.arrear_amount" />
+						</div>
+					</div>
+				</div>
+
+				<button class="btn btn-primary" id="search1"
+					data-ng-click="applyctcrevision(data.object);"
+					style="cursor: pointer">Apply</button>
+
+			</div>
+			<br>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+<script>
+	jQuery(document).ready(function() {
+
+		$("#profileupdatepage").hide();
+		$("#updatectcPage").hide();
+		angular.bootstrap(jQuery("#modifyctcId"), [ 'modifyctc' ]);
+	});
+
+/* 	$(document).on('click', "#navigatepage", function() {
+		$("#modifypage").hide();
+		$("#profileupdatepage").show();
+		$("#updatectcPage").hide();
+	});
+
+	$(document).on('click', "#navigatectcpage", function() {
+		$("#modifypage").hide();
+		$("#profileupdatepage").hide();
+		$("#updatectcPage").show();
+	}); */
+	     
+	
+	$(document).on('click', "#validate", function() {
+		$("#display").show();
+		
+	});
+</script>

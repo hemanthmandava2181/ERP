@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Scheme">
+      <select id="getYears" resultType="map">
+		SELECT distinct yearid,years from procurements.years_mst;
+	</select> 
+	 <select id="getPrimaryNames" resultType="map">  
+		SELECT a.empid as empid, concat(first_name,' ',middle_name,' ',last_name) AS first_name
+		FROM hrms.employee_personal_details as a    
+       join hrms.employee_employment_details as b on (a.empid = b.empid)
+	</select>  
+	    
+	<select id="getSecondaryNames" resultType="map">  
+		SELECT a.empid as empid, concat(first_name,' ',middle_name,' ',last_name) AS first_name
+		FROM hrms.employee_personal_details as a    
+       join hrms.employee_employment_details as b on (a.empid = b.empid)
+	</select>    
+    <select id="getSdeigroups" resultType="map">
+		SELECT  sdei_groupnumber,sdei_groupname from procurements.sdeigroup_mst;
+	</select>
+	 <insert id="Insert" parameterType="map">
+insert into procurements.createscheme_mst(financial_year,sdei_groupnumber,scheme_id,scheme_name,scheme_type,
+capex_budgetvalue,opex_budgetvalue,from_date,to_date,primary_responsibility,
+  secondary_responsibility,description,headcount,physical_outcome)
+values(#{p.financial_year},#{p.sdei_groupnumber},#{p.scheme_id},#{p.scheme_name},#{p.scheme_type},#{p.capex_budgetvalue},
+#{p.opex_budgetvalue},#{p.from_date},#{p.to_date},#{p.primary_responsibility},#{p.secondary_responsibility},#{p.description},#{p.headcount},#{p.physical_outcome});
+		</insert>                
+		<select id="getAll" resultType="map">
+    SELECT financial_year,sdei_groupnumber,scheme_id,scheme_name,scheme_type,capex_budgetvalue,opex_budgetvalue,from_date,to_date,
+     primary_responsibility,secondary_responsibility,description,headcount,physical_outcome from procurements.createscheme_mst;
+	</select>     
+	                
+	<select id="getById" resultType="Scheme">       
+  SELECT sdei_groupnumber,scheme_id,scheme_name,scheme_type,capex_budgetvalue,opex_budgetvalue,from_date,to_date,
+  primary_responsibility,secondary_responsibility,description,headcount,physical_outcome 
+  from procurements.createscheme_mst WHERE financial_year = #{financial_year} ;     
+	  </select>  
+	  
+	 <delete id="deleteData" parameterType="java.lang.String">
+		delete from procurements.createscheme_mst where financial_year = #{financial_year};
+	</delete>                     
+	
+	<update id="updateData"  parameterType="map">
+		update procurements.createscheme_mst SET  sdei_groupnumber= #{p.sdei_groupnumber},scheme_id=#{p.scheme_id}, scheme_name = #{p.scheme_name},scheme_type = #{p.scheme_type},capex_budgetvalue = #{p.capex_budgetvalue},
+		opex_budgetvalue = #{p.opex_budgetvalue},from_date = #{p.from_date},to_date = #{p.to_date},primary_responsibility = #{p.primary_responsibility},secondary_responsibility = #{p.secondary_responsibility}, WHERE financial_year=#{p.financial_year};                        
+	</update> 
+	  
+	</mapper>                          

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="EmployeeMaster">
+
+
+
+	<insert id="InsertModifiedCTC"  parameterType="map">
+		insert into hrms.effective_ctc_association (empid,ctc_calculator,annual_salary,effective_date) values (#{p.empid},#{p.ctc_calculatorid},#{p.revised_ctc},#{p.effective_date})
+	</insert>
+	
+	<insert id="InsertModifiedCTC1"  parameterType="map">
+<!-- 	insert into hrms.employee_arrears(empid,financial_year,month,arrear_amount,created_by)
+	values
+	(#{p.empid},
+	(select id from hrms.financial_year_mst where name = (CASE when extract(MON from CURRENT_TIMESTAMP)>3 then CONCAT(extract(YEAR from CURRENT_TIMESTAMP),'-',extract(YEAR from CURRENT_TIMESTAMP)+1) 
+	ELSE CONCAT(extract(YEAR from CURRENT_TIMESTAMP)-1,'-',extract(YEAR from CURRENT_TIMESTAMP))END)),
+	(select extract(MON from CURRENT_TIMESTAMP)as month),
+	(select (( extract(MON from CURRENT_TIMESTAMP) - extract(MON from #{p.effective_date}::date)) * (#{p.revised_ctc}-#{p.ctc_amount})) as arrear_amount),#{p.created_by})
+	 -->
+	 
+	 insert into hrms.employee_arrears(empid,financial_year,arrear_amount,month)
+select distinct a.empid,#{p.financial_year}::int,
+((a.max_annual_salary - b.annual_salary)/12) as month_arrear_amount,
+(select (EXTRACT(year FROM age(current_date,a.effective_date))*12 + EXTRACT(month FROM age(current_date,a.effective_date)))) as month from
+(select empid,max(annual_salary) as max_annual_salary,effective_date from hrms.effective_ctc_association group by empid,effective_date) a inner join
+(select empid,annual_salary from hrms.employee_ctc_association) b on (a.empid = b.empid)
+where a.max_annual_salary > b.annual_salary AND b.empid = #{p.empid}
+</insert>
+	
+	
+	
+	<update id="updateModifiedCTC" parameterType="map">
+	
+	update  hrms.employee_ctc_association 
+	set annual_salary= #{p.revised_ctc} , ctc_calculator= #{p.ctc_calculatorid} , created_by=#{p.created_by } 
+	where empid=#{p.empid} 
+		
+	</update>
+	
+  
+	 <select id="getNameWiseData" resultType="EmployeeMaster">
+		SELECT empid,first_name,email,mobile from hrms.employee_personal_details where empid = #{empid};
+	  </select>
+			
+	<select id="getsearch" resultType="map">
+		SELECT empid,first_name,email,mobile from hrms.employee_personal_details where empid in (SELECT empid from hrms.employee_employment_details where designation= #{p.designation_id} AND department=#{p.departmentid} AND cader=#{p.caderid} AND grade=#{p.gradeid});
+	</select>  	
+	<select id="getAll" resultType="map">
+		SELECT empid,first_name,email,mobile,status from hrms.employee_personal_details;
+		
+	</select>  
+	
+	<select id="getctccalculator" resultType="map">
+		SELECT distinct  id, name from hrms.ctc_calculator_mst order by id;
+	</select>
+	
+	
+	<!--getting FlexiHolidays-->
+	<select id="getFlexiHolidays" resultType="map">
+			SELECT a.date,b.description,c.dayname,c.day FROM hrms.calender_mst as a 
+		inner join hrms.calendar_days_mst as c on c.day=a.date
+			inner join hrms.holiday_types_mst as b on a.holiday_type=b.id AND TRIM(b.description)='Flexi Leave' and a.status='TRUE';
+	</select>   
+	
+	
+	<!-- update data based on empid in employee master -->
+	   
+	<select id="getById" resultType="EmployeeMaster">
+	select a.empid,a.name,b.status as status1 from
+		(SELECT empid,concat(first_name,' ',last_name) as name from hrms.employee_personal_details WHERE empid = #{empid}) a inner join 
+		(select empid,status from hrms.employee_employment_details) b on (b.empid = a.empid)
+	</select>
+ <update id="updateData"  parameterType="map">
+		update hrms.employee_employment_details SET status=#{p.status1} WHERE empid=#{p.empid};
+	</update>
+	
+	<select id="getemployeemaster" resultType="EmployeeMaster">
+		select distinct a.empid,a.name,a.mobile,a.email,b.statusname,c.cader_name,d.grade_name,e.department_name,f.designation_name,g.employeetype from
+		(select concat(first_name,' ',last_name) as name,empid,mobile,email from hrms.employee_personal_details) a inner join 
+		(select empid,cader,grade,department,designation,employee_type,(case when status = '0' then 'Active' 
+		when status = '1' then 'In-Active' end) as statusname from hrms.employee_employment_details) b on (b.empid = a.empid) inner join
+		(select id,cader_name from hrms.cader_mst) c on (c.id = b.cader) inner join 
+		(select id,grade_name from hrms.grades_mst) d on (d.id = b.grade) inner join
+		(select id,department_name from hrms.department_mst) e on (e.id = b.department) inner join
+		(select id,designation_name from hrms.designation_mst) f on (f.id = b.designation) inner join
+		(select id,type as employeetype from hrms.employee_types_mst) g on (g.id = b.employee_type) where 
+		b.employee_type = #{p.employee_type} AND b.grade = #{p.gradeid} AND b.department = #{p.departmentid} AND
+		b.cader = #{p.caderid} AND b.designation = #{p.designation_id}
+	</select>
+	 <select id="getCaders" resultType="map">            
+		SELECT distinct id,cader_name from hrms.cader_mst;             
+	</select>    
+	
+	<select id="getGrades" resultType="map">
+		SELECT distinct id,grade_name from hrms.grades_mst;
+	</select>
+	
+	<select id="getDepartment" resultType="map">
+		SELECT distinct id ,department_name from hrms.department_mst;
+	</select>  
+	
+	<select id="getDesignation" resultType="map">
+		SELECT distinct id ,designation_name from hrms.designation_mst;   
+	</select>   
+	   
+	<!-- create hiring request add method -->  
+	
+	<select id="getCount1" resultType="java.lang.Integer">
+		SELECT count(id)+1 as count from hrms.create_hiring_request;
+	</select>
+	
+	<insert id="Insert" parameterType="map">
+		insert into	hrms.create_hiring_request(scheme_id,project_id,sector_id,departmentid,caderid,gradeid,designation_id,position,position_number,divisionid,total_experience,relevent_experience,job_id)
+		values(#{p.scheme_id},#{p.project_id},#{p.sector_id},#{p.departmentid},#{p.caderid},#{p.gradeid},#{p.designation_id},#{p.position},#{p.position_number},#{p.divisionid},#{p.total_experience},#{p.relevent_experience},('SDC' || '' ||lpad(CAST( #{id} AS character varying ),4,'0')));
+	</insert>
+	
+	<!-- candidate registration add1 method -->
+	       
+	<insert id="Insert0" parameterType="map">
+		insert into	hrms.candidates_mst(position,candidate_type,candidate_name,mobile,email,education_id,branch_id,passout_year,experience,relevent_experience,notice_period,coolingoff_period,designation,joining_date,contract_end_date)
+		values(#{p.position},#{p.candidate_type},#{p.candidate_name},#{p.mobile},#{p.email},#{p.education_id},#{p.branch_id},#{p.passout_year},#{p.experience},#{p.relevent_experience},#{p.notice_period},#{p.coolingoff_period},#{p.designation},#{p.joining_date},#{p.contract_end_date});
+	</insert>  
+	  
+	<!-- getting data in table in hiring request -->
+	
+	<select id="hiringRequest" resultType="map">
+		SELECT distinct job_id,position,position_number from hrms.create_hiring_request;
+	</select> 
+	
+	<!-- education and branch in candidate registration -->
+	
+	<select id="getEducations" resultType="map">   
+		SELECT distinct education_id, education_name from hrms.education_mst ORDER BY education_id;
+	</select>   
+	
+	<select id="getBranches" parameterType="map" resultType="Employee">  
+		select branch_name, branch_id from hrms.branch_mst where education_id = #{education_id}  order by branch_name;
+	</select>
+	
+	<!-- getting details to front end in select candidate -->
+	<select id="getCandidates" resultType="map">   
+		SELECT candidate_type,candidate_name,mobile,email from hrms.candidates_mst where position = #{p.position};
+	</select>
+	
+	
+	<!-- search bar in hiring request  -->
+	
+	<!-- <select id="getHiringsearch" resultType="map">
+		SELECT job_id,position,position_number from hrms.create_hiring_request where job_id in (SELECT job_id from hrms.employee_employment_details where designation= #{p.designation_id} AND department=#{p.departmentid} AND cader=#{p.caderid} AND grade=#{p.gradeid});
+	</select> -->
+	
+	<!-- Getting data in table for others in payslip -->
+	<select id="getStaff" resultType="map">
+		SELECT distinct id,type from hrms.employee_types_mst order by id;
+	</select>      
+	
+	<select id="getdetails" resultType="EmployeeMaster">
+		select concat(first_name,' ',last_name) as name,b.pan_no,b.bank_name,b.bank_acno,b.brach,b.ifsc_code from (select * from hrms.employee_personal_details) a inner join (select * from hrms.employee_bank_details) b on (a.empid=b.empid) inner join (select empid,employee_type from hrms.employee_employment_details) c on(c.empid=a.empid)
+		inner join (select * from hrms.employee_types_mst ) d on (d.id=c.employee_type) where c.employee_type = #{p.employee_type}   
+    </select>
+                   
+    <!-- Getting data in My timesheets table -->
+	
+	<select id="getdata" resultType="EmployeeMaster" parameterType="map">    
+	select concat(first_name,' ',last_name) as name,b.timesheet_date,b.task,b.description,b.start_time,b.end_time,b.duration,b.status,b.created_date from 
+	(select * from hrms.employee_personal_details) a inner join 
+	(select * from hrms.employee_timesheet) b on (b.empid=a.empid) where a.empid = #{p.empid} and b.created_date::date>=#{p.from_date}::timestamp AND #{p.to_date} ::timestamp>=b.created_date::date
+	</select>
+	
+	<select id="getByIddata" resultType="EmployeeMaster">
+		SELECT * from hrms.employee_timesheet WHERE task = #{p.task} and timesheet_date::date=#{p.timesheet_date}::date;
+	</select>
+	
+	<!-- Removing data based on task in my timesheet page -->
+	<delete id="deletedata" parameterType="java.lang.String">
+		delete from hrms.employee_timesheet where task = #{task};
+	</delete>    
+	
+	<!-- updating data based on task in my timesheet page -->
+	<update id="updatedata"  parameterType="map">
+		update hrms.employee_timesheet SET timesheet_date=#{p.timesheet_date},location=#{p.location},status=#{p.status},description=#{p.description},start_time=#{p.start_time},end_time=#{p.end_time} WHERE task=#{p.task};
+	</update>
+	
+	<!-- getting data to popup in attendance sheet page --> 
+	   
+	 <select id="getstatus" resultType="EmployeeMaster">
+		SELECT empid,login_date as date from hrms.employee_login_details WHERE empid=#{empid} AND login_date = #{date};
+	</select> 
+	
+	<select id="getstatusab" resultType="EmployeeMaster">
+		SELECT empid from hrms.employee_personal_details WHERE empid=#{empid};
+	</select>
+	
+	
+	<!--getting Leavetype-->
+		<select id="getLeavetype" resultType="map">
+SELECT distinct id, type from hrms.leave_types_mst;
+</select>
+
+		
+		
+	
+	<!--getting reporting-->
+	<select id="getReporting" resultType="EmployeeMaster">
+SELECT a.empid as empid, concat(first_name,' ',middle_name,' ',last_name) AS fullname,
+b.reporting_to as reporting_to FROM hrms.employee_personal_details as a    
+ join hrms.employee_employment_details as b on (a.empid = b.empid) AND a.empid=#{p.empid};
+</select>
+		
+		
+		 <!--create apply flexi leave-->  
+			<insert id="InsertFlexi" parameterType="map">
+insert into	hrms.leaves (empid,leave_type,leave_nature,emergency_number,from_date,to_date,approval_by,reason,file_name)
+values(#{p.empid},#{p.leave_type},#{p.leave_nature},#{p.emergency_number},#{p.from_date},#{p.to_date}, #{p.reporting_to},#{p.reason},#{p.image});
+	</insert>
+
+
+<insert id="InsertComp" parameterType="map">
+insert into	hrms.leaves (empid,leave_type,leave_nature,emergency_number,from_date,to_date,approval_by,reason,file_name,comp_date)
+values(#{p.empid},#{p.leave_type},#{p.leave_nature},#{p.emergency_number},#{p.from_date},#{p.to_date}, #{p.reporting_to},#{p.reason},#{p.image},#{p.comp_date});
+</insert>        
+					
+		<select id="getFlexiCount" resultType="EmployeeMaster" parameterType="map">
+select empid,count(leave_type) as flexicount from hrms.leaves  where leave_type=6 and empid=#{p} group by leave_type,empid
+</select>
+	  
+<select id="getValidateComp" resultType="EmployeeMaster" parameterType="map">
+select a.day,a.dayname,c.description from (select day,dayname from hrms.calendar_days_mst where day between  #{p.from_date} :: date and #{p.to_date} :: date)a 
+inner join (select date::date as datename,holiday_type from hrms.calender_mst)b on a.day=b.datename
+inner join (select id,description from hrms.holiday_types_mst)c on c.id=b.holiday_type 
+inner join (select * from hrms.employee_login_details)e on
+ e.login_date=#{p.comp_date}
+</select>
+	
+				
+				<!--create apply leave--> 
+			<insert id="Insertleave" parameterType="map">		
+ insert into hrms.leaves (empid,leave_type,leave_nature,emergency_number,from_date,to_date,reason,approval_by,file_name)
+values(#{p.empid},#{p.leave_type},#{p.leave_nature},#{p.emergency_number},#{p.from_date},#{p.to_date},#{p.reason},#{p.reporting_to},#{p.image});
+</insert>
+			
+				<!-- getting report in attendance report page -->
+				
+				<select id="getAllname" resultType="map">
+					SELECT a.empid,a.first_name,a.email,a.mobile,b.login_time from hrms.employee_personal_details as a join (select empid,login_time from hrms.employee_login_details) as b on a.empid=b.empid;
+				</select>
+				<select id="getTotalleaves" resultType="EmployeeMaster">
+select a.empid,a.employeename,b.status,e.type as employee_type,c.leaves_eligible,c.leave_balance,c.availed_leaves,
+c.leave_balance,d.name as quarter_name,f.year_name from
+(select empid,concat(first_name,'',last_name) as employeename from hrms.employee_personal_details )a left join
+ (select empid,designation,employee_type,status  from  hrms.employee_employment_details where status=0)b on a.empid=b.empid left join
+(select id,type from hrms.employee_types_mst)e on e.id=b.employee_type left join
+(select calendar_year,empid,quarter,total_leaves as leaves_eligible,used_leaves as availed_leaves,available_leaves as leave_balance from hrms.employee_leave_summary)
+c on b.empid=c.empid
+left join
+(select * from hrms.calendar_year_mst)f on (f.id=c.calendar_year)left join
+(select * from hrms.quarter_mst)d on (d.id=c.quarter)
+ where c.empid=#{empid};
+</select> 
+	      
+	
+	<select resultType="map" id="getAll1"> select a.first_name,a.last_name,a.empid,b.contract_from,b.contract_to,b.joining_date from (select * from hrms.employee_personal_details)a inner join (select * from hrms.employee_employment_details)b on a.empid=b.empid; </select> 
+	
+	<select resultType="map" id="getAll2">      
+
+select a.first_name,a.last_name,b.employee_type,a.empid,b.contract_from,b.contract_to,b.joining_date from 
+(select * from hrms.employee_personal_details )a inner join (select * from hrms.employee_employment_details 
+where ( contract_to::date-current_timestamp::date ) between 0 and 30 and status=0  )b on a.empid=b.empid;
+</select>	
+	
+	
+	
+	
+	
+	
+	<select resultType="map" id="getAll3"> 
+	select a.first_name,a.last_name,b.employee_type,a.empid,b.contract_from,b.contract_to,b.joining_date from (select * from hrms.employee_personal_details)a inner join (select * from hrms.employee_employment_details where status=0 and  employee_type=0)b on a.empid=b.empid; </select>
+	
+	<select resultType="map" id="getAll4">
+	 select a.first_name,a.last_name,b.employee_type,a.empid,b.contract_from,b.contract_to,b.joining_date from (select * from hrms.employee_personal_details  )a inner join (select * from hrms.employee_employment_details where status=0 and  employee_type=1)b on a.empid=b.empid; </select>
+	
+	
+	
+	
+
+<select resultType="map" id="getAll5">      
+
+select a.first_name,a.last_name,b.employee_type,a.empid,b.contract_from,b.contract_to,b.joining_date from 
+(select * from hrms.employee_personal_details )a inner join (select * from hrms.employee_employment_details 
+where ( contract_to::date-current_timestamp::date ) between 0 and 30 and status=0 and employee_type = '0' )b on a.empid=b.empid;
+</select> 
+
+<select resultType="map" id="getAll6"> 
+select a.first_name,a.last_name,b.employee_type,a.empid,b.contract_from,b.contract_to,b.joining_date from 
+(select * from hrms.employee_personal_details)a inner join
+ (select * from hrms.employee_employment_details where ( current_timestamp::date-contract_to::date> 0 ) and status=0 and employee_type = '0' )b on a.empid=b.empid; </select>
+	
+
+<select resultType="map" id="getAll7">      
+
+select a.first_name,a.last_name,b.employee_type,a.empid,b.contract_from,b.contract_to,b.joining_date from 
+(select * from hrms.employee_personal_details )a inner join (select * from hrms.employee_employment_details 
+where ( contract_to::date-current_timestamp::date ) between 0 and 30 and status=0 and employee_type = '1' )b on a.empid=b.empid;
+</select>	
+	
+	
+<select resultType="map" id="getAll8"> 
+select a.first_name,a.last_name,b.employee_type,a.empid,b.contract_from,b.contract_to,b.joining_date from 
+(select * from hrms.employee_personal_details)a inner join
+ (select * from hrms.employee_employment_details where ( current_timestamp::date-contract_to::date> 0 ) and status=0 and employee_type = '1' )b on a.empid=b.empid; </select>
+		
+
+<select resultType="EmployeeMaster" id="getAll9"> 
+select a.first_name,a.last_name, c.employee_type,c.emptypename,a.empid,b.contract_from,b.contract_to,b.joining_date from 
+(select * from hrms.employee_personal_details)a inner join
+ (select * from hrms.employee_employment_details where ( current_timestamp::date-contract_to::date> 0 ) and status=0 and comments is null )b on a.empid=b.empid inner join 
+(select id as employee_type,type as emptypename from hrms.employee_types_mst ) as c on c.employee_type=b.employee_type;
+ </select>
+
+
+<insert id="inserthistory" parameterType="map">
+		insert into hrms.contract_renewal_history(empid,contract_from,contract_to,comments)values(#{p.empid},CAST(#{p.contract_from} as date),CAST(#{p.contract_to} as date),#{p.comments});
+		update hrms.employee_employment_details set comments=null where empid=#{p.empid}
+		
+	</insert>  
+	  
+	<update id="updateData12" parameterType="map">
+	update hrms.employee_employment_details set comments=#{p.comments} where empid=#{p.empid} ;
+	
+	</update>
+	
+	 
+	
+	<select id="gethr" resultType="map">      
+
+select a.first_name,a.last_name,c.employee_type,a.empid,b.contract_from,b.contract_to,b.joining_date,b.comments from (select * from hrms.employee_personal_details)a inner join
+(select * from hrms.employee_employment_details  where ( current_timestamp::date-contract_to::date> 0 ) and status=0 and comments is not null)b on a.empid=b.empid inner join
+(select id,type as employee_type from hrms.employee_types_mst ) as c on c.id=b.employee_type;
+
+
+</select>
+
+	<update id="Approveall" parameterType="map">
+
+	update  hrms.employee_employment_details set contract_to=contract_to::date + cast(#{p.Month} as interval) where empid = #{p.empid}
+						
+	</update>    
+	
+	
+	<select id="GetDataByID" resultType="EmployeeMaster">
+
+select a.empid,a.company_email,f.name,b.designation_name as
+designation,c.department_name as
+department,a.notice_period,d.cader_name as cader,e.grade_name as
+grade,a.joining_date,a.contract_from,a.contract_to
+from (select * from hrms.employee_employment_details where empid= #{empid})
+as a
+inner join
+hrms.designation_mst as b on a.designation = b.id
+inner join
+hrms.department_mst as c on a.department = c.id
+inner join
+hrms.cader_mst as d on a.cader = d.id   
+inner join
+hrms.grades_mst as e on a.grade=e.id      
+inner join
+(select empid, concat(first_name,' ',last_name) as
+name from hrms.employee_personal_details )f on a.empid=f.empid
+
+
+
+
+
+</select>
+	
+	
+	
+	
+	
+	</mapper>                          

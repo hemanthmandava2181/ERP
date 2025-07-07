@@ -1,0 +1,195 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/employeeemployeeselfserviece/projectemployeemapping.js"></script>
+
+<!-- Data Tables -->
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="projectempid" data-ng-controller="projectempController">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">    
+				<div class="card-header bg-primary">    
+					<h6 class="card-title">Project Employee Mapping</h6>
+				</div>
+				<div class="card-body">    
+					<div class="row">
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>Project Name</label> <select
+							 class="form-control"
+									data-ng-model="data.object.project">
+									<option></option>
+									<option data-ng-repeat="project in projects"
+										value="{{project.id}}">{{project.name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>Location</label> 
+								<select class="form-control"
+									data-ng-model="data.object.division">
+									<option></option>
+									<option data-ng-repeat="division in divisions"
+										value="{{division.id}}">{{division.name}}</option>
+								</select>
+							</div>   
+						</div>
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>Reporting To</label> 
+								<select class="form-control"
+									data-ng-model="data.object.reporting_to">
+									<option data-ng-repeat="report in reportings"
+										value="{{report.empid}}">{{report.fullname}}</option>
+								</select>  
+							</div>    
+						</div>    
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>From Date</label> <input type="date"
+									class="form-control" data-ng-model="data.object.from_date" placeholder="Select From Date"/>
+							</div>           
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>To Date</label> <input     
+									class="form-control" type="date"
+									data-ng-model="data.object.end_date" placeholder="Select To date"/>
+							</div>
+						</div>
+						<div
+							class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12 text-center">
+							<button type="button" class="btn btn-grd-success btn-sm"
+								data-ng-click="getprojectdata(data.object); getallemployees(data.object);">Get
+								Data</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12 col-md-12 col-xs-12 col-lg-12 col-xl-12 mt-1">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Mapped Employee</h6>
+				</div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="simpletable" class="table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th>S.No</th>
+									<th>Employee Id</th>
+									<th>Employee Name</th>
+									<th>Project Name</th>
+									<th>Location</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="userdata in regdetails | filter:search"> 
+							     	<td align="left">{{$index+1}}</td>   
+							     	<td align="left">{{userdata.empid}}</td>
+							     	<td align="left">{{userdata.name}}</td> 
+								 	<td align="left">{{userdata.project_name}}</td>    
+								 	<td align="left">{{userdata.division_name}}</td>      
+								 	<td align="left">{{userdata.status_name}}</td>       
+								</tr>
+							</tbody>
+						</table>
+					</div>   
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12 col-md-12 col-xs-12 col-lg-12 col-xl-12 mt-1">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Available Employee</h6>
+				</div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="order-table" class="table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th>SNo</th>
+									<th><input type="checkbox" data-ng-model="projectmapping"
+										data-ng-true-value="true" data-ng-false-value="false"
+										data-ng-click="setAllIds(projectmapping);">&nbsp;</th>
+									<th>Employee Id</th>
+									<th>Employee Name</th>
+									<th>Mobile</th>
+									<th>Email</th>      
+									<th>Cadre</th>
+									<th>Grade</th>
+									<th>Designation</th>    
+								</tr>
+							</thead>   
+							<tbody>
+								<tr data-ng-repeat="userdata1 in (filteredResult = (empdetails | filter:search))"> 
+							     	<td align="left">{{$index+1}}</td> 
+							     	<td><input type="checkbox" data-ng-model="projectEmpArr[userdata1.emp_id]" 
+							     		 data-ng-checked="allSelected()"></td>
+							     	<td align="left">{{userdata1.emp_id}}</td>
+							     	<td align="left">{{userdata1.name}}</td>      
+								 	<td align="left">{{userdata1.mobile}}</td>               
+								 	<td align="left">{{userdata1.email}}</td>         
+								 	<td align="left">{{userdata1.description}}</td>          
+								 	<td align="left">{{userdata1.grade_name}}</td>          
+								 	<td align="left">{{userdata1.designation_name}}</td>      
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="col-sm-12 col-md-12 col-xs-12 col-lg-12 col-xl-12 mt-1 text-center">
+			<button type="button" class="btn btn-primary" id="b1"
+				data-ng-click="addemployees(empdetails,projectEmpArr);">Add</button>
+		</div>
+
+	</div>
+</div>    
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+<script>
+	jQuery(document).ready(
+			function() {
+				angular.bootstrap(jQuery("#projectempid"),
+						[ 'projectemployeemapping' ]);
+			});
+</script>

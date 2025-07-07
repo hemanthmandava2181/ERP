@@ -1,0 +1,270 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/OrderManagement/ordermanagement.js"></script>
+<div id="orderid" data-ng-controller="orderController">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Order Management</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Procurements</a></li>
+							<li class="breadcrumb-item"><a href="#!">Order
+									Management</a></li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Order Management</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label>Type</label> <select class="form-control"
+								data-ng-model="data.object.project" id="type">
+								<option>Select</option>
+								<option value="1">Work Orders</option>
+								<option value="2">Purchase Orders</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1"
+							data-ng-show="data.object.project == '1'">
+							<label>WorkOrder</label> <select class="form-control"
+								data-ng-model="data.object.workorder_id">
+								<option>--select--</option>
+								<option data-ng-repeat="workorder in workorders"
+									value="{{workorder.id}}">{{workorder.workorder_id}}</option>
+							</select>
+
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg- col-xl-3 col-xs-12 mt-1"
+							data-ng-show="data.object.project == '2'">
+							<label>Purchase Order</label> <select class="form-control"
+								data-ng-model="data.object.purchaseorder_id">
+								<!-- data-ng-change="getDetailsofPurchaseorder(data.object);"> -->
+								<option>--select--</option>
+								<option data-ng-repeat="purchaseorder in purchaseorders"
+									value="{{purchaseorder.id}}">{{purchaseorder.purchaseorder_id}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 col-xl-12 m-b-30 text-center"
+		data-ng-show="data.object.project == '1'">
+		<button class="btn btn-primary" id="workorderbtn"
+			data-ng-click="getWorkorderDetails(data.object);">Submit</button>
+	</div>
+
+	<div class="col-sm-12 col-xl-12 m-b-30 text-center"
+		data-ng-show="data.object.project != '1'">
+		<button class="btn btn-primary" id="purchaseorderbtn"
+			data-ng-click="getPODetails(data.object);">Submit</button>
+	</div>
+	<div id="details">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header bg-primary">Details</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-12 col-xl-2 m-b-30">
+								Work Order No : <label class="col-sm-3x col-form-label"></label>
+							</div>
+
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<input type="text" class="form-control"
+									data-ng-model="data.object.workorder_id" disabled />
+							</div>
+							<div class="col-sm-12 col-xl-2 m-b-30">
+								Vendor <label class="col-sm-3 col-form-label"></label>
+							</div>
+
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<input type="text" class="form-control"
+									data-ng-model="data.object.vendor_id" disabled />
+							</div>
+
+							<div class="col-sm-12 col-xl-2 m-b-30">
+								Created By <label class="col-sm-3 col-form-label"></label>
+							</div>
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<input type="text" class="form-control"
+									data-ng-model="data.object.empcreated_by" disabled />
+							</div>
+							<div class="col-sm-12 col-xl-2 m-b-30">
+								Incharge <label class="col-sm-3 col-form-label"></label>
+							</div>
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<input type="text" class="form-control"
+									data-ng-model="data.object.empincharge" disabled />
+							</div>
+
+							<div class="col-sm-12 col-xl-2 m-b-30">
+								Incharge <label class="col-sm-3 col-form-label"></label>
+							</div>
+							<div class="col-sm-12 col-xl-4 m-b-30">
+								<select class="form-control"
+									data-ng-model="data.object.incharge">
+									<option>--select--</option>
+									<option data-ng-repeat="empname in empnames"
+										value="{{empname.empid}}">{{empname.fullname}}</option>
+								</select>
+							</div>
+
+
+							<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+								<button type="button" class="btn btn-primary" id="removebtn"
+									data-ng-click="addordermanagement(data.object);">SUBMIT</button>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div  id="POdetails">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">Details</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-xl-2 m-b-30">
+							purchaseorderno : <label class="col-sm-3x col-form-label"></label>
+						</div>
+
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<input type="text" class="form-control"
+								data-ng-model="data.object.wopurchaseorder_id" disabled />
+						</div>
+						<div class="col-sm-12 col-xl-2 m-b-30">
+							Vendor <label class="col-sm-3 col-form-label"></label>
+						</div>
+
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<input type="text" class="form-control"
+								data-ng-model="data.object.wovendor_id" disabled />
+						</div>
+
+						<div class="col-sm-12 col-xl-2 m-b-30">
+							Created By <label class="col-sm-3 col-form-label"></label>
+						</div>
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<input type="text" class="form-control"
+								data-ng-model="data.object.wocreated_by" disabled />
+						</div>
+						<div class="col-sm-12 col-xl-2 m-b-30">
+							Incharge <label class="col-sm-3 col-form-label"></label>
+						</div>
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<input type="text" class="form-control"
+								data-ng-model="data.object.woincharge" disabled />
+						</div>
+
+						<div class="col-sm-12 col-xl-2 m-b-30">
+							Incharge <label class="col-sm-3 col-form-label"></label>
+						</div>
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<select class="form-control" data-ng-model="data.object.incharge">
+								<option>--select--</option>
+								<option data-ng-repeat="empname in empnames"
+									value="{{empname.empid}}">{{empname.fullname}}</option>
+							</select>
+						</div>
+
+
+						<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+							<button type="button" class="btn btn-primary" id="removebtn"
+								data-ng-click="addordermanagement(data.object);">SUBMIT</button>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+</div>
+<!-- 
+
+<script src="/../files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="/../files/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
+<script src="/../files/bower_components/popper.js/js/popper.min.js"></script>
+<script src="/../files/bower_components/bootstrap/js/bootstrap.min.js"></script>
+
+<script
+	src="/../files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+
+<script src="/../files/bower_components/modernizr/js/modernizr.js"></script>
+<script src="/../files/bower_components/modernizr/js/css-scrollbars.js"></script>
+Data Table
+<script
+	src="/../files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="/../files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/../files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/../files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/../files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/../files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/../files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/../files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/../files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/../files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/../files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/../files/assets/pages/data-table/js/data-table-custom.js"></script> -->
+
+
+
+<script>
+	$('#simpletable1').DataTable();
+</script>
+
+<script>
+	jQuery(document).ready(function() {
+		document.getElementById("POdetails").style.display = "none";
+		document.getElementById("details").style.display = "none";
+		angular.bootstrap(jQuery("#orderid"), [ 'order' ]);    
+	});
+
+	$(document).on('click', "#workorderbtn", function() {
+		document.getElementById("POdetails").style.display = "none";
+		document.getElementById("details").style.display = "block";
+	});
+	
+	$(document).on('click', "#purchaseorderbtn", function() {
+		document.getElementById("POdetails").style.display = "block";
+		document.getElementById("details").style.display = "none";
+	});
+	
+</script>

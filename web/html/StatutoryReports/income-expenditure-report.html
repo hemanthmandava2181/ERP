@@ -1,0 +1,2135 @@
+
+<script
+	src="/erp/files/assets/js/erp-scripts/finance/satutaryreports/incomeandexpenditurereport.js"></script>
+<!-- Form Picker  -->
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css">
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datedropper/css/datedropper.min.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/spectrum/css/spectrum.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/jquery-minicolors/css/jquery.minicolors.css" />
+
+<!-- Cloned CSS -->
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/j-pro/css/demo.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/j-pro/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/j-pro/css/j-forms.css">
+
+<div id="incomeandexpenditurereportId"
+	data-ng-controller="incomeandexpenditurereportController">
+
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Income &amp; Expenditure Report</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Finance &amp;
+									Accounts</a></li>
+							<li class="breadcrumb-item"><a href="#!">Statutory
+									Reports</a></li>
+							<li class="breadcrumb-item"><a href="#!">Income &
+									Expenditure Report</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<ul class="nav nav-fill nav-pills" role="tablist">
+						<li class="nav-item"><a class="nav-link active"
+							data-toggle="tab" href="#home3" role="tab">Financial Year</a>
+							<div class="slide"></div></li>
+						<li class="nav-item"><a class="nav-link" data-toggle="tab"
+							href="#profile3" role="tab">Period</a>
+							<div class="slide"></div></li>
+					</ul>
+
+					<div class="tab-content card-block">
+						<div class="tab-pane active" id="home3" role="tabpanel">
+							<div class="row">
+								<div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 col-xl-6 mt-1">
+									<div class="form-group">
+										<label>Financial Year</label> <select
+											class="form-control form-control-primary"
+											data-ng-model="data.object.financial_year">
+											<option>--Select--</option>
+											<option data-ng-repeat="year in financialyear"
+												value="{{year.financial_year}}">{{year.fy}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 col-xl-6">
+									<button type="button"
+										class="btn btn-grd-success hor-grd btn-sm mt-4 float-right"
+										data-ng-click="getIncomeExpenditureReport(data.object);getExpenditureReport(data.object);getDepreciationDetails(data.object);">
+										<i class="feather icon-download-cloud mr-2"></i>Get Data
+									</button>
+								</div>
+
+
+
+							</div>
+						</div>
+						<div class="tab-pane" id="profile3" role="tabpanel">
+							<div class="row">
+								<div class="col-md-6 col-sm-12 col-xs-12 col-xl-6 col-md-6">
+									<div class="form-group">
+										<label>From Date</label> <input class="form-control"
+											type="date" placeholder="Select your date"
+											data-ng-model="data.object.from_date" id="from" />
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-12 col-xs-12 col-xl-6 col-md-6">
+									<div class="form-group">
+										<label>To Date</label> <input class="form-control" type="date"
+											placeholder="Select your date"
+											data-ng-model="data.object.to_date" id="to" />
+									</div>
+								</div>
+								<div
+									class="col-md-12 col-sm-12 col-xs-12 col-xl-12 col-md-12 text-center">
+									<button type="button"
+										class="btn btn-sm btn-success hor-grd font-weight-bold"
+										data-ng-click="getMonthIncomeExpenditureReport(data.object);getMonthExpenditureReport(data.object);getMonthDepreciationDetails(data.object);getPreviousDates(data.object);">
+										<i class="feather icon-download-cloud mr-2 font-weight-bold"></i>Get
+										Data
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row" id="yearbased">
+		<div class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+			<div class="card" style="border-radius: 25px;">
+				<div class="card-header bg-primary text-center"
+					style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+					<h6 class="card-title">ANDHRA PRADESH STATE SKILL DEVELOPMENT
+						CORPORATION</h6>
+					<h6 class="card-title mt-2">Statement of Income and
+						Expenditure</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div
+							class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+							<button type="button"
+								class="btn btn-success bg-c-yellow text-white btn-out-dashed btn-sm float-left">Export
+								Excel</button>
+
+						</div>
+
+						<div
+							class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-5">
+							<div id="accordion" role="tablist" aria-multiselectable="true">
+								<div class="accordion-panel mt-2 mb-2">
+									<div class="accordion-heading bg-c-pink text-white" role="tab"
+										id="headingOne">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseOne"
+												aria-expanded="true" aria-controls="collapseOne"> Income
+											</a>
+										</h3>
+									</div>
+									<div id="collapseOne"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingOne">
+										<div class="accordion-content accordion-desc">
+											<div class="dt-responsive table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr class="bg-c-green text-white">
+															<th class="text-center">Particulars</th>
+															<!--   <th class="text-center">{{fy | filter : fyindex : comparator: financial_year}}</th>  -->
+															<!-- <th class="text-center">{{fyindex}}</th>  -->
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '8'">2020-2021
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '8'">2019-2020
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '7'">2019-2020
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '7'">2018-2019
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '6'">2018-2019
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '6'">2017-2018
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '5'">2017-2018
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '5'">2016-2017
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '1'">2016-2017
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '1'">2015-2016
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '2'">2015-2016
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '2'">2014-2015
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '3'">2014-2015
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '3'">2013-2014
+																( Previous Year )</th>
+														</tr>
+
+														<tr
+															data-ng-repeat="income in filteredResult = incomeDetails | filter:search"
+															data-toggle="collapse" data-target="#collapseExample1"
+															aria-expanded="false" aria-controls="collapseExample1">
+
+															<td style="text-align: right;"><a href
+																data-ng-click="getGLAccountNames(income);"><b>{{income.group_name}}(+)</b></a></td>
+															<td style="text-align: right;"><b>{{income.amount
+																	| number : 2}}</b></td>
+															<td style="text-align: right;"><b>{{income.previous_amount
+																	| number : 2}}</b></td>
+														</tr>
+														<tr class="collapse" id="collapseExample1">
+														<tr
+															data-ng-repeat="glaccountname in filteredResult = glaccounts | filter:search">
+															<td style="text-align: right;">{{glaccountname.account_name}}</td>
+															<td style="text-align: right;"><a href
+																data-ng-click="getGLAccountDetails(glaccountname);"
+																data-toggle="modal" data-target="#myModal">{{glaccountname.amount
+																	| number : 2}}</a></td>
+															<td style="text-align: right;"><a href
+																data-ng-click="getGLAccountDetailsPrevious(glaccountname);"
+																data-toggle="modal" data-target="#myModals">{{glaccountname.previous_amount
+																	| number : 2}}</a></td>
+														</tr>
+
+
+
+														<tr
+															data-ng-repeat="income1 in filteredResult = incomeDetails1 | filter:search"
+															data-toggle="collapse" data-target="#collapseExample2"
+															aria-expanded="false" aria-controls="collapseExample2">
+
+															<td style="text-align: right;"><a href
+																data-ng-click="getGLAccountTwoNames(income1);"><b>{{income1.group_name}}(+)</b></a></td>
+															<td style="text-align: right;"><b>{{income1.amount
+																	| number : 2}}</b></td>
+															<td style="text-align: right;"><b>{{income1.previous_amount
+																	| number : 2}}</b></td>
+														</tr>
+														<tr class="collapse" id="collapseExample2">
+														<tr
+															data-ng-repeat="glaccountname1 in filteredResult = glaccounts1 | filter:search">
+															<td style="text-align: right;">{{glaccountname1.account_name}}</td>
+															<td style="text-align: right;"><a href
+																data-ng-click="getGLAccountDetails1(glaccountname1);"
+																data-toggle="modal" data-target="#myModal1">{{glaccountname1.amount
+																	| number : 2}}</a></td>
+															<td style="text-align: right;"><a href
+																data-ng-click="getGLAccountDetailsPrevious1(glaccountname1);"
+																data-toggle="modal" data-target="#myModals1">{{glaccountname1.previous_amount
+																	| number : 2}}</a></td>
+														</tr>
+														<tr>
+															<th class="text-right">Total</th>
+															<td class="text-right"><b>{{incomeDetails[0].amount
+																	+ incomeDetails1[0].amount | number : 2}}</b></td>
+															<td class="text-right"><b>{{incomeDetails[0].previous_amount
+																	+ incomeDetails1[0].previous_amount | number : 2}}</b></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-panel mt-2 mb-2">
+									<div class="accordion-heading bg-c-pink text-white" role="tab"
+										id="headingTwo">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseTwo"
+												aria-expanded="false" aria-controls="collapseTwo">
+												Expenditure </a>
+										</h3>
+									</div>
+									<div id="collapseTwo"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingTwo">
+										<div class="accordion-content accordion-desc">
+											<div class="accordion-content accordion-desc">
+												<div class="dt-responsive table-responsive">
+													<table class="table table-bordered">
+														<tbody>
+															<tr class="bg-c-green text-white">
+																<th class="text-center">Particulars</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '8'">2020-2021
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '8'">2019-2020
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '7'">2019-2020
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '7'">2018-2019
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '6'">2018-2019
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '6'">2017-2018
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '5'">2017-2018
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '5'">2016-2017
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '1'">2016-2017
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '1'">2015-2016
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '2'">2015-2016
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '2'">2014-2015
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '3'">2014-2015
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '3'">2013-2014
+																	( Previous Year )</th>
+															</tr>
+															<tr
+																data-ng-repeat="expenditure in filteredResult = expenditureDetails | filter:search"
+																data-toggle="collapse" data-target="#collapseExample3"
+																aria-expanded="false" aria-controls="collapseExample1">
+																<td style="text-align: right;"><a href
+																	data-ng-click="getGLExpAccountNames(expenditure);"><b>{{expenditure.group_name}}(+)</b></a></td>
+																<td style="text-align: right;"><b>{{expenditure.amount
+																		| number : 2}}</b></td>
+																<td style="text-align: right;"><b>{{expenditure.previous_amount
+																		| number : 2}}</b></td>
+															</tr>
+															<tr class="collapse" id="collapseExample3">
+															<tr
+																data-ng-repeat="expenditureaccount in filteredResult = expenditureaccounts | filter:search">
+																<td style="text-align: right;">{{expenditureaccount.account_name}}</td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getGLAccountDetails2(expenditureaccount);"
+																	data-toggle="modal" data-target="#myModal2">{{expenditureaccount.amount
+																		| number : 2}}</a></td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getGLAccountDetailsPrevious2(expenditureaccount);"
+																	data-toggle="modal" data-target="#myModals2">{{expenditureaccount.previous_amount
+																		| number : 2}}</a></td>
+															</tr>
+															<tr
+																data-ng-repeat="expenditure1 in filteredResult = expenditureDetails1 | filter:search"
+																data-toggle="collapse" data-target="#collapseExample4"
+																aria-expanded="false" aria-controls="collapseExample4">
+																<td style="text-align: right;"><a href
+																	data-ng-click="getGLExpAccountOneNames(expenditure1);"><b>{{expenditure1.group_name}}(+)</b></a></td>
+																<td style="text-align: right;"><b>{{expenditure1.amount
+																		| number : 2}}</b></td>
+																<td style="text-align: right;"><b>{{expenditure1.previous_amount
+																		| number : 2}}</b></td>
+															</tr>
+															<tr class="collapse" id="collapseExample4">
+															<tr
+																data-ng-repeat="expenditureaccount1 in filteredResult = expenditureaccounts1 | filter:search">
+																<td style="text-align: right;">{{expenditureaccount1.account_name}}</td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getGLAccountDetails3(expenditureaccount1);"
+																	data-toggle="modal" data-target="#myModal3">{{expenditureaccount1.amount
+																		| number : 2}}</a></td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getGLAccountDetailsPrevious3(expenditureaccount1);"
+																	data-toggle="modal" data-target="#myModals3">{{expenditureaccount1.previous_amount
+																		| number : 2}}</a></td>
+															</tr>
+															<tr
+																data-ng-repeat="expenditure2 in filteredResult = expenditureDetails2 | filter:search"
+																data-toggle="collapse" data-target="#collapseExample5"
+																aria-expanded="false" aria-controls="collapseExample5">
+																<td style="text-align: right;"><a href
+																	data-ng-click="getGLExpAccountTwoNames(expenditure2);"><b>{{expenditure2.group_name}}(+)</b></a></td>
+																<td style="text-align: right;"><b>{{expenditure2.amount
+																		| number : 2}}</b></td>
+																<td style="text-align: right;"><b>{{expenditure2.previous_amount
+																		| number : 2}}</b></td>
+															</tr>
+															<tr class="collapse" id="collapseExample5">
+															<tr
+																data-ng-repeat="expenditureaccount2 in filteredResult = expenditureaccounts2 | filter:search">
+																<td style="text-align: right;">{{expenditureaccount2.account_name}}</td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getGLAccountDetails4(expenditureaccount2);"
+																	data-toggle="modal" data-target="#myModal4">{{expenditureaccount2.amount
+																		| number : 2}}</a></td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getGLAccountDetailsPrevious4(expenditureaccount2);"
+																	data-toggle="modal" data-target="#myModals4">{{expenditureaccount2.previous_amount
+																		| number : 2}}</a></td>
+															</tr>
+															<tr>
+																<th class="text-right">Total</th>
+																<td class="text-right"><b>{{expenditureDetails[0].amount
+																		+ expenditureDetails1[0].amount +
+																		expenditureDetails2[0].amount | number : 2}}</b></td>
+																<td class="text-right"><b>{{expenditureDetails[0].previous_amount
+																		+ expenditureDetails1[0].previous_amount +
+																		expenditureDetails2[0].previous_amount | number : 2}}</b>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-panel mt-2 mb-2">
+									<div class=" accordion-heading bg-c-pink text-white" role="tab"
+										id="headingThree">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseThree"
+												aria-expanded="false" aria-controls="collapseThree">
+												Excess of Income over Expenditure before Exceptional and
+												Extraordinary items and Tax </a>
+										</h3>
+									</div>
+									<div id="collapseThree"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingThree">
+										<div class="accordion-content accordion-desc">
+											<div class="accordion-content accordion-desc">
+												<div class="dt-responsive table-responsive">
+													<table class="table table-bordered">
+														<tbody>
+															<tr class="bg-c-green text-white">
+																<th class="text-center">Particulars</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '8'">2020-2021
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '8'">2019-2020
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '7'">2019-2020
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '7'">2018-2019
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '6'">2018-2019
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '6'">2017-2018
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '5'">2017-2018
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '5'">2016-2017
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '1'">2016-2017
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '1'">2015-2016
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '2'">2015-2016
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '2'">2014-2015
+																	( Previous Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '3'">2014-2015
+																	( Current Year )</th>
+																<th class="text-center"
+																	data-ng-show="data.object.financial_year == '3'">2013-2014
+																	( Previous Year )</th>
+															</tr>
+															<tr
+																data-ng-repeat="depreciation in filteredResult = depreciationDetails | filter:search"
+																data-toggle="collapse" data-target="#collapseExample6"
+																aria-expanded="false" aria-controls="collapseExample6">
+																<td style="text-align: right;"><a href
+																	data-ng-click="getDepreciationAccountNames(depreciation);"><b>{{depreciation.group_name}}(+)</b></a></td>
+																<td style="text-align: right;"><b>{{depreciation.amount
+																		| number : 2}}</b></td>
+																<td style="text-align: right;"><b>{{depreciation.previous_amount
+																		| number : 2}}</b></td>
+															</tr>
+															<tr class="collapse" id="collapseExample6">
+															<tr
+																data-ng-repeat="depreciationAccount in filteredResult = depreciationAccountnames | filter:search">
+																<td style="text-align: right;">{{depreciationAccount.account_name}}</td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getGLAccountDetails5(depreciationAccount);"
+																	data-toggle="modal" data-target="#myModal5">{{depreciationAccount.amount
+																		| number : 2}}</a></td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getGLAccountDetailsPrevious5(depreciationAccount);"
+																	data-toggle="modal" data-target="#myModals5">{{depreciationAccount.previous_amount
+																		| number : 2}}</a></td>
+															</tr>
+
+															<tr>
+																<th class="text-right">Total</th>
+																<td class="text-right"><b>{{depreciationDetails[0].amount
+																		| number : 2}}</b></td>
+																<td class="text-right"><b>{{depreciationDetails[0].previous_amount
+																		| number : 2}}</b></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-panel mt-2 mb-2">
+									<div class=" accordion-heading bg-c-pink text-white" role="tab"
+										id="headingFour">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseFour"
+												aria-expanded="false" aria-controls="collapseFour">
+												Excess of Income over Expenditure before tax </a>
+										</h3>
+									</div>
+									<div id="collapseFour"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingFour">
+										<div class="accordion-content accordion-desc">
+											<div class="accordion-content accordion-desc">
+												<div class="dt-responsive table-responsive">
+													<table class="table table-bordered">
+														<tbody>
+															<tr>
+																<th class="text-right">Total</th>
+																<td class="text-right"><b>{{(incomeDetails[0].amount
+																		+ incomeDetails1[0].amount) -
+																		(expenditureDetails[0].amount +
+																		expenditureDetails1[0].amount +
+																		expenditureDetails2[0].amount) | number : 2}}</b></td>
+																<td class="text-right"><b>{{(incomeDetails[0].previous_amount
+																		+ incomeDetails1[0].previous_amount) -
+																		(expenditureDetails[0].previous_amount +
+																		expenditureDetails1[0].previous_amount +
+																		expenditureDetails2[0].previous_amount) | number : 2}}</b></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-panel mt-2 mb-2">
+									<div class=" accordion-heading bg-c-pink text-white" role="tab"
+										id="headingFive">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseFive"
+												aria-expanded="false" aria-controls="collapseFive">
+												Excess of Income over Expenditure </a>
+										</h3>
+									</div>
+									<div id="collapseFive"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingFive">
+										<div class="accordion-content accordion-desc">
+											<div class="accordion-content accordion-desc">
+												<div class="dt-responsive table-responsive">
+													<table class="table table-bordered">
+														<tbody>
+															<tr>
+																<th class="text-right">Total</th>
+																<td class="text-right"><b>{{(incomeDetails[0].amount
+																		+ incomeDetails1[0].amount) -
+																		(expenditureDetails[0].amount +
+																		expenditureDetails1[0].amount +
+																		expenditureDetails2[0].amount) | number : 2}}</b></td>
+																<td class="text-right"><b>{{(incomeDetails[0].previous_amount
+																		+ incomeDetails1[0].previous_amount) -
+																		(expenditureDetails[0].previous_amount +
+																		expenditureDetails1[0].previous_amount +
+																		expenditureDetails2[0].previous_amount) | number : 2}}</b></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-panel mt-2 mb-2">
+									<div class=" accordion-heading bg-c-pink text-white" role="tab"
+										id="headingSix">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseSix"
+												aria-expanded="false" aria-controls="collapseSix"> Total
+												Comprehensive Income for Year </a>
+										</h3>
+									</div>
+									<div id="collapseSix"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingSix">
+										<div class="accordion-content accordion-desc">
+											<div class="accordion-content accordion-desc">
+												<div class="dt-responsive table-responsive">
+													<table class="table table-bordered">
+														<tbody>
+															<tr>
+																<th class="text-right">Total</th>
+																<td class="text-right"><b>{{(incomeDetails[0].amount
+																		+ incomeDetails1[0].amount) -
+																		(expenditureDetails[0].amount +
+																		expenditureDetails1[0].amount +
+																		expenditureDetails2[0].amount) | number : 2}}</b></td>
+																<td class="text-right"><b>{{(incomeDetails[0].previous_amount
+																		+ incomeDetails1[0].previous_amount) -
+																		(expenditureDetails[0].previous_amount +
+																		expenditureDetails1[0].previous_amount +
+																		expenditureDetails2[0].previous_amount) | number : 2}}</b></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">GL-Group
+						Details</h4>
+						<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="data in (filteredResult =(GLgroupNames | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href data-ng-click="getDisplayAccountDetails(data);">{{data.account_name}}</a></td>
+								<td>{{data.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+                 <div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModal1" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="data1 in (filteredResult =(GLgroupNames1 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetails1(data1);">{{data1.account_name}}</a></td>
+								<td>{{data1.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+                 <div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModal2" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="data2 in (filteredResult =(GLgroupNames2 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetails2(data2);">{{data2.account_name}}</a></td>
+								<td>{{data2.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+                <div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModal3" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="data3 in (filteredResult =(GLgroupNames3 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetails3(data3);">{{data3.account_name}}</a></td>
+								<td>{{data3.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+                <div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModal4" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="data4 in (filteredResult =(GLgroupNames4 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetails4(data4);">{{data4.account_name}}</a></td>
+								<td>{{data4.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModal5" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="data5 in (filteredResult =(GLgroupNames5 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetails5(data5);">{{data5.account_name}}</a></td>
+								<td>{{data5.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<div class="modal fade" id="myModals" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="dataprevious in (filteredResult =(GLgroupNamesprevious | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious(dataprevious);">{{dataprevious.account_name}}</a></td>
+								<td>{{dataprevious.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModals1" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="dataprevious1 in (filteredResult =(GLgroupNamesprevious1 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious1(dataprevious1);">{{dataprevious1.account_name}}</a></td>
+								<td>{{dataprevious1.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModals2" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="dataprevious2 in (filteredResult =(GLgroupNamesprevious2 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious2(dataprevious2);">{{dataprevious2.account_name}}</a></td>
+								<td>{{dataprevious2.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModals3" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="dataprevious3 in (filteredResult =(GLgroupNamesprevious3 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious3(dataprevious3);">{{dataprevious3.account_name}}</a></td>
+								<td>{{dataprevious3.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModals4" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="dataprevious4 in (filteredResult =(GLgroupNamesprevious4 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious4(dataprevious4);">{{dataprevious4.account_name}}</a></td>
+								<td>{{dataprevious4.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModals5" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="dataprevious5 in (filteredResult =(GLgroupNamesprevious5 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious5(dataprevious5);">{{dataprevious5.account_name}}</a></td>
+								<td>{{dataprevious5.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+
+
+	<div class="row" id="monthbased">
+		<div class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+			<div class="card" style="border-radius: 25px;">
+				<div class="card-header bg-primary text-center"
+					style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+					<h6 class="card-title">ANDHRA PRADESH STATE SKILL DEVELOPMENT
+						CORPORATION</h6>
+					<h6 class="card-title mt-2">Statement of Income and
+						Expenditure</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div
+							class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+							<button type="button"
+								class="btn btn-success bg-c-yellow text-white btn-out-dashed btn-sm float-left">Export
+								Excel</button>
+
+						</div>
+
+						<div
+							class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-5">
+							<div id="accordion" role="tablist" aria-multiselectable="true">
+								<div class="accordion-panel mt-2 mb-2">
+									<div class="accordion-heading bg-c-pink text-white" role="tab"
+										id="headingOne">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseOne"
+												aria-expanded="true" aria-controls="collapseOne"> Income
+											</a>
+										</h3>
+									</div>
+									<div id="collapseOne"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingOne">
+										<div class="accordion-content accordion-desc">
+											<div class="dt-responsive table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr class="bg-c-green text-white">
+															<th class="text-center">Particulars</th>
+															<!-- <th class="text-center">{{financialyear | filter : fyindex : comparator: financial_year}}</th> -->
+															<th class="text-center">{{data.object.from_date |
+																date:"dd-MM-yyyy"}} TO {{data.object.to_date |
+																date:"dd-MM-yyyy"}}</th>
+															<th class="text-center">{{monthincomeDetails.previous_from_date
+																| date:"dd-MM-yyyy"}} TO
+																{{monthincomeDetails.previous_to_date |
+																date:"dd-MM-yyyy"}}</th>
+														</tr>
+
+														<tr
+															data-ng-repeat="monthincome in filteredResult = monthincomeDetails | filter:search"
+															data-toggle="collapse" data-target="#collapseExample1"
+															aria-expanded="false" aria-controls="collapseExample1">
+
+															<td style="text-align: right;"><a href
+																data-ng-click="getMonthGLAccountNames(monthincome);"><b>{{monthincome.group_name}}(+)</b></a></td>
+															<td style="text-align: right;"><b>{{monthincome.amount
+																	| number : 2}}</b></td>
+															<td style="text-align: right;"><b>{{monthincome.previous_amount
+																	| number : 2}}</b></td>
+														</tr>
+														<tr class="collapse" id="collapseExample1">
+														<tr
+															data-ng-repeat="monthglaccountname in filteredResult = monthglaccounts | filter:search">
+															<td style="text-align: right;">{{monthglaccountname.account_name}}</td>
+															<td style="text-align: right;"><a href
+																data-ng-click="getMonthGLAccountDetails(monthglaccountname);"
+																data-toggle="modal" data-target="#myModalmonth">{{monthglaccountname.amount
+																	| number : 2}}</a></td>
+															<td style="text-align: right;"><a href
+																data-ng-click="getMonthGLAccountDetailsPrevious(monthglaccountname);"
+																data-toggle="modal" data-target="#myModalsmonth">{{monthglaccountname.previous_amount
+																	| number : 2}}</a></td>
+														</tr>
+
+
+
+														<tr
+															data-ng-repeat="monthincome1 in filteredResult = monthincomeDetails1 | filter:search"
+															data-toggle="collapse" data-target="#collapseExample2"
+															aria-expanded="false" aria-controls="collapseExample2">
+
+															<td style="text-align: right;"><a href
+																data-ng-click="getMonthGLAccountTwoNames(monthincome1);"><b>{{monthincome1.group_name}}(+)</b></a></td>
+															<td style="text-align: right;"><b>{{monthincome1.amount
+																	| number : 2}}</b></td>
+															<td style="text-align: right;"><b>{{monthincome1.previous_amount
+																	| number : 2}}</b></td>
+														</tr>
+														<tr class="collapse" id="collapseExample2">
+														<tr
+															data-ng-repeat="monthglaccountname1 in filteredResult = monthglaccounts1 | filter:search">
+															<td style="text-align: right;">{{monthglaccountname1.account_name}}</td>
+															<td style="text-align: right;"><a href
+																data-ng-click="getMonthGLAccountDetails1(monthglaccountname1);"
+																data-toggle="modal" data-target="#myModalmonth1">{{monthglaccountname1.amount
+																	| number : 2}}</a></td>
+															<td style="text-align: right;"><a href
+																data-ng-click="getMonthGLAccountDetailsPrevious1(monthglaccountname1);"
+																data-toggle="modal" data-target="#myModalsmonth1">{{monthglaccountname1.previous_amount
+																	| number : 2}}</a></td>
+														</tr>
+														<tr>
+															<th class="text-right">Total</th>
+															<td class="text-right"><b>{{monthincomeDetails[0].amount
+																	+ monthincomeDetails1[0].amount | number : 2}}</b></td>
+															<td class="text-right"><b>{{monthincomeDetails[0].previous_amount
+																	+ monthincomeDetails1[0].previous_amount | number : 2}}</b>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-panel mt-2 mb-2">
+									<div class="accordion-heading bg-c-pink text-white" role="tab"
+										id="headingTwo">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseTwo"
+												aria-expanded="false" aria-controls="collapseTwo">
+												Expenditure </a>
+										</h3>
+									</div>
+									<div id="collapseTwo"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingTwo">
+										<div class="accordion-content accordion-desc">
+											<div class="accordion-content accordion-desc">
+												<div class="dt-responsive table-responsive">
+													<table class="table table-bordered">
+														<tbody>
+															<tr class="bg-c-green text-white">
+																<th class="text-center">Particulars</th>
+																<th class="text-center">{{data.object.from_date |
+																	date:"dd-MM-yyyy"}} TO {{data.object.to_date |
+																	date:"dd-MM-yyyy"}}</th>
+															</tr>
+															<tr
+																data-ng-repeat="monthexpenditure in filteredResult = monthexpenditureDetails | filter:search"
+																data-toggle="collapse" data-target="#collapseExample3"
+																aria-expanded="false" aria-controls="collapseExample1">
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthGLExpAccountNames(monthexpenditure);"><b>{{monthexpenditure.group_name}}(+)</b></a></td>
+																<td style="text-align: right;"><b>{{monthexpenditure.amount
+																		| number : 2}}</b></td>
+																<td style="text-align: right;"><b>{{monthexpenditure.previous_amount
+																		| number : 2}}</b></td>
+															</tr>
+															<tr class="collapse" id="collapseExample3">
+															<tr
+																data-ng-repeat="monthexpenditureaccount in filteredResult = monthexpenditureaccounts | filter:search">
+																<td style="text-align: right;">{{monthexpenditureaccount.account_name}}</td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthGLAccountDetails2(monthexpenditureaccount);"
+																	data-toggle="modal" data-target="#myModalmonth2">{{monthexpenditureaccount.amount
+																		| number : 2}}</a></td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthGLAccountDetailsPrevious2(monthexpenditureaccount);"
+																	data-toggle="modal" data-target="#myModalsmonth2">{{monthexpenditureaccount.previous_amount
+																		| number : 2}}</a></td>
+															</tr>
+															<tr
+																data-ng-repeat="monthexpenditure1 in filteredResult = monthexpenditureDetails1 | filter:search"
+																data-toggle="collapse" data-target="#collapseExample4"
+																aria-expanded="false" aria-controls="collapseExample4">
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthGLExpAccountOneNames(monthexpenditure1);"><b>{{monthexpenditure1.group_name}}(+)</b></a></td>
+																<td style="text-align: right;"><b>{{monthexpenditure1.amount
+																		| number : 2}}</b></td>
+																<td style="text-align: right;"><b>{{monthexpenditure1.previous_amount
+																		| number : 2}}</b></td>
+															</tr>
+															<tr class="collapse" id="collapseExample4">
+															<tr
+																data-ng-repeat="monthexpenditureaccount1 in filteredResult = monthexpenditureaccounts1 | filter:search">
+																<td style="text-align: right;">{{monthexpenditureaccount1.account_name}}</td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthGLAccountDetails3(monthexpenditureaccount1);"
+																	data-toggle="modal" data-target="#myModalmonth3">{{monthexpenditureaccount1.amount
+																		| number : 2}}</a></td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthGLAccountDetailsPrevious3(monthexpenditureaccount1);"
+																	data-toggle="modal" data-target="#myModalsmonth3">{{monthexpenditureaccount1.previous_amount
+																		| number : 2}}</a></td>
+															</tr>
+															<tr
+																data-ng-repeat="monthexpenditure2 in filteredResult = monthexpenditureDetails2 | filter:search"
+																data-toggle="collapse" data-target="#collapseExample5"
+																aria-expanded="false" aria-controls="collapseExample5">
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthGLExpAccountTwoNames(monthexpenditure2);"><b>{{monthexpenditure2.group_name}}(+)</b></a></td>
+																<td style="text-align: right;"><b>{{monthexpenditure2.amount
+																		| number : 2}}</b></td>
+																<td style="text-align: right;"><b>{{monthexpenditure2.previous_amount
+																		| number : 2}}</b></td>
+															</tr>
+															<tr class="collapse" id="collapseExample5">
+															<tr
+																data-ng-repeat="monthexpenditureaccount2 in filteredResult = monthexpenditureaccounts2 | filter:search">
+																<td style="text-align: right;">{{monthexpenditureaccount2.account_name}}</td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthGLAccountDetails4(monthexpenditureaccount2);"
+																	data-toggle="modal" data-target="#myModalmonth4">{{monthexpenditureaccount2.amount
+																		| number : 2}}</a></td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthGLAccountDetailsPrevious4(monthexpenditureaccount2);"
+																	data-toggle="modal" data-target="#myModalsmonth4">{{monthexpenditureaccount2.previous_amount
+																		| number : 2}}</a></td>
+															</tr>
+															<tr>
+																<th class="text-right">Total</th>
+																<td class="text-right"><b>{{monthexpenditureDetails[0].amount
+																		+ monthexpenditureDetails1[0].amount +
+																		monthexpenditureDetails2[0].amount | number : 2}}</b></td>
+																<td class="text-right"><b>{{monthexpenditureDetails[0].previous_amount
+																		+ monthexpenditureDetails1[0].previous_amount +
+																		monthexpenditureDetails2[0].previous_amount | number :
+																		2}}</b></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-panel mt-2 mb-2">
+									<div class=" accordion-heading bg-c-pink text-white" role="tab"
+										id="headingThree">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseThree"
+												aria-expanded="false" aria-controls="collapseThree">
+												Excess of Income over Expenditure before Exceptional and
+												Extraordinary items and Tax </a>
+										</h3>
+									</div>
+									<div id="collapseThree"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingThree">
+										<div class="accordion-content accordion-desc">
+											<div class="accordion-content accordion-desc">
+												<div class="dt-responsive table-responsive">
+													<table class="table table-bordered">
+														<tbody>
+															<tr class="bg-c-green text-white">
+																<th class="text-center">Particulars</th>
+																<th class="text-center">{{data.object.from_date |
+																	date:"dd-MM-yyyy"}} TO {{data.object.to_date |
+																	date:"dd-MM-yyyy"}}</th>
+															</tr>
+															<tr
+																data-ng-repeat="monthdepreciation in filteredResult = monthdepreciationDetails | filter:search"
+																data-toggle="collapse" data-target="#collapseExample6"
+																aria-expanded="false" aria-controls="collapseExample6">
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthDepreciationAccountNames(monthdepreciation);"><b>{{monthdepreciation.group_name}}(+)</b></a></td>
+																<td style="text-align: right;"><b>{{monthdepreciation.amount
+																		| number : 2}}</b></td>
+																<td style="text-align: right;"><b>{{monthdepreciation.previous_amount
+																		| number : 2}}</b></td>
+															</tr>
+															<tr class="collapse" id="collapseExample6">
+															<tr
+																data-ng-repeat="monthdepreciationAccount in filteredResult = monthdepreciationAccountnames | filter:search">
+																<td style="text-align: right;">{{monthdepreciationAccount.account_name}}</td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthGLAccountDetails5(monthdepreciationAccount);"
+																	data-toggle="modal" data-target="#myModalmonth5">{{monthdepreciationAccount.amount
+																		| number : 2}}</a></td>
+																<td style="text-align: right;"><a href
+																	data-ng-click="getMonthGLAccountDetailsPrevious5(monthdepreciationAccount);"
+																	data-toggle="modal" data-target="#myModalsmonth5">{{monthdepreciationAccount.previous_amount
+																		| number : 2}}</a></td>
+															</tr>
+
+															<tr>
+																<th class="text-right">Total</th>
+																<td class="text-right"><b>{{monthdepreciationDetails[0].amount
+																		| number : 2}}</b></td>
+																<td class="text-right"><b>{{monthdepreciationDetails[0].previous_amount
+																		| number : 2}}</b></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-panel mt-2 mb-2">
+									<div class=" accordion-heading bg-c-pink text-white" role="tab"
+										id="headingFour">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseFour"
+												aria-expanded="false" aria-controls="collapseFour">
+												Excess of Income over Expenditure before tax </a>
+										</h3>
+									</div>
+									<div id="collapseFour"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingFour">
+										<div class="accordion-content accordion-desc">
+											<div class="accordion-content accordion-desc">
+												<div class="dt-responsive table-responsive">
+													<table class="table table-bordered">
+														<tbody>
+															<tr class="bg-c-green text-white">
+																<th class="text-center">Particulars</th>
+																<th class="text-center">{{data.object.from_date |
+																	date:"dd-MM-yyyy"}} TO {{data.object.to_date |
+																	date:"dd-MM-yyyy"}}</th>
+															</tr>
+															<tr>
+																<th class="text-right">Total</th>
+																<td class="text-right"><b>{{(monthincomeDetails[0].amount
+																		+ monthincomeDetails1[0].amount) -
+																		(monthexpenditureDetails[0].amount +
+																		monthexpenditureDetails1[0].amount +
+																		monthexpenditureDetails2[0].amount) | number : 2}}</b></td>
+																<td class="text-right"><b>{{(monthincomeDetails[0].previous_amount
+																		+ monthincomeDetails1[0].previous_amount) -
+																		(monthexpenditureDetails[0].previous_amount +
+																		monthexpenditureDetails1[0].previous_amount +
+																		monthexpenditureDetails2[0].previous_amount) | number
+																		: 2}}</b></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-panel mt-2 mb-2">
+									<div class=" accordion-heading bg-c-pink text-white" role="tab"
+										id="headingFive">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseFive"
+												aria-expanded="false" aria-controls="collapseFive">
+												Excess of Income over Expenditure </a>
+										</h3>
+									</div>
+									<div id="collapseFive"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingFive">
+										<div class="accordion-content accordion-desc">
+											<div class="accordion-content accordion-desc">
+												<div class="dt-responsive table-responsive">
+													<table class="table table-bordered">
+														<tbody>
+															<tr class="bg-c-green text-white">
+																<th class="text-center">Particulars</th>
+																<th class="text-center">{{data.object.from_date |
+																	date:"dd-MM-yyyy"}} TO {{data.object.to_date |
+																	date:"dd-MM-yyyy"}}</th>
+															</tr>
+															<tr>
+																<th class="text-right">Total</th>
+																<td class="text-right"><b>{{(monthincomeDetails[0].amount
+																		+ monthincomeDetails1[0].amount) -
+																		(monthexpenditureDetails[0].amount +
+																		monthexpenditureDetails1[0].amount +
+																		monthexpenditureDetails2[0].amount) | number : 2}}</b></td>
+																<td class="text-right"><b>{{(monthincomeDetails[0].previous_amount
+																		+ monthincomeDetails1[0].previous_amount) -
+																		(monthincomeDetails[0].previous_amount +
+																		monthincomeDetails1[0].previous_amount +
+																		monthincomeDetails2[0].previous_amount) | number : 2}}</b></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-panel mt-2 mb-2">
+									<div class=" accordion-heading bg-c-pink text-white" role="tab"
+										id="headingSix">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseSix"
+												aria-expanded="false" aria-controls="collapseSix"> Total
+												Comprehensive Income for Year </a>
+										</h3>
+									</div>
+									<div id="collapseSix"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingSix">
+										<div class="accordion-content accordion-desc">
+											<div class="accordion-content accordion-desc">
+												<div class="dt-responsive table-responsive">
+													<table class="table table-bordered">
+														<tbody>
+															<tr>
+																<th class="text-right">Total</th>
+																<td class="text-right"><b>{{(monthincomeDetails[0].amount
+																		+ monthincomeDetails1[0].amount) -
+																		(monthexpenditureDetails[0].amount +
+																		monthexpenditureDetails1[0].amount +
+																		monthexpenditureDetails2[0].amount) | number : 2}}</b></td>
+																<td class="text-right"><b>{{(monthincomeDetails[0].previous_amount
+																		+ monthincomeDetails1[0].previous_amount) -
+																		(monthexpenditureDetails[0].previous_amount +
+																		monthexpenditureDetails1[0].previous_amount +
+																		monthexpenditureDetails2[0].previous_amount) | number
+																		: 2}}</b></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="myModalmonth" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdata in (filteredResult =(monthGLgroupNames | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href data-ng-click="getDisplayAccountDetails(data);">{{monthdata.account_name}}</a></td>
+								<td>{{monthdata.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModalmonth1" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdata1 in (filteredResult =(monthGLgroupNames1 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetails1(data1);">{{monthdata1.account_name}}</a></td>
+								<td>{{monthdata1.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModalmonth2" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdata2 in (filteredResult =(monthGLgroupNames2 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetails2(data2);">{{monthdata2.account_name}}</a></td>
+								<td>{{monthdata2.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModalmonth3" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdata3 in (filteredResult =(monthGLgroupNames3 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetails3(data3);">{{monthdata3.account_name}}</a></td>
+								<td>{{monthdata3.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModalmonth4" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdata4 in (filteredResult =(monthGLgroupNames4 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetails4(data4);">{{monthdata4.account_name}}</a></td>
+								<td>{{monthdata4.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModalmonth5" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdata5 in (filteredResult =(monthGLgroupNames5 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetails5(data5);">{{monthdata5.account_name}}</a></td>
+								<td>{{monthdata5.amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<div class="modal fade" id="myModalsmonth" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdataprevious in (filteredResult =(monthGLgroupNamesprevious | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious(dataprevious);">{{monthdataprevious.account_name}}</a></td>
+								<td>{{monthdataprevious.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModalsmonth1" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdataprevious1 in (filteredResult =(monthGLgroupNamesprevious1 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious1(dataprevious1);">{{monthdataprevious1.account_name}}</a></td>
+								<td>{{monthdataprevious1.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModalsmonth2" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdataprevious2 in (filteredResult =(monthGLgroupNamesprevious2 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious2(monthdataprevious2);">{{monthdataprevious2.account_name}}</a></td>
+								<td>{{monthdataprevious2.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModalsmonth3" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdataprevious3 in (filteredResult =(monthGLgroupNamesprevious3 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious3(monthdataprevious3);">{{monthdataprevious3.account_name}}</a></td>
+								<td>{{monthdataprevious3.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModalsmonth4" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdataprevious4 in (filteredResult =(monthGLgroupNamesprevious4 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious4(monthdataprevious4);">{{monthdataprevious4.account_name}}</a></td>
+								<td>{{monthdataprevious4.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="myModalsmonth5" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">GL-Group
+						Details</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class=" table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.No</th>
+									<th style="min-width: 120px; max-width: 120px;">GL
+										Accounts</th>
+									<th style="min-width: 120px; max-width: 120px;">Amount</th>
+
+								</tr>
+							</thead>
+							<tr
+								data-ng-repeat="monthdataprevious5 in (filteredResult =(monthGLgroupNamesprevious5 | filter:search))">
+								<td align="left">{{$index+1}}</td>
+
+								<td><a href
+									data-ng-click="getDisplayAccountDetailsPrevious5(monthdataprevious5);">{{monthdataprevious5.account_name}}</a></td>
+								<td>{{monthdataprevious5.previous_amount | number : 2}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+
+<!-- Cloned JS -->
+
+<script src="/erp/files/assets/pages/j-pro/js/jquery.ui.min.js"></script>
+<script src="/erp/files/assets/pages/j-pro/js/jquery.maskedinput.min.js"></script>
+<script src="/erp/files/assets/pages/j-pro/js/jquery-cloneya.min.js"></script>
+
+<script
+	src="/erp/files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+
+<script src="/erp/files/bower_components/modernizr/js/modernizr.js"></script>
+<script src="/erp/files/bower_components/modernizr/js/css-scrollbars.js"></script>
+
+<!-- Form Picker -->
+
+<script
+	src="/erp/files/assets/pages/advance-elements/moment-with-locales.min.js"></script>
+<script
+	src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="/erp/files/assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
+
+<script
+	src="/erp/files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js"></script>
+
+<script
+	src="/erp/files/bower_components/datedropper/js/datedropper.min.js"></script>
+
+<script src="/erp/files/bower_components/spectrum/js/spectrum.js"></script>
+<script src="/erp/files/bower_components/jscolor/js/jscolor.js"></script>
+
+<script
+	src="/erp/files/bower_components/jquery-minicolors/js/jquery.minicolors.min.js"></script>
+
+<script src="/erp/files/assets/pages/advance-elements/custom-picker.js"></script>
+
+<!-- Cloned JS -->
+
+<script src="/erp/files/assets/pages/j-pro/js/custom/cloned-form.js"></script>
+
+<!-- Accordion JS -->
+<script src="/erp/files/assets/pages/accordion/accordion.js"></script>
+
+<script>
+    $("#yearbased").hide();
+    $("#monthbased").hide();
+		jQuery(document).ready(function() { 
+			
+			angular.bootstrap(jQuery("#incomeandexpenditurereportId"), [ 'incomeandexpenditurereport' ]);
+		});
+	</script>
+<script>
+   jQuery(document).on('click', "#home3", function(){    
+$("#yearbased").show();
+$("#monthbased").hide();
+});  
+   </script>
+
+<script>
+   jQuery(document).on('click', "#profile3", function(){
+$("#yearbased").hide();
+$("#monthbased").show();
+});  
+   </script>
+

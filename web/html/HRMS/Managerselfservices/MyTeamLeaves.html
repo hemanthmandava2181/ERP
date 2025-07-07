@@ -1,0 +1,151 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/managerselfservices/ManagerLeaves.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+<div id="leavesId" data-ng-controller="managerleavesReportController">
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">   
+                                                        <div class="breadcrumb-header">
+                                                            <h5>My Team Leaves</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">HRMS</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Manager Self Services</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">My Team Leaves</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Team Leave Report</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">From Date
+                                                               <input
+					type="date" class="form-control" id="from" name="fromdate"
+					data-ng-model="data.object.from_date" />
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">To Date
+                                                              <input
+					type="date" class="ValidFrom form-control" id="to" name="todate"
+					data-ng-model="data.object.to_date" />
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">Leave Type
+                                                                	<select
+					class="form-control" data-ng-model="data.object.leave_type">
+					
+					<option data-ng-repeat="leave in leaves" value="{{leave.id}}">{{leave.type}}</option>
+				</select>
+				
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                                            <button type="button" class="btn btn-primary" id="removebtn"
+							data-ng-click="getLeaveSheets(data.object);"style="margin-left:45%">Submit</button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">My Team Leaves</div>
+                                                    <div class="card-body">
+                                                        <div class="dt-responsive table-responsive">
+                                                            <table class="table table-hover table-bordered" id="simpletable">
+                                                                <thead class="btn-grd-primary">
+                                                                    <tr>
+                                                                        <th>S.No</th>
+                                                                        <th>Employee Name</th>
+                                                                        <th>Department Name</th>
+                                                                        <th>Designation Name</th>
+                                                                        <th>Cader Name</th>
+                                                                        <th>Grade Name</th>
+                                                                        <th>Leave Type</th>
+                                                                        <th>Leave Nature</th>
+                                                                        <th>From Date</th>
+                                                                        <th>To Date</th>
+                                                                        <th>Leave Status</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                   <tr data-ng-repeat="userdata in filteredResult =(userdetails | filter:search)">    
+				     <td >{{$index+1}}</td>   
+					<td>{{userdata.name}}</td>  
+		<td>{{userdata.department}}</td>	 
+		<td>{{userdata.designation}}</td>	 
+		<td>{{userdata.cader}}</td>	 
+		<td>{{userdata.grade}}</td>	            
+		<td>{{userdata.leave_type}}</td>	 
+		<td>{{userdata.leave_nature}}</td>	 
+		<td>{{userdata.from_date | date:"dd-MM-yyyy"}}</td>	 
+		<td>{{userdata.to_date|date:"dd-MM-yyyy"}}</td>	
+					<td><button type="button" data-ng-click="updateDataapprove(userdata)"
+							class="btn btn-success btn-md">Pending
+						</button></td>	 	 
+		<td><button type="button" class="btn btn-default"
+							data-ng-click="updateDatareject(userdata);">Cancel</button></td>	 	 
+			  
+					 
+				</tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+</div>
+
+
+   
+    <!-- Data Table -->
+    <script src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+   
+<script>                        
+		jQuery(document).ready(function() {         
+			
+  			 angular.bootstrap(jQuery("#leavesId"), [ 'managerleavesReportModule' ]); 
+	    });
+		
+	</script>

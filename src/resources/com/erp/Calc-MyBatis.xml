@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Calc">
+
+
+	<select id="getAll" resultType="Calc">
+		select a.name,d.id,b.cader_name,c.grade_name from
+		hrms.ctc_calculator_mst as
+		a
+
+		inner join(select id,name from
+		hrms.financial_year_mst) as d on (a.id
+		=
+		d.id)
+		inner join(select
+		id,cader_name from hrms.cader_mst) as b on
+		(d.id = b.id)
+		inner
+		join(select id,grade_name from hrms.grades_mst) as c on (b.id =c.id);
+	</select>
+
+
+
+<select id="getAllLetterheads" resultType="map">
+		SELECT id,name,title,status
+		
+		from hrms.payslip_heads_mst;
+	</select>
+	
+	
+	<insert id="saveLetterhead" parameterType="map">
+		
+
+		insert into hrms.payslip_heads_mst
+		(name,title)
+		values
+		(#{p.name},#{p.title});
+	</insert>
+	
+	<select id="getByletterhead" resultType="Calc" parameterType="java.lang.String">
+	
+	select name,title from hrms.payslip_heads_mst where name = #{name};
+	
+	</select>
+	
+<update id="updateLetterhead" parameterType="map">
+		update
+		hrms.payslip_heads_mst SET title=#{p.title},name=#{p.name} WHERE
+		name=#{p.name};
+	</update>
+
+
+	<select id="getById" resultType="Calc">
+		SELECT * from
+		hrms.ctc_calculator_mst where name=#{p.name};
+	</select>
+	
+	
+
+
+	<select id="getcalc_id" resultType="java.lang.Integer">
+		SELECT max(id) from
+		hrms.ctc_calculator_mst ;
+	</select>
+
+	<select id="getCalcnames" resultType="map">
+		SELECT distinct
+		id,calc_names
+		from hrms.ctc_calculator_names;
+	</select>
+
+	<select id="getYears" resultType="map">
+		SELECT distinct id,name
+		from hrms.financial_year_mst order by id;
+	</select>
+
+	<select id="getMonths" resultType="map">
+		SELECT distinct id, name
+		from hrms.months_mst order by id;
+	</select>
+
+	<select id="getCaders" resultType="map">
+		SELECT distinct id as caderid,
+		cader_name from hrms.cader_mst;
+	</select>
+
+	<select id="getGrades" resultType="map">
+		SELECT distinct id as gradeid,
+		grade_name from hrms.grades_mst;
+	</select>
+
+
+	<insert id="Insert" parameterType="map">
+		<!-- insert into hrms.ctc_calculator_mst (name,financial_year,gradeid,caderid,basicvalue,hravalue,cavalue,mavalue,ltavalue,grossvalue,deductions) 
+			values (#{p.name},#{p.financial_year},#{p.gradeid},#{p.caderid},#{p.basicvalue},#{p.hravalue},#{p.cavalue},#{p.mavalue},#{p.ltavalue},#{p.grossvalue}, 
+			#{p.deductions}); -->
+
+
+		insert into hrms.ctc_calculator_mst  
+		(name,grade,cader,financial_year)
+		values
+		(#{p.calc_names},#{p.gradeid},#{p.caderid},#{p.financial_year}::integer);
+	</insert>
+
+	<insert id="Insert1" parameterType="map">
+
+		insert into
+		hrms.ctc_calculator_details(ctc_calculator,payslip_heads,entity_type,value)
+		values
+		(#{p.id},#{p.payslip_id}::integer,#{p.entity_type}::integer,#{p.value}::integer);
+	</insert>
+
+	
+
+
+	<select id="getPname" resultType="map">
+		SELECT distinct id,name as
+		pname
+		from hrms.payslip_heads_mst;
+	</select>
+
+
+	<select id="getNames" resultType="map">
+		SELECT distinct a.empid,concat(a.first_name,'',a.last_name) as employeename
+		from hrms.employee_personal_details as a join
+		hrms.employee_employment_details as b on b.employee_type=2
+	</select>
+
+	<!-- getting data in earnings table -->
+
+	<select id="getEarnings" resultType="Calc" parameterType="map">
+		<!-- select
+		f.name as payslip_head,e.entity_type as entity,e.value as entity_value
+		from (select * from hrms.ctc_calculator_mst) a inner join
+		(select * from hrms.cader_mst) b on (b.id = a.caderid) inner join (select *
+		from hrms.grades_mst) c on (c.id = a.gradeid) inner join
+		(select * from procurements.years_mst) d on (d.yearid = a.financia_year)
+		inner join (select * from hrms.ctc_calculator_details) e on
+		(e.ctc_calculator = a.id) inner join
+		(select * from hrms.payslip_heads_mst where title = 'Earnings') f on (f.id =
+		e.payslip_heads)
+		where a.name = #{name}; -->
+		
+		select
+		f.name as payslip_head,e.entity_type as entity_type,e.value as value
+		from (select * from hrms.ctc_calculator_mst) a inner join
+		(select * from hrms.cader_mst) b on (b.id = a.cader) inner join 
+		(select * from hrms.grades_mst) c on (c.id = a.grade) 
+		inner join (select * from hrms.ctc_calculator_details) e on
+		(e.ctc_calculator = a.id) inner join
+		(select * from hrms.payslip_heads_mst where title = 'Earnings') f on (f.id =
+		e.payslip_heads)
+		where a.name =  #{p.name};
+	</select>
+
+
+	<!-- getting data in deductions table -->
+
+	<select id="getDeductions" resultType="Calc" parameterType="map">
+		<!-- select f.name as paysliphead,e.entity_type as entitytype,e.value as
+		entityvalue from (select * from hrms.ctc_calculator_mst) a inner join
+		(select * from hrms.cader_mst) b on (b.id = a.caderid) inner join
+		(select * from hrms.grades_mst) c on (c.id = a.gradeid) inner join
+		(select * from procurements.years_mst) d on (d.yearid =
+		a.financia_year) inner join (select * from
+		hrms.ctc_calculator_details) e on (e.ctc_calculator = a.id) inner join
+		(select * from hrms.payslip_heads_mst where title = 'Deductions') f on
+		(f.id = e.payslip_heads)
+		where a.name = #{name}; -->
+		select f.name as paysliphead,e.entity_type as entitytype,e.value as
+		entityvalue from (select * from hrms.ctc_calculator_mst) a inner join
+		(select * from hrms.cader_mst) b on (b.id = a.cader) inner join
+		(select * from hrms.grades_mst) c on (c.id = a.grade)  inner join (select * from
+		hrms.ctc_calculator_details) e on (e.ctc_calculator = a.id) inner join
+		(select * from hrms.payslip_heads_mst where title = 'Deductions') f on
+		(f.id = e.payslip_heads)
+		where a.name =  #{p.name};
+	</select>
+
+
+</mapper>

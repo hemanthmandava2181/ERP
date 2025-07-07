@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Selfservices">
+
+      
+<select id="getCategories" resultType="map">  
+		SELECT id,name from hrms.helpdesk_categories;
+	</select>  
+	          
+     <select id="getReqtypes" resultType="map">  
+		SELECT  id,name from hrms.helpdesk_request_types where helpdesk_categoryid = #{id} ;
+	</select>  
+	          
+              
+     <select id="getStatuss" resultType="map">  
+		SELECT  id,name from hrms.helpdesk_requests_status;
+	</select>  
+	          
+    
+    <select id="getAssigns" resultType="map">
+		select concat(first_name,' ',middle_name,' ',last_name) AS fullname,empid from hrms.employee_personal_details;
+	</select> 
+	    
+    
+  
+
+     <!-- Onduty request -->
+	<insert id="Insert" parameterType="map">
+insert into hrms.on_duty_request(empid,reporting_to,start_date,end_date,onduty_reporting_to,nature_of_assignment,
+  location,project,description,onduty_contact,onduty_request_status,created_by)
+values(#{p.empid},#{p.reporting_to},#{p.start_date},#{p.end_date},#{p.onduty_reporting_to},#{p.nature_of_assignment},
+#{p.location},#{p.project},#{p.description},#{p.onduty_contact},3,#{p.created_by});
+		</insert>
+		                     
+		<select id="getAllduty" resultType="map">  
+		SELECT distinct empid,start_date,end_date,onduty_reporting_to,nature_of_assignment,
+  location,project,onduty_contact,onduty_request_status from  hrms.on_duty_request;
+	</select>    
+	             
+	<!-- <select id="getById" resultType="Selfservices">       
+SELECT distinct empid,reporting_to,start_date,end_date,onduty_reporting_to,nature_of_assignment,
+  location,project,description,onduty_contact,onduty_request_status,created_by,created_date,comments
+  from  hrms.on_duty_request WHERE location = #{location} ;     
+	  </select>   -->  
+	  <select id="getById1" resultType="Selfservices">       
+SELECT distinct empid,reporting_to,start_date,end_date,onduty_reporting_to,nature_of_assignment,
+  location,project,description,onduty_contact,onduty_request_status,created_by,created_date,comments
+  from  hrms.on_duty_request WHERE location = #{location} ;     
+	  </select>  
+	
+		 <update id="updateData"  parameterType="map">
+		update hrms.on_duty_request SET location=#{p.location},reporting_to=#{p.reporting_to},start_date=#{p.start_date},
+		end_date=#{p.end_date},onduty_reporting_to=#{p.onduty_reporting_to},
+		nature_of_assignment=#{p.nature_of_assignment},project=#{p.project},description=#{p.description},
+		onduty_contact=#{p.onduty_contact},onduty_request_status=#{p.onduty_request_status},
+		created_by=#{p.created_by},comments=#{p.comments} WHERE empid=#{p.empid};                        
+	</update> 
+	   	
+	    <update id="updateDataCancel"  parameterType="map">     
+		update hrms.on_duty_request SET onduty_request_status=2   
+	 WHERE empid=#{p.empid};                        
+	</update> 
+	     
+	<select id="getReportings" resultType="Selfservices">
+		SELECT a.empid as empid, concat(first_name,' ',middle_name,' ',last_name) AS fullname,
+		b.reporting_to as reporting_to
+		
+		FROM hrms.employee_personal_details as a    
+        join hrms.employee_employment_details as b on (a.empid = b.empid);
+
+         
+	</select>
+<select id="getReporting" resultType="Selfservices">     
+	
+		
+		SELECT a.empid as empid, concat(first_name,' ',middle_name,' ',last_name) AS fullname,
+		b.reporting_to as reporting_to
+		
+		FROM hrms.employee_personal_details as a    
+        join hrms.employee_employment_details as b on (a.empid = b.empid) AND a.empid=#{p.empid};
+	</select>
+	<select id="getProjects" resultType="map">
+		SELECT distinct id,project_name from  procurements.createproject_mst;
+	</select>
+ 
+	     
+	      
+	
+	
+	
+	<!--Ontravel request-->
+	<!--Ontravel request-->
+	 <insert id="Insert2" parameterType="map">
+insert into hrms.on_travel_request(empid,reporting_to,start_date,end_date,ontravel_reporting_to,nature_of_assignment,
+  location,project,description,ontravel_contact,ontravel_request_status,created_by)
+values(#{p.empid},#{p.reporting_to},#{p.start_date},#{p.end_date},#{p.ontravel_reporting_to},#{p.nature_of_assignment},
+#{p.location},#{p.project},#{p.description},#{p.ontravel_contact},3,#{p.created_by});
+		</insert>
+		                     
+		<select id="getAlltravel" resultType="map">
+		SELECT distinct empid,start_date,end_date,ontravel_reporting_to,nature_of_assignment,
+  location,project,ontravel_contact,ontravel_request_status from  hrms.on_travel_request;
+	</select>
+	             
+	<!-- <select id="getById2" resultType="Selfservices">       
+SELECT distinct empid,location,reporting_to,start_date,end_date,ontravel_reporting_to,nature_of_assignment,
+  location,project,description,ontravel_contact,ontravel_request_status,created_by,created_date,comments
+  from  hrms.on_travel_request where location = #{location} ;             
+	  </select>   -->
+	  
+	  <select id="getById2" resultType="Selfservices">       
+SELECT distinct empid,location,reporting_to,start_date,end_date,ontravel_reporting_to,nature_of_assignment,
+  location,project,description,ontravel_contact,ontravel_request_status,created_by,created_date,comments
+  from  hrms.on_travel_request where WHERE  start_date=#{p.start_date} and end_date=#{p.end_date} and empid=#{p.empid};             
+	  </select>  
+	  
+<select id="getById" resultType="Selfservices">       
+SELECT distinct empid,reporting_to,start_date,end_date,onduty_reporting_to,nature_of_assignment,
+  location,project,description,onduty_contact,onduty_request_status,created_by,created_date,comments
+  from  hrms.on_duty_request WHERE  start_date=#{p.start_date} and end_date=#{p.end_date} and empid=#{p.empid};     
+	  </select>  
+	  
+	  
+	                  
+	
+		 <update id="updateData2"  parameterType="map">
+			update hrms.on_travel_request  SET location=#{p.location},reporting_to=#{p.reporting_to},start_date=#{p.start_date},
+		end_date=#{p.end_date},ontravel_reporting_to =#{p.ontravel_reporting_to },
+		nature_of_assignment=#{p.nature_of_assignment},project=#{p.project},description=#{p.description},
+		ontravel_contact=#{p.ontravel_contact},ontravel_request_status=#{p.ontravel_request_status},
+		created_by=#{p.created_by},comments=#{p.comments} WHERE empid=#{p.empid};     
+	</update> 
+	
+		 <update id="updateData2Cancel"  parameterType="map">
+			update hrms.on_travel_request  SET ontravel_request_status=2
+ WHERE empid=#{p.empid};     
+	</update>                 
+	
+	 <!-- help desk -->
+	 <select id="getYear" resultType="java.lang.Integer">
+		SELECT (EXTRACT(year FROM CURRENT_TIMESTAMP)) as year;
+	  </select> 
+     
+     <select id="getCount" resultType="java.lang.Integer">
+		SELECT count(id)+1 as count from hrms.helpdesk_requests ;  
+	</select>
+	  <insert id="Insert3" parameterType="map">
+insert into hrms.helpdesk_requests(empid,request_id,request_categoryid,request_typeid,description,createddate)
+values(#{p.empid},('APHR' || '' || #{year} || '' ||lpad(CAST( #{id} AS character varying ),3,'0')),#{p.request_categoryid},#{p.request_typeid},#{p.description},current_timestamp);
+		</insert>
+		                     
+		
+	             
+			<select id="getAllhelpdesk" resultType="map">	
+select distinct a.empid,a.request_id as request_id,b.name as name,a.description as description,d.name as request_statusname,c.name as request_typename ,a.emp_comments as emp_comments from
+ (SELECT request_id,empid,request_categoryid,request_typeid,description,request_status,emp_comments,createddate from hrms.helpdesk_requests) a inner join (select * from hrms.helpdesk_categories) b on (a.request_categoryid = b.id)
+	inner join (select * from hrms.helpdesk_request_types) c on (c.id = a.request_typeid) inner join (select * from hrms.helpdesk_requests_status) d on (d.id = a.request_status)
+	</select>
+	    <select id="getAllclosedhelpdesk" resultType="map">	
+select distinct a.empid,a.request_id as request_id,b.name as name,a.description as description,d.name as request_statusname,c.name as request_typename ,a.emp_comments as emp_comments from
+ (SELECT request_id,empid,request_categoryid,request_typeid,description,request_status,emp_comments,createddate,closed_date from hrms.helpdesk_requests) a inner join (select * from hrms.helpdesk_categories) b on (a.request_categoryid = b.id)
+	inner join (select * from hrms.helpdesk_request_types) c on (c.id = a.request_typeid) inner join (select * from hrms.helpdesk_requests_status) d on (d.id = a.request_status)
+	</select>         
+	<select id="getById3" resultType="Selfservices">       
+
+	
+      SELECT request_id,request_typeid,request_categoryid,description from hrms.helpdesk_requests
+      WHERE request_id=#{request_id} ;
+	  </select>  
+	                  	               
+		 <update id="updateData3"  parameterType="map">            
+		update hrms.helpdesk_requests SET request_categoryid=#{p.request_categoryid},     
+		request_typeid=#{p.request_typeid},
+		description=#{p.description} WHERE request_id=#{p.request_id};                     
+	</update> 
+	  <select id="getByIdview" resultType="Selfservices"> 
+	  select a.request_id as request_id,b.name as name,a.description as description,d.name as request_statusname,c.name as request_typename from
+      (SELECT request_id,request_categoryid,request_typeid,description,request_status from hrms.helpdesk_requests) a inner join (select * from hrms.helpdesk_categories) b on (a.request_categoryid = b.id)
+	 inner join (select * from hrms.helpdesk_request_types) c on (c.id = a.request_typeid) inner join (select * from hrms.helpdesk_requests_status) d on (d.id = a.request_status)
+ WHERE a.request_id= #{request_id} ;
+ </select> 
+   <update id="updateDataAssign"  parameterType="map">   
+		update hrms.helpdesk_requests SET assigned_to=#{p.assigned_to} WHERE request_id=#{p.request_id};                     
+	</update>  
+	<update id="updateDataEmpcomm"  parameterType="map">
+		update hrms.helpdesk_requests SET emp_comments=#{p.emp_comments},createddate=current_timestamp,request_status=#{p.request_status} WHERE request_id=#{p.request_id};                     
+	</update> 
+	<update id="updateDatahrcomm"  parameterType="map">
+		update hrms.helpdesk_requests SET hr_comments=#{p.hr_comments},createddate=current_timestamp,request_status=#{p.request_status} WHERE request_id=#{p.request_id};                     
+	</update> 
+ <select id="getname" resultType="Selfservices"> 
+select concat(first_name,' ',last_name) AS fullname,empid from hrms.employee_personal_details  where empid=#{p.empid};
+</select>
+	   
+	<select id="getEmployeeDirectory" resultType="map">  
+       
+   SELECT b.empid as empid,b.company_email,c.designation_name,a.mobile,d.department_name,e.description,f.grade_name,g.reporting_to, concat (first_name,' ',middle_name,' ',last_name) AS name
+         FROM hrms.employee_personal_details as a    
+        inner join (select * from hrms.employee_employment_details  where status=0) as b on (a.empid = b.empid) inner join
+        (select * from hrms.designation_mst )c on (c.id=b.designation ) inner join
+       ( select * from hrms.department_mst)d on (d.id=b.department) inner join 
+       (select * from hrms.cader_mst)e on (e.id=b.cader) inner join
+       (select * from hrms.grades_mst)f     on (f.id=b.grade) inner join
+       (select concat (first_name,' ',middle_name,' ',last_name) as reporting_to,empid from hrms.employee_personal_details)g on g.empid=b.reporting_to
+	
+	</select> 
+	
+	
+	
+	<insert id="Insertexitemployee" parameterType="map">
+insert into hrms.employee_exit(empid,resignation_date,reason,status,notice_period,reporting_to,created_date,hr_desired_notice_period,relieving_date)
+values(#{p.empid},#{p.resignation_date},#{p.reason},1,#{p.notice_period},#{p.reporting_to},current_timestamp,#{p.hr_desired_notice_period},((#{p.resignation_date}::date)+30));
+		</insert>
+		<select id="getNoticePeriod" resultType="Selfservices">
+		 select  distinct empid,notice_period,status from hrms.employee_employment_details where status=0 and empid=#{empid};
+	</select>
+	 <select id="getallexitemployee" resultType="Selfservices">  
+		 select distinct concat(first_name,middle_name,last_name) as employeename,a.empid,b.empid,a.resignation_date,a.reason,a.status,a.notice_period,a.reporting_to,a.created_date,a.hr_desired_notice_period,a.relieving_date,d.name from
+      (SELECT empid,resignation_date,reason,status,notice_period,reporting_to,created_date,hr_desired_notice_period,relieving_date from hrms.employee_exit  ) a 
+      inner join(select * from hrms.employee_personal_details) b on (a.empid = b.empid)
+	 left join (select * from  hrms.request_status_mst) d on (d.id = a.status)
+ WHERE a.empid=#{empid}
+
+	</select>
+	<select id="getallprojectemployee" resultType="Selfservices">  
+select distinct concat(first_name,middle_name,last_name) as employeename,a.empid,c.project,f.project_name,e.name,c.work_location from
+      (SELECT * from hrms.employee_exit) a 
+      inner join(select * from hrms.employee_personal_details) b on (a.empid = b.empid)
+	  inner join (select * from  hrms.project_employee WHERE empid=#{empid}) c on (b.empid = c.empid)
+	  inner join (select * from   operations.location_mst)e on(e.id=c.work_location)
+	   inner join (select * from procurements.createproject_mst)f on(f.id=c.project)
+ 
+	</select>
+	<!-- <select id="getexitreportemployees" resultType="Selfservices">  
+select  distinct concat(first_name,middle_name,last_name) as employeename,a.empid ,d.designation_name,c.resignation_date,c.reason,c.status,c.notice_period,c.reporting_to,c.created_date,c.hr_desired_notice_period,c.relieving_date,e.name  from
+      
+      (select * from hrms.employee_personal_details) a    
+        inner join (select * from  hrms.employee_employment_details) b on (a.empid = b.empid)
+        inner join (SELECT empid,resignation_date,reason,status,notice_period,reporting_to,created_date,hr_desired_notice_period,relieving_date from hrms.employee_exit WHERE empid=#{empid}) c on(b.empid=c.empid)
+	  inner join (select * from  hrms.designation_mst) d on (b.id = d.id)
+	   inner join (select * from  hrms.request_status_mst) e on (e.id = c.status)
+	</select> -->
+	 <select id="getByIdemployeeexit" resultType="Selfservices"> 
+	 select  distinct concat(first_name,middle_name,last_name) as employeename,a.empid ,d.designation_name,c.resignation_date,c.reason,c.status,c.notice_period,c.reporting_to,c.created_date,c.hr_desired_notice_period,c.relieving_date,e.name  from
+      
+      (select * from hrms.employee_personal_details) a    
+        inner join (select * from  hrms.employee_employment_details) b on (a.empid = b.empid)
+        inner join (SELECT empid,resignation_date,reason,status,notice_period,reporting_to,created_date,hr_desired_notice_period,relieving_date from hrms.employee_exit WHERE empid=#{empid}) c on(b.empid=c.empid)
+	  inner join (select * from  hrms.designation_mst) d on (b.id = d.id)
+	   inner join (select * from  hrms.request_status_mst) e on (e.id = c.status)
+ </select>  
+ <select id="getexitreportemployees" resultType="Selfservices">
+		select  distinct concat(first_name,middle_name,last_name) as employeename,a.empid ,d.designation_name,c.resignation_date,c.reason,c.status,
+ c.notice_period,c.reporting_to,c.created_date,c.hr_desired_notice_period,c.relieving_date,e.name  from
+      
+      (select * from hrms.employee_personal_details) a    
+        inner join (select * from  hrms.employee_employment_details) b on (b.empid = a.empid)
+        inner join (select * from hrms.employee_exit) c on(c.empid=b.empid)
+	  left join (select * from  hrms.designation_mst) d on (b.id = d.id)
+	   left join (select * from  hrms.request_status_mst) e on (e.id = c.status)
+
+	</select> 
+	
+	    <select id="getHelpDeskTrackerDetails" resultType="map">
+select distinct a.request_id,a.empid,a.request_categoryid,a.request_typeid,a.description,a.assigned_to,a.request_status,a.createddate,a.closed_date,b.name as categoryname,
+c.name as requestname,d.name as requeststatus
+
+ from
+
+(select * from  hrms.helpdesk_requests)a left join
+(select id,name,status from hrms.helpdesk_categories)b on b.id=a.request_categoryid left join
+(select id,name,helpdesk_categoryid,status  from hrms.helpdesk_request_types)c on c.id=a.request_typeid
+left join
+(select id,name from hrms.helpdesk_requests_status)d on d.id=a.request_status
+
+	</select> 
+	
+	<select id="getByIdviews" resultType="Selfservices"> 
+	  select a.request_id as request_id,b.name as name,a.description as description,d.name as request_statusname,c.name as request_typename from
+      (SELECT request_id,request_categoryid,request_typeid,description,request_status from hrms.helpdesk_requests) a inner join (select * from hrms.helpdesk_categories) b on (a.request_categoryid = b.id)
+	 inner join (select * from hrms.helpdesk_request_types) c on (c.id = a.request_typeid) inner join (select * from hrms.helpdesk_requests_status) d on (d.id = a.request_status)
+ WHERE a.request_id= #{p.request_id} and a.description=#{p.description} ;
+ </select> 
+	</mapper>                          

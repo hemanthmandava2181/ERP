@@ -1,0 +1,240 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/finance/taxaccount.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+    <div id="taxaccountId" data-ng-controller="taxaccountController">
+
+
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Create Tax Account</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Admin Control</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Finance Admin</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Create Tax Account</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+
+                                                            <div class="col-sm-6 col-md-5 col-xl-5 col-lg-5 col-xs-6">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Tax Nature&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary" 
+                                                                      data-ng-model = "data.object.account_nature">
+				   				<option value = "1">Expenditure</option>
+				   				<option value = "2">Income</option>
+				   				<option value = "3">Assets</option>
+				   				<option value = "4">Liability</option>				   				
+				   			</select> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-1 col-xl-1 col-lg-1 col-xs-12">
+                                                                <label>&nbsp;</label>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-5 col-xl-5 col-lg-5 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Tax Group &nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary" data-ng-model = "data.object.tax_groupid">
+				   				<option data-ng-repeat="group in groups" value="{{group.id}}">{{group.tax_group}}</option>
+				   			</select> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-5 col-xl-5 col-lg-5 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Tax Account &nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary"data-ng-model = "data.object.gl_accountid">
+				   				<option data-ng-repeat="account in accounts" value="{{account.id}}">{{account.account_name}}</option>
+				   			</select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-1 col-xl-1 col-lg-1 col-xs-12">
+                                                                <label>&nbsp;</label>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-5 col-xl-5 col-lg-5 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Account Type&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary"  data-ng-model = "data.object.account_type">
+				   				<option value = "1">DEBIT</option>
+				   				<option value = "2">CREDIT</option>
+				   			</select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12 text-center mt-1">
+                                                                <button class="btn btn-grd-success ver-grd" data-ng-click = "createtaxaccount(data.object);">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h4>Tax Accounts List</h4>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Tax Nature</th>
+                                                            <th>Group Name</th>
+                                                            <th>Tax Name</th>
+                                                            <th>Account Type</th>
+                                                            <th>Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                       <tr data-ng-repeat="taxaccount in userdetails">
+									<td>{{$index+1}}</td> 
+									<td>{{taxaccount.id}}</td>  
+									<td>{{taxaccount.accountnature_name}}</td>
+									<td>{{taxaccount.tax_group_name}}</td>   
+									<td>{{taxaccount.account_name}}</td>
+									<td>{{taxaccount.accounttype_name}}</td>
+									<td >{{taxaccount.status}}</td>
+                                                            <td><button type="button" class="  float-xl-none" data-toggle="modal" data-target="#large-Modal"data-ng-click = "gettaxaccountdata(taxaccount.id);" >Update</button></td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Update</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                           <span aria-hidden="true">&times;</span>
+                                                          </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5>Tax Account</h5>
+                                                        <h4>&nbsp;</h4>
+                                                        <div class="row">
+
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Tax Nature&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary" 
+                                                                      data-ng-model = "data.object.account_nature">
+										   				<option value = "1">Expenditure</option>
+										   				<option value = "2">Income</option>
+										   				<option value = "3">Assets</option>
+										   				<option value = "4">Liability</option>				   				
+										   			</select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Tax Group &nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary" 
+                                                                     data-ng-model = "data.object.tax_groupid">
+				   										<option data-ng-repeat="group in groups" value="{{group.id}}">{{group.tax_group}}</option>
+				   									</select>  
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12 mt-1">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Tax Account &nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary" 
+                                                                      data-ng-model = "data.object.gl_accountid">
+										   				<option data-ng-repeat="account in accounts" value="{{account.id}}">{{account.account_name}}</option>
+										   			</select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+
+
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Account Type&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary" 
+                                                                       										   			 data-ng-model = "data.object.account_type">
+										   				<option value = "1">DEBIT</option>
+										   				<option value = "2">CREDIT</option>
+										   			</select> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Status&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                    <select class="form-control form-control-primary" 
+                                                                   data-ng-model = "data.object.status">
+											   			<option value = "true">Active</option>
+											   			<option value = "false">In-Active</option>
+											   		</select> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-success alert-success-msg m-b-8" data-ng-click = "updatetaxaccount(data.object);">Update</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                 </div>
+
+
+   
+    <script src="erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+    <script>
+		jQuery(document).ready(function() { 
+			angular.bootstrap(jQuery("#taxaccountId"), [ 'taxaccount' ]);
+		});
+	</script>
+    

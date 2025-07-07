@@ -1,0 +1,350 @@
+
+<script
+	src="/erp/files/assets/js/erp-scripts/operationAdmin/scheme.js"></script>
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+<div id="schemeId" data-ng-controller="schemeController">
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Create Scheme</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                      <a href="#!">Operation Admin Control</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!"></a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Create Scheme</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4 class="card-title">Create Scheme</h4>
+                                                <div class="card">
+                                                    <div class="card-header">
+
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+
+
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                Financial Year
+                                                                <select name="select" class="form-control" data-ng-model="data.object.financial_year">
+															    <option>--Select Year--</option>
+															    <option data-ng-repeat="year in years" value="{{year.yearid}}">{{year.years}}</option>
+															    </select>
+															                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                SDEI Group
+                                                                <select name="select" class="form-control" data-ng-model="data.object.sdei_groupnumber">
+																		    <option>--Select--</option>
+																		    <option data-ng-repeat="sdeigroup in sdeigroups" value="{{sdeigroup.sdei_groupnumber}}">{{sdeigroup.sdei_groupname}}</option>
+																		</select>
+																		                                                            </div>
+                                                              <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                Scheme Name
+                                                                <input type="text" class="form-control" data-ng-model="data.object.scheme_name" placeholder="Enter Scheme Name">
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                Scheme Type
+                                                                <select name="select" class="form-control" data-ng-model="data.object.scheme_type">
+    <option>--Select --</option>
+    <option >State</option>
+    <option >Central</option>
+</select>
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                CAPEX Budget Value
+                                                                <input type="text" class="form-control" data-ng-model="data.object.capex_budgetvalue" placeholder="Enter CAPEX Budget Value">
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                OPEX Budget Value
+                                                                <input type="text" class="form-control" data-ng-model="data.object.opex_budgetvalue" placeholder="Enter  OPEX Budget Value">
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                From Date
+                                                                <input type="date" class="form-control" data-ng-model="data.object.from_date">
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                To Date
+                                                                <input type="date" class="form-control" data-ng-model="data.object.to_date">
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                Primary Responsibility
+                                                                <select name="select" class="form-control" data-ng-model="data.object.primary_responsibility">
+																    <option>--Select --</option>
+																    <option data-ng-repeat="primary in primarys"
+																            value="{{primary.empid}}">{{primary.first_name}}</option> 
+																</select>
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                Secondary Responsibility
+                                                                <select name="select" class="form-control" data-ng-model="data.object.secondary_responsibility">
+																						    <option>--Select--</option>
+																						    <option data-ng-repeat="secondary in secondarys"
+																						            value="{{secondary.empid}}">{{secondary.first_name}}</option> 
+																						</select>
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                Head Count
+                                                                <input type="text" class="form-control" data-ng-model="data.object.headcount" placeholder="Head Count">
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                Physical OutCome
+                                                                <input type="text" class="form-control" data-ng-model="data.object.physical_outcome" placeholder="Physical OutCome">
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                Description
+                                                                <textarea class="form-control" data-ng-model="data.object.description" placeholder="Enter Description"></textarea>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                         <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                        <button class="btn btn-primary" data-ng-click="registration(data.object);" >Submit</button>
+                                    </div>
+                                    
+                                   
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h4>Scheme List</h4>
+                                            <div class="card">
+
+                                                <div class="card-header"></div>
+                                                <div class="card-body">
+                                                    <div class="dt-responsive table-responsive">
+                                                        <table class="table table-hover table-bordered" id="simpletable">
+                                                            <thead class="btn-grd-primary">
+                                                                <tr>
+                                                                    <th>S.No</th>
+
+                                                                    <th>Financial Year
+                                                                    </th>
+                                                                    <th>SDEI Group</th>
+                                                                    <th>Scheme Id
+                                                                    </th>
+                                                                    <th>Scheme Name
+                                                                    </th>
+                                                                    <th>Scheme Type</th>
+                                                                    <th>CAPEX Budget Value
+                                                                    </th>
+                                                                    <th>OPEX Budget Value
+                                                                    </th>
+                                                                    <th>From Date</th>
+                                                                    <th>To Date</th>
+                                                                    <th>Primary Responsibility
+                                                                    </th>
+                                                                    <th>Secondary Responsibility
+                                                                    </th>
+                                                                    <th>Description</th>
+                                                                    <th>Head Count</th>
+                                                                    <th>Physical Outcome
+                                                                    </th>
+                                                                    <th>Documents</th>
+                                                                    <th>Status</th>
+                                                                    <th>Action</th>
+                                                                    <th>Update/Delete</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr data-ng-repeat="userdata in filteredResult =(userdetails | filter:search)">
+                                                                    <td>{{userdata.S.No}}</td>
+
+                                                                    <td>{{userdata.financial_year}}</td>
+                                                                    <td>{{userdata.sdei_groupnumber}}</td>
+                                                                    <td>{{userdata.scheme_id}}</td>
+                                                                    <td>{{userdata.scheme_name}}</td>
+                                                                    <td>{{userdata.scheme_type}}</td>
+                                                                    <td>{{userdata.capex_budgetvalue}}</td>
+                                                                    <td>{{userdata.opex_budgetvalue}}</td>
+                                                                    <td>{{userdata.from_date }}</td>
+                                                                    <td>{{userdata.to_date}}</td>
+                                                                    <td>{{userdata.primary_responsibiity}}</td>
+                                                                    <td>{{userdata.secondary_responsibility}}</td>
+                                                                    <td>{{userdata.description}}</td>
+                                                                    <td>{{userdata.headcount}}</td>
+                                                                    <td>{{userdata.physical_outcome}}</td>
+                                                                    <td>{{userdata.documents}}</td>
+                                                                    <td>{{userdata.status}}</td>
+                                                                    <td>{{userdata.action}}</td>
+                                                                    <td>
+                                                                        <button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal" data-ng-click="getById(userdata.financial_year)"><i class="ti-pencil-alt text-primary"></i></button></td>
+
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Update</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            Financial Year
+                                                                            <select name="select" class="form-control" data-ng-model="data.object.financial_year">
+    <option>--Select Year--</option>
+    <option data-ng-repeat="year in years" value="{{year.yearid}}">{{year.years}}</option>
+    </select>
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            SDEI Group
+                                                                            <select name="select" class="form-control" data-ng-model="data.object.sdei_groupnumber">
+    <option>--Select--</option>
+    <option data-ng-repeat="sdeigroup in sdeigroups" value="{{sdeigroup.sdei_groupnumber}}">{{sdeigroup.sdei_groupname}}</option>
+</select>
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            Scheme Name
+                                                                            <input type="text" class="form-control" data-ng-model="data.object.scheme_name" placeholder="Enter Scheme Name">
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            Scheme Type
+                                                                            <select name="select" class="form-control" data-ng-model="data.object.scheme_type">
+    <option>--Select --</option>
+    <option >State</option>
+    <option >Central</option>
+</select>
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            CAPEX Budget Value
+                                                                            <input type="text" class="form-control" data-ng-model="data.object.capex_budgetvalue" placeholder="Enter CAPEX Budget Value">
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            OPEX Budget Value
+                                                                            <input type="text" class="form-control" data-ng-model="data.object.opex_budgetvalue" placeholder="Enter  OPEX Budget Value">
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            From Date
+                                                                            <input type="date" class="form-control" data-ng-model="data.object.from_date">
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            To Date
+                                                                            <input type="date" class="form-control" data-ng-model="data.object.to_date">
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            Primary Responsibility
+                                                                            <select name="select" class="form-control" data-ng-model="data.object.primary_responsibiity">
+    <option>--Select --</option>
+    <option data-ng-repeat="primary in primarys"
+            value="{{primary.empid}}">{{primary.first_name}}</option> 
+</select>
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            Secondary Responsibility
+                                                                            <select name="select" class="form-control" data-ng-model="data.object.secondary_responsibility">
+    <option>--Select--</option>
+    <option data-ng-repeat="secondary in secondarys"
+            value="{{secondary.empid}}">{{secondary.first_name}}</option> 
+</select>
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            Head Count
+                                                                            <input type="text" class="form-control" data-ng-model="data.object.headcount" placeholder="Head Count">
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            Physical OutCome
+                                                                            <input type="text" class="form-control" data-ng-model="data.object.physical_outcome" placeholder="Physical OutCome">
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                            Description
+                                                                            <textarea class="form-control" data-ng-model="data.object.description" placeholder="Enter Description"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                                                        <button type="button" class="btn btn-primary waves-effect waves-light" data-ng-click="updateData(data.object)" >Submit</button>
+                                                                    </div>
+                                                                    <!--  Modal End -->
+
+                                                                    <!--  Modal End -->
+
+
+
+
+
+
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                               </div>
+                           
+   
+    <!-- Data Table -->
+    <script src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+   
+    <script>
+        $('#simpletable1').DataTable();
+    </script>
+<script>
+		jQuery(document).ready(function() {                               
+			
+  			 angular.bootstrap(jQuery("#schemeId"), [ 'schemeModule' ]); 
+	    });
+		
+	</script>

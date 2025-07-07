@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Procurement">
+
+		<!-- ############BOOK INVOICE############# -->
+
+
+		<select id = "getServices" resultType="map">
+		
+		select distinct serviceid,servicename from procurements.service_mst order by servicename;
+		
+		</select>
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+	<!-- creating work order -->
+	<select id="getYearwo" resultType="java.lang.Integer">
+		SELECT (cast(cast(EXTRACT(year
+		FROM CURRENT_TIMESTAMP) as varchar) as
+		integer)) as year;
+	</select>
+	<select id="getYearmou" resultType="java.lang.Integer">
+		SELECT
+		(cast(cast(EXTRACT(year FROM CURRENT_TIMESTAMP) as varchar) as
+		integer)) as year;
+	</select>
+	<select id="getMonthwo" resultType="java.lang.Integer">
+		SELECT
+		(cast(cast(EXTRACT(month FROM CURRENT_TIMESTAMP) as varchar) as
+		integer)) as month;
+	</select>
+	<select id="getMonthmou" resultType="java.lang.Integer">
+		SELECT
+		(cast(cast(EXTRACT(month FROM CURRENT_TIMESTAMP) as varchar) as
+		integer)) as month;
+	</select>
+	<select id="getCountwo" resultType="java.lang.Integer">
+		SELECT count(id)+1 as count
+		from finance.workorder;
+	</select>
+	<select id="getVendors" resultType="Procurement">
+		SELECT vendorid,vendorname from procurements.vendors_mst order by vendorname;
+	</select>
+
+	<select id="getSectors" resultType="Procurement">
+		SELECT id,sector_name from
+		procurements.createsector_mst;
+	</select>
+
+	<select id="getCountmou" resultType="java.lang.Integer">
+		SELECT count(id)+1 as count
+		from procurements.mou;
+	</select>
+	<insert id="createworkorder" parameterType="map">
+		insert into
+		finance.workorder
+		(project,program,vendor,amount,workorder_date,type,financial_year,scheme,from_date,
+		to_date,budjet_type,inclusive_tax,document_path,workorder_id)
+		values(#{p.project},#{p.program_id},#{p.vendor},#{p.worate},#{p.workorder_date},#{p.paybasemodel},#{p.financial_year},#{p.scheme_id},
+		#{p.from_date},#{p.to_date},#{p.budjet_type},#{p.inclusive_tax},#{p.image},
+		('WO-PMK/PMK/PMK' || '' || '' ||
+		#{month} || '' || #{year} ||lpad(CAST(
+		#{id} AS
+		character varying
+		),3,'0')));
+	</insert>
+	<insert id="createmou" parameterType="map">
+		insert into
+		procurements.mou
+		(project,program,vendor,amount,mou_date,type,financial_year,scheme,from_date,
+		to_date,reference,service,subject,budget_type,inclusive_tax,description,document_to_submit,document_path,mou_id)
+		values(#{p.project},#{p.program},#{p.vendor},#{p.amount},#{p.mou_date},#{p.type},#{p.financial_year},#{p.scheme},
+		#{p.from_date},#{p.to_date},#{p.reference},#{p.service},#{p.subject},#{p.budget_type},#{p.inclusive_tax},#{p.description},
+		#{p.document_to_submit},#{p.image},
+		('MOU-PMK/PMK/PMK' || '' || '' ||
+		#{month} || '' || #{year} ||lpad(CAST( #{id} AS
+		character varying
+		),3,'0')));    
+	</insert>
+	<!-- <insert id="createmou2" parameterType="map"> insert into procurements.mou_districts(district,mou) 
+		values(#{p.district},#{p.id}); </insert> -->
+	<!-- Mou list -->
+	<select id="getmoulist" resultType="Procurement">
+		select
+		project,program,vendor,amount,mou_date,type,financial_year,scheme,from_date,to_date,reference,service,
+		subject,budget_type,inclusive_tax,description,document_to_submit,document_path,mou_id,date_created
+		from procurements.mou;
+	</select>
+	<!-- Workoreder list -->
+	<select id="getwolist" resultType="Procurement">
+		select
+		project,program,vendor,amount,workorder_date,type,financial_year,scheme,from_date,to_date,reference,service,
+		subject,budjet_type,inclusive_tax,description,document_to_submit,document_path,workorder_id,date_created
+		from finance.workorder;
+	</select>
+
+	<insert id="Insertwoitems" parameterType="map">
+		insert into
+		procurements.workorder_model_details
+		(model,invoice_details,location,workorder,description,
+		duration_hours,duration_days,trainer_type,no_of_trainers,no_of_candidates,no_of_batches,model_rate,
+		amount,duration_days_check,duration_hours_check,no_of_trainers_check,no_of_candidates_check,
+		model_rate_check,no_of_batches_check,name)
+		values(#{p.model},#{p.invoice_details},#{p.location},#{p.workorder},#{p.description},#{p.duration_hours},#{p.duration_days},
+		#{p.trainer_type},#{p.no_of_trainers},#{p.no_of_candidates},#{p.no_of_batches},#{p.model_rate},#{p.amount},#{p.duration_days_check},#{p.duration_hours_check},#{p.no_of_trainers_check},
+		#{p.no_of_candidates_check},#{p.model_rate_check},#{p.no_of_batches_check},#{p.name});
+	</insert>
+	<insert id="Insertwoadditions" parameterType="map">
+		insert into
+		procurements.workorder_additions_map
+		(status,description,workorder,workorder_additions,value,rate,
+		per_days,trainer_trainee,per_days_check,trainer_trainee_check)
+		values(#{p.status},#{p.description},#{p.workorder},#{p.workorder_additions},#{p.value},#{p.rate},#{p.per_days},#{p.trainer_trainee},
+		#{p.per_days_check},#{p.trainer_trainee_check});
+	</insert>
+
+
+	<select id="getDetailsofProgram" resultType="Procurement">
+		SELECT
+		id,program_name,project_id,from_date,to_date,description,program_id,segment_id,sector_id,scheme_id
+		from procurements.createprogram_mst WHERE id= #{program} ;
+	</select>
+
+	<select id="getProjectWise" resultType="Procurement"
+		parameterType="map">
+		select id,project,count(workorder_id) as count from finance.workorder
+		where
+		id=#{project} group by workorder_id,id,project
+		<!-- select id,project_name,project_id from procurements.createproject_mst 
+			where id=#{id} -->
+	</select>
+	<select id="getWorkOrderWise" resultType="Procurement"
+		parameterType="map">
+		select
+		id,project,workorder_id,scheme,vendor,program,workorder_date,amount,
+		existing_work_order_id from finance.workorder where
+		id=#{project}
+	</select>
+
+	<select id="getDetailsofWorkorder" resultType="Procurement">
+		SELECT
+		workorder_id,vendor,created_by,incharge,id
+		from finance.workorder WHERE
+		id= #{id} ;
+	</select>
+
+
+
+	<!-- &#%################################################################ -->
+
+
+
+	<!-- getting gl account names in drop down -->
+	<select id="getTaxaccountnames" resultType="map">
+		SELECT distinct id,
+		account_name as account_name from
+		finance.gl_group_accounts_mst group
+		by id;  
+	</select>
+	<!-- getting programs drop down -->
+	<select id="getPrograms" parameterType="map" resultType="map">  
+		SELECT distinct programid,programname from procurements.programs_mst order by programid;
+	</select>
+	<!-- getting vendors drop down -->
+	<select id="getvendors" parameterType="map" resultType="map">
+		SELECT distinct vendor_id,vendorname as vendorname from procurements.vendors_mst order by vendor_id;
+	</select>
+	<!-- getting work order drop down -->
+	
+	<select id="getworkorders"  resultType="map">
+		SELECT distinct id,workorder_id as workorder_id from finance.workorder order by id;
+	</select>
+	<!-- getting work order details in book invoice -->
+	    
+	<select id="getWorkorderDetails" resultType="map" >  
+	
+
+select workorder_id,empcreated_by,vendorname,empincharge from (select id,workorder_id,created_by,vendor,incharge  from finance.workorder) as a inner join
+(select id,name as vendorname from procurements.vendors)as b on (a.vendor=b.id) inner join
+(select empid,concat(first_name,middle_name,last_name) as empincharge,concat(first_name,middle_name,last_name) as empcreated_by from hrms.employee_personal_details) as c on (c.empid=a.incharge) 
+where a.workorder_id=#{p.workorder_id}	
+	
+	</select>     
+	<!-- book invoice for others type -->
+	<select id="getYearAP" resultType="java.lang.Integer">
+		SELECT (cast(cast(EXTRACT(year           
+		FROM CURRENT_TIMESTAMP) as varchar) as   
+		integer)) as year;
+	</select>
+  
+	<select id="getMonthAP" resultType="java.lang.Integer">
+		SELECT
+		(cast(cast(EXTRACT(month FROM CURRENT_TIMESTAMP) as varchar) as
+		integer)) as month;
+	</select>
+
+	<select id="getDateAP" resultType="java.lang.Integer">
+		SELECT (cast(cast(EXTRACT(day
+		FROM CURRENT_TIMESTAMP) as varchar) as
+		integer)) as date;
+	</select>
+
+	<select id="getCountAP" resultType="java.lang.Integer">
+		SELECT count(id)+1 as count
+		from finance.accounts_payable;
+	</select>
+
+	<insert id="bookothersinvoice" parameterType="map">
+		insert into finance.accounts_payable
+		(voucher_id,order_type,program,service,vendor,cost_center,amount,gl_account,hsn_code,
+		invoice_number,invoice_date,due_date,description,documnet_path,attachment,location,item_description)
+		values(('AP-' || '' || #{date} || '' || #{month} || '' || #{year} ||''
+		|| lpad(CAST( #{id} AS character varying ),4,'0')),
+		#{p.order_type},#{p.program},#{p.service},#{p.vendor},#{p.cost_center},#{p.amount},#{p.gl_account},#{p.hsn_code},
+		#{p.invoice_number},#{p.invoice_date},#{p.due_date},#{p.description},#{p.image},#{p.image1},#{p.location_id},
+		#{p.item_description});
+	</insert>
+
+
+
+
+
+
+	<select id="getpurchaseorders"  resultType="map">
+		SELECT distinct id,purchaseorder_id  from procurements.purchase_order order by id;
+	</select>
+
+
+  
+
+
+
+  
+  
+
+
+
+
+			<!--########################## Report in order Management#####################-->
+			
+			
+	<select id = "getPODetails" resultType="map">
+	
+select wopurchaseorder_id,wovendor_id,woincharge from (select purchaseorder_id as wopurchaseorder_id,vendor_id,incharge  from procurements.purchase_order) as a inner join
+(select id,name as wovendor_id from procurements.vendors)as b on a.vendor_id=b.id inner join
+(select empid,concat(first_name,middle_name,last_name) as woincharge,concat(first_name,middle_name,last_name) as wocreated_by from hrms.employee_personal_details) as c on c.empid=a.incharge
+where a.purchaseorder_id=#{p.purchaseorder_id}
+	</select>
+
+
+
+	<update id="addordermanagement"  parameterType="map">    
+		
+		UPDATE finance.workorder SET incharge = #{p.incharge} WHERE incharge = #{p.empincharge};
+    
+	</update>  
+  
+
+
+
+
+
+
+
+</mapper>    
+       

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="VendorserviceData">
+      
+
+
+	<insert id="Insert" parameterType="map">
+				insert into operations.vender_service_nature_mst(service_name) values (#{p.service_name});
+		       
+		</insert>
+		<!--<insert id="Insert" parameterType="map">
+				insert into procurements.vender_service_nature_mst(service_name,status) values (#{p.service_name},#{p.status});
+		       
+		</insert>-->
+		
+		  <select id="count" resultType="java.lang.Integer">     
+		SELECT count(id)+1 as count from procurements.vender_service_nature_mst;
+	  </select>   
+	
+		<update id="updateDetails"  parameterType="map">    
+		update procurements.vender_service_nature_mst SET
+		service_id = concat('NS',lpad(CAST( #{count} AS character varying ),2,'0')) 
+		WHERE service_name=#{p.service_name};    
+	</update>         
+		  
+		
+		    
+		<select id="getAll" resultType="map">
+		SELECT distinct id,service_name,status from operations.vender_service_nature_mst order by id
+	</select>  
+	   
+	    <select id="getNameWiseData" resultType="VendorService">
+		SELECT service_name,status from procurements.vender_service_nature_mst where  service_name=#{service_name};
+	  </select>
+	     
+	
+	<select id="getById" resultType="vendorservice">       
+		SELECT service_name,status,service_id  from procurements.vender_service_nature_mst
+		WHERE service_id = #{service_id} ;     
+	  </select>     
+	  
+	  <update id="updateData"  parameterType="map">
+		update procurements.vender_service_nature_mst SET service_name = #{p.service_name},status = CAST(#{p.status} as boolean) WHERE service_id=#{p.service_id};                        
+	</update> 
+	 
+	</mapper>                          

@@ -1,0 +1,269 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/EmployeeSelfServices/viewpayslip.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="ViewPayslipDIV" data-ng-controller="viewpayslipController">
+
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>View Payslip</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!">HRMS <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Employee Self
+									Services</a></li>
+							<li class="breadcrumb-item"><a href="#!">View Payslip </a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- BreadCrumb End -->
+
+
+	<div class="row" style="padding-left: 20%;">
+
+		<div class="card">
+
+			<div class=" card-body ">
+				<div class="row " style="background-color: rgb(240, 235, 235)">
+					<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12 ">
+						<img src="/erp/files/assets/images/user.png " width="100px ">
+					</div>
+					<div
+						class="col-sm-12 col-md-9 col-xl-9 col-lg-9 col-xs-12 media-body ">
+						<h6>{{viewdetails.object.name}}</h6>
+						<small>Empid</small> : {{viewdetails.object.empid}} <br> <small>Joining
+							Date</small>: {{viewdetails.object.joining_date}} <br>
+
+					</div>
+				</div>
+				<br>
+				<div class="dt-responsive table-responsive ">
+					<table class="table table-hover table-bordered " id="simpletable ">
+						<thead>
+							<tr>
+								<td>Bank Ac.No: {{viewdetails.object.bank_acno}}</td>
+							</tr>
+							<tr>
+								<td>Bank Name : {{viewdetails.object.bank_name}}</td>
+							</tr>
+							<tr>
+								<td>PF No.: {{viewdetails.object.uan_no}}</td>
+							</tr>
+							<!-- <tr>
+                                                                        <td>Days In Month</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Effective Work Days</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>LOP Days</td>
+                                                                    </tr> -->
+
+						</thead>
+					</table>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<div class="card ">
+
+
+		<div class="card-body">
+			<div class="row">
+
+				<div class="col-md-10">
+					<div class="panel panel-default">
+						<div
+							style="background: #fff !important; color: #000; border-bottom: 1px #000 solid !important;"
+							class="panel-heading">
+							<div class="row">
+								<div class="row" style="width: 100%;">
+									<div class="col-sm-12 col-xl-2 m-b-30">
+										Financial year <label class="col-sm-3 col-form-label"></label>
+									</div>
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										<select class="form-control"
+											data-ng-model="data.object.financial_year">
+											<option></option>
+											<option data-ng-repeat="financialyear in financialyears"
+												value="{{financialyear.id}}">{{financialyear.name}}</option>
+										</select>
+									</div>
+									<div class="col-sm-12 col-xl-2 m-b-30">
+										Month <label class="col-sm-3 col-form-label"></label>
+									</div>
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										<select class="form-control"
+											data-ng-model="data.object.payroll_month">
+											<option></option>
+											<option data-ng-repeat="month in months" value="{{month.id}}">{{month.name}}</option>
+										</select>
+									</div>
+									<div class="col-md-1">
+										<button class="btn btn-primary" value="submit" type="submit"
+											data-ng-click="getViewpayslipearings(data.object);getViewpayslipdeduction(data.object);">Get</button>
+									</div>
+									<div class="col-md-1 pull-right">
+										<button class="btn btn-warning pull-right" type="button">
+											<span tabindex="4" class="glyphicon glyphicon-download-alt"></span>
+											Download
+										</button>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6" style="padding-left: 10%;">
+										<table class="table table-bordered" border="1">
+											<thead>
+												<tr>
+													<th class="text-center">Earnings</th>
+
+													<th style="text-align: right !important;"
+														class="text-right">Rs.</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr data-ng-repeat="data1 in employeepayslipearing">
+													<td class="text-left">{{data1.name}}</td>
+													<td class="text-right">{{data1.amount}}</td>
+
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<th class="text-left">Total Earnings(<i
+														class="fa fa-inr"></i>)
+													</th>
+
+													<th align="right"><b>{{ employeepayslipearing |
+															sumOfValue:'amount'}}</b></th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+
+
+									<div class="col-md-6" style="padding-left: 30%;">
+										<table class="table table-bordered" border="1">
+											<thead>
+												<tr>
+													<th class="text-center">Deductions</th>
+
+													<th style="text-align: right !important;"
+														class="text-right">Rs.</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr data-ng-repeat="data in employeepayslipdeduction">
+													<td class="text-left">{{data.name}}</td>
+													<td class="text-right">{{data.amount}}</td>
+
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<th class="text-left">Total Deductions(<i
+														class="fa fa-inr"></i>)
+													</th>
+
+													<th align="right"><b>{{ employeepayslipdeduction |
+															sumOfValue:'amount'}}</b></th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+
+
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<strong> Net Pay :{{ employeepayslipearing |
+										sumOfValue:'amount' | Integer -  employeepayslipdeduction |
+										sumOfValue:'amount'| Integer}} <br> <span
+										style="color: #449d44 !important;"> (Twenty Thousand
+											Three Hundred Fifty Rupees Only.)</span>
+									</strong>
+								</div>
+
+
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+
+</div>
+
+
+
+
+
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+
+<script>
+	$('simpletable1').DataTable();
+	$('simpletable2').DataTable();
+	$('simpletable3').DataTable();
+</script>
+
+
+<script>
+	jQuery(document).ready(function() {
+
+		angular.bootstrap(jQuery("#ViewPayslipDIV"), [ 'viewpayslipModule' ]);
+
+	});
+</script>
+

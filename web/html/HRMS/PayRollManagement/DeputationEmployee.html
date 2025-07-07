@@ -1,0 +1,216 @@
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/css/jquery.mCustomScrollbar.css">
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/general/DeputationModule.js"></script>
+
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-block caption-breadcrumb">
+				<div class="breadcrumb-header">
+					<h5>Deputation Employee</h5>
+				</div>
+				<div class="page-header-breadcrumb">
+					<ul class="breadcrumb-title">
+						<li class="breadcrumb-item"><a href="#!"> <i
+								class="ti-home"></i>
+						</a></li>
+						<li class="breadcrumb-item"><a href="#!">HRMS</a></li>
+						<li class="breadcrumb-item"><a href="#!">PayRoll
+								Management</a></li>
+						<li class="breadcrumb-item"><a href="#!">Deputation
+								Employee</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- BreadCrumb End -->
+<div class="row" id="Deputationid"
+	data-ng-controller="DeputationController">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header bg-primary">
+				<h6 class="card-title">Generate PayRoll For Deputation</h6>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-xl-2 m-b-30">
+						Employee <label class="col-sm-3 col-form-label"></label>
+					</div>
+					<div class="col-sm-12 col-xl-4 m-b-30">
+						<select class="form-control"
+							data-ng-model="data.object.empid">
+							<option data-ng-repeat="name in names" value="{{name.empid}}">{{name.employeename}}</option>
+						</select>
+					</div>
+					<div class="col-sm-12 col-xl-2 m-b-30">
+						Month <label class="col-sm-3 col-form-label"></label>
+					</div>
+					<div class="col-sm-12 col-xl-4 m-b-30">
+						<select class="form-control" data-ng-model="data.object.monthid">
+							<option data-ng-repeat="month in months" value="{{month.id}}">{{month.name}}</option>
+						</select>
+					</div>
+
+					<div class="col-sm-12 col-xl-2 m-b-30">
+						Financial Year <label class="col-sm-3 col-form-label"></label>
+					</div>
+					<div class="col-sm-12 col-xl-4 m-b-30">
+						<select class="form-control"
+							data-ng-model="data.object.financial_year">
+							<option>--Select Year--</option>
+							<option data-ng-repeat="year in years" value="{{year.id}}">{{year.name}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+		<button class="btn btn-success">GET</button>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">
+						Employee PaySlip Heads
+						<!-- <button class="btn btn-grd-danger float-right" value="Add Row"
+						onclick="addRow('dataTable');"
+					 id="addTableRow">
+						<i class="ti-plus "></i>
+					</button> -->
+
+						<button type="button" class="btn btn-grd-danger float-right"
+							value="Add Row" id="addTableRow" onclick="addRow('dataTable');">
+							<i class="ti-plus "></i>
+						</button>
+					</h6>
+				</div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive" id="dataDiv">
+						<table class="table table-hover table-bordered" id="dataTable">
+							<thead class="btn-primary">
+								<TR>
+									<th>Payslip Head</th>
+									<th>Amount</th>
+									<th>Action</th>
+								</TR>
+							</thead>
+
+							<TR id="tr1" name="rname">
+								<div ng-repeat="data in payslip">
+								<td><select id="id1" class="id1"
+									data-ng-model="data.payslip_heads">
+										<option>select</option>
+										<option data-ng-repeat="name in pnames" value="{{name.id}}">{{name.pname}}</option>
+								</select> </td>
+
+								<TD><INPUT type="text" class="id2" name="txt" value="amount"
+								data-ng-model="data.amount" id="id2" /></TD>
+								<TD>
+								 <button type="button" class="btn btn-danger" id="removebtn"  value="Delete Row"
+									onclick="deleteRow('dataTable');"
+									style="margin-left: 30%">Delete</button>    
+
+								</TD>
+								</div>
+							</TR>
+
+						</table>
+					</div>
+				</div>
+				<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+					<button class="btn btn-success" id="removebtn"
+						data-ng-click="savedetails(data.object);">Process</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Data Table -->
+<script
+	src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+<script src="/erp/files/assets/js/pcoded.min.js"></script>
+<script src="/erp/files/assets/js/vertical/vertical-layout.min.js"></script>
+<script src="/erp/files/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/erp/files/assets/js/sweetalert.js"></script>
+
+<script src="/erp/files/assets/js/script.js"></script>
+<script>
+function addRow(dataTable) {
+
+	var table = document.getElementById(dataTable);
+
+	var rowCount = table.rows.length;
+	
+	var row = table.insertRow(rowCount);
+
+	var colCount = table.rows[1].cells.length;
+
+	for (var i =0; i < colCount; i++) {
+
+		var newcell = row.insertCell(i);
+
+		newcell.innerHTML = table.rows[1].cells[i].innerHTML;
+		
+		//alert(newcell.childNodes);
+		 switch (newcell.childNodes[0].type) {
+		case "text":
+			newcell.childNodes[0].value = "";
+			break;
+		case "checkbox":
+			newcell.childNodes[0].checked = false;
+			break; 
+		 case "select-one":
+			newcell.childNodes[0].selectedIndex = 0;
+			break; 
+			
+		 
+		} 
+
+
+}
+}  
+
+
+
+</script>
+<script>
+	$('#simpletable1').DataTable();
+
+
+	jQuery(document).ready(function() {
+		$("#add").hide();
+		$("#tablerow").hide();
+		angular.bootstrap(jQuery("#Deputationid"), [ 'DeputationModule' ]);
+	});
+</script>

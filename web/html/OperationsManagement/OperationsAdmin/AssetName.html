@@ -1,0 +1,683 @@
+   <script src="/erp/files/assets/js/erp-scripts/operationAdmin/asset.js"></script>
+    <script src="/erp/files/assets/js/erp-scripts/operationAdmin/assetgroup.js"></script>
+     <script src="/erp/files/assets/js/erp-scripts/operationAdmin/assetname.js"></script>
+      <script src="/erp/files/assets/js/erp-scripts/operationAdmin/assetnature.js"></script>
+    <!-- Data Tables -->         
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+
+    <div class="theme-loader">
+        <div class="loader-track">        
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+   
+
+
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>My Team Time Sheets</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">           
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">HRMS</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Manager self Services</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">My Team Time Sheets</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+
+                                        <!-- <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12 mt-1">
+                                                                <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">Contract Renewal List</button>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12 mt-1">
+                                                                <button class="btn btn-success btn-block" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">HOD Renewal</button>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12 mt-1">
+                                                                <button class="btn btn-warning btn-block" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3">Pending Renewals in HEAD HR</button>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12 mt-1">
+                                                                <button class="btn btn-danger btn-block" type="button" data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4">Exit List</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="row collapse show" id="collapseExample1">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title"></h6>Asset Name
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div id="accordion" role="tablist" aria-multiselectable="true">
+                                                            <div class="accordion-panel">
+                                                                <div class="accordion-heading" role="tab" id="headingOne">
+                                                                    <h3 class="card-title accordion-title btn-grd-success">
+                                                                        <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                            Create Heads Under Non/Current Assets
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+                                                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                       <div class="accordion-content accordion-desc">
+                                                                          <div class="row">
+                                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                                Asset Class Name
+                                                                                <input type="text" class="form-control" placeholder="Enter Asset Class Name">
+                                                                            </div>
+
+
+                                                                            <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                                Asset Heads
+                                                                                <select name="select" class="form-control">
+                                                                                         <option value="opt1">--Select--</option>
+                                                                                         <option value="opt2">Type 2</option>
+                                                                                     </select>
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                                                        <button class="btn btn-primary">Submit</button>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <h4>Asset Class List</h4>
+                                                                            <div class="panel panel-primary" style="border-color: #4099ff;">
+                                                                                <div class="panel-body p-6">
+                                                                                    <div class="dt-responsive table-responsive mt-3 mb-3">
+                                                                                        <table id="ceoApproval" class="table table-hover table-bordered nowrap">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>S.No</th>
+                                                                                                    <th>Asset Class Name</th>
+                                                                                                    <th> Asset Heads </th>
+                                                                                                    <th> Status</th>
+                                                                                                    <th>Update</th>
+
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td>1</td>
+                                                                                                    <td>sdfgh</td>
+                                                                                                    <td>interviewers</td>
+                                                                                                    <td>Active</td>
+
+
+                                                                                                    <td><button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal"><i class="ti-pencil-alt text-primary"></i></button></td>
+
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="accordion-panel">
+                                                            <div class="accordion-heading" role="tab" id="headingTwo">
+                                                                <h3 class="card-title accordion-title btn-grd-warning">
+                                                                    <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                      Create   Asset Nature
+                                                                        </a>
+                                                                </h3>
+                                                            </div>
+                                                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                                <div class="accordion-content accordion-desc">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Asset Nature Name
+                                                                            <input class="form-control" type="text" placeholder="Enter Asset Nature Name" />
+                                                                        </div>
+
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Asset Class
+                                                                            <select name="select" class="form-control">
+                                                                                        <option value="opt1">--Select--</option>
+                                                                                        <option value="opt2">Type 2</option>
+                                                                                    </select>
+                                                                        </div>
+
+                                                                        <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                                                            <button class="btn btn-primary">Submit</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <h4>Asset Nature List</h4>
+                                                                            <div class="panel panel-primary" style="border-color: #4099ff;">
+                                                                                <div class="panel-body p-6">
+                                                                                    <div class="dt-responsive table-responsive mt-3 mb-3">
+                                                                                        <table id="ceoApproval" class="table table-hover table-bordered nowrap">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>S.No</th>
+                                                                                                    <th>Asset Nature Name</th>
+
+                                                                                                    <th>Assset Class Name</th>
+
+                                                                                                    <th> Status </th>
+                                                                                                    <th> Update</th>
+
+
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td>1</td>
+
+                                                                                                    <td>Asset Nature name</td>
+                                                                                                    <td>asset class name</td>
+
+                                                                                                    <td>Active</td>
+
+
+                                                                                                    <td><button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal1"><i class="ti-pencil-alt text-primary"></i></button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="accordion-panel">
+                                                            <div class="accordion-heading" role="tab" id="headingThree">
+                                                                <h3 class="card-title accordion-title btn-grd-primary">
+                                                                    <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                        Create Asset Name
+                                                                        </a>
+                                                                </h3>
+                                                            </div>
+                                                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                                <div class="accordion-content accordion-desc">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Asset Name
+                                                                            <input class="form-control" type="text" placeholder="Enter Asset Name" />
+                                                                        </div>
+
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">GL Account Group Name
+                                                                            <select name="select" class="form-control">
+                                                                                        <option value="opt1">--Select--</option>
+                                                                                        <option value="opt2">Type 2</option>
+                                                                                    </select>
+                                                                        </div>
+
+                                                                        <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                                                            <button class="btn btn-primary">Submit</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="panel panel-primary" style="border-color: #4099ff;">
+                                                                                <div class="panel-body p-6">
+                                                                                    <div class="dt-responsive table-responsive mt-3 mb-3">
+                                                                                        <table id="ceoApproval" class="table table-hover table-bordered nowrap">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>S.No</th>
+                                                                                                    <th>Asset Name</th>
+                                                                                                    <th>GL Group Account Name </th>
+                                                                                                    <th>GL Group Name</th>
+                                                                                                    <th>Asset Class</th>
+                                                                                                    <th>Asset Nature</th>
+                                                                                                    <th> Status </th>
+                                                                                                    <th> Update </th>
+
+
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td>1</td>
+                                                                                                    <td>assetname</td>
+                                                                                                    <td>glgroupaccountname</td>
+                                                                                                    <td>glgroupname</td>
+                                                                                                    <td>assetclass</td>
+                                                                                                    <td>Assetnature</td>
+                                                                                                    <td>Status</td>
+
+                                                                                                    <td><button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal2"><i class="ti-pencil-alt text-primary"></i></button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="accordion-panel">
+                                                            <div class="accordion-heading" role="tab" id="headingFour">
+                                                                <h3 class="card-title accordion-title btn-grd-danger">
+                                                                    <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseTwo">
+                                                                       Create  Asset Group
+                                                                        </a>
+                                                                </h3>
+                                                            </div>
+                                                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                                                <div class="accordion-content accordion-desc">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Group Name
+                                                                            <input class="form-control" type="text" placeholder="Enter Group Name" />
+                                                                        </div>
+
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Asset Nature
+                                                                            <select name="select" class="form-control">
+                                                                                        <option value="opt1">--Select--</option>
+                                                                                        <option value="opt2">Type 2</option>
+                                                                                    </select>
+                                                                        </div>
+
+                                                                        <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                                                            <button class="btn btn-primary">Submit</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="panel panel-primary" style="border-color: #4099ff;">
+                                                                                <div class="panel-body p-6">
+                                                                                    <div class="dt-responsive table-responsive mt-3 mb-3">
+                                                                                        <table id="ceoApproval" class="table table-hover table-bordered nowrap">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>S.No</th>
+                                                                                                    <th>Group Name</th>
+                                                                                                    <th>Asset Nature</th>
+                                                                                                    <th>Assset Class</th>
+                                                                                                    <th>Created By</th>
+                                                                                                    <th> Status </th>
+                                                                                                    <th> Update</th>
+
+
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td>1</td>
+                                                                                                    <td>group name</td>
+                                                                                                    <td>Asset Nature</td>
+                                                                                                    <td>asset class</td>
+                                                                                                    <td>created by</td>
+                                                                                                    <td>Active</td>
+
+
+                                                                                                    <td><button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal3"><i class="ti-pencil-alt text-primary"></i></button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Modal For View Documents -->
+
+                                                    <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Update</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="card">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+
+
+
+
+                                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                                            Asset Class Name
+                                                                                            <input type="text" class="form-control" placeholder="Enter Asset Class Name">
+                                                                                        </div>
+
+
+                                                                                        <div class="col-sm-12 col-xl-4 m-b-30">
+                                                                                            Asset Heads
+                                                                                            <select name="select" class="form-control">
+                                                                                                         <option value="opt1">--Select--</option>
+                                                                                                         <option value="opt2">Type 2</option>
+                                                                                                     </select>
+                                                                                        </div>
+
+
+
+
+
+                                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Status
+                                                                                            <select name="select" class="form-control">
+                                                                                                <option value="opt1">--Select--</option>
+                                                                                                <option value="opt2">Active</option>
+                                                                                                <option value="opt2">In-Active</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                                        <button type="button" class="btn btn-primary waves-effect waves-light ">Submit</button>
+                                                                                    </div>
+
+
+                                                                                    <!--  Modal End -->
+
+
+
+
+
+
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal fade" id="large-Modal1" tabindex="-1" role="dialog">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Update</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="card">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+
+                                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Asset Nature Name
+                                                                                            <input class="form-control" type="text" placeholder="Enter Asset Nature Name" />
+                                                                                        </div>
+
+                                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Asset Class
+                                                                                            <select name="select" class="form-control">
+                                                                                                        <option value="opt1">--Select--</option>
+                                                                                                        <option value="opt2">Type 2</option>
+                                                                                                    </select>
+                                                                                        </div>
+                                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Status
+                                                                                            <select name="select" class="form-control">
+                                                                                                <option value="opt1">--Select--</option>
+                                                                                                <option value="opt2">Active</option>
+                                                                                                <option value="opt2">In-Active</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                                        <button type="button" class="btn btn-primary waves-effect waves-light ">Submit</button>
+                                                                                    </div>
+
+
+                                                                                    <!--  Modal End -->
+
+
+
+
+
+
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal fade" id="large-Modal2" tabindex="-1" role="dialog">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Update</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="card">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+
+                                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Asset Name
+                                                                                            <input class="form-control" type="text" placeholder="Enter Asset Name" />
+                                                                                        </div>
+
+                                                                                        <div class="col-sm-12 col-xl-4 m-b-30">GL Account Group Name
+                                                                                            <select name="select" class="form-control">
+                                                                                                        <option value="opt1">--Select--</option>
+                                                                                                        <option value="opt2">Type 2</option>
+                                                                                                    </select>
+                                                                                        </div>
+
+
+
+
+
+                                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Status
+                                                                                            <select name="select" class="form-control">
+                                                                                                <option value="opt1">--Select--</option>
+                                                                                                <option value="opt2">Active</option>
+                                                                                                <option value="opt2">In-Active</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                                        <button type="button" class="btn btn-primary waves-effect waves-light ">Submit</button>
+                                                                                    </div>
+
+
+                                                                                    <!--  Modal End -->
+
+
+
+
+
+
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal fade" id="large-Modal3" tabindex="-1" role="dialog">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Update</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="card">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+
+                                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Group Name
+                                                                                            <input class="form-control" type="text" placeholder="Enter Group Name" />
+                                                                                        </div>
+
+                                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Asset Nature
+                                                                                            <select name="select" class="form-control">
+                                                                                                        <option value="opt1">--Select--</option>
+                                                                                                        <option value="opt2">Type 2</option>
+                                                                                                    </select>
+                                                                                        </div>
+
+
+
+
+
+
+                                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Status
+                                                                                            <select name="select" class="form-control">
+                                                                                                <option value="opt1">--Select--</option>
+                                                                                                <option value="opt2">Active</option>
+                                                                                                <option value="opt2">In-Active</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                                        <button type="button" class="btn btn-primary waves-effect waves-light ">Submit</button>
+                                                                                    </div>
+
+
+                                                                                    <!--  Modal End -->
+
+
+
+
+
+
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>     
+                                    
+
+
+    <script src="/erp/files/bower_components/jquery/js/jquery.min.js"></script>
+    <script src="/erp/files/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
+    <script src="/erp/files/bower_components/popper.js/js/popper.min.js"></script>
+    <script src="/erp/files/bower_components/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/erp/files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+
+    <script src="/erp/files/bower_components/modernizr/js/modernizr.js"></script>
+    <script src="/erp/files/bower_components/modernizr/js/css-scrollbars.js"></script>
+
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+    <script src="/erp/files/assets/js/pcoded.min.js"></script>
+    <script src="/erp/files/assets/js/vertical/vertical-layout.min.js"></script>
+    <script src="/erp/files/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script src="/erp/files/assets/js/sweetalert.js"></script>
+   
+    <script src="/erp/files/assets/js/script.js"></script>
+
+    <script>
+        $(document).ready(function() {    
+            $('#hrApproval').DataTable();
+            $('#ceoApproval').DataTable();
+            // $('#ceoRejected').DataTable();
+            // $('#hodRenewal').DataTable();
+            // $('#pendingRenewal').DataTable();
+            // $('#hrApproval_1').DataTable();
+            // $('#ceoApproval_1').DataTable();
+        });
+    </script>
+
+</body>
+
+</html>

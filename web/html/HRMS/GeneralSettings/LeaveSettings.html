@@ -1,0 +1,405 @@
+
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/general/leaveSettingsModule.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp//erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+
+<div id="leaveid" data-ng-controller="leaveSettingsController">
+
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Leave type</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">controlpanel</a></li>
+							<li class="breadcrumb-item"><a href="#!">Leave Settings</a>
+							</li>
+							<li class="breadcrumb-item"><a href="#!">Leave type</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+
+     
+	<div class="col-sm-12 col-md-6 col-xl-12 col-lg-6 col-xs-12  col-mt-1">
+
+		<div class="card">
+			<div class="card-header bg-primary">
+				<h6 class="card-title">New Leave type</h6>
+			</div>    
+			<div class="card-body">
+				<div class="row">
+
+					<div class="col-sm-12 col-lg-12">
+						<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1">Leave
+								Type</span> <input id="msg" type="text" class="form-control" name="msg"
+								placeholder="Enter Leave Type" data-ng-model="data1.object.type;"data-ng-blur="saveLeaveType(data1.object);" />
+
+						</div>
+						<hr>
+
+						<div class="dt-responsive table-responsive">
+							<table id="simpletable"
+								class="table table-hover table-bordered nowrap">
+								<thead>
+									<tr>
+										<th>Select</th>
+										<th>Rule</th>
+										<th>Value(Days)</th>
+									</tr>
+								</thead>
+								<tbody>    
+									<tr data-ng-repeat="rule in leaveRules">
+
+										<td class="form-group col-md-3"><input type="checkbox"
+											id="selectRecord" data-ng-model="leaveSettingArr[rule.id]"></td>
+										<td class="form-group col-md-3">{{rule.leave_rule}}</td>
+										<td class="form-group col-md-3"><div
+												data-ng-if="rule['id'] == '1'">
+												<input type="radio" id="genderm" name="gender" value="male"
+													data-ng-model="data.object.gender"> Male <input
+													type="radio" id="genderf" name="gender" value="female"
+													data-ng-model="data.object.gender"> Female
+											</div>
+											<div data-ng-if="rule['id'] == '2'">
+												<input type="checkbox" id=status
+													data-ng-model="data.object.statusvalue">&nbsp;True
+											</div>
+											<div data-ng-if="rule['id'] == '3'">  
+												<input type="number" class="form-control"
+													data-ng-model="data.object.useddays">
+											</div>
+											<div data-ng-if="rule['id'] == '4'">
+												<input type="number" class="form-control"
+													data-ng-model="data.object.maxdays">
+											</div>
+											<div data-ng-if="rule['id'] == '5'">
+												<input type="number" class="form-control"
+													data-ng-model="data.object.maxleaves">
+											</div>
+											<div data-ng-if="rule['id'] == '6'">
+												<input type="number" class="form-control"
+													data-ng-model="data.object.workdays">
+											</div>
+											<div data-ng-if="rule['id'] == '7'">
+												<input type="number" class="form-control"
+													data-ng-model="data.object.applicabledays">
+											</div></td>
+
+									</tr>
+									<!-- <tr>
+										<td><input type="checkbox"></td>
+										<td>Personal leave</td>
+										<td><input type="checkbox">True</td>
+
+									</tr>
+									<tr>  
+										<td><input type="checkbox"></td>
+										<td>Leave should be used in days(Compensatory off)</td>
+										<td><input type="text"></td>
+
+									</tr>
+									<tr>
+										<td><input type="checkbox"></td>
+										<td>Max applicable days in a year</td>
+										<td><input type="text"></td>
+
+									</tr>
+									<tr>
+										<td><input type="checkbox"></td>
+										<td>Maximum leave at a stretch</td>
+										<td><input type="text"></td>
+
+									</tr>
+									<tr>
+										<td><input type="checkbox"></td>
+										<td>Should worked with the Company for a minimum days</td>
+										<td><input type="text"></td>
+
+									</tr>
+									<tr>
+										<td><input type="checkbox"></td>
+										<td>Max applicable days for this leave type</td>
+										<td><input type="text"></td>
+
+									</tr> -->
+
+
+								</tbody>
+							</table>
+							<div class="row">
+								<div class="col-md-12 mt-4 text-center">
+									<button class="btn btn-grd-primary hor-grd text-center"
+										data-ng-click="savedata(data.object,leaveSettingArr,leaveRules);">Submit</button>
+								</div>
+							</div>
+
+
+
+
+
+
+
+						</div>
+
+
+
+
+
+
+
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-6 col-xl-12 col-lg-6 col-xs-12  col-mt-1">
+
+		<div class="card">
+			<div class="card-header bg-primary">
+				<h6 class="card-title">Leave Type List</h6>
+			</div>
+			<div class="card-body">
+				<div class="row">
+
+					<div class="col-sm-12 col-lg-12">
+
+						<hr>
+
+						<div class="dt-responsive table-responsive">
+							<table id="smtable"
+								class="table table-hover table-bordered nowrap">
+								<thead>
+									<tr>
+										<th>Leave type</th>
+										<th>Status</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="leave in leaveTypes">
+										<td class="hidden">{{leave.leave_type}}</td>
+										<td class="form-group col-md-3">{{leave.type}}</td>
+										<td class="form-group col-md-3"><font color="green">{{leave.status}}</font></td>
+										<td class="form-group col-md-3"><button type="button"
+												id="Register" class="btn btn-primary" data-toggle="modal"
+												data-target="#myModal"
+												data-ng-click="getByLeave(leave.leave_type)">Update</button>
+									</tr>
+
+
+
+								</tbody>
+							</table>
+						</div>
+
+
+
+
+
+
+
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" style="margin-left: 370px;">Update
+						Leave Type</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class="container">
+						<form>
+							<br> <label class="control-label col-md-3">Leave
+								Type</label>
+							<div class="col-md-3">
+								<input type="text" class="form-control"
+									data-ng-model="data3.object.type" />
+							</div>
+							<label class="control-label col-md-3">Status</label>
+							<div class="col-md-3">
+								<select data-ng-model="data3.object.status">
+									<option value="true">Active</option>
+									<option value="false">Inactive</option>
+
+								</select>
+							</div>
+							<br>
+							<br>
+							<br>
+							<br>
+							<table  id="simpletable"
+								class="table table-hover table-bordered nowrap">
+								<tr>
+									<th style="width: 10px;">Select</th>
+									<th>Rule</th>
+									<th id="tablevalue">value(Days)</th>
+								</tr>
+								<tr data-ng-repeat="rule in leaveRules">
+
+									<td class="form-group col-md-3 tdDisb"><input
+										type="checkbox" class="selectRecord1" checked="checked"
+										data-ng-model="leaveSettingArr1[rule.id]"
+										data-ng-checked="allSelected()"></td>
+									<td class="form-group col-md-3 tdDisb">{{rule.leave_rule}}</td>
+									<td class="form-group col-md-3 tdDisb"><div
+											data-ng-if="rule['id'] == '1'">
+											<input type="radio" name="gender" value="male"
+												data-ng-model="leave.gender"> Male <input
+												type="radio" id="genderf" name="gender" value="female"
+												data-ng-model="data3.object.gender"> Female
+										</div>
+										<div data-ng-if="rule['id'] == '2'">
+											<input type="checkbox" value="true"
+												data-ng-model="data3.object.statusvalue"
+												data-ng-checked="allSelected()">&nbsp;True
+										</div>
+										<div data-ng-if="rule['id'] == '3'">
+											<input type="number" class="form-control"
+												data-ng-model="data3.object.useddays">
+										</div>
+										<div data-ng-if="rule['id'] == '4'">
+											<input type="number" class="form-control"
+												data-ng-model="data3.object.maxdays">
+										</div>
+										<div data-ng-if="rule['id'] == '5'">
+											<input type="number" class="form-control"
+												data-ng-model="data3.object.maxleaves">
+										</div>
+										<div data-ng-if="rule['id'] == '6'">
+											<input type="number" class="form-control"
+												data-ng-model="data3.object.workdays">
+										</div>
+										<div data-ng-if="rule['id'] == '7'">
+											<input type="number" class="form-control"
+												data-ng-model="data3.object.applicabledays">
+										</div></td>
+
+								</tr>
+
+
+
+
+
+							</table>
+							<br>
+							<br>
+							<br>
+							<div>
+								<button type="button" id="sub" value="Register"
+									class="btn btn-md btn-primary"
+									data-ng-click="update(data3.object,leaveSettingArr1,leaveRules);"
+									style="margin-left: 50%">Update</button>
+							</div>
+					</div>
+					</form>
+				</div>
+			</div>
+
+
+
+		</div>
+
+	</div>
+
+</div>
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+<script src="/erp/files/assets/js/pcoded.min.js"></script>
+<script src="/erp/files/assets/js/vertical/vertical-layout.min.js"></script>
+<script src="/erp/files/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script src="/erp/files/assets/js/sweetalert.js"></script>
+
+<script src="/erp/files/assets/js/script.js"></script>
+<script>
+        $(function () {
+            $("#selectRecord").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#status").removeAttr("disabled");
+                    $("#status").focus();
+                } else {
+                    $("#status").attr("disabled", "disabled");
+                }
+            });
+        });
+
+        	jQuery(document).ready(function() {
+        	/* 
+        		 $('#selectRecord').click(function() {
+        			if ($('#status').is(':disabled')) {
+        		    	$('#status').removeAttr('disabled');
+        		    } else {
+        		    	$('#status').attr('disabled', 'disabled');
+        		    }
+        		});	 
+        		 */
+        		angular.bootstrap(jQuery("#leaveid"), [ 'leaveSettingsModule' ]);
+        	});
+        	/* $(document).ready(function() {
+        		  $('.selectRecord').click(function() {
+        		     var obj = $(this);
+        		     if (obj.prop("checked")) {
+        		      obj.parent().parent().children('.tdDisb').children(".elDisb").prop("disabled", false);
+        		     } else {
+        		      obj.parent().parent().children('.tdDisb').children(".elDisb").prop("disabled", true);
+        		     }
+        		     });
+        		  }); */
+        	jQuery("#register").click(function() {
+        		$("#leavetype").hide();
+        		$("#myModal").show();
+        	});
+        	jQuery(document).on('click', "#editData", function() {
+        		$("#update").show();
+        		$("#add").hide();
+        	});
+            $('#smtable').DataTable();
+        </script>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Sdei">
+	<insert id="Insert" parameterType="map">
+		insert into	procurements.sdeigroup_mst(sdei_groupnumber,sdei_groupname,description,status)
+		values(#{p.sdei_groupnumber},#{p.sdei_groupname},#{p.description},#{p.status});
+	</insert>
+	<select id="getAll" resultType="Sdei">
+		SELECT sdei_groupnumber,sdei_groupname,description,created_date,status from procurements.sdeigroup_mst;
+	</select> 
+	<delete id="deleteData" parameterType="java.lang.String">
+		delete from procurements.sdeigroup_mst where sdei_groupnumber=#{p.sdei_groupnumber};    
+	</delete>   
+	<update id="updateData"  parameterType="map">
+		update procurements.sdeigroup_mst SET sdei_groupname=#{p.sdei_groupname},status=#{p.status},created_date=#{p.created_date},description=#{p.description} WHERE sdei_groupnumber=#{p.sdei_groupnumber};
+	</update>
+	<select id="getById" resultType="Sdei">   
+		SELECT sdei_groupname,description,created_date,status  from procurements.sdeigroup_mst WHERE sdei_groupnumber=#{p.sdei_groupnumber};
+	</select>
+</mapper>

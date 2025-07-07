@@ -1,0 +1,442 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/MoUManagement/createmou.js"></script>
+
+<!-- Form Select -->
+
+<link rel="stylesheet"
+	href="/erp/files/bower_components/select2/css/select2.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/bootstrap-multiselect/css/bootstrap-multiselect.css" />
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/multiselect/css/multi-select.css" />
+
+<!-- Data Table -->
+<link rel="stylesheet" type="text/css"     
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+   
+
+
+<!-- Data Table -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+
+
+<div id="createmouId" data-ng-controller="createmouController">
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-block caption-breadcrumb">
+				<div class="breadcrumb-header">
+					<h5>Create MoU</h5>
+				</div>
+				<div class="page-header-breadcrumb">
+					<ul class="breadcrumb-title">
+						<li class="breadcrumb-item"><a href="#!"> <i
+								class="ti-home"></i>
+						</a></li>
+						<li class="breadcrumb-item"><a href="#!">Procurements</a></li>
+						<li class="breadcrumb-item"><a href="#!">MOU Management</a></li>
+						<li class="breadcrumb-item"><a href="#!">Create MOU</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- BreadCrumb End -->
+<!-- <h5>Create Work Order</h5>
+                                        <h8>&nbsp;</h8> -->
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header bg-primary">
+				<h6 class="card-title">Create MOU</h6>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">MOU Type&nbsp;&nbsp;<span
+								class="text-danger">*</span> :
+							</label> <select class="form-control form-control-primary"
+								placeholder="select Type" data-ng-model="data.object.MoUtype" id="type">
+								<option value="select">select</option>
+								<option value="1">Existing</option>
+								<option value="2">New</option>
+							</select>
+						</div>
+					</div>
+					<!-- <div data-ng-show="data.object.mou_type != 0">
+                                                                <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="font-weight-bold">MOU No.&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                        <input type="text" class="form-control form-control-primary" placeholder="Enter MOU Number">
+                                                                    </div>
+                                                                </div>
+                                                            </div> -->
+					<!-- <div data-ng-show="data.object.mou_type == 0">
+                                                                <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                    <div class="form-group">
+                                                                           <label class="font-weight-bold">MOU No.&nbsp;&nbsp;<span class="text-danger">*</span> :</label>
+                                                                        <input type="text" class="form-control form-control-primary" placeholder="Enter MOU Number" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div> -->
+
+					<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12" data-ng-show="data.object.MoUtype != '2'">
+						<div class="form-group"> 
+							<label class="font-weight-bold">MOU No.&nbsp;&nbsp;<span
+								class="text-danger">*</span> :
+							</label> <input type="text" class="form-control form-control-primary"
+								placeholder="Enter MOU Number"data-ng-model="data.object.existing_mou_id" >
+						</div>
+					</div>
+					  
+					
+					<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12" data-ng-show="data.object.MoUtype == '2'">
+						<div class="form-group">
+							<label class="font-weight-bold">MOU No.&nbsp;&nbsp;<span
+								class="text-danger">*</span> :
+							</label> <input type="text" class="form-control form-control-primary"
+								placeholder="Enter MOU Number"data-ng-model="data.object.existing_mou_id" disabled>
+						</div>
+					</div>
+
+					<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+						<div class="form-group">
+							<label>Program&nbsp;<b style="color: red">*</b></label> <select
+								class="form-control" data-ng-model="data.object.program_id"
+								data-ng-change="getMoUIds(data.object);">
+								<option>--Select Programs--</option>
+								<option data-ng-repeat="program in programs"
+									value="{{program.program_id}}">{{program.program_name}}</option>
+							</select>
+						</div> 
+					</div>
+					
+					<div class="form-group col-md-3"
+							data-ng-show="data.object.program_id != null">
+							<label>program name&nbsp;<b style="color: red">*</b></label> <input
+								type="text" class="form-control"
+								data-ng-model="data.object.program_id" disabled>
+					</div>
+					
+					<div class="form-group col-md-3"
+							data-ng-show="data.object.program_id != null">
+							<label>scheme Id&nbsp;<b style="color: red">*</b></label> <input
+								type="text" class="form-control"
+								data-ng-model="data.object.scheme_id" disabled>
+					</div>
+					<div class="form-group col-md-3"
+							data-ng-show="data.object.program_id != null">
+							<label>Project Id&nbsp;<b style="color: red">*</b></label> <input
+								type="text" class="form-control"
+								data-ng-model="data.object.project_id" disabled>
+					</div>
+				
+					<div class="form-group col-md-3"
+							data-ng-show="data.object.program_id != null">
+							<label>From Date&nbsp;<b style="color: red">*</b></label> <input
+								type="text" class="form-control" data-ng-model="data.object.from_date" disabled>
+					</div>
+						
+						           
+					<div class="form-group col-md-3"
+							data-ng-show="data.object.program_id != null">
+							<label>End Date&nbsp;<b style="color: red">*</b></label> <input
+								type="text" class="form-control" data-ng-model="data.object.to_date" disabled>
+					</div>
+					
+					
+					<div class="form-group col-md-3"
+							data-ng-show="data.object.program_id != null">
+							<label>Description&nbsp;<b style="color: red">*</b></label> <input
+								type="text" class="form-control" 
+								data-ng-model="data.object.description" disabled>
+					</div>
+					
+					
+					
+				</div>
+			</div>
+		</div>
+		<!-- <h6>&nbsp;</h6>
+                                                <div class="row">
+                                                    <div class="col-sm-12 mt-1 text-center">
+                                                        <button class="btn btn-grd-success hor-grd">Submit</button>
+                                                    </div>
+                                                </div> -->
+	</div>
+</div>
+<!-- <h8>&nbsp;</h8> -->
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header bg-primary">
+				<h6 class="card-title">Program Details</h6>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">Financial Year</label>
+							<select class="form-control" name="select"data-ng-model="data.object.financial_year">
+							<option>--Select--</option>
+							<option data-ng-repeat="year in years" value="{{year.yearid}}">{{year.years}}</option> 
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">Service</label>
+							<select class="form-control" name="select" data-ng-model="data.object.service">
+								<option data-ng-repeat="service in services" value="{{service.serviceid}}">{{service.servicename}}</option>    
+							</select>  
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">MoU Date</label> <input
+								type="date" class="form-control form-control-primary"
+								placeholder="enter date" min={{data.object.from_date}}
+							max ={{data.object.to_date}} data-ng-model="data.object.mou_date">
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">Vendor Name</label>  
+							<select class="form-control" name="select" data-ng-model="data.object.vendor">
+								<option data-ng-repeat = "vendor in vendors" value = "{{vendor.vendor_id}}">{{vendor.vendorname}}</option>    
+							</select> 
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">Start Date</label> <input
+								type="date" class="form-control form-control-primary"
+								placeholder="Select Start Date" min={{data.object.from_date}}
+							max ={{data.object.to_date}} data-ng-model = "data.object.from_date" >
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">End Date</label> <input
+								type="date" class="form-control form-control-primary"
+								placeholder="Select End Date" min={{data.object.from_date}}
+							max ={{data.object.to_date}} data-ng-model = "data.object.to_date" >
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">Budget Type</label>
+							<select class="form-control" name="select" data-ng-model="data.object.budget_type">
+								<option value = "1">CAPEX</option>
+								<option value = "2">OPEX</option>    
+							</select> 
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">Sector</label> 
+							<select
+								class="js-example-basic-multiple col-sm-12 form-control form-control-primary"
+								multiple="multiple" data-ng-model="data.object.sector">
+								 <option data-ng-repeat="sector in sectors" value="{{sector.id}}">{{sector.sector_name}}</option> 
+							</select>  
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 col-md-7 col-xl-7 col-lg-7 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">District</label> <select
+								class="js-example-basic-multiple col-sm-12 form-control form-control-primary"
+								multiple="multiple" name="district" data-ng-model="data.object.district">
+								  <option data-ng-repeat = "district in districts" value = "{{district.id}}">{{district.name}}</option>  
+							</select> 
+								
+							
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+						<div class="form-group">
+							<label>&nbsp;</label>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">Total Amount</label> <input type="text"
+								class="form-control form-control-primary" placeholder="0" data-ng-model="data.object.amount"
+								disabled>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 col-md-5 col-xl-5 col-lg-5 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">Subject</label>
+							<textarea class="form-control form-control-primary"
+								placeholder="Subject" data-ng-model="data.object.subject"></textarea>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-1 col-xl-1 col-lg-1 col-xs-12">
+						<div class="form-group">
+							<label>&nbsp;</label>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-5 col-xl-5 col-lg-5 col-xs-12">
+						<div class="form-group">
+							<label class="font-weight-bold">Reference</label>
+							<textarea class="form-control form-control-primary"
+								placeholder="Reference" data-ng-model="data.object.reference"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header bg-primary">
+				<h6 class="card-title">Payment Base Type</h6>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+						<select class="form-control form-control-primary" data-ng-model = "data.object.model" id="basetype">
+							<option value="1">Custom Model</option>
+						</select>
+						
+					</div>
+				</div>
+				<h6>&nbsp;</h6>
+				<div class="row">
+					<div class="col-sm-12 mt-1 text-center">
+						<button class="btn btn-grd-success hor-grd">Add Items</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header bg-primary">
+				<h7 class="card-title">
+				<input type="checkbox"> Inclusive Tax</h7>
+			</div>
+			<div class="card-body"></div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card-header bg-primary">
+			<h6 class="card-title">MOU Additions</h6>
+		</div>
+		<div class="card-body">
+			<div class="dt-responsive table-responsive">
+				<table id="simpletable"
+					class="table table-striped table-bordered nowrap">
+					<thead>
+						<tr>
+							<th>S.No</th>
+							<th>Additions</th>
+							<th>Description</th>
+							<th>Rate</th>
+							<th>No.of Days</th>
+							<th>No.of Candidates/Consultants</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="data in filteredResult =(ondutydetails | filter:search)">   
+        <td>{{$index+1}}</td>
+		<td>{{data.start_date}}</td>  
+		<td>{{data.end_date}}</td>	 
+		<td>{{data.location}}</td>	 
+		<td>{{data.project}}</td>	 
+		<td>{{data.nature_of_assignment}}</td>	            
+		
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="col-sm-12 col-md-8 col-xl-8 col-lg-8 col-xs-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Upload Document</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xs-12">
+							<button class="btn btn-grd-primary hor-grd">Add
+								Documents</button>
+						</div>
+					</div>
+					<h5>&nbsp;</h5>
+					<div class="row">
+						<div class="col-sm-12 col-md-5 col-xl-5 col-lg-5 col-xs-12">
+							<input type="text" class="form-control form-control-primary"
+								placeholder="Document Name">
+						</div>
+						<div class="col-sm-12 col-md-5 col-xl-5 col-lg-5 col-xs-12">
+							<input type="file" class="form-control form-control-primary"
+								placeholder="Choose File">
+						</div>
+						<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<i class="ti-trash float-right"></i>
+						</div>
+					</div>
+				</div>
+			</div>      
+		</div>
+	</div>
+</div>
+<!-- <h3>&nbsp;</h3> -->
+<div class="row">
+	<div class="col-sm-12 mt-1 text-center">
+		<button class="btn btn-grd-success hor-grd" data-ng-click = "createMoU(data.object);">Submit</button>
+	</div>
+</div>
+</div>
+<script>                        
+		jQuery(document).ready(function() {         
+			
+			angular.bootstrap(jQuery("#createmouId"), [ 'createmou' ]);
+	    });
+		
+	</script>
+
+
+
+
+
+
+
+</script> 

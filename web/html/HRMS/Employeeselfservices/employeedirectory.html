@@ -1,0 +1,157 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/EmployeeSelfServices/directory.js"></script>
+
+
+
+<div id="DirectoryID" data-ng-controller="DirectoryController">
+
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Employee Directory</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Employee Self
+									Services</a></li>
+							<li class="breadcrumb-item"><a href="#!">Employee
+									Directory</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+	<div class="row">
+		<div class="col-sm-12 col-md-6 col-xs-12 col-lg-6 col-xl-6 mt-1">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Employees</h6>
+				</div>
+				<div class="card-body" style="overflow: auto;">
+					<div id="name-list" data-toggle="lists"
+						data-lists-values='["name"]' style="height: 50.8em;">
+
+						<div class="input-group">
+							<input class="form-control search" type="search"> <span
+								class="input-group-addon" id="basic-addon3"><i
+								class="ti-search"></i></span>
+						</div>
+
+						<ul class="basic-list list-icons-img list">
+							<li data-ng-repeat="x in directorydata"><img
+								src="files/assets/images/user.png"
+								class="img-fluid p-absolute d-block text-center"
+								style="width: 50px" alt=""> <span class="name"><h6>
+										<a data-ng-click="Getdata(x);">{{x.name}}></a>
+									</h6></span><br> <span class="name"><small>{{x.empid}}</small></span><br>
+								<span class="name"><small>{{x.designation_name}}</small></span><br>
+								<span class="name"><small>{{x.company_email}}</small></span></li>
+
+						</ul>
+
+
+
+
+
+
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div
+			class="col-sm-12 col-md-6 col-xs-12 col-lg-6 col-xl-6 mt-1 simple-cards users-card">
+			<div class="card user-card p-5">
+				<div class="card-header-img">
+					<img class="img-fluid img-radius"
+						src="files/assets/images/user.png" alt="card-img">
+					<h4>{{SingleData.name}}</h4>
+					<h5>
+						<a href="javascript:void(0)">{{SingleData.company_email}}</a>
+					</h5>
+				</div>
+				<table class="table table-bordered mt-3 text-left">
+					<tr>
+						<th>Mobile</th>
+						<td>{{SingleData.mobile}}</td>
+					</tr>
+					<tr>
+						<th>Department</th>
+						<td>{{SingleData.department_name}}</td>
+					</tr>
+					<tr>
+						<th>Designation</th>
+						<td>{{SingleData.designation_name}}</td>
+					</tr>
+
+					<tr>
+						<th>Grade</th>
+						<td>{{SingleData.grade_name}}</td>
+					</tr>
+					<tr>
+						<th>Cadre</th>
+						<td>{{SingleData.description}}</td>
+					</tr>
+					<tr>
+						<th>Reporting to</th>
+						<td><a href="javascript:void(0)" data-toggle="modal"
+							data-target="#default-Modal">{{SingleData.reporting_to}}</a></td>
+
+					</tr>
+				</table>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- Data Table -->
+<script
+	src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+
+<script>
+	jQuery(document).ready(function() {
+
+		angular.bootstrap(jQuery("#DirectoryID"), [ 'directoryModule' ]);
+	});
+</script>
+</body>
+
+</html>

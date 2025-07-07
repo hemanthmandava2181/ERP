@@ -1,0 +1,183 @@
+ <script
+	src="/erp/files/assets/js/erp-scripts/operationAdmin/assetnature.js"></script>
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+   <div id="assetnatureId" data-ng-controller="assetnatureController">
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Asset Nature</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Operation Admin Control</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!"></a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Create Asset Nature</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4 class="card-title">Asset Nature</h4>
+                                                <div class="card">
+                                                    <div class="card-header">
+
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Asset Nature Name<span class="text-danger">*</span> :</label>
+                                                                    <input class="form-control" type="text" placeholder="Enter Asset Nature Name" data-ng-model="data.object.name" />
+                                                                </div>
+                                                            </div>
+  
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">Asset Class<span class="text-danger">*</span> :</label>
+                                                                    <select name="select" class="form-control" data-ng-model="data.object.asset_class_name">
+                                                                        <option>--Select--</option>
+                                                                            <option data-ng-repeat="assetclass in assetclasses" value="{{assetclass.id}}">{{assetclass.name}}</option>	
+                                                                        </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>  
+                                <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                    <button class="btn btn-primary" data-ng-click="addassetnature(data.object);">Submit</button>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4>Asset Natures List</h4>   
+                                        <div class="card">
+                                            <div class="card-header"></div>
+                                            <div class="card-body">
+                                                <div class="dt-responsive table-responsive">
+                                                    <table class="table table-hover table-bordered" id="simpletable">
+                                                        <thead class="btn-grd-primary">
+                                                            <tr>
+                                                                <th>S.No</th>
+                                                                <th>Asset Nature Name</th>
+                                                                <th>Asset Class Name</th>
+                                                                <th> Status </th>
+                                                                <th> Update</th>  
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr data-ng-repeat="data in filteredResult =(assetnaturedetails | filter:search)">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{data.name}}</td>
+                                                                <td>{{data.asset_class_name}}</td>
+                                                                <td>{{data.status}}</td>
+                                                                <td><button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal1" data-ng-click="getByIdassetnature(data.asset_name)"><i class="ti-pencil-alt text-primary"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="large-Modal1" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Update</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+
+                                                                    <div class="col-sm-12 col-xl-4 m-b-30">Asset Nature Name
+                                                                        <input class="form-control" type="text" data-ng-model="data.object.name" placeholder="Enter Asset Nature Name" />
+                                                                    </div>
+
+                                                                    <div class="col-sm-12 col-xl-4 m-b-30">Asset Class
+                                                                        <select name="select" class="form-control" data-ng-model="data.object.asset_class">
+        <option>--Select--</option>
+            <option data-ng-repeat="assetclass in assetclasses" value="{{assetclass.id}}">{{assetclass.name}}</option>	
+        </select>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-xl-3 m-b-30">Status
+                                                                        <select name="select" class="form-control" data-ng-model="data.object.status">
+                                                                            <option value="opt1">--Select--</option>
+                                                                            <option value="opt2">Active</option>
+                                                                            <option value="opt2">In-Active</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-ng-click="updateDataassetnature(data.object);">Submit</button>
+                                                                </div>
+
+
+                                                                <!--  Modal End -->
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    <!-- Data Table -->
+    <script src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+   
+
+    <script>
+        $('#simpletable1').DataTable();
+    </script>
+<script>
+		jQuery(document).ready(function() {         
+			
+  			 angular.bootstrap(jQuery("#assetnatureId"), [ 'assetnatureModule' ]); 
+	    });
+		
+	</script>

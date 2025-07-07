@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Services">
+	<!--<select id="getAll" resultType="Services">
+		select concat(first_name,'',middle_name,'',last_name) AS name,email,mobile,empid from hrms.employee_personal_details where iscreated = 'no';
+	</select>-->
+	<select id="getAll" resultType="Services">
+		select concat(first_name,' ',middle_name,' ',last_name) AS name,email,mobile,empid from hrms.employee_personal_details;
+	</select> 
+	<!-- <select id="getRoles" resultType="College">
+		select distinct roleid AS   
+		roleid,rolename AS rolename from           
+		[roles_mst] where status=1 Order BY rolename;
+	</select>      -->
+	<insert id="add" parameterType="map" >
+	insert into hrms.data (name,email,mobile,roleid) values(#{p.name},#{p.email} ,#{p.mobile},#{p.roleid});
+	</insert>
+   <select id="getUserDetails1" parameterType="java.lang.String" resultType="Services">
+		select  ('HR' ||(Right (#{mobile},4))) pwd 
+	</select>
+	<select id="getUserDetails2" parameterType="java.lang.String" resultType="Services">
+		select ('EMP' ||(Right (#{mobile},4))) pwd 
+	</select> 
+	<select id="getUserDetails3" parameterType="java.lang.String" resultType="Services">
+		select  ('ADMIN' ||(Right (#{mobile},4))) pwd 
+	</select>
+	
+	<!--  <select id="getRole" parameterType="map" resultType="java.lang.Integer">
+		select count(*) from hrms.logins where userid like #{p.userId} AND roleid like 16;
+	</select> -->
+	
+	<select id="checkUser" parameterType="map" resultType="java.lang.Integer">
+		select count(*) from hrms.logins where username = #{p.username};          
+	</select>
+	<insert id="saveEmployee" parameterType="map">  
+		insert into hrms.logins(name,email,username,mobileno,password,roleid,employeeid)
+		values( #{p.name},#{p.email},#{p.username},#{p.mobile}, #{p.pwd},#{p.roleid},#{p.empid});
+	</insert>
+	<insert id="saveHR" parameterType="map">  
+		insert into hrms.logins(name,email,username,mobileno,password,roleid,employeeid)
+		values( #{p.name},#{p.email},#{p.username},#{p.mobile}, #{p.pwd},#{p.roleid},#{p.empid});
+	</insert>
+	<update id="update"  parameterType="map">    
+		update hrms.employee_personal_details  SET 
+		 iscreated = 'yes' WHERE empid = #{p.empid};   
+	</update> 
+	     
+	<!--  -->
+	<!-- <select resultType="Services" parameterType="map" id="getById"> 
+		select institutioncode from [user] where username like #{p.username} 
+		 </select> -->
+	      
+	  <!-- <select id="getDetails" parameterType="map" resultType="Services">
+		select  email,password from [user] where username like #{p.username}              
+	</select>   -->
+	<!-- <select id="getUserId" parameterType="map" resultType="java.lang.Integer">
+		
+		select id AS userId from [user] where username like #{p.username} ORDER BY logtime DESC;
+	</select> -->
+	<!-- <update id="assignRole"  parameterType="map">    
+		update [user] SET      
+		roleid = 16 ,userid = #{p.userId} WHERE id = #{p.userId};   
+	</update>  -->
+	 <!-- <insert id="assignRole" parameterType="map">                             
+		update INTO admin.user(userid, roleid) VALUES (#{p.userId}, 16);                      
+	</insert>  -->
+	   
+	<!-- <select id="getLogins" parameterType="java.lang.Integer" resultType="map">
+		select a.username, (b.institutionid+ '@'+ a.institutioncode) AS pwd from
+		(select id, username, institutioncode from [user] where institutioncode like #{institutioncode} and id in
+		(select distinct userid from [user] where roleid = 16)) a    
+		INNER JOIN
+		(select institutioncode, institutionid from [colleges_polytechnic]) b
+		on (a.institutioncode like b.institutioncode) ORDER BY a.username;
+	</select>   -->
+</mapper>

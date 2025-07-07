@@ -1,0 +1,71 @@
+
+<script
+	src="/erp/files/assets/js/erp-scripts/Assets/Fixedasset.js"></script>
+<div id="fixedassetId" data-ng-controller="FixedController">
+
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Fixed asset Consolidated</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Procurements</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Asset Management</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Fixed Asset Consolidated</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Asset Detail Report</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="col-sm-12 col-xl-3 col-sm-2">
+                                                            <label class="font-weight-bold">Financial Year<span class="text-danger">*</span></label>
+                                                            <select name="select" class="form-control form-control-default"
+						data-ng-model="data.object.yearid">
+						<option></option>
+						<option data-ng-repeat="year in years"
+							value="{{year.yearid}}">{{year.years}}</option>
+					</select>
+                                                        </div>
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                               
+
+
+   <script>         
+	jQuery(document).ready(function() {
+		angular.bootstrap(jQuery("#fixedassetId"), [ 'Fixedasset' ]);
+	});
+</script>	

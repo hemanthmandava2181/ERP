@@ -1,0 +1,320 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/financeadmin/taxmapping.js"></script>
+
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="taxmappingId" data-ng-controller="taxmappingController">
+
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Create Tax Mapping</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Finance Admin
+									Control</a></li>
+							<li class="breadcrumb-item"><a href="#!"></a></li>
+							<li class="breadcrumb-item"><a href="#!">Create Tax
+									Mapping</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<div class="row">
+		<div class="col-sm-12">
+			<h4 class="card-title">Create Tax Mapping</h4>
+			<div class="card">
+				<div class="card-header"></div>
+				<div class="card-body">
+					<div class="row">
+
+
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Service Type <select name="select" class="form-control"
+								data-ng-model="data.object.serviceid">
+								<option data-ng-repeat="service in services"
+									value="{{service.id}}">{{service.service_name}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Vendor Type <select name="select" class="form-control"
+								data-ng-model="data.object.vendortype" class="form-control">
+								<option value="1">Individual</option>
+								<option value="2">HUF</option>
+								<option value="3">Partnership Firm</option>
+								<option value="4">Association of Persons</option>
+								<option value="5">Others</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Tax Group <select name="select" class="form-control"
+								data-ng-model="data.object.taxgroup">
+								<option data-ng-repeat="group in groups" value="{{group.id}}">{{group.tax_group}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Supply Type <select name="select" class="form-control"
+								data-ng-model="data.object.supplytype">
+								<option value="1">Inter</option>
+								<option value="2">Intra</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Tax Account <select name="select" class="form-control"
+								data-ng-model="data.object.gl_accountid">
+								<option data-ng-repeat="account in accounts"
+									value="{{account.id}}">{{account.account_name}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Tax Section <select name="select" class="form-control"
+								data-ng-model="data.object.taxsection">
+								<option data-ng-repeat="section in sections"
+									value="{{section.id}}">{{section.section_name}}</option>
+							</select>
+						</div>
+
+
+						<div class="col-sm-12 col-xl-3 m-b-30">
+							Tax Rate(%) <input class="form-control" type="text"
+								placeholder="Enter Tax Rate" data-ng-model="data.object.taxrate" />
+						</div>
+
+
+
+
+						<div class="col-sm-12 col-xl-3 m-b-30 ">
+							Effective From <input class="form-control " type="date"
+								data-ng-model="data.object.effectivefrom" />
+						</div>
+						<div class="col-sm-12 col-xl-3 m-b-30 ">
+							Effective To <input class="form-control " type="date"
+								data-ng-model="data.object.effectiveto" />
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-sm-12 col-xl-12 m-b-30 text-center ">
+	<button class="btn btn-primary "
+		data-ng-click="createtaxmapping(data.object);">Submit</button>
+</div>
+<br>
+<div class="row ">
+	<div class="col-sm-12 ">
+
+		<div class="card ">
+
+			<div class="card-header bg-primary">
+				<h6 class="card-title">Tax Mapping List</h6>
+			</div>
+			<div class="card-body ">
+				<div class="dt-responsive table-responsive ">
+					<table class="table table-hover table-bordered " id="simpletable ">
+						<thead class="btn-grd-primary ">
+							<tr>
+								<th>S.No</th>
+								<th>Service Type</th>
+								<th>Vendor Type</th>
+								<th>Tax Group</th>
+								<th>Supply Type</th>
+								<th>Tax Account</th>
+								<th>Tax Section</th>
+								<th>Tax Rate</th>
+								<th>Effective From</th>
+								<th>Effective To</th>
+								<th>Status</th>
+								<th>Edit/Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="taxmappingdata in userdetails">
+								<td>{{$index+1}}</td>
+								<td>{{taxmappingdata.id}}</td>
+								<td>{{taxmappingdata.service_name}}</td>
+								<td>{{taxmappingdata.vendor_type}}</td>
+								<td>{{taxmappingdata.tax_group_name}}</td>
+								<td>{{taxmappingdata.supply_type}}</td>
+								<td>{{taxmappingdata.account_name}}</td>
+								<td>{{taxmappingdata.section_name}}</td>
+								<td>{{taxmappingdata.tax_rate}}</td>
+								<td>{{taxmappingdata.effective_from}}</td>
+								<td>{{taxmappingdata.effective_to}}</td>
+
+								<td><button class="btn ver-grd waves-effect "
+										data-toggle="modal" data-target="#large-Modal"
+										data-ng-click="gettaxmappingdata(taxmappingdata.id);">
+										<i class="ti-pencil-alt text-primary "></i>
+									</button>
+									<button class="btn ver-grd ">
+										<i class="ti-trash text-danger"
+											data-ng-click="deletetaxmappingdata(taxmappingdata);"></i>
+									</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade " id="large-Modal " tabindex="-1 " role="dialog ">
+	<div class="modal-dialog modal-lg " role="document ">
+		<div class="modal-content ">
+			<div class="modal-header ">
+				<h4 class="modal-title ">Update</h4>
+				<button class="close " data-dismiss="modal " aria-label="Close ">
+					<span aria-hidden="true ">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body ">
+				<div class="row ">
+					<div class="col-sm-12 ">
+						<div class="card ">
+							<div class="card-body ">
+								<div class="row ">
+
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Service Type <select name="select" class="form-control"
+											data-ng-model="data.object.service">
+											<option data-ng-repeat="service in services"
+												value="{{service.id}}">{{service.service_name}}</option>
+										</select>
+									</div>
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Vendor Type <select name="select" class="form-control"
+											data-ng-model="data.object.vendor_typeid">
+											<option value="1">Individual</option>
+											<option value="2">HUF</option>
+											<option value="3">Partnership Firm</option>
+											<option value="4">Association of Persons</option>
+											<option value="5">Others</option>
+										</select>
+									</div>
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Tax Group <select name="select" class="form-control"
+											data-ng-model="data.object.tax_groupid">
+											<option data-ng-repeat="group in groups" value="{{group.id}}">{{group.tax_group_name}}</option>
+										</select>
+									</div>
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Supply Type <select name="select" class="form-control"
+											data-ng-model="data.object.supply_typeid">
+											<option value="1">Inter</option>
+											<option value="2">Intra</option>
+										</select>
+									</div>
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Tax Account <select name="select" class="form-control"
+											data-ng-model="data.object.tax_account">
+											<option data-ng-repeat="account in accounts"
+												value="{{account.id}}">{{account.account_name}}</option>
+										</select>
+									</div>
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Tax Section <select name="select" class="form-control"
+											data-ng-model="data.object.tax_section">
+											<option data-ng-repeat="section in sections"
+												value="{{section.id}}">{{section.section_name}}</option>
+										</select>
+									</div>
+
+
+									<div class="col-sm-12 col-xl-3 m-b-30">
+										Tax Rate(%) <input class="form-control" type="text"
+											placeholder="Enter Tax Rate"
+											data-ng-model="data.object.tax_rate" />
+									</div>
+
+
+
+									<div class="col-sm-12 col-xl-3 m-b-30 ">
+										Effective From <input class="form-control " type="date"
+											data-ng-model="data.object.effective_from" />
+									</div>
+									<div class="col-sm-12 col-xl-3 m-b-30 ">
+										Effective To <input class="form-control " type="date"
+											data-ng-model="data.object.effective_to" />
+									</div>
+
+
+									<div class="col-sm-12 col-xl-3 m-b-30 ">
+										Status <select name="select " class="form-control "
+											data-ng-model="data.object.status">
+											<option value="opt1 ">--Select--</option>
+											<option value="0">Active</option>
+											<option value="1">In-Active</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="modal-footer ">
+									<button class="btn btn-default waves-effect "
+										data-dismiss="modal ">Close</button>
+									<button class="btn btn-primary waves-effect waves-light "
+										data-ng-click="updatetaxmapping(data.object);">Submit</button>
+								</div>
+								<!--  Modal End -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Data Table -->
+<!-- <script src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js "></script> -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+
+
+<script>
+	jQuery(document).ready(function() {
+		angular.bootstrap(jQuery("#taxmappingId"), [ 'taxmapping' ]);
+	});
+</script>

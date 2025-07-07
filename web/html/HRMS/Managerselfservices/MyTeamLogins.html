@@ -1,0 +1,476 @@
+<script src="/erp/files/assets/js/erp-scripts/HRMS/managerselfservices/ManagerLogins.js"></script>
+
+
+    <!-- Data Tables -->
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="loginId" data-ng-controller="managerController">
+
+	<!-- BreadCrumb Start -->
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>My Team Logins</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">HRMS</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Manager Self Services</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">My Team Logins</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        <h5>Time Sheet Report</h5>
+                                    
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+                                                                <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#pendingExample" aria-expanded="false" aria-controls="collapseExample">
+                                                            Login Report
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+                                                                <button class="btn btn-warning btn-block" type="button" data-toggle="collapse" data-target="#rejectedExample" aria-expanded="false" aria-controls="collapseExample">
+                                                                Weekly/Monthly Working Hours
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row collapse show mt-2" id="pendingExample">
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-info">
+                                                        <h6 class="card-title"> Login Report</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">From Date<span class="text-danger">*</span> :</label>
+                                                                    <input class="form-control" type="date" data-ng-model="data.object.from_date"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="font-weight-bold">To Date<span class="text-danger">*</span> :</label>
+                                                                    <input class="form-control" type="date" data-ng-model="data.object.to_date"  />
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12 mt-4 text-center">
+                                                            <button class="btn btn-grd-primary hor-grd text-center" 
+                                                            data-ng-click="getLoginSheets(data.object);">Submit</button>
+                                                        </div>
+                                                    </div><br>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="panel panel-primary" style="border-color: #4099ff;">
+                                                                <div class="panel-body p-6">
+                                                                    <div class="dt-responsive table-responsive">
+                                                                        <table id="simpletable" class="table table-hover table-bordered nowrap">
+                                                                            <thead class="btn-grd-primary">
+                                                                                <tr>
+                                                                                    <th>S.No</th>
+                                                                                    <th>Date</th>
+                                                                                    <th>Login</th>
+                                                                                    <th>Missed Login</th>
+                                                                                    <th>Action</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                               <tr
+																data-ng-repeat="data in filteredResult =(userdetails | filter:search)">
+																<td>{{$index+1}}</td>
+																
+																<td>{{data.login_date}}</td>
+																<td>{{data.logincount}}</td>
+																<td>{{data.missedlogin}}</td>
+																<td><button type="button" class="btn btn-primary"
+																		id="viewData" data-toggle="modal"
+																		data-target="#large-Modal"
+																		data-ng-click="getByIdviewlogin(data.login_date);getLoginafter11(data.login_date);
+																		getLoginbefore11(data.login_date);
+																		getMissedLogin(data.login_date);
+																		getAllReports(data.login_date);
+																		getLeavesReport(data.login_date);
+																		">View
+																		Details</button></td>
+
+															</tr>
+                                                                                      
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row collapse mt-2" id="rejectedExample">
+                                                <div class="col-sm-12 col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-header bg-warning">
+                                                            <h6 class="card-title">Time SheetWeekly/Monthly Working Hours</h6>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+
+
+                                                                <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="font-weight-bold">Select Month<span class="text-danger">*</span> :</label>
+                                                                        <select class="form-control" name="select" data-ng-model="data.object.month">
+                                                                                <option></option>
+								<option data-ng-repeat="month in months"
+									value="{{month.id}}">{{month.name}}</option>
+							</select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="row">
+                                                            <div class="col-md-12 mt-4 text-center">
+                                                                <button class="btn btn-grd-primary hor-grd text-center" data-ng-click="getMonthlyData(data.object)">Submit</button>
+                                                            </div>
+                                                        </div><br>
+
+
+
+
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="panel panel-primary" style="border-color: #4099ff;">
+                                                                    <div class="panel-body p-6">
+                                                                        <div class="dt-responsive table-responsive">
+                                                                            <table id="simpletable1" class="table table-hover table-bordered nowrap">
+                                                                                <thead class="btn-grd-primary">
+                                                                                    <tr>
+                                                                                        <th>S.no</th>
+                                                                                        <th>EmployeeName</th>
+                                                                                        <th>Week1</th>
+                                                                                        <th>Week2
+                                                                                        </th>
+                                                                                        <th>Month</th>
+
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                   <tr data-ng-repeat="emp in attdetails | filter:search"> 
+				     <td >{{$index+1}}</td>                  
+				     <td >{{emp.employeename}}</td> 
+					 <td >{{emp.week1}}</td>
+					 <td >{{emp.week2}}</td> 
+					 <td >{{emp.month}}</td>
+				</tr> 
+
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+<!-- Modal For View Documents -->
+				<div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title"></h4>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-lg-12 col-xl-12">
+
+										<ul class="nav nav-tabs  tabs" role="tablist">
+											<li class="nav-item"><a class="nav-link active"
+												data-toggle="tab" href="#home1" role="tab">Before 11 AM</a>
+											</li>
+											<li class="nav-item"><a class="nav-link"
+												data-toggle="tab" href="#profile1" role="tab">After 11
+													AM</a></li>
+											<li class="nav-item"><a class="nav-link"
+												data-toggle="tab" href="#messages1" role="tab">Missed
+													Logins</a></li>
+											<li class="nav-item"><a class="nav-link"
+												data-toggle="tab" href="#settings1" role="tab">All</a></li>
+											<li class="nav-item"><a class="nav-link"
+												data-toggle="tab" href="#settings2" role="tab">Leaves</a></li>
+										</ul>
+
+										<div class="tab-content tabs card-block">
+											<div class="tab-pane active" id="home1" role="tabpanel">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable2"
+														class="table table-hover table-bordered nowrap">
+														<thead class="btn-grd-primary">
+															<tr>
+																<th>S.No</th>
+															<!-- 	<th>Location</th> -->
+																<th>Login Type</th>
+																<th>Employee Type</th>
+																<th>Employee ID</th>
+																<th>Employee Name</th>
+																<th>Department</th>
+																<th>Designation</th>
+																<th>Cadre</th>
+																<th>Login</th>
+																<th>Logout</th>
+																<th>Login IP Address</th>
+																<th>Logout IP Address</th>
+
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="data in beforelogins"> 
+        <td>{{$index+1}}</td>   
+		<!-- <td>{{data.location}}</td>   -->
+		<td>{{data.login_type}}</td>	 
+		<td>{{data.type}}</td>		 
+		<td>{{data.empid}}</td>	
+		<td>{{data.name}}</td>  
+		<td>{{data.department}}</td>	 
+		<td>{{data.designation}}</td>		 
+		<td>{{data.cader}}</td>	
+		<td>{{data.login_time}}</td>  
+		<td>{{data.logout_time}}</td>	 
+		<td>{{data.login_ip}}</td>		 
+		<td>{{data.logout_ip}}</td>			
+		
+	</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="tab-pane" id="profile1" role="tabpanel">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable3"
+														class="table table-hover table-bordered nowrap">
+														<thead class="btn-grd-primary">
+															<tr>
+																<th>S.No</th>
+																<!-- <th>Location</th> -->
+																<th>Login Type</th>
+																<th>Employee Type</th>
+																<th>Employee ID</th>
+																<th>Employee Name</th>
+																<th>Department</th>
+																<th>Designation</th>
+																<th>Cadre</th>
+																<th>Login</th>
+																<th>Logout</th>
+																<th>Login IP Address</th>
+																<th>Logout IP Address</th>
+
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="data in filteredResult =(afterlogins | filter:search)">   
+        <td>{{$index+1}}</td>    
+		<!-- <td>{{data.location}}</td>   -->
+		<td>{{data.login_type}}</td>	 
+		<td>{{data.type}}</td>		 
+		<td>{{data.empid}}</td>	
+		<td>{{data.name}}</td>  
+		<td>{{data.department}}</td>	 
+		<td>{{data.designation}}</td>		 
+		<td>{{data.cader}}</td>	
+		<td>{{data.login_time}}</td>  
+		<td>{{data.logout_time}}</td>	 
+		<td>{{data.login_ip}}</td>		 
+		<td>{{data.logout_ip}}</td>			
+		
+	</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="tab-pane" id="messages1" role="tabpanel">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable4"
+														class="table table-hover table-bordered nowrap">
+														<thead class="btn-grd-primary">
+															<tr>
+																<th>S.No</th>
+																<!-- <th>Location</th> -->
+																<th>Employee Type</th>
+																<th>Employee ID</th>
+																<th>Employee Name</th>
+																<th>Department</th>
+																<th>Designation</th>
+																<th>Cadre</th>
+																<th>Grade</th>
+
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="data in filteredResult =(missedlogins | filter:search)">   
+        <td>{{$index+1}}</td>   
+		<!-- <td>{{data.location}}</td>   -->
+		<td>{{data.type}}</td>	 
+		<td>{{data.empid}}</td>		 
+		<td>{{data.name}}</td>	
+		<td>{{data.department}}</td>  
+		<td>{{data.designation}}</td>	 
+		<td>{{data.cader}}</td>		 
+		<td>{{data.grade}}</td>	
+				
+		
+	</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="tab-pane" id="settings1" role="tabpanel">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable5"
+														class="table table-hover table-bordered nowrap">
+														<thead class="btn-grd-primary">
+															<tr>
+																<th>S.No</th>
+																<!-- <th>Location</th> -->
+																<th>Employee Type</th>
+																<th>Employee ID</th>
+																<th>Employee Name</th>
+																<th>Department</th>
+																<th>Login Type</th>
+																<th>Login</th>
+																<th>Logout</th>
+															</tr>
+														</thead>
+														<tbody>
+														
+															<tr data-ng-repeat="data in filteredResult =(allreports | filter:search)">   
+       <td>{{$index+1}}</td>   
+		<!-- <td>{{data.location}}</td>   -->
+		<td>{{data.type}}</td>	 
+		<td>{{data.empid}}</td>		 
+		<td>{{data.name}}</td>	
+		<td>{{data.department}}</td>  
+		<td>{{data.login_type}}</td>	 
+		<td>{{data.login_time}}</td>		 
+		<td>{{data.logout_time}}</td>	
+				
+	</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="tab-pane" id="settings2" role="tabpanel">
+												<div class="dt-responsive table-responsive">
+													<table id="simpletable6"
+														class="table table-hover table-bordered nowrap">
+														<thead class="btn-grd-primary">
+															<tr>
+																<th>S.No</th>
+																<th>Employee Name</th>
+																<th>Leave Type</th>
+																<th>Approved By</th>
+																<th>Reason</th>
+																<th>Status</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="data in filteredResult =(leavesreports | filter:search)">   
+        <td>{{$index+1}}</td>   
+		<td>{{data.name}}</td>  
+		<td>{{data.leave_type}}</td>	 
+		<td>{{data.approval_by}}</td>		 
+		<td>{{data.reason}}</td>	
+		<td>{{data.leavestatus}}</td>  
+		
+				
+		
+	</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+                      </div>          
+            <!-- Data Tables -->
+            <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+            <script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+            <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+            <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+            <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+            <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+           
+            <script>
+                $('simpletable1').DataTable();
+                $('simpletable2').DataTable();
+                $('simpletable').DataTable();
+                $('simpletable3').DataTable();
+                $('simpletable4').DataTable();
+                $('simpletable5').DataTable();
+                $('simpletable6').DataTable();
+            </script>
+<script>                        
+		jQuery(document).ready(function() {         
+			
+  			 angular.bootstrap(jQuery("#loginId"), [ 'managerModule' ]); 
+	    });
+		
+	</script>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Attendance">
+
+	<select id="checkAttendance" parameterType="Login"
+		resultType="java.lang.Integer"> 
+		SELECT count(*) FROM hrms.employee_login_details WHERE  
+		empid=#{empid} AND
+		login_date=to_char(CURRENT_TIMESTAMP,'dd-MM-yyyy')::date;
+	</select>
+	
+              
+
+	<!-- updating attendance in attendance sheet -->
+
+	<update id="updateattendance" parameterType="map">
+		update
+		hrms.employee_login_details SET workingday =
+		#{p.workingday},login_time = null,login_date = null WHERE
+		empid=#{p.empid} AND login_date = #{p.date}::date;
+	</update>
+
+	<!--updating attendance to leave in attendance sheet -->
+
+	<update id="updateattendanceleave" parameterType="map">
+		update
+		hrms.employee_login_details SET workingday = #{p.workingday},
+		login_date = null,login_time = null WHERE empid=#{p.empid} AND
+		login_date = #{p.date};   
+	</update>
+
+	<insert id="Addleave" parameterType="map">
+		insert into
+		hrms.leaves(empid,from_date,to_date)
+		values(#{p.empid},#{p.date},#{p.date});
+	</insert>
+
+	<!-- updating attendance to present in attendance sheet -->
+
+	<insert id="updateattendancepresent" parameterType="map">
+		insert into
+		hrms.employee_login_details(empid,login_date,workingday)
+		values(#{p.empid},#{p.date},#{p.workingday});
+	</insert>
+
+	<!-- getting calendar details based on from date,to date -->
+	<select id="getCalendarDetailsdet" resultType="Attendance"
+		parameterType="map">
+		<!--select date,day from hrms.calendar_creation where date::date>=#{p.from_date} 
+			and #{p.to_date}>=date::date; -->
+		select day,(case when TRIM(dayname)='Sunday' or
+		TRIM(dayname)='Saturday' then 'Holiday'
+		end) as session from
+		hrms.calendar_days_mst where day>=#{p.from_date} and
+		#{p.to_date}>=day;
+	</select>
+
+	<!-- getting Time Sheets based on from date,to date -->
+	<select id="apprvedTimesheets" resultType="Attendance"
+		parameterType="map">
+		select concat(a.first_name,' ',a.middle_name,'
+		',a.last_name) as
+		name,b.timesheet_date,b.task,b.location as
+		locationdata,b.description,
+		(case when b.status = false then 'Pending'
+		when b.status=true then
+		'Approved' end) as statusvalue
+		from (select *
+		from hrms.employee_personal_details) a inner join
+
+		(select * from
+		hrms.employee_timesheet where timesheet_date BETWEEN
+		#{p.from_date} and
+		#{p.to_date} )b on (b.empid=a.empid)
+	</select>
+
+	<!-- get year -->
+	<select id="getyears" resultType="map">
+		SELECT year_id,year from
+		hrms.year_mst;
+	</select>
+
+	<select id="getMyleavesDetails" resultType="Attendance">
+		select a.empid,a.from_date,a.to_date,a.reason,a.calendar_year,a.leave_type,d.id,a.leavestatus,a.approved_date,a.created_date from(SELECT (to_date-from_date+1) as no_days,from_date,to_date,reason,created_date,
+	calendar_year,leave_type,empid,leavestatus,approved_date from hrms.leaves )a 
+	inner join 
+	(select * from hrms.employee_personal_details )b on  a.empid=b.empid
+	left join(select * from hrms.employee_employment_details)c on c.empid=b.empid
+        left join (select * from hrms.calendar_year_mst)as d  on a.calendar_year=d.id 
+
+where a.empid=#{p.empid} and a.leave_type=#{p.leave_type} ;
+
+</select> 
+
+	<!-- calendar page -->
+
+	<insert id="Insert" parameterType="map">
+		insert into
+		hrms.calendar_mst(holiday_type,year,holiday_name,from_date,to_date,day)
+		values(#{p.holiday_type},#{p.year_id},#{p.holiday_name},#{p.from_date},#{p.to_date},#{p.day});
+	</insert>
+
+	<select id="getMyTeamDetails" resultType="Attendance"
+		parameterType="map">
+		select
+		a.first_name,b.cader,b.grade,b.designation,b.department,c.leave_type,c.from_date,c.to_date,c.leave_nature,c.approval_by
+		,c.reason,c.created_date from(select empid,first_name from
+		hrms.employee_personal_details)a
+		inner join (select
+		empid,cader,department,grade,designation from
+		hrms.employee_employment_details)b on a.empid=b.empid
+		inner join
+		(select
+		empid,leave_type,from_date,to_date,leave_nature,approval_by,reason,created_date
+		from hrms.leaves where created_date::date>=#{p.from_date} and
+		#{p.to_date}>=created_date::date and leave_type=#{p.leave_type})c on
+		b.empid=c.empid
+	</select>
+
+	<!-- dashboard -->
+	<insert id="savePresentEmployees" parameterType="Login">
+		INSERT INTO
+		hrms.employee_login_details(empid,login_date,login_time,login_latitude,login_longitude,login_ip)
+		VALUES
+		(#{employee_id},to_char(CURRENT_TIMESTAMP,'dd-MM-yyyy')::date,to_char(CURRENT_TIMESTAMP,'HH24:MI:SS')::time,#{login_latitude},
+		#{login_longitude},#{login_ip});
+	</insert>
+	<select id="getLogin" parameterType="Login" resultType="Login">
+		SELECT
+		empid as employee_id, * from hrms.employee_login_details where
+		empid=#{employee_id} and
+		login_date=to_char(CURRENT_TIMESTAMP,'dd-MM-yyyy')::date;
+	</select>
+
+	<update id="updatePresentEmployees" parameterType="Login">
+		UPDATE hrms.employee_login_details
+		SET
+		logout_time=to_char(CURRENT_TIMESTAMP,'HH24:MI:SS')::time
+
+		WHERE
+		empid=#{employee_id} AND
+		login_date=to_char(CURRENT_TIMESTAMP,'dd-MM-yyyy')::date;
+
+		<!--UPDATE hrms.employee_login_details SET logout_time=to_char(CURRENT_TIMESTAMP,'HH24:MI:SS')::time 
+			WHERE empid=#{p.empid} AND login_date=to_char(CURRENT_TIMESTAMP,'dd-MM-yyyy')::date -->
+	</update>
+
+	<select id="getdashboard" resultType="Login">
+	SELECT empid as employee_id, login_date, login_time, logout_time from
+		hrms.employee_login_details where empid=#{employee_id} and     
+		login_date=to_char(CURRENT_TIMESTAMP,'dd-MM-yyyy')::date;
+		
+		<!-- SELECT * from
+		hrms.employee_login_details where empid=#{employee_id} and
+		login_date=to_char(CURRENT_TIMESTAMP,'dd-MM-yyyy')::date; -->
+	</select>
+
+	<select id="getAbsentees" resultType="java.util.Map"
+		parameterType="java.lang.String">
+
+		
+	select at.* from ( select a.empid,a.name,a.days,c.department_name as
+	department ,d.cader_name as
+	cader,a.grade,b.login_date from
+	(select a.empid,concat(b.first_name,' ',b.middle_name,' ',b.last_name) as
+	name,a.days,a.department,a.cader,a.grade from (select
+	empid,#{p.login_date}::date as days ,department,cader,grade from
+	hrms.employee_employment_details where status=0) a
+	inner join hrms.employee_personal_details b on (a.empid=b.empid)) a inner
+	join
+	(select * from hrms.department_mst)c on (c.id=a.department) inner join
+	(select * from hrms.cader_mst) d on (d.id=a.cader)
+	left join
+	(select a.empid,a.login_date::date from (select empid,login_date from
+	hrms.employee_login_details
+	union
+	select empid,generate_series(from_date,to_date,interval '1 Day') as
+	login_date from hrms.leaves) a) b on (a.empid=b.empid and
+	a.days=b.login_date))at where at.login_date is null;
+
+
+
+	</select>
+	
+	
+	<insert id="updateAttendance" parameterType="map">      
+	INSERT INTO hrms.employee_login_details(empid,login_date,login_time)
+		VALUES (#{p.empid},#{p.date}::date,to_char(CURRENT_TIMESTAMP,'HH24:MI:SS')::time);
+	</insert>   
+	
+	
+	<select id="getCalendarDetails" resultType="Attendance" parameterType="map">
+select day,dayname from hrms.calendar_days_mst where day between #{p.from_date} :: date and #{p.to_date} :: date;
+	   </select>
+	
+
+</mapper>     

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="attendanece">
+<select id="search" resultType="map">
+SELECT a.from_date,a.to_date,b.login_time,b.logout_time,b.login_date from
+(select* from hrms.employee_professional_details)a inner join( select * from hrms.employee_login_details)b
+ON a.empid = b.empid; 
+           
+	</select>  
+	</mapper>                             

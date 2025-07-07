@@ -1,0 +1,467 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/ctc/employeestopsalary.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="EmployeestopsalaryDIV"
+	data-ng-controller="EmployeeStopSalaryController">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">       s
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Employee Stop Salary</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">HRMS/a> </li>
+							<li class="breadcrumb-item"><a href="#!">Payroll
+									Management</a></li>
+							<li class="breadcrumb-item"><a href="#!">Employee Stop
+									Salary</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header"></div>
+				<div class="card-body">
+					<div class="row">
+
+
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							Employee <select class="form-control"
+								data-ng-model="data.object.empid">
+								<option></option>
+								<option data-ng-repeat="emp in empnames" value="{{emp.empid}}">{{emp.name}}</option>
+							</select>
+						</div>
+
+						<div class="col-sm-12 col-xl-4 m-b-30"
+							data-ng-show="data.object.type == '0'">
+							<label>STOP Date <span class="text-danger ">*</span></label>
+							<div>
+								<input type="date" id="stopdate" class="form-control"
+									name="stopdate" data-ng-model="data.object.stop_date">
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-sm-12 col-xl-4 m-b-30">
+
+							<div class="form-group checkbox row">
+								<label><input tabindex="5" value="0"
+									name="filterByJoinOrReleav" data-ng-model="data.object.type"
+									type="radio"><span class="f_12"> Stop Salary</span></label>
+							</div>
+						</div>
+						
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<div class="form-group checkbox row">
+								<label><input value="2" name="filterByJoinOrReleav"
+									tabindex="6" type="radio" data-ng-model="data.object.type"><span
+									class="f_12">Release Stop Salary</span></label>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<div class="form-group checkbox row">
+								<label><input value="1" name="filterByJoinOrReleav"
+									tabindex="6" type="radio" data-ng-model="data.object.type"><span
+									class="f_12">Release Stop Salary Payroll</span></label>
+							</div>
+						</div>
+						
+						
+
+					</div>
+
+
+
+
+					<div class="row" data-ng-show="data.object.type == '0'">
+
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<button class="btn btn-grd-primary hor-grd text-center"
+								data-ng-click="addstopsalaryData(data.object); getStopData(data.object);">Submit</button>
+						</div>
+
+
+					</div>
+					<div class="row" data-ng-show="data.object.type == '2'">
+
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<button class="btn btn-grd-primary hor-grd text-center"
+								data-ng-click="releasestopdate(data.object);">Submit</button>
+						</div>
+
+
+					</div>
+
+					<div class="row" data-ng-show="data.object.type == '1'">
+
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<button class="btn btn-grd-primary hor-grd text-center"
+								data-ng-click="releasestopsalary(data.object);">Submit</button>
+						</div>
+
+
+					</div>
+					
+					
+
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+	<!-- addEmployeeStopSalary(data.object); -->
+
+	<br>
+	<div id="display">
+		<div class="row">
+			<div class="col-sm-12">
+
+				<div class="card">
+
+					<div class="card-header bg-primary">
+						<h6 class="card-title">Employee Stop Salary List</h6>
+					</div>
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table class="table table-hover table-bordered" id="simpletable">
+								<thead class="btn-grd-primary">
+									<tr>
+										<th>S.No</th>
+										<th>Name</th>
+										<th>Department</th>
+										<th>Cadre</th>
+										<th>Grade</th>
+										<th>Stop Date</th>
+										
+
+
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="emp in saldetails">
+										<td>{{$index+1}}</td>
+										<td>{{emp.name}}</td>
+										<td>{{emp.department_name}}</td>
+										<td>{{emp.cader_name}}</td>
+										<td>{{emp.grade_name}}</td>
+										<td>{{emp.stoped_date}}</td>
+										
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+	<div id="display2">
+		<div class="row">
+			<div class="col-sm-12">
+
+				<div class="card">
+
+					<div class="card-header bg-primary">
+						<h6 class="card-title">Employee Stop Salary List</h6>
+					</div>
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table class="table table-hover table-bordered" id="simpletable">
+								<thead class="btn-grd-primary">
+									<tr>
+										<th>S.No</th>
+										<th>Name</th>
+										<th>Department</th>
+										<th>Cadre</th>
+										<th>Grade</th>
+										<th>Stop Date</th>
+										<th>Action</th>
+
+
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="emp in releasestopdate">
+										<td>{{$index+1}}</td>
+										<td>{{emp.name}}</td>
+										<td>{{emp.department_name}}</td>
+										<td>{{emp.cader_name}}</td>
+										<td>{{emp.grade_name}}</td>
+										<td>{{emp.stop_date}}</td>
+										<td><button type="button" class="btn btn-primary"
+												data-toggle="modal" data-target="#Stopsalarydate"
+												id="release" data-ng-click="releaseStopSalaryDate(emp);">Release</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="display1">
+		<div class="row">
+			<div class="col-sm-12">
+
+				<div class="card">
+
+					<div class="card-header bg-primary">
+						<h6 class="card-title">Employee Release Salary</h6>
+					</div>
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table class="table table-hover table-bordered" id="simpletable">
+								<thead class="btn-grd-primary">
+									<tr>
+										<th>S.No</th>
+										<th>Name</th>
+										<th>Department</th>
+										<th>Cadre</th>
+										<th>Grade</th>
+										<th>Stop Date</th>
+										<th>Financial_year</th>
+										<th>Monthh</th>
+										<th>Action</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="emp in salreleasedetails">
+										<td>{{$index+1}}</td>
+										<td>{{emp.name}}</td>
+										<td>{{emp.department_name}}</td>
+										<td>{{emp.cader_name}}</td>
+										<td>{{emp.grade_name}}</td>
+
+										<td>{{emp.stoped_date}}</td>
+										<td>{{emp.financialyear}}</td>
+										<td>{{emp.monthname}}</td>
+										<td><button type="button" class="btn btn-primary"
+												data-toggle="modal" data-target="#Stopsalary_payroll"
+												id="release" data-ng-click="releasestopsalaryamount(emp);">Release</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<div class="modal fade" id="Stopsalary_payroll" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-primary"></h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label>Financial Year</label> <select class="form-control"
+									data-ng-model="data.object.financial_year">
+									<option data-ng-repeat="year in financialyears"
+										value="{{year.id}}">{{year.name}}</option>
+								</select>
+							</div>
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<label>Month</label> <select class="form-control"
+									data-ng-model="data.object.month">
+									<option data-ng-repeat="month in months" value="{{month.id}}">{{month.name}}</option>
+								</select>
+							</div>
+							<div class="col-sm-12 col-md-3 col-lg- col-xl-3 col-xs-12 mt-1">
+								<label>Employee</label> <select class="form-control"
+									data-ng-model="data.object.empid">
+
+									<option data-ng-repeat="employee in empnames"
+										value="{{employee.empid}}">{{employee.name}}</option>
+								</select>
+							</div>
+
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<div class="form-group">
+									<label>Stop Date</label> <input type="text"
+										class="form-control" placeholder="Enter stop date"
+										data-ng-model="data.object.stop_date" readonly />
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<div class="form-group">
+									<label>Release Date</label> <input type="date"
+										class="form-control" placeholder="Enter Release date"
+										data-ng-model="data.object.release_date" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect"
+						data-dismiss="modal">Close</button>
+					<button type="button" id="sub" value="Register"
+						class="btnbtn-md btn-primary" data-dismiss="modal"
+						data-ng-click="releasestopsalarypayroll(data.object);"
+						style="margin-left: 50%">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="Stopsalarydate" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-primary"></h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">   
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="card-body">
+						<div class="row">   
+							
+							
+							<div class="col-sm-12 col-md-3 col-lg- col-xl-3 col-xs-12 mt-1">
+								<label>Employee</label> <select class="form-control"
+									data-ng-model="data.object.empid">
+
+									<option data-ng-repeat="employee in empnames"
+										value="{{employee.empid}}">{{employee.name}}</option>
+								</select>
+							</div>
+
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<div class="form-group">
+									<label>Stop Date</label> <input type="text"
+										class="form-control" placeholder="Enter stop date"
+										data-ng-model="data.object.stop_date" readonly />
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+								<div class="form-group">
+									<label>Release Date</label> <input type="date"
+										class="form-control" placeholder="Enter Release date"
+										data-ng-model="data.object.release_date" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect"
+						data-dismiss="modal">Close</button>
+					<button type="button" id="sub" value="Register"
+						class="btnbtn-md btn-primary" data-dismiss="modal"
+						data-ng-click="releaseEmployeestopsalaryDate(data.object);"
+						style="margin-left: 50%">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- Data Table -->
+<script
+	src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+
+
+<script>
+	jQuery(document).ready(
+			function() {
+
+			 	$("#display").hide();
+				$("#display1").hide();
+				$("#display2").hide();
+				$("#displaysaturation").hide();
+
+				$("#joining").DataTable();     
+				$("#relieving").DataTable();
+				$("#stop").DataTable();
+
+				angular.bootstrap(jQuery("#EmployeestopsalaryDIV"),
+						[ 'employeeStopsalaryModule' ]);
+
+			});
+</script>
+

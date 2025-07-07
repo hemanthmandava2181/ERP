@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LeavesReport">
+	<select id="getleavesDetailedReport" resultType="LeavesReport"
+		parameterType="map">
+		select
+		a.empid,a.employeename,b.department,b.designation,b.cader,b.grade,b.reporting_to,c.leave_type,c.leave_nature,c.from_date,c.to_date,c.approval_by,c.reason,c.leavestatus,c.comp_date,c.created_date
+		from
+		(select empid,concat(first_name,'',last_name) as employeename from
+		hrms.employee_personal_details)a inner join (select
+		empid,department,designation,cader,grade,reporting_to from
+		hrms.employee_employment_details)b on a.empid=b.empid
+		inner join
+		(select
+		empid,leave_type,leave_nature,from_date,to_date,approval_by,reason,leavestatus,comp_date,created_date
+		from hrms.leaves)c on b.empid=c.empid where
+		c.created_date>=#{p.from_date}::timestamp and
+		#{p.to_date}::timestamp>=c.created_date and
+		c.leave_type=#{p.leave_type}
+	</select>
+	
+	<select id="getLeavesDetails" resultType="map">
+		SELECT distinct id as leave_type,type,(case when status='TRUE' then 'Active' end) as status  from
+		hrms.leave_types_mst order by id;   
+	</select>
+	
+	<select id="getLeaveRules" resultType="map">
+		SELECT distinct id,rule as leave_rule from
+		hrms.leave_rules_mst order by id;         
+	</select>	
+	
+	<select id="GetLeavesReport" resultType="LeavesReport"
+		parameterType="map">
+		 SELECT b.empid as empid,c.designation_name,d.department_name,e.description,f.grade_name,g.reporting_to as approval_by,i.type as leavetype, h.from_date,h.to_date,h.reason,h.approval_by,
+ (case when h.leavestatus=1 then 'Approved' When h.leavestatus=0 then 'Pending' end ) as leavestatusdata, concat (first_name,' ',middle_name,' ',last_name) AS name
+         FROM hrms.employee_personal_details as a    
+        inner join (select * from hrms.employee_employment_details) as b on (a.empid = b.empid) inner join
+        (select * from hrms.designation_mst )c on (c.id=b.designation ) inner join
+       ( select * from hrms.department_mst)d on (d.id=b.department) inner join 
+       (select * from hrms.cader_mst)e on (e.id=b.cader) inner join
+       (select * from hrms.grades_mst)f     on (f.id=b.grade) inner join
+       (select concat (first_name,' ',middle_name,' ',last_name) as reporting_to,empid from hrms.employee_personal_details)g on (g.empid=b.reporting_to) left join
+
+       (select * from hrms.leaves where (from_date between #{p.from_date} and #{p.to_date}) and leave_type=#{p.leave_type} ) h on (b.empid=h.empid) inner join
+       (select * from hrms.leave_types_mst) i on (i.id=h.leave_type)
+	</select>    
+	
+	
+	
+	
+	
+	
+	<select id="getLeaves" resultType="map">
+		SELECT  id,type from
+		hrms.leave_types_mst;
+	</select>
+	<select id="getSummary1" resultType="LeavesReport" parameterType="map">	
+    select empid,count(empid) as empid1, count(leave_type) as count, leave_type from hrms.leaves where  leave_type=#{p.leave_type} group by empid,leave_type 
+	</select>
+	
+
+	<select id="getQuarters" resultType="map">   
+		SELECT distinct id,name from
+		hrms.quarter_mst order by id;   
+	</select>     
+	<select id="getYears" resultType="map">
+		SELECT id ,name from
+		hrms.financial_year_mst; 
+	</select>
+	<select id="getCalendarYears" resultType="LeavesReport">
+		SELECT id as year_id,year_name as year from
+		hrms.calendar_year_mst;   
+	</select>
+	
+	<select id="getLeaveEncashmentDetails" resultType="LeavesReport"
+		parameterType="map">
+				select
+		a.empid,a.employeename,(CASE WHEN b.status=1 THEN 'INACTIVE' WHEN b.status=0 THEN 'ACTIVE'  END) as status,b.designation,c.calendar_year,c.quarter,c.opbal,c.availed_leaves,c.forwarded_leaves,c.encashed_leaves,c.basic_salary,c.special_allowance,c.encash_amount
+		from
+		(select empid,concat(first_name,'',last_name) as employeename  from
+		hrms.employee_personal_details)a inner join (select
+		empid,designation,status from      
+		hrms.employee_employment_details where designation=1 and status=0)b on a.empid=b.empid
+		inner join
+		(select calendar_year,empid,quarter,total_leaves as opbal,used_leaves as availed_leaves,
+		 (case when 15 >=(total_leaves-used_leaves)  then 0
+		 when (total_leaves-used_leaves) >=15 then (total_leaves-used_leaves-15) end) as encashed_leaves,(case when 15>= (total_leaves-used_leaves)  then
+		 (total_leaves-used_leaves) 
+		 when (total_leaves-used_leaves) >=15  then (total_leaves-used_leaves - (total_leaves-used_leaves-15)) end) as forwarded_leaves,basic_salary,special_allowance,((basic_salary + special_allowance)*(total_leaves-(used_leaves + (total_leaves-used_leaves))))as encash_amount 
+		from hrms.employee_leave_summary) c on b.empid=c.empid where c.calendar_year=#{p.calendar_year} and c.quarter=#{p.quarter}
+
+	</select>
+	
+	
+	<select id="getInactiveLeaveEncashmentDetails" resultType="LeavesReport"
+		parameterType="map">
+		
+
+		select
+		a.empid,a.employeename,(CASE WHEN b.status=1 THEN 'INACTIVE' WHEN b.status=0 THEN 'ACTIVE'  END) as status,b.designation,c.calendar_year,c.quarter,c.opbal,c.availed_leaves,c.forwarded_leaves,c.encashed_leaves,c.basic_salary,c.special_allowance,c.encash_amount
+		from
+		(select empid,concat(first_name,'',last_name) as employeename from
+		hrms.employee_personal_details)a inner join (select
+		empid,designation,status from      
+		hrms.employee_employment_details where designation=1 and status=1)b on a.empid=b.empid
+		inner join   
+		(select calendar_year,empid,quarter,total_leaves as opbal,used_leaves as availed_leaves,
+		 (case when 15 >=(total_leaves-used_leaves)  then 0
+		 when (total_leaves-used_leaves) >=15 then (total_leaves-used_leaves-15) end) as encashed_leaves,(case when 15>= (total_leaves-used_leaves)  then
+		 (total_leaves-used_leaves)     
+		 when (total_leaves-used_leaves) >=15  then (total_leaves-used_leaves - (total_leaves-used_leaves-15)) end) as forwarded_leaves,basic_salary,special_allowance,((basic_salary + special_allowance)*(total_leaves-(used_leaves + (total_leaves-used_leaves))))as encash_amount 
+		from hrms.employee_leave_summary) c on b.empid=c.empid where c.calendar_year=#{p.calendar_year} and c.quarter=#{p.quarter}
+		</select>
+		
+		  
+	<insert id="saveLeaveEncashmentDetails" parameterType="java.lang.String">
+	
+	
+		INSERT INTO hrms.employee_leave_encashment(
+            id, calendar_year,empid, quarter, encashed_leaves,   
+            basic_salary, special_allowance, encashed_amount, created_date, created_by) (select id,calendar_year,empid,quarter,(total_leaves-(used_leaves + (total_leaves-used_leaves-5))) as encashed_leaves,basic_salary,special_allowance,((basic_salary + special_allowance)*(total_leaves-(used_leaves + (total_leaves-used_leaves-5))))as encashed_amount,
+            created_date,created_by
+		from hrms.employee_leave_summary where empid=#{p.empid})
+	</insert>    
+	
+	<insert id="saveInactiveLeaveEncashmentDetails" parameterType="java.lang.String">
+	
+	
+		INSERT INTO hrms.employee_leave_encashment(
+            id, calendar_year,empid, quarter, encashed_leaves,   
+            basic_salary, special_allowance, encashed_amount, created_date, created_by) (select id,calendar_year,empid,quarter,(total_leaves-(used_leaves + (total_leaves-used_leaves-5))) as encashed_leaves,basic_salary,special_allowance,((basic_salary + special_allowance)*(total_leaves-(used_leaves + (total_leaves-used_leaves-5))))as encashed_amount,
+            created_date,created_by
+		from hrms.employee_leave_summary where empid=#{p.empid})
+	</insert> 
+	
+	<select id="getLeaveSummaryReport" parameterType="java.lang.Integer" resultType="LeavesReport">
+	
+select
+a.empid,a.employeename,a.status,e.type,c.year_id,c.leaves_eligible,c.leave_balance,c.availed_leaves,
+c.leave_balance,d.quarter_name
+from
+(select empid,concat(first_name,'',last_name) as employeename,status from
+hrms.employee_personal_details where status='Active')a left join (select
+empid,designation,employee_type  from      
+hrms.employee_employment_details)b on a.empid=b.empid
+left join
+(select id,type from hrms.employee_types_mst)e on e.id=b.employee_type
+left join
+(select calendar_year as year_id,empid,quarter,total_leaves as leaves_eligible,used_leaves as availed_leaves,available_leaves as leave_balance
+from hrms.employee_leave_summary) c on b.empid=c.empid
+left join
+(select quarter,quarter_name from hrms.quarter_mst)d on c.quarter=d.quarter
+
+ where c.year_id=#{year_id}
+	
+	</select>
+	
+		<select id="getMonths" resultType="LeavesReport">
+		SELECT payroll_id,payroll_month,quarter_id from
+		hrms.payroll_month_mst;   
+	</select>
+	
+	<select id="getFinancialYears" resultType="LeavesReport">
+		SELECT id as year_id,name as financial_year from
+		hrms.financial_year_mst;      
+	</select>   
+	<select id="getEmployees"  parameterType="map" resultType="map">
+		select a.empid,a.employeename from (select empid,concat(first_name,'',last_name) as employeename from
+hrms.employee_personal_details)a inner join (select empid,payslip_head,payroll_month,amount from hrms.employee_payroll where payslip_head=14 and amount is not null)b on a.empid=b.empid where b.payroll_month=#{p.payroll_id} 
+	</select>
+	<select id="getLOPCount" parameterType="map" resultType="map">
+	select lop_days from hrms.employee_lop where empid=#{p.empid}  
+	</select>
+	<select id="getAnnualctc"  resultType="java.lang.Double">
+	<!-- select ctc from hrms.employee_bank_details where empid=#{p.empid} -->
+	select max(annual_salary) as ctc from hrms.effective_ctc_association where empid=#{p.empid} 
+	
+	</select>
+	<select id="getEmployeeLOPDetails" resultType="LeavesReport"      
+		parameterType="map">  
+	<!-- 	select a.empid,a.employeename,c.financial_year,d.payroll_month,b.amount,b.lop_days from
+
+(select empid,concat(first_name,'',last_name) as employeename from
+hrms.employee_personal_details)a inner join 
+(select empid,financial_year,payroll_month,lop_days,amount from hrms.employee_lop_pay)b on a.empid=b.empid inner join
+(select id as year_id,name as financial_year from hrms.financial_year_mst)c on c.year_id=b.financial_year
+inner join
+(select payroll_id,payroll_month from hrms.payroll_month_mst)d on d.payroll_id=b.payroll_month 
+where
+ b.empid=#{p.empid} and b.payroll_month=#{p.monthid} and b.lop_days=#{p.lop_days} and b.financial_year=#{p.financial_year}  -->
+ 
+<!--  select a.empid,a.employeename,c.financial_year,d.id,b.amount,b.lop_days from
+
+(select empid,concat(first_name,'',last_name) as employeename from
+hrms.employee_personal_details)a inner join 
+(select empid,financial_year,month,lop_days,amount from hrms.employee_lop_pay)b on a.empid=b.empid inner join
+(select id as year_id,name as financial_year from hrms.financial_year_mst)c on c.year_id=b.financial_year
+inner join
+(select id,name from hrms.months_mst)d on d.id=b.month 
+where
+ b.empid= #{p.empid} and b.month= #{p.monthid}  and b.lop_days= #{p.lop_days} and b.financial_year=#{p.financial_year} -->
+ 
+ select a.empid,a.employeename as name,c.name as financialyear,d.name as payroll_month,d.id,b.amount,b.lop_days from
+
+(select empid,concat(first_name,'',last_name) as employeename from
+hrms.employee_personal_details)a inner join 
+(select empid,financial_year,month,lop_days,amount from hrms.employee_lop_pay)b on a.empid=b.empid inner join
+(select id as year_id,name  from hrms.financial_year_mst)c on c.year_id=b.financial_year
+inner join
+(select id,name from hrms.months_mst)d on d.id=b.month 
+where
+ b.empid= #{p.empid} and b.month= #{p.monthid}  and b.lop_days= #{p.lop_days} and b.financial_year=#{p.financial_year}
+ 
+		</select>
+		<insert id="saveEmployeeLOPDetails" parameterType="map">   	
+       insert into hrms.employee_lop_pay(empid,financial_year,month,lop_days,amount)values(#{p.empid},#{p.financial_year},#{p.monthid},#{p.lop_days},#{p.amount})  
+	</insert> 
+	
+	<insert id="saveLeaveType" parameterType="map">   
+		INSERT INTO hrms.leave_types_mst(   
+            type) values (#{p.type})
+	</insert>     
+	<insert id="saveData" parameterType="map">   
+	
+	   INSERT INTO hrms.leave_rule_assosication_mst(leave_type,leave_rule,calendar_year)
+    VALUES 
+    ((select id as leave_type from hrms.leave_types_mst where id=(select max(id) from hrms.leave_types_mst)),#{p.id},(select id as calendar_year from hrms.calendar_year_mst where id=(select max(id) from hrms.calendar_year_mst)))
+    
+	</insert>  
+	<update id="update1" parameterType="map">      
+	UPDATE hrms.leave_rule_assosication_mst
+SET value= 
+   CASE leave_rule
+        WHEN 1 THEN #{p.gender}
+        WHEN 2 THEN #{p.status}
+        WHEN 3 THEN #{p.useddays}::character varying
+        WHEN 4 THEN #{p.maxdays}::character varying
+        WHEN 5 THEN #{p.maxleaves}::character varying
+        WHEN 6 THEN #{p.workdays}::character varying
+        WHEN 7 THEN #{p.applicabledays}::character varying
+        
+   END
+WHERE  leave_rule=#{p.id} and leave_type=(select max(id) from hrms.leave_types_mst);
+    
+</update> 
+	 
+	<update id="update" parameterType="map">
+	   
+UPDATE hrms.leave_rule_assosication_mst
+SET value= 
+   CASE leave_rule
+        WHEN 1 THEN #{p.gender}
+        WHEN 2 THEN #{p.status}
+        WHEN 3 THEN #{p.useddays}
+        WHEN 4 THEN #{p.maxdays}
+        WHEN 5 THEN #{p.maxleaves}
+        WHEN 6 THEN #{p.workdays}   
+        WHEN 7 THEN #{p.applicabledays}
+        
+   END  
+WHERE  leave_rule IN (1,2,3,4,5,6,7) and leave_type=#{p.leave_type};
+	</update> 
+	
+		<!-- <select id="getByLeave" resultType="LeavesReport" parameterType="map">       
+		SELECT a.id,a.leave_type,a.leave_rule, a.value, a.status,b.id,b.type from (select id,leave_type,leave_rule,value,status from 
+   hrms.leave_rule_assosication_mst)a left join (select id ,type from hrms.leave_types_mst)b on a.leave_type=b.id where leave_type=#{p.leave_type}   
+	  </select> -->
+	  
+	   <select id="getByLeave" resultType="LeavesReport" parameterType="java.lang.Integer">       
+SELECT a.id,a.leave_type,a.leave_rule, a.gender,a.statusvalue,a.useddays,a.maxdays,a.maxleaves,a.workdays,a.applicabledays, a.status,b.id,b.type from (select id,leave_type,leave_rule,gender,statusvalue,useddays,maxdays,maxleaves,workdays,applicabledays,status from 
+   hrms.leave_rule_assosication_mst)a left join (select id ,type from hrms.leave_types_mst)b on a.leave_type=b.id where leave_type=#{p.leave_type}    
+	  </select>
+	  
+	  
+	  
+	   <select id="GetLeavesSummaryReport" resultType="LeavesReport" parameterType="java.lang.Integer"> 
+	   
+	         
+
+	  </select> 
+	  
+	  
+	  <select id="getreleaseamount" resultType="LeavesReport">
+
+
+		<!-- select a.empid,a.employeename as name,c.name as financialyear,c.year_id 
+			as financial_year,d.name as payroll_month,d.id,b.amount,b.lop_days from (select 
+			empid,concat(first_name,'',last_name) as employeename from hrms.employee_personal_details 
+			where empid= #{p.empid})a inner join (select empid,financial_year,month,lop_days,amount 
+			from hrms.employee_lop_pay)b on a.empid=b.empid inner join (select id as 
+			year_id,name from hrms.financial_year_mst)c on c.year_id=b.financial_year 
+			inner join (select id,name from hrms.months_mst)d on d.id=b.month -->
+
+		select empid,financial_year,month,lop_days,amount from
+		hrms.employee_lop_pay where empid = #{p.empid} and status='FALSE';
+    
+	</select>
+
+	<insert id="Insertloppayrolldata" parameterType="map">
+	<!-- insert into
+	hrms.employee_lop_payroll(financial_year,month,empid,payslip_heads
+	,amount)
+	(select #{p.financial_year},#{p.month},#{p.empid},a.payslip_heads,sum(a.amount)
+	from ((select c.financial_year,c.month,a.empid,b.payslip_heads,
+	(case when b.entity_type=1 then ((c.amount/100)* b.value)
+	when b.entity_type=0 then b.value end) as amount from hrms.employee_lop_pay
+	c inner join hrms.employee_ctc_association a on ( (c.empid=a.empid))
+	inner join hrms.ctc_calculator_details b on
+	(a.ctc_calculator=b.ctc_calculator) where b.entity_type!=2 and
+	c.status='f' )
+	union
+	(select c.financial_year,c.month,a.empid,a.payslip_heads,sum((case when
+	b.entity_type=1 then ((c.amount/100)* b.value)
+	when b.entity_type=0 then b.value end)) from hrms.employee_lop_pay c
+	inner join (select
+	a.empid,a.ctc_calculator,b.payslip_heads,b.entity_type,b.value,unnest(string_to_array(b.subtractheads,','))as
+	heads from hrms.employee_ctc_association a inner join
+	hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator)
+	where b.entity_type=2 )a on (c.empid=a.empid) inner join
+	hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator and
+	a.heads::int=b.payslip_heads) where c.status='f' group by
+	c.financial_year,c.month,a.empid,a.payslip_heads )) a group by
+	a.payslip_heads) -->
+
+
+	insert into
+	hrms.employee_lop_payroll(financial_year,month,empid,payslip_heads
+	,amount)
+	(select
+	#{p.financial_year},#{p.month},#{p.empid},a.payslip_heads,sum(a.amount)
+	from ((select c.financial_year,c.month,a.empid,b.payslip_heads,
+	(case when b.entity_type=1 then ((c.amount/100)* b.value)
+	when b.entity_type=0 then 0 end) as amount from hrms.employee_lop_pay c
+	inner join hrms.employee_ctc_association a on
+	( (c.empid=a.empid)) inner join hrms.ctc_calculator_details b on
+	(a.ctc_calculator=b.ctc_calculator) where b.entity_type!=2 and
+	c.status='f')
+	union
+	(select c.financial_year,c.month,a.empid,a.payslip_heads,sum((case when
+	b.entity_type=1 then ((c.amount/100)* b.value)
+	when b.entity_type=0 then 0 end)) from hrms.employee_lop_pay c inner join
+	(select a.empid,a.ctc_calculator,
+	b.payslip_heads,b.entity_type,b.value,unnest(string_to_array(b.subtractheads,','))as
+	heads from hrms.employee_ctc_association a inner join
+	hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator)
+	where b.entity_type=2 )a on (c.empid=a.empid) inner join
+	hrms.ctc_calculator_details b on (a.ctc_calculator=b.ctc_calculator and
+	a.heads::int=b.payslip_heads) where c.status='f'
+	group by c.financial_year,c.month,a.empid,a.payslip_heads )) a group by
+	a.payslip_heads)
+
+	
+		</insert>
+		
+		<select id="EncashmentStatus" resultType="LeavesReport">
+		SELECT id,status
+		 from
+		hrms.leave_encashment_status;
+	</select>
+		
+		<update id="Updatelopdate" parameterType="map">
+
+		update hrms.employee_lop_pay
+		set status= 'TRUE' , ctc_calculator=
+		#{p.ctc_calculatorid} , financial_year=#{p.financial_year }
+		where empid=#{p.empid}
+
+	</update>
+	  
+	  <select id="GetEncashdetails" resultType="LeavesReport">
+
+	select p.empid as empid,
+	CAST(p.years as Integer) as calendar_year,p.leaves as
+	total_leaves,p.used_leaves as used_leaves,p.available_leaves as
+	leaves_availed,p.encash as leave_encashed,p.forwarded_leaves as
+	leaves_forwarded,p.basic as basic_salary ,p.spl as special_allowance,((p.basic +
+	p.spl)*p.encash) as encashed_amount from (with leaves as(select
+	s.empid,s.years,s.leaves,s.used_leaves,s.available_leaves,s.encash,(s.available_leaves-s.encash)
+	as forwarded_leaves from (select
+	r.empid,r.years,r.leaves,r.used_leaves,r.available_leaves,(case when
+	r.available_leaves >=15 then 15
+	when r.available_leaves>0 and
+	15>r.available_leaves then r.available_leaves
+	when 0>r.available_leaves
+	then 0 end) as encash from
+	(select q.empid,q.years,(case when
+	q.lastyear>0 then q.leaves+lastyear else
+	q.leaves end)
+	leaves,q.used_leaves,(case when q.lastyear>0 then
+	q.available_leaves+lastyear else q.available_leaves
+	end)available_leaves from (select
+	p.empid,p.years,p.leaves,p.used_leaves,p.available_leaves,coalesce(lag(p.available_leaves,1)
+	OVER (PARTITION BY p.empid ORDER BY p.years),0)-15 lastyear from
+	(select a.empid,a.years,a.leaves,coalesce(b.used_leaves,0) as
+	used_leaves,a.leaves-coalesce(b.used_leaves,0) as available_leaves from
+	(select a.empid,a.years,(case when b.olddays >15 and days>15 then
+	(a.months*2.5)-2
+	when b.olddays >15 and 15>=days then (a.months*2.5)-1
+	when 15>=b.olddays and 15>= days then (a.months*2.5)
+	when 15>= b.olddays
+	and days> 15 then (a.months*2.5)-1
+	when b.olddays is null and days is
+	null then (a.months*2.5) end)as leaves
+	from (select
+	b.empid,b.joining_date,b.years,count(*) months from
+	(select
+	a.empid,a.joining_date,extract(month from a.months)
+	months,extract(years from a.months) years from (select
+	empid,joining_date,generate_series(joining_date,now()::date,interval '1
+	month') months from hrms.employee_employment_details where
+	employee_type=0 and status=0 and empid=#{p.empid}) a) b group by
+	b.empid,b.joining_date,b.years) a
+	left join
+	(select empid,extract(year
+	from joining_date) oldyears,extract(day from
+	joining_date)
+	olddays,extract(year from now()) years,extract(day from
+	now()) days from
+	hrms.employee_employment_details where employee_type=0
+	and status=0 and
+	empid=#{p.empid}) b on (a.empid=b.empid and
+	a.years=b.oldyears)) a
+	left
+	join
+	(select a.empid,b.year_name::int,sum(a.used_leaves) as used_leaves
+	from
+	hrms.employee_leave_summary a inner join hrms.calendar_year_mst b
+	on
+	(a.calendar_year=b.id) where empid=#{p.empid} group by
+	a.empid,b.year_name) b on (a.empid=b.empid and
+	a.years=b.year_name::int) order by a.years) p)q) r) s),
+	ctc as (select
+	a.empid,a.annual_salary,coalesce(sum(case when
+	payslip_heads=1 then
+	a.daysal end),0) as basic,coalesce(sum(case when
+	payslip_heads=2 then
+	a.daysal end),0) as hra,coalesce(sum(case when
+	payslip_heads=3 then
+	a.daysal end),0) as ce,coalesce(sum(case when
+	payslip_heads=4 then
+	a.daysal end),0) as ma,coalesce(sum(case when
+	payslip_heads=6 then
+	a.daysal end),0) as lta,coalesce(sum(case when
+	payslip_heads=20 then
+	a.daysal end),0) as epf from (select
+	a.empid,a.ctc_calculator,b.payslip_heads,b.entity_type,round((a.annual_salary/12)/(SELECT
+	DATE_PART('days',DATE_TRUNC('month', NOW()) + '1 MONTH'::INTERVAL - '1
+	DAY'::INTERVAL ))) as annual_salary, b.value,round(case when
+	entity_type=1 then ((b.value/100)*(a.annual_salary/12)/(SELECT
+	DATE_PART('days',DATE_TRUNC('month', NOW()) + '1 MONTH'::INTERVAL - '1
+	DAY'::INTERVAL )))
+	when entity_type=0 then (b.value/12)/(SELECT
+	DATE_PART('days',DATE_TRUNC('month', NOW()) + '1 MONTH'::INTERVAL - '1
+	DAY'::INTERVAL )) end) as daysal from hrms.employee_ctc_association a
+	inner join hrms.ctc_calculator_details b on
+	(a.ctc_calculator=b.ctc_calculator) where b.entity_type!=2 and
+	a.empid=#{p.empid} ) a group by a.empid,a.annual_salary)
+	select
+	a.*,b.basic,(b.annual_salary-(b.basic+b.hra+b.ma+b.lta+b.ce)-b.epf) as
+	spl from leaves a inner join ctc b on (a.empid=b.empid)) p
+	
+
+
+
+	</select>
+	
+	<insert id="LeaveEncashdataprocess"
+		parameterType="java.lang.Integer">
+
+	INSERT INTO hrms.employee_leave_encashment(
+	encashed_status,empid,
+	calendar_year,total_leaves,leaves_availed,leaves_forwarded,leave_encashed,basic_salary,special_allowance,encashed_amount)
+	(select CAST(#{p.id} as integer),p.empid,
+	CAST(p.years as Integer) as
+	calendar_year,p.leaves as
+	total_leaves,p.available_leaves as
+	leaves_availed ,p.forwarded_leaves as
+	leaves_forwarded,p.encash as
+	leave_encashed,p.basic as basic_salary ,p.spl as
+	special_allowance,((p.basic +
+	p.spl)*p.encash) as encashed_amount from
+	(with leaves as(select
+	s.empid,s.years,s.leaves,s.used_leaves,s.available_leaves,s.encash,(s.available_leaves-s.encash)
+	as forwarded_leaves from (select
+	r.empid,r.years,r.leaves,r.used_leaves,r.available_leaves,(case when
+	r.available_leaves >=15 then 15
+	when r.available_leaves>0 and
+	15>r.available_leaves then r.available_leaves
+	when 0>r.available_leaves
+	then 0 end) as encash from
+	(select q.empid,q.years,(case when
+	q.lastyear>0 then q.leaves+lastyear else
+	q.leaves end)
+	leaves,q.used_leaves,(case when q.lastyear>0 then
+	q.available_leaves+lastyear else q.available_leaves
+	end)available_leaves from (select
+	p.empid,p.years,p.leaves,p.used_leaves,p.available_leaves,coalesce(lag(p.available_leaves,1)
+	OVER (PARTITION BY p.empid ORDER BY p.years),0)-15 lastyear from
+	(select a.empid,a.years,a.leaves,coalesce(b.used_leaves,0) as
+	used_leaves,a.leaves-coalesce(b.used_leaves,0) as available_leaves from
+	(select a.empid,a.years,(case when b.olddays >15 and days>15 then
+	(a.months*2.5)-2
+	when b.olddays >15 and 15>=days then (a.months*2.5)-1
+	when 15>=b.olddays and 15>= days then (a.months*2.5)
+	when 15>= b.olddays
+	and days> 15 then (a.months*2.5)-1
+	when b.olddays is null and days is
+	null then (a.months*2.5) end)as leaves
+	from (select
+	b.empid,b.joining_date,b.years,count(*) months from
+	(select
+	a.empid,a.joining_date,extract(month from a.months)
+	months,extract(years from a.months) years from (select
+	empid,joining_date,generate_series(joining_date,now()::date,interval '1
+	month') months from hrms.employee_employment_details where
+	employee_type=0 and status=0 and empid=#{p.empid}) a) b group by
+	b.empid,b.joining_date,b.years) a
+	left join
+	(select empid,extract(year
+	from joining_date) oldyears,extract(day from
+	joining_date)
+	olddays,extract(year from now()) years,extract(day from
+	now()) days from
+	hrms.employee_employment_details where employee_type=0
+	and status=0 and
+	empid= #{p.empid}) b on (a.empid=b.empid and
+	a.years=b.oldyears)) a
+	left
+	join
+	(select a.empid,b.year_name::int,sum(a.used_leaves) as used_leaves
+	from
+	hrms.employee_leave_summary a inner join hrms.calendar_year_mst b
+	on
+	(a.calendar_year=b.id) where empid=#{p.empid} group by
+	a.empid,b.year_name) b on (a.empid=b.empid and
+	a.years=b.year_name::int) order by a.years) p)q) r) s),
+	ctc as (select
+	a.empid,a.annual_salary,coalesce(sum(case when
+	payslip_heads=1 then
+	a.daysal end),0) as basic,coalesce(sum(case when
+	payslip_heads=2 then
+	a.daysal end),0) as hra,coalesce(sum(case when
+	payslip_heads=3 then
+	a.daysal end),0) as ce,coalesce(sum(case when
+	payslip_heads=4 then
+	a.daysal end),0) as ma,coalesce(sum(case when
+	payslip_heads=6 then
+	a.daysal end),0) as lta,coalesce(sum(case when
+	payslip_heads=20 then
+	a.daysal end),0) as epf from (select
+	a.empid,a.ctc_calculator,b.payslip_heads,b.entity_type,round((a.annual_salary/12)/(SELECT
+	DATE_PART('days',DATE_TRUNC('month', NOW()) + '1 MONTH'::INTERVAL - '1
+	DAY'::INTERVAL ))) as annual_salary, b.value,round(case when
+	entity_type=1 then ((b.value/100)*(a.annual_salary/12)/(SELECT
+	DATE_PART('days',DATE_TRUNC('month', NOW()) + '1 MONTH'::INTERVAL - '1
+	DAY'::INTERVAL ))) 
+	when entity_type=0 then (b.value/12)/(SELECT
+	DATE_PART('days',DATE_TRUNC('month', NOW()) + '1 MONTH'::INTERVAL - '1
+	DAY'::INTERVAL )) end) as daysal from hrms.employee_ctc_association a
+	inner join hrms.ctc_calculator_details b on
+	(a.ctc_calculator=b.ctc_calculator) where b.entity_type!=2 and
+	a.empid=
+	#{p.empid} ) a group by a.empid,a.annual_salary)
+	select
+	a.*,b.basic,(b.annual_salary-(b.basic+b.hra+b.ma+b.lta+b.ce)-b.epf) as
+	spl from leaves a inner join ctc b on (a.empid=b.empid)) p)
+
+
+	     
+	</insert>
+	
+	<update id="UpdateRelieveData" parameterType="map">
+
+		update
+		hrms.employee_employment_details
+		set relieved_date= #{p.relieved_date} , notice_period=
+		#{p.notice_period},status=1
+		where
+		empid=#{p.empid}
+
+	</update>
+	  
+	  
+</mapper>                          

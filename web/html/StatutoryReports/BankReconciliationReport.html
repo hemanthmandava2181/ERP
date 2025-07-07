@@ -1,0 +1,186 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/finance/satutaryreports/bankreconciliationreport.js"></script>
+
+
+
+<div id="bankreconciliationreportId" data-ng-controller="bankreconciliationreportController">
+
+
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Bank Reconciliation Report</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Finance</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Statutory Reports</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Bank Reconciliation Report</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Bank Reconciliation Report</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">Bank Account
+                                                                <select name="select" class="form-control"
+                                                                   
+						data-ng-model="data.object.id">
+						<option>--Select--</option>   
+						<option data-ng-repeat="account in bankAccounts"
+							value="{{account.id}}">{{account.account_name}}</option>
+					</select>   
+                                                            </div>     
+                                                           
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">From Date
+                                                                <input class="form-control" type="date" data-ng-model = "data.object.from_date" id = "from" />
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">To Date
+                                                                <input class="form-control" type="date" data-ng-model = "data.object.to_date" id = "to" />
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                                                <button class="btn btn-primary" data-ng-click = "getBankDetails(data.object);">SUBMIT</button>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+<div id = "report">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                      
+
+                                                        <div class="row">
+                                                             <div class="col-sm-12">
+                                                                <h6 class="card-title">Bank Reconciliation Report</h6><br>
+                                                                <div class="card">
+                                                                    <div class="card-header">
+
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <div class="row">
+                                                                            <div class="dt-responsive table-responsive">
+                                                                                <table id="order-table" class="table table-hover table-bordered nowrap">
+                                                                                    <thead class="btn-grd-primary">
+                                                                                        <tr>
+                                                                                            <th style="min-width: 100px;max-width: 100px;text-align: center;">S.No</th>
+                                                                                            <th style="min-width: 250px;max-width: 250px;text-align: center;">Vendor Name</th>
+                                                                                            <th style="min-width: 250px;max-width: 250px;text-align: center;">Cheque No</th>
+                                                                                            <th style="min-width: 250px;max-width: 250px;text-align: center;">Cheque Date</th>
+                                                                                            <th style="min-width: 250px;max-width: 250px;text-align: center;">Bank Date</th>
+                                                                                            <th style="min-width: 250px;max-width: 250px;text-align: center;">Account Type</th>
+                                                                                             <th style="min-width: 250px;max-width: 250px;text-align: center;">Amount</th>
+                                                                                              <th style="min-width: 250px;max-width: 250px;text-align: center;">Action</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>   
+
+                                                                                      <tr  data-ng-repeat="bank in filteredResult = bankDetails | filter:search">  
+                                                                                      <td style="text-align: center;">{{$index+1}}</td>     
+										<td style="text-align: center;">{{bank.vendor_name}}</td>       
+										<td style="text-align: center;">{{bank.cheque_no}}</td>       
+										<td style="text-align: center;">{{bank.cheque_date}}</td> 
+										<td style="text-align: center;">{{bank.bank_date}}</td>  
+										<td style="text-align: center;">{{bank.account_type}}</td>
+										<td style="text-align: center;">{{bank.amount}}</td>
+										<td><button class="btn btn-success btn-sm mr-2" data-toggle="modal"
+								data-target="#large-Modal" data-ng-click="getByBankDetails(bank.id);">Update</button></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Update Bank Date</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-primary" style="border-color: #4099ff;">
+								<div class="panel-body p-3">
+								 <div class="col-sm-12 col-xl-3 m-b-30">Bank Date
+                                                                <input type="date" class="form-control" id="bank" placeholder="Select Date" data-ng-model="data.object.bank_date"/>	
+                                                            </div>
+								</div>
+								</div>
+								</div>
+								</div>
+								</div>
+								<div class="modal-footer">
+								<button type="button" id="sub" value="Register"   
+			class="btn btn-md btn-primary" data-ng-click="updateBankDetails(data.object);"
+			>Update</button></div>	
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+								</div>
+								</div>
+								</div>
+								
+                                                          
+                                                        </div>
+
+
+                                                       </div>
+                                                </div>
+                                            </div>
+                                            </div>
+</div>
+                                        
+   
+
+ 
+    
+
+    <script>
+        $('#simpletable1').DataTable();
+    </script>
+<script>
+		jQuery(document).ready(function() { 
+			$("#report").hide();
+			$("#report1").hide();
+			angular.bootstrap(jQuery("#bankreconciliationreportId"), [ 'bankreconciliationreport' ]);
+		});
+	</script>

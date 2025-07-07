@@ -1,0 +1,135 @@
+
+<script src="/erp/scripts/general/reports/claimsquarterwisereport.js"></script>
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-block caption-breadcrumb">
+				<div class="breadcrumb-header">
+					<h5>Claim Quarter Wise Reports</h5>
+				</div>
+				<div class="page-header-breadcrumb">
+					<ul class="breadcrumb-title">
+						<li class="breadcrumb-item"><a href="#!"> <i
+								class="ti-home"></i>
+						</a></li>
+						<li class="breadcrumb-item"><a href="#!"></a></li>
+						<li class="breadcrumb-item"><a href="#!"></a></li>
+						<li class="breadcrumb-item"><a href="#!"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- BreadCrumb End -->
+<div id="claimsQuaterwise"
+	data-ng-controller="ClaimsQuaterwiseReportController">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Sample Page</h6>
+				</div>
+				<div class="card-body">
+					<div class="row cc-margin-bottom">
+						<div class="col-md-4 col-sm-4 col-xs-12">
+
+							<label>Financial Year <span class="cc-mandatory">*</span></label>
+							<select class="form-control" 
+								data-ng-model="data.object.financial_year">
+								<option></option>
+								<option data-ng-repeat="financialyear in financialyears"
+									value="{{financialyear.id}}">{{financialyear.name}}</option>
+							</select>
+
+
+
+						</div>
+						<div class="col-sm-12 col-xl-4 m-b-30">
+							<label>Quarter <span class="cc-mandatory">*</span></label>
+							<div>
+								<select class="js-example-basic-multiple col-sm-12"
+									>
+									<option value="%">ALL</option>
+									<option value="2">Quarter 1 (Apr - Jun)</option>
+									<option value="3">Quarter 2 (Jul - Sep)</option>
+									<option value="4">Quarter 3 (Oct - Dec)</option>
+									<option value="1">Quarter 4 (Jan - Mar)</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-3">
+							<button class="btn btn-primary" style="margin-left: 419px;"
+								value="submit" type="submit"
+								data-ng-click="getclaimsquarterwise(data.object);">SUBMIT</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Sample Page</h6>
+				</div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table id="order-table"
+							class="table table-striped table-bordered nowrap">
+							<thead class="btn-grd-primary">
+								<tr>
+									<th>S.No</th>
+									<th>Quarter</th>
+									<th>Advance Amount(<span class="fa fa-inr"></span>)
+									</th>
+									<th>Reimbursement Amount(<span class="fa fa-inr"></span>)
+									</th>
+									<th>Imprest Amount(<span class="fa fa-inr"></span>)
+									</th>
+									<th>Imprest Details Amount(<span class="fa fa-inr"></span>)
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr
+									data-ng-repeat="data in claimqueterwise =(linedetails | filter:search)">
+									<td>{{$index+1}}</td>
+
+									<td>{{data.quater}}</td>
+									<td>{{data.advanceamount}}</td>
+									<td>{{data.reimbersementamount}}</td>
+									<td>{{data.Inst_date}}</td>
+									<td>{{data.imprestamount}}</td>
+									<td>{{data.imprestamountdetails}}</td>
+									
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<script>
+jQuery(document).ready(function() {
+	
+	$("#display").show();
+	$("#display1").hide();
+
+	angular.bootstrap(jQuery("#claimsQuaterwise"), [ 'claimsQuaterwiseModule' ]);
+	
+});  
+
+       
+</script>

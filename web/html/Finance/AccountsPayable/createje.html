@@ -1,0 +1,321 @@
+<div>
+<script src="/erp/scripts/finance/createje.js"></script>
+<div id="createjeId" data-ng-controller="Createjecontroller">
+	<div class = "mainhome">    
+	<h3 style="margin-left:18%;position:absolute;top:160px;"><b>Create Journal Voucher</b></h3>
+	<div style="top:200px;position:absolute;">
+		<button class = "btn btn-primary pull-right" id = "journal" type = "submit" onclick = "">Payroll Journal Entry</button>
+	</div>
+	<div class = "container" style = "margin-left:18%;margin-top:0%;margin-right:2%">    
+	<div class="panel panel-primary" style="margin-left: 18%;top:200px;width:1020px">         
+	    <div class="panel-body">    
+	   	<form class="form" data-role="form">                
+			<div class="form-group row">                      
+				<div class="form-group col-md-4">           
+	       			<label>Order Type&nbsp;</label>   
+		   			<select class="form-control" data-ng-model="data.object.order_type">
+							<option value = "workorder">Work Order</option>    
+							<option value = "others">Others</option>
+					</select>
+				</div> 
+				
+				<!-- work order -->   
+				<div data-ng-show="data.object.order_type != 'others'">
+					<div class="form-group col-md-4">
+	       			<label>Work Order NO.&nbsp;</label>
+		   				<select class="form-control" data-ng-model="data.object.workorder_no">
+							<option data-ng-repeat="ctc in ctcs" 
+								value="{{ctc.id}}">{{ctc.name}}</option>    
+						</select>
+				</div>         						       
+				<div class="form-group col-md-4">                 
+	      			<label>Cost Center&nbsp;</label>   
+		   				<select class="form-control" data-ng-model="data.object.cost_centerid">
+							<option data-ng-repeat="ctc in ctcs" 
+								value="{{ctc.id}}">{{ctc.name}}</option>
+						</select>
+				</div>  
+				</div>	
+				<div data-ng-show="data.object.order_type == 'others'">			
+				<div class="form-group col-md-4">
+	       			<label>Cost Center&nbsp;</label>
+		   				<select class="form-control"  data-ng-model="data.object.cost_centerid">
+							<option data-ng-repeat="ctc in ctcs" 
+								value="{{ctc.id}}">{{ctc.name}}</option>
+						</select>   
+				</div> 
+				</div>        					    	              	 						        
+			</div>  
+			<div data-ng-show="data.object.order_type == 'others'">
+				<div class="form-group row">
+					<div class="form-group col-md-4">         
+					<label>Vendor&nbsp;</label>
+						<select class="form-control"  data-ng-model="data.object.vendor">
+							<option data-ng-repeat="ctc in ctcs" 
+								value="{{ctc.id}}">{{ctc.name}}</option>
+						</select>		    
+				</div>
+				<div class="form-group col-md-4">         
+					<label>Program&nbsp;</label>
+						<select class="form-control"  data-ng-model="data.object.program">
+							<option data-ng-repeat="ctc in ctcs" 
+								value="{{ctc.id}}">{{ctc.name}}</option>
+						</select>			    
+				</div>
+				<div class="form-group col-md-4">         
+					<label>Service&nbsp;</label>
+						<select class="form-control"  data-ng-model="data.object.service">
+							<option data-ng-repeat="ctc in ctcs" 
+								value="{{ctc.id}}">{{ctc.name}}</option>
+						</select>			    
+				</div>
+				</div>
+			</div>
+			</form>
+	  </div>
+</div>
+    
+<!-- work order -->
+<div data-ng-show="data.object.order_type != 'others'">
+	<div class="panel panel-primary" style="margin-left: 18%;top:365px;width:1020px">
+		<div class="panel-heading"><h4>Work Order Details</h4></div>
+		<div class="panel-body">
+			<div class="form-group col-md-4">         
+					<label>Vendor&nbsp;</label>
+						<input type="text" class="form-control" disabled data-ng-model="data.object.vendor"/>			    
+			</div>
+			<div class="form-group col-md-4">         
+					<label>Program&nbsp;</label>
+						<input type="text" class="form-control" disabled data-ng-model="data.object.program"/>		    
+			</div>
+			<div class="form-group col-md-4">         
+				<label>Service&nbsp;</label>
+					<input type="text" class="form-control" disabled data-ng-model="data.object.service"/>			    
+			</div>
+		</div>
+	</div>
+</div>   
+<div data-ng-show="data.object.order_type != 'others'">
+	<div class="panel panel-primary" style="margin-left: 18%;top:555px;width:1020px">
+		<div class="panel-heading"><h4>Payment Terms</h4></div>
+		<div class="panel-body table-responsive">
+			<table class="table table-bordered">  
+				<thread> 
+					<tr style='background-color: CornflowerBlue'>        
+						<th align="left">S.no</th>        
+						<th align="left">Title</th>   
+						<th align="left">Rate</th>    
+						<th align="left">Condition</th>    
+						<th align="left">Amount(Rs.)</th> 	   		   	             
+					</tr>             
+					<tr data-ng-repeat="payment in filteredResult = data | filter:search">      
+					     <td><input type="checkbox" data-ng-model="projectEmpArr[payment.emp_id]" data-ng-checked="allSelected()"></td>          
+						 <td align="left"></td>             
+						 <td align="left"></td>
+						 <td align="left"></td>
+						 <td align="left"></td>  	     
+					</tr>          
+				</thread>                         
+			</table>  
+		</div>
+	</div>
+</div>
+<div data-ng-show="data.object.order_type != 'others'">
+	<div class="panel panel-primary" style="margin-left: 18%;top:705px;width:1020px">
+		<div class="panel-heading"><h4>Invoice</h4></div>
+		<div class = "panel-body">
+			<div class="form-group row">
+				<div class="form-group col-md-4">         
+					<label>Invoice#&nbsp;</label>
+						<input type="text" class="form-control" placeholder = "Invoice number" data-ng-model="data.object.invoice_number"/>			    
+				</div>
+				<div class="form-group col-md-4">         
+						<label>Invoice Date&nbsp;</label>
+							<input type="date" class="form-control" data-ng-model="data.object.invoice_date"/>		    
+				</div>
+				<div class="form-group col-md-4">         
+					<label>Due Date&nbsp;</label>
+						<input type="date" class="form-control" data-ng-model="data.object.due_date"/>			    
+				</div>
+			</div>	
+			<div class="form-group row">
+				<div class="form-group col-md-4">         
+					<label>Amount(Rs.)&nbsp;</label>
+						<input type="text" class="form-control" disabled placeholder = "Amount" data-ng-model="data.object.amount"/>			    
+				</div>
+				<div class="form-group col-md-4">         
+						<label>Description&nbsp;</label>
+							<textarea type="text" class="form-control" data-ng-model="data.object.descripton"></textarea>		    
+				</div>
+				<div class="form-group col-md-4">         
+					<label>Attachments&nbsp;</label>   
+						<input type="file" class="form-control" data-ng-model="data.object.service"/>			    
+				</div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading"><h4>Line Items</h4></div>
+				<div class = "panel-body">
+					<h4>Invoice Line Items</h4>
+					<div id="dataDiv" style="overflow-x:auto;">
+						<table class="table table-bordered">  
+							<thread> 
+								<tr style='background-color: CornflowerBlue'>        
+									<th style="min-width: 200px;max-width: 200px;">GL Account</th>        
+									<th style="min-width: 200px;max-width: 200px;">Description</th>   
+									<th style="min-width: 200px;max-width: 200px;">HSN/SAC Code</th>    
+									<th style="min-width: 200px;max-width: 200px;">Duration</th>    
+									<th style="min-width: 200px;max-width: 200px;">No.Of Trainees</th> 	
+									<th style="min-width: 200px;max-width: 200px;">No.Of Batches</th>        
+									<th style="min-width: 200px;max-width: 200px;">Rate</th>   
+									<th style="min-width: 200px;max-width: 200px;">Value</th>    
+									<th style="min-width: 200px;max-width: 200px;">Location</th>    
+									<th style="min-width: 200px;max-width: 200px;">Documents</th> 	   		   	             
+								</tr>             
+								<tr> 
+									 <td align="left">
+									 	<select class="form-control"  data-ng-model="data.object.glaccount">
+											<option data-ng-repeat="ctc in ctcs" 
+												value="{{ctc.id}}">{{ctc.name}}</option>
+										</select>
+									 </td>             
+									 <td align="left">
+									 	<textarea type="text" class="form-control" placeholder = "description" data-ng-model="data.object.descripton"></textarea>
+									 </td>
+									 <td align="left">
+									 	<input type="text" class="form-control" placeholder = "HSN/SAC code" data-ng-model="data.object.hsn_code"/>
+									 </td>
+									 <td align="left">
+									 	<label>Days</label><input type="text" plceholder = "days" class="form-control" data-ng-model="data.object.days"/>
+									 	<label>Hours</label><input type="text" placeholder = "hours" class="form-control" data-ng-model="data.object.hours"/>
+									 </td> 
+									 <td align="left">
+									 	<input type="text" class="form-control" placeholder = "no.of trainees" data-ng-model="data.object.noof_trainees"/>
+									 </td>
+									 <td align="left">
+									 	<input type="text" class="form-control" placeholder = "nO.of batches" data-ng-model="data.object.noof_batches"/>
+									 </td>
+									 <td align="left">
+									 	<input type="text" class="form-control" placeholder = "rate" data-ng-model="data.object.rate"/>
+									 </td>
+									 <td align="left">
+									 	<input type="text" class="form-control" disabled placeholder = "value" data-ng-model="data.object.value"/>
+									 </td> 	
+									 <td align="left">
+									 	<input type="text" class="form-control" disabled placeholder = "location" data-ng-model="data.object.location"/>
+									 </td>
+									 <td align="left">
+									 	<input type="file" class="form-control" data-ng-model="data.object.document"/>
+									 </td>     
+								</tr>          
+							</thread>                         
+						</table> 
+					</div> 
+					<br>
+					<table class="table table-bordered">  
+						<thread> 
+							<tr style='background-color: CornflowerBlue'>        
+								<th align="left">GL Account</th>        
+								<th align="left">Item Description</th>   
+								<th align="left">HSN/SAC Code</th>    
+								<th align="left">Amount(Rs.)</th>    
+								<th align="left">Location</th> 	
+								<th align="left">Uploaded Documents</th>        
+								<th align="left">Action</th>   	   		   	             
+							</tr>             
+							<tr data-ng-repeat="payment in filteredResult = data | filter:search">          
+								 <td align="left"></td>             
+								 <td align="left"></td>
+								 <td align="left"></td>
+								 <td align="left"></td> 
+								 <td align="left"></td>
+								 <td align="left"></td>
+								 <td align="left"></td>  	     
+							</tr>          
+						</thread>                         
+					</table>
+				</div>
+				<center><button class="btn btn-primary" data-ng-click="getCalendarDetails(data.object);" id="invoice" value="submit" type="submit">Submit</button></center>
+			</div>
+		</div>
+	</div>
+</div>
+<div data-ng-show="data.object.order_type == 'others'">
+	<div class="panel panel-primary" style="margin-left: 18%;top:450px;width:1020px">
+		<div class="panel-heading"><h4>Line Items</h4></div>
+		<div class = "panel-body">
+			<div class="form-group row">
+				<div class="form-group col-md-4">         
+					<label>Invoice#&nbsp;</label>
+						<input type="text" class="form-control" placeholder = "Invoice number" data-ng-model="data.object.invoice_number"/>			    
+				</div>
+				<div class="form-group col-md-4">         
+						<label>Invoice Date&nbsp;</label>
+							<input type="date" class="form-control" data-ng-model="data.object.invoice_date"/>		    
+				</div>
+				<div class="form-group col-md-4">         
+					<label>Due Date&nbsp;</label>
+						<input type="date" class="form-control" data-ng-model="data.object.due_date"/>			    
+				</div>
+			</div>	
+			<div class="form-group row">
+				<div class="form-group col-md-4">         
+					<label>Amount(Rs.)&nbsp;</label>
+						<input type="text" class="form-control" disabled placeholder = "Amount" data-ng-model="data.object.amount"/>			    
+				</div>
+				<div class="form-group col-md-4">         
+						<label>Description&nbsp;</label>
+							<textarea type="text" class="form-control" data-ng-model="data.object.descripton"></textarea>		    
+				</div>
+				<div class="form-group col-md-4">         
+					<label>Attachments&nbsp;</label>   
+						<input type="file" class="form-control" data-ng-model="data.object.service"/>			    
+				</div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading"><h4>Line Items</h4></div>
+				<div class = "panel-body">
+					<h4>Invoice Line Items</h4>
+					<table class="table table-bordered">  
+						<thread> 
+							<tr style='background-color: CornflowerBlue'>           
+								<th align="left">GL Account</th>        
+								<th align="left">Item Description</th>   
+								<th align="left">HSN/SAC Code</th>    
+								<th align="left">Amount(Rs.)</th>    
+								<th align="left">Location</th> 	
+								<th align="left">Uploaded Documents</th>        
+								<th align="left">Action</th>   	   		   	             
+							</tr>             
+							<tr data-ng-repeat="payment in filteredResult = data | filter:search">          
+								 <td align="left"></td>             
+								 <td align="left"></td>
+								 <td align="left"></td>
+								 <td align="left"></td> 
+								 <td align="left"></td>
+								 <td align="left"></td>
+								 <td align="left"></td>  	     
+							</tr>          
+						</thread>                         
+					</table>
+				</div>
+				<center><button class="btn btn-primary" data-ng-click="getCalendarDetails(data.object);" id="invoice" value="submit" type="submit">Submit</button></center>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+  
+   
+<br>
+   </div>
+</div>
+
+<script>
+jQuery(document).ready(function() { 
+	angular.bootstrap(jQuery("#createjeId"), [ 'createje' ]);
+});
+
+</script>
+
+</div>

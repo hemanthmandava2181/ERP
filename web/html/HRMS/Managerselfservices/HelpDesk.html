@@ -1,0 +1,434 @@
+
+ <script
+	src="/erp/files/assets/js/erp-scripts/HRMS/EmployeeSelfServices/helpdesk.js"></script>
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="helpdeskId" data-ng-controller="HelpdeskController">
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Help Desk</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">HRMS</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Employee Self Services</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Help Desk</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        <!-- Content Starts Here -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">New Request</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">Request Category
+                                                                <label class="col-sm-3 col-form-label"></label>
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                <select name="select" class="form-control"    
+data-ng-model="data.object.request_categoryid" data-ng-change="getReqtypes(data.object);">
+<option></option>
+<option data-ng-repeat="categorie in categories"
+value="{{categorie.id}}">{{categorie.name}}</option>
+</select>  
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">Request Type
+                                                                <label class="col-sm-3 col-form-label"></label>
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                <select name="select" class="form-control"
+                                                                     data-ng-model="data.object.request_typeid">
+<option></option>
+<option data-ng-repeat="reqtype in reqtypes"  
+value="{{reqtype.id}}">{{reqtype.name}}</option>
+</select>
+                                                            </div>
+                                                            <label class="col-sm-12 col-form-label">Description</label>
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                <textarea rows="5" cols="5" class="form-control" placeholder="Enter Description" data-ng-model="data.object.description"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mt-4 text-center">
+                                            <button class="btn btn-grd-primary hor-grd text-center" data-ng-click="addhelpdesk(data.object);">Submit</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <ul class="nav nav-tabs  tabs" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" data-toggle="tab" href="#home1" role="tab">Requested List</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" data-toggle="tab" href="#profile1" role="tab">Closed List</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content tabs card-block">
+                                                        <div class="tab-pane active" id="home1" role="tabpanel">
+                                                            <div class="dt-responsive table-responsive">
+                                                                <table id="simpletable" class="table table-hover table-bordered nowrap">
+                                                                    <thead class="btn-grd-primary">
+                                                                        <tr>
+                                                                            <th>S.No</th>
+                                                                            <th>Request ID</th>
+                                                                            <th>Request Category</th>
+                                                                            <th> Request Type </th>
+                                                                            <th> Status </th>
+                                                                            <th> Request Date</th>
+                                                                            <th> Attachments</th>
+                                                                            <th>View Status </th>
+                                                                            <th> Update </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                       <tr data-ng-repeat="data in linedetails">   
+        <td>{{$index+1}}</td>   
+		<td>{{data.request_id}}</td>  
+		<td>{{data.name}}</td>	 
+		<td>{{data.request_typename}}</td>	 
+		<td>{{data.request_statusname}}</td>	 
+		<td>{{data.createddate}}</td>
+                                                                            <td><button class="btn btn-grd ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal"><i class="ti-files text-primary"></i></button></td>
+                                                                            <td>
+                                                                                <button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal3"data-ng-click="getByIdview(data.request_id);" ><i class="ti-eye text-primary"></i></button></td>
+                                                                            <td><button class="btn ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal2" data-ng-click="getById3(data.request_id);" ><i class="ti-pencil-alt text-primary"></i></button></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane" id="profile1" role="tabpanel">
+                                                            <div class="dt-responsive table-responsive">
+                                                                <table id="simpletable1" class="table table-hover table-bordered nowrap">
+                                                                    <thead class="btn-grd-primary">
+                                                                        <tr>
+                                                                            <th>S.No</th>
+                                                                            <th>Request ID</th>
+                                                                            <th>Request Category</th>
+                                                                            <th> Request Type </th>
+                                                                            <th> Status </th>
+                                                                            <th> Closed Date</th>
+                                                                            <th> Attachments</th>
+                                                                            <th>View Status </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr  data-ng-repeat="data in linedetails">
+                                                                            <td>{{$index+1}}</td>
+                                                                            <td>{{data.request_id}}</td>
+                                                                            <td>{{data.name}}</td>
+                                                                            <td>{{data.request_typename}}</td>
+                                                                            <td>{{data.request_statusname}}</td>
+                                                                            <td>{{data.createddate}}</td>
+                                                                            <td><button class="btn btn-grd ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal"><i class="ti-files text-primary"></i></button></td>
+                                                                            <td>
+                                                                                <button class="btn  ver-grd waves-effect"data-target="#large-Modal3"data-ng-click="getByIdview(data.request_id);" ><i class="ti-eye text-primary"></i></button></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#large-Modal">Large</button> -->
+                                <!-- Modal For View Documents -->
+                                <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">View Documents</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="dt-responsive table-responsive">
+                                                                    <table id="simpletable2" class="table table-hover table-bordered nowrap">
+                                                                        <thead class="btn-grd-primary">
+                                                                            <tr>
+                                                                                <th>Document Name</th>
+                                                                                <th>Download</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>{{data.docname}}</td>
+                                                                                <td><button class="btn btn-grd-primary ver-grd btn-sm"><i class="ti-arrow-down"></i>Download</button></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal  For Modify -->
+                                <div class="modal fade" id="large-Modal2" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Update Help Request</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12 col-xl-3 m-b-30">Request Category
+                                                                        <label class="col-sm-3 col-form-label"></label>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                        <select name="select" class="form-control" data-ng-model="data.object.request_categoryid"
+	  data-ng-change="getReqtypes(data.object);">  
+	  <option></option>   
+	   <option data-ng-repeat="categorie in categories"  value="{{categorie.id}}">{{categorie.name}}</option>
+	  </select>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-xl-3 m-b-30">Request Type
+                                                                        <label class="col-sm-3 col-form-label"></label>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                        <select name="select" class="form-control"data-ng-model="data.object.request_typeid">
+	 
+	   <option data-ng-repeat="reqtype in reqtypes"  value="{{reqtype.id}}">{{reqtype.name}}</option>
+	  </select> 
+                                                                    </div>
+                                                                    <label class="col-sm-12 col-form-label">Description</label>
+                                                                    <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter Description" data-ng-model="data.object.description"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-primary waves-effect waves-light " data-ng-click="updateData3(data.object);">Submit</button>
+                                                                </div>
+                                                                <!-- Modify Modal End -->
+                                                                <!-- Modal  For View -->
+                                                                <div class="modal fade" id="large-Modal3" tabindex="-1" role="dialog">
+                                                                    <div class="modal-dialog modal-lg" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title"> Request Details</h4>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">                                                                                                                              <span aria-hidden="true">&times;</span>
+                                                                               </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-12">
+                                                                                        <div class="card">
+                                                                                            <div class="card-body">
+                                                                                                <div class="row">
+                                                                                                    <label class="col-sm-3 col-form-label">Request ID</label>
+                                                                                                    <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                                                        <input class="form-control" type="text" data-ng-model="data.object.request_id" disabled/>
+                                                                                                    </div>
+                                                                                                    <label class="col-sm-3 col-form-label">Request Category</label>
+                                                                                                    <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                                                        <input class="form-control" type="text" data-ng-model="data.object.name"disabled />
+                                                                                                    </div>
+                                                                                                    <label class="col-sm-3 col-form-label">Request Type</label>
+                                                                                                    <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                                                        <input type="text" class="form-control"data-ng-model="data.object.request_typename"  disabled>
+                                                                                                    </div>
+                                                                                                    <label class="col-sm-3 col-form-label">Request Status</label>
+                                                                                                    <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                                                        <input type="text" class="form-control"data-ng-model="data.object.request_statusname"  disabled>
+                                                                                                    </div>
+                                                                                                    <label class="col-sm-3 col-form-label">Created By</label>
+                                                                                                    <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                                                        <input type="text" class="form-control" data-ng-model="data.object.fullname" disabled>   
+                                                                                                    </div>
+                                                                                                    <label class="col-sm-3 col-form-label">Date Created</label>
+                                                                                                    <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                                                        <input type="text" class="form-control" data-ng-model="data.object.createddate" disabled>
+                                                                                                    </div>
+                                                                                                    <label class="col-sm-3 col-form-label">Assigned To</label>
+                                                                                                    <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                                                        <input type="text" class="form-control" data-ng-model="data.object.assigned_to" disabled>
+                                                                                                    </div>
+                                                                                                    <label class="col-sm-12 col-form-label">Description</label>
+                                                                                                    <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                                                        <input type="text" class="form-control" data-ng-model="data.object.description" disabled>
+                                                                                                    </div>
+
+                                                                                                </div>
+
+
+
+                                                                                                <div class="row">
+                                                                                                    <div class="col-sm-12">
+                                                                                                        <div class="card">
+                                                                                                            <div class="card-header bg-primary">
+                                                                                                                <h6 class="card-title">Place Your Comments</h6>
+                                                                                                            </div>
+                                                                                                            <div class="card-body">
+                                                                                                                <label class="col-sm-12 col-form-label">Comments</label>
+                                                                                                                <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                                                                    <textarea rows="5" cols="5" class="form-control"data-ng-model="data.object.emp_comments" placeholder="Enter Comments Here"></textarea>
+                                                                                                                </div>
+
+                                                                                                                <div class="col-sm-12 col-xl-3 m-b-30">Status
+                                                                                                                    <label class="col-sm-3 col-form-label"></label>
+                                                                                                                </div>
+                                                                                                                <div class="col-sm-12 col-xl-3 m-b-30">
+                                                                                                                    <select name="select" class="form-control"
+                                                                 data-ng-model="data.object.request_status">
+	  <option></option>
+	   <option data-ng-repeat="status in statuss"  value="{{status.id}}">{{status.name}}</option>
+	  </select>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="modal-footer">
+                                                                                                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                                                    <button type="button" class="btn btn-primary waves-effect waves-light " data-ng-click="updateDataEmpcomm(data.object);">Submit</button>
+                                                                                                </div>
+
+                                                                                                <div class="row">
+                                                                                                    <div class="col-sm-12">
+                                                                                                        <div class="card">
+                                                                                                            <div class="card-header bg-primary">
+                                                                                                                <h6 class="card-title">Status Details</h6>
+                                                                                                            </div>
+                                                                                                            <div class="card-body">
+                                                                                                                <div class="dt-responsive table-responsive">
+                                                                                                                    <table id="simpletable3" class="table table-hover table-bordered nowrap">
+                                                                                                                        <thead class="btn-grd-primary">
+                                                                                                                            <tr>
+                                                                                                                                <th>S.No</th>
+                                                                                                                                <th>Comments</th>
+                                                                                                                                <th>Commented By</th>
+                                                                                                                                <th>Attachments </th>
+                                                                                                                                <th>Commented Date</th>
+
+
+                                                                                                                            </tr>
+                                                                                                                        </thead>
+                                                                                                                        <tbody>
+                                                                                                                           <tr data-ng-repeat="data in filteredResult =(linedetails | filter:search)">   
+        <td>{{$index+1}}</td>   
+		<td>{{data.emp_comments}}</td>  
+		<td>{{data.comment_by}}</td>	 
+		<td>{{data.attachements}}</td>		 
+		<td>{{data.createddate}}</td>			
+		
+	</tr>
+
+                                                                                                                            
+                                                                                                                        </tbody>
+                                                                                                                    </table>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <!-- View Modal End -->
+
+
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Content Ends Here -->
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div> 
+</div>
+
+                          
+
+                            <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+                            <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+                            <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+                            <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+                            <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+                            <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+                            <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+                            <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+                            <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+                            <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+                            <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+                           
+
+                            <!-- for two tables -->
+                            <script>
+                                $('#simpletable1').DataTable();
+                                $('#simpletable').DataTable();
+                                $('#simpletable2').DataTable();
+                                $('#simpletable3').DataTable();
+                            </script>
+
+
+<script>
+jQuery(document).ready(function() {
+	/*$("#helpRequestAddDocButton").show();    
+	$("#helpRequestDocumentAppend").hide() */
+	 angular.bootstrap(jQuery("#helpdeskId"), [ 'helpdesk' ]); 
+});
+/* jQuery("#helpRequestAddDocButton").click(function(){
+	$("#helpRequestDocumentAppend").show();    
+}); */
+
+	</script>
+	

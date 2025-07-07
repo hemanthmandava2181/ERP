@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Operation">
+	<insert id="Insertdistrict" parameterType="map">
+		insert into	operations.district_mst(district_name,date_created)  
+		values(#{p.district_name},current_timestamp);
+	</insert>
+	<select id="getAlldistrict" resultType="Operation"> 
+		SELECT id,district_name,status,date_created from operations.district_mst;
+	</select> 
+	<delete id="deleteDatadistrict" parameterType="java.lang.String">
+		delete from operations.district_mst where district_name=#{p.district_name};    
+	</delete>   
+	<update id="updateDatadistrict"  parameterType="map">
+		update operations.district_mst SET  district_name=#{p.district_name},status=#{p.status};
+	</update>
+	<select id="getByIddistrict" resultType="Operation">   
+		SELECT id,status,date_created from operations.district_mst WHERE district_name=#{p.district_name};
+	</select>
+	
+	
+	
+   
+	<!-- constituency -->
+	<select id="getdistricts" resultType="Operation"> 
+		SELECT distinct districtid,districtname from operations.district_mst order by districtid;
+	</select> 
+	<insert id="Insertconstituency" parameterType="map">
+		insert into	operations.constituency(name,date_created,districtid)     
+		values(#{p.name},current_timestamp,#{p.district_id});
+	</insert>
+	<select id="getAllconstituency" resultType="Operation"> 
+		SELECT id,name,status,districtid  from operations.constituency;
+	</select> 
+	<delete id="deleteDataconstituency" parameterType="java.lang.String">
+		delete from operations.constituency where name=#{p.name};    
+	</delete>   
+	<update id="updateDataconstituency"  parameterType="map">
+		update operations.constituency SET  name=#{p.name},status=#{p.status},districtid=#{p.districtid};
+	</update>
+	<select id="getByIdconstituency" resultType="Operation">   
+		SELECT id,districtid ,status,date_created from operations.constituency WHERE name=#{p.name};
+	</select>
+	
+	
+	
+	<!-- mandal-->
+	<select id="getConstituencys" resultType="Operation"> 
+		SELECT distinct id,name from operations.constituency;
+	</select> 
+	<insert id="Insertmandal" parameterType="map">
+		insert into	operations.mandal(mandal_name,date_created,districtid,constituency)  
+		values(#{p.mandal_name},current_timestamp,#{p.districtid},#{p.constituency});
+	</insert>
+	<select id="getAllmandal" resultType="Operation"> 
+		SELECT id,mandal_name,status,districtid from operations.mandal;
+	</select> 
+	<delete id="deleteDatamandal" parameterType="java.lang.String">
+		delete from operations.mandal where mandal_name=#{p.mandal_name};    
+	</delete>   
+	<update id="updateDatamandal"  parameterType="map">
+		update operations.mandal SET  mandal_name=#{p.mandal_name},status=#{p.status},districtid =#{p.districtid},constituency=#{p.constituency} ;
+	</update>
+	<select id="getByIdmandal" resultType="Operation">   
+		SELECT id,districtid,status,date_created,constituency  from operations.mandal WHERE mandal_name=#{p.mandal_name};
+	</select>
+	
+	
+	
+	<!-- Ledger Heads -->
+	<insert id="Insertledgerhead" parameterType="map">
+		insert into	operations.ledgerheads(name,date_created,description)  
+		values(#{p.name},current_timestamp,#{p.description});
+	</insert>
+	<select id="getAllledgerhead" resultType="Operation"> 
+		SELECT id,name,status,description from operations.ledgerheads;
+	</select> 
+	<delete id="deleteDataledgerhead" parameterType="java.lang.String">
+		delete from operations.ledgerheads where name=#{p.name};    
+	</delete>   
+	<update id="updateDataledgerhead"  parameterType="map">
+		update operations.ledgerheads SET  name=#{p.name},status=#{p.status},description=#{p.description};
+	</update>
+	<select id="getByIdledgerhead" resultType="Operation">   
+		SELECT id,status,date_created,description from operations.ledgerheads WHERE name=#{p.name};
+	</select>
+	
+	
+	
+	<!--asset class details  -->
+	<insert id="Insertassetclass" parameterType="map">
+		insert into	finance.asset_class_mst(name,asset_type,created_date)  
+		values(#{p.name},#{p.asset_type},current_timestamp);  
+	</insert>
+	<select id="getAllassetclass" resultType="Operation"> 
+		SELECT id,name,asset_type,created_date from finance.asset_class_mst;
+	</select> 
+	<delete id="deleteDataassetclass" parameterType="java.lang.String">
+		delete from operations.asset_class where name=#{p.name};    
+	</delete>   
+	
+	<update id="updateDataassetclass"  parameterType="map">
+		update operations.asset_class SET  name=#{p.name},status=#{p.status},asset_type=#{p.asset_type};
+	</update>
+	<select id="getByIdassetclass" resultType="Operation">   
+		SELECT id,asset_type,created_date,status from operations.asset_class WHERE name=#{p.name};
+	</select>
+	
+	
+	<!--Item group details  -->
+	<insert id="Insertitemgroup" parameterType="map">
+		insert into	operations.item_groups(group_name)  
+		values(#{p.group_name});
+	</insert>
+	<select id="getAllitemgroup" resultType="Operation"> 
+		<!-- SELECT id,group_name,created_by,  
+  modified_by,date_created from operations.item_group; -->
+  
+  SELECT id,group_name from operations.item_groups;
+  
+	</select> 
+	<delete id="deleteDataitemgroup" parameterType="java.lang.String">
+		delete from operations.item_group where group_name=#{p.group_name};    
+	</delete>   
+	<update id="updateDataitemgroup"  parameterType="map">
+		update operations.item_group SET  group_name=#{p.group_name},status=#{p.status};
+	</update>
+	<select id="getByIditemgroup" resultType="Operation">   
+		SELECT id,date_created,status,created_by,
+  modified_by from operations.item_group WHERE group_name=#{p.group_name};
+	</select>
+	
+	
+	
+	
+	<!--Item Name Details  -->
+	<select id="getItemgroups" resultType="Operation"> 
+		SELECT id,group_name from operations.item_groups;
+	</select>    
+	<insert id="Insertitemname" parameterType="map">
+		insert into	operations.item_names(item_name,item_group,created_date)  
+		values(#{p.item_name},#{p.item_group},current_timestamp);
+	</insert> 
+	<select id="getAllitemname" resultType="Operation"> 
+		SELECT id,item_name,created_by,created_date,item_group from operations.item_names;
+	</select> 
+	<delete id="deleteDataitemname" parameterType="java.lang.String">
+		delete from operations.item_name where item_name=#{p.item_name};    
+	</delete>   
+	<update id="updateDataitemname"  parameterType="map">
+		update operations.item_name SET  item_name=#{p.item_name},item_group=#{p.item_group},status=#{p.status};
+	</update>
+	<select id="getByIditemname" resultType="Operation">   
+		SELECT id,date_created,status,created_by,modified_by,item_group from operations.item_name WHERE item_name=#{p.item_name};
+	</select>
+	
+	
+	
+	
+	
+	
+	    
+	  
+	<!--Asset Nature Details  -->
+	<select id="getassetclass" resultType="Operation"> 
+		SELECT id,name from finance.asset_class_mst;
+	</select> 
+	<insert id="Insertassetnature" parameterType="map">
+		insert into	finance.asset_nature_mst(name,asset_class,created_date)  
+		values(#{p.name},#{p.asset_class},current_timestamp);            
+	</insert> 
+	<select id="getAllassetnature" resultType="Operation"> 
+		
+SELECT distinct created_date,asset_class_name,naturename from(select id,name as asset_class_name from finance.asset_class_mst) as a inner join
+(select id,created_date,asset_class,name as naturename from finance.asset_nature_mst) as b on b.asset_class=a.id;
+	</select> 
+	<delete id="deleteDataassetnature" parameterType="java.lang.String">
+		delete from operations.asset_nature where name=#{p.name};    
+	</delete>   
+	<update id="updateDataassetnature"  parameterType="map">
+		update operations.asset_nature SET  name=#{p.name},asset_class=#{p.asset_class},status=#{p.status};
+	</update>
+	<select id="getByIdassetnature" resultType="Operation">   
+		SELECT id,date_created,status,asset_class from operations.asset_nature WHERE name=#{p.name};
+	</select>
+	  
+	
+	
+	
+	
+	
+	<!--Asset Name Details  -->
+	<select id="getglaccounts" resultType="Operation"> 
+		SELECT id,account_name from finance.gl_group_accounts_mst;
+	</select>   
+	<insert id="Insertassetname" parameterType="map">   
+		insert into	operations.asset_name(asset_name,gl_account,date_created)  
+		values(#{p.asset_name},#{p.gl_account},current_timestamp);                 
+	</insert> 
+	<select id="getAllassetname" resultType="Operation"> 
+		SELECT id,date_created,gl_account,asset_name from operations.asset_name;
+	</select> 
+	<delete id="deleteDataassetname" parameterType="java.lang.String">
+		delete from operations.asset_name where asset_name=#{p.asset_name};    
+	</delete>   
+	<update id="updateDataassetname"  parameterType="map">
+		update operations.asset_name SET  asset_name=#{p.asset_name},gl_account=#{p.gl_account},status=#{p.status};
+	</update>
+	<select id="getByIdassetname" resultType="Operation">   
+		SELECT id,date_created,status,gl_account from operations.asset_name WHERE asset_name=#{p.asset_name};
+	</select>
+	
+	
+	  
+	
+	
+	<!--Asset Group Details  -->
+	<select id="getassetnature" resultType="Operation"> 
+		SELECT id,name from finance.asset_nature_mst;
+	</select> 
+	<insert id="Insertassetgroup" parameterType="map">
+		insert into	finance.asset_group_mst(asset_group_name,asset_nature,created_date)  
+		values(#{p.asset_group_name},#{p.asset_nature},current_timestamp);            
+	</insert> 
+	<select id="getAllassetgroup" resultType="Operation"> 
+		
+
+SELECT distinct group_name,asset_class_name,asset_nature_name from(select distinct id,name as asset_class_name from finance.asset_class_mst) as a inner join
+(select distinct id,created_date,asset_class,name as asset_nature_name from finance.asset_nature_mst) as b on b.asset_class=a.id inner join 
+(select asset_nature,asset_group_name as group_name from finance.asset_group_mst) as c on c.asset_nature= b.id	</select> 
+	<delete id="deleteDataassetgroup" parameterType="java.lang.String">
+		delete from operations.asset_group where group_name=#{p.group_name};    
+	</delete>   
+	<update id="updateDataassetgroup"  parameterType="map">
+		update operations.asset_group SET  group_name=#{p.group_name},asset_nature=#{p.asset_nature};
+	</update>
+	<select id="getByIdassetgroup" resultType="Operation">   
+		SELECT id,date_created,asset_nature from operations.asset_group WHERE group_name=#{p.group_name};
+	</select>
+	
+	
+	
+	<!--Location Details  -->
+	<select id="getMandals" resultType="Operation"> 
+		SELECT id,mandal_name from operations.mandal;
+	</select> 
+	<insert id="Insertlocation" parameterType="map">
+		insert into	operations.location(group_name,asset_nature,date_created)  
+		values(#{p.group_name},#{p.asset_nature},current_timestamp);            
+	</insert> 
+	<select id="getAlllocation" resultType="Operation"> 
+		SELECT location_name,created_by,created_date,districtid,constituencyid,pin_code,address1,address2,status,mandalid from operations.location;
+	</select> 
+	<delete id="deleteDatalocation" parameterType="java.lang.String">
+		delete from operations.location where location_name=#{p.location_name};    
+	</delete>   
+	<update id="updateDatalocation"  parameterType="map">
+		update operations.location SET  location_name=#{p.location_name},created_by=#{p.created_by},
+		districtid=#{p.districtid},constituencyid=#{p.constituencyid},
+		pin_code=#{p.pin_code},address1=#{p.address1},address2=#{p.address2},status=#{p.status},
+		mandalid=#{p.mandalid};
+	</update>
+	<select id="getByIdlocation" resultType="Operation">   
+		SELECT id,date_created,asset_nature from operations.location WHERE location_name=#{p.location_name};
+	</select>
+	
+	
+</mapper>    

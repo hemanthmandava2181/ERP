@@ -1,0 +1,262 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/finance/budget inputs/simulationSumaryview.js"></script>
+
+<!-- Data Tables -->
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="siulationsumaryviewID" data-ng-controller="SimulationSumaryviewControler">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">   
+						<h5>Simulation Summary View Page</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Budget Inputs</a></li>
+							<li class="breadcrumb-item"><a href="#!">Simulation
+									Summary</a></li>
+							<li class="breadcrumb-item"><a href="#!">Simulation
+									Summary View</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<div style="margin-top: 35px;"
+						class="panel panel-heading media mar_t2 ">
+						<div class="media-left ">
+							<img height="81 " width="81 " style="border: 2px solid #ccc;"
+								class="media-object img-circle " alt=" "
+								src="/files/assets/images/default_Muser.png ">
+						</div>
+						<div class="media-body ">
+							<h5 style="margin: 0; padding: 0; font-weight: 400;">Admin</h5>
+							<small>Emp.ID : AO0116397 </small><br> <small>Designation
+								: Administrative Officer </small><br> <small>Work Location
+								: APSSDC Head Office </small><br>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">Budget Input ID</label>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.budget_id}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">Financial Year</label>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.years}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">Scheme</label>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.scheme_name}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">Segment</label>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.segment_name}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">SDEI Group</label>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.group_name}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">Description</label>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.description}}
+						</div>
+					</div>
+					<hr>
+					<h6>CAPEX Budget Details :-</h6>
+					<h7>&nbsp;</h7>
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xs-12 mt-1">
+							<label class="font-weight-bold">CAPEX Planned</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;{{data.object.planned}}
+						</div>
+						<div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xs-12 mt-1">
+							<label>&nbsp;</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">CAPEX Non-Planned</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;{{data.object.non_planned}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xs-12 mt-1">
+							<label class="font-weight-bold">CAPEX Additional</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;{{data.object.adnn_budget}}
+						</div>
+						<div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xs-12 mt-1">
+							<label>&nbsp;</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">CAPEX Total</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;{{data.object.capex_total_budget}}
+						</div>
+					</div>
+					<hr>
+					<h6>OPEX Planned Budget :-</h6>
+					<h7>&nbsp;</h7>
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xs-12 mt-1">
+							<label class="font-weight-bold">OPEX Planned</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;{{data.object.opex_planned}}
+						</div>
+						<div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xs-12 mt-1">
+							<label>&nbsp;</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">OPEX Non-Planned</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;{{data.object.opex_non_planned}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xs-12 mt-1">
+							<label class="font-weight-bold">OPEX Additional</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;{{data.object.opex_adnn_planned}}
+						</div>
+						<div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xs-12 mt-1">
+							<label>&nbsp;</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">OPEX Total</label>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;{{data.object.opex_total_budget}}
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">Total Budget</label>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.total_budget}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">HC Planned</label>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.hc_planned}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">Physical Output</label>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.physical_output}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">From Date</label>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.from_date}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12 mt-1">
+							<label class="font-weight-bold">To Date</label>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<label class="font-weight-bold">:</label>&nbsp;&nbsp;&nbsp;{{data.object.to_date}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+<script>
+	jQuery(document).ready(
+			function() {
+				angular.bootstrap(jQuery("#siulationsumaryviewID"),[ 'simulationSumaryview' ]);
+			});
+</script>

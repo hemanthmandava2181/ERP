@@ -1,0 +1,712 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/finance/accountspayable/AccountspayablePendingView.js"></script>
+
+<!-- Data Tables -->
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+	
+<div id="accountspayableID"    
+	data-ng-controler="AccountsPayableController">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>AP Pending Approval view Page</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Finance &
+									Accounts</a></li>
+							<li class="breadcrumb-item"><a href="#!">Accounts
+									Payable</a></li>
+							<li class="breadcrumb-item"><a href="#!">Accounts
+									Payable</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<!-- Content Starts Here -->
+	<!-- <h5>GRN View</h5>
+    <h8>&nbsp;</h8> -->
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div
+							class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xs-12 text-center">
+							<button class="btn btn-info btn-sm mr-2" data-ng-click="SaveApprovalDetails(data.object.voucher_id);">Approve</button>
+							<button class="btn btn-danger btn-sm mr-2" data-ng-click="saveReturnDetails(data.object.voucher_id);">Return</button>
+							<button class="btn btn-warning btn-sm mr-2" data-ng-click="saveParkDetails(data.object.voucher_id);">Park</button>
+							<button class="btn btn-success btn-sm mr-2" data-toggle="modal"
+								data-target="#large-Modal" data-ng-click="getJVDetails(pending.voucher_id);">JV View</button>
+							<button class="btn btn-primary btn-sm mr-2" data-ng-click="getByInvoiceDetails(data.object.voucher_id);">Edit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>     
+	</div>
+
+	<!-- Journal Voucher -->
+	<div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Journal Voucher</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-primary" style="border-color: #4099ff;">
+								<div class="panel-body p-3">
+									<div class="dt-responsive table-responsive">
+										<table class="table table-striped table-bordered nowrap">
+											<thead class="btn-grd-primary">
+												<tr>
+													<th align="left">Account Name</th>
+	                                                <th align="left">Debit/By(<span class="fa fa-inr"><!--  --></span>)</th>
+	                                                <th align="left">Credit/To(<span class="fa fa-inr"><!--  --></span>)</th>
+	                                            </tr>
+											</thead>
+											<tbody>
+												<div data-ng-if="jvview1.length != 0">
+                                                    <tr data-ng-repeat="jv in jvview1 = jvview1 | filter : search">
+                                                        <!--  <td align="left">{{$index+1}}</td> -->
+                                                        <td align="left">{{jv.account_name}}</td>
+                                                        <td align="left">{{jv.debit}}</td>
+                                                        <td align="left">{{jv.credit}}</td>
+                                                    </tr>
+                                                </div>
+                                                <div data-ng-if="jvview2.length != 0">
+                                                    <tr data-ng-repeat="jv in jvview2 = jvview2 | filter : search">
+
+                                                        <td align="left">{{jv.account_name}}</td>
+                                                        <td align="left">{{jv.debit}}</td>
+                                                        <td align="left">{{jv.credit}}</td>
+                                                    </tr>
+                                                </div>
+                                                <div data-ng-if="jvview3.length != 0">
+                                                    <tr data-ng-repeat="jv in jvview3 = jvview3 | filter : search">
+
+                                                        <td align="left">{{jv.account_name}}</td>
+                                                        <td align="left">{{jv.debit}}</td>
+                                                        <td align="left">{{jv.credit}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="1">
+                                                            <center><b>Total</b></center>
+                                                        </td>
+                                                        <td><b>{{jvview1[0].debit + jvview2[0].debit + jvview3[0].debit}}</b></td>
+                                                        <td><b>{{jvview1[0].credit + jvview2[0].credit + jvview3[0].credit}}</b></td>
+                                                    </tr>
+                                                </div>   
+										</table>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xs-12">
+											<label class="font-weight-bold">Description : </label>Two-Wheeler
+											Service Technician 1st Batch 2nd Installment
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect "
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6>Invoice Details</h6>
+				</div>
+				<div class="card-body">
+					<div class = "row">
+						<div class = "col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">   
+							<label>Invoice ID:</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.invoice_id" disabled />
+						</div>
+						<div class = "col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label>Invoice Date:</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.invoice_date" disabled />
+						</div>
+						<div class = "col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">    
+							<label>Invoice Due Date:</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.due_date" disabled />
+						</div>
+						<div class = "col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label>Invoice Amount:</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.net_amount" disabled />
+						</div>
+						<div class = "col-md-1">
+							<label>&nbsp;</label>
+						</div>
+						<div class = "col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+							<label>Submitted Date:</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.submitted_date" disabled />
+						</div>
+					</div>
+					<div class = "row">
+						<div class = "col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+							<label>Created By:</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.createdby" disabled />
+						</div>
+						<div class = "col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">    
+							<label>AP ID:</label>   
+							<input type = "text" class = "form-control" data-ng-model = "data.object.voucher_id" disabled />
+						</div>   
+						<div class = "col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+							<label>Cost Center:</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.cost_center" disabled />
+						</div>
+					</div> 
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<div class="row">
+						<div class="col-sm-12 col-md-9 col-xl-9 col-lg-9 col-xs-12">
+							<h6>Workorder Details</h6>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<button class="btn btn-grd-succcess btn-mini float-right ver-grd" data-ng-click = "getworkOrderDetails(data.object.voucher_id);">WO
+								View</button>
+							<!-- <button class="btn btn-grd-succcess ver-grd">WO PDF</button> -->
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+							<label class="font-weight-bold">WorkOrder No.:</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.workorder_id" disabled />
+						</div>
+						<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+							<label class="font-weight-bold">WorkOrder Amount:</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.workorder_amount" disabled />
+						</div>
+						<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+							<label class="font-weight-bold">Project:</label> 
+							<input type = "text" class = "form-control" data-ng-model = "data.object.project_name" disabled />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+							<label class="font-weight-bold">Program:</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.program_name" disabled />
+						</div>
+						<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+							<label class="font-weight-bold">Vendor:</label>
+							<input type = "text" class = "form-control" data-ng-model = "data.object.createdby" disabled />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="row">
+				<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+					<div class="card">
+						<div class="card-header bg-primary">
+							<h6>Tax Details</h6>
+						</div>
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+								<table class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Name</th>
+											<th>Debit</th>
+											<th>Credit</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="tax in taxDetails | filter:search">
+			                                <td align="left">{{$index+1}}</td>
+			                                <td align="left">{{tax.account_name}}</td>
+			                                <td align="left">{{tax.debit}}</td>
+			                                <td align="left">{{tax.credit}}</td>
+			                            </tr>
+			                            <tr>
+			                                <td colspan="2">
+			                                    <center><b>Total</b></center>
+			                                </td>
+			                                <td align="right"><b>{{taxDetails[0].debit}}</b></td>
+			                                <td align="right"><b>{{taxDetails[0].credit}}</b></td>			
+			                            </tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+					<div class="card">
+						<div class="card-header bg-primary">
+							<h6>Payment Breakup</h6>
+						</div>
+						<div class="card-body">
+							<div class="dt-responsive table-responsive">
+								<table class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th align="left">S.no</th>
+			                                <th align="left">Name</th>
+			                                <th align="left">Amount(<span class="fa fa-inr"><!--  --></span>)</th>			
+			                            </tr>
+									</thead>
+									<tbody>
+										<tr>
+			                                <td>1</td>
+			                                <td>Invoice_amount</td>
+			                                <td>{{data.object.amount}}			
+			                            </tr>
+			                            <tr>
+			                                <td>2</td>
+			                                <td>Credit_Tax_amount</td>
+			                                <td>{{data.object.credit_tax_amount}}			
+			                            </tr>
+			                            <tr>
+			                                <td>3</td>
+			                                <td>Debit_Tax_amount</td>
+			                                <td>{{data.object.debit_tax_amount}}			
+			                            </tr>
+			                            <tr>
+			                                <td>4</td>
+			                                <td>Net Amount</td>
+			                                <td>{{data.object.net_amount}}			
+			                            </tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<button class="btn btn-info btn-sm-block" type="button"
+								data-toggle="collapse" data-target="#invoiceExample"
+								aria-expanded="false" aria-controls="collapseExample">
+								Invoice</button>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<button class="btn btn-warning btn-block" type="button"
+								data-toggle="collapse" data-target="#documentsExample"
+								aria-expanded="false" aria-controls="collapseExample">
+								Invoice Documents</button>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<button class="btn btn-primary btn-block" type="button"
+								data-toggle="collapse" data-target="#commentsExample"
+								aria-expanded="false" aria-controls="collapseExample">
+								View Comments</button>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<button class="btn btn-primary btn-block" type="button"
+								data-toggle="collapse" data-target="#timelineExample"
+								aria-expanded="false" aria-controls="collapseExample">
+								Action Time Line</button>
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<button class="btn btn-primary btn-block" type="button"
+								data-toggle="collapse" data-target="#checklistExample"
+								aria-expanded="false" aria-controls="collapseExample">
+								Invoice Check List</button>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<button class="btn btn-primary btn-block" type="button"
+								data-toggle="collapse" data-target="#previousExample"
+								aria-expanded="false" aria-controls="collapseExample">
+								Previous Invoice</button>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<button class="btn btn-primary btn-block" type="button"
+								data-toggle="collapse" data-target="#paymenttermsExample"
+								aria-expanded="false" aria-controls="collapseExample">
+								Payment Terms</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- invoice tab -->
+	<div class="row collapse show mt-2" id="invoiceExample">
+		<div class="col-sm-12 col-md-12">
+			<div class="card">
+				<div class="card-header bg-info">
+					<h6 class="card-title">Invoice Details</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<div class="panel panel-primary" style="border-color: #4099ff;">
+								<div class="panel-heading btn-grd-primary">
+									<h6 class="card-title">Items List</h6>
+								</div>
+								<div class="panel-body p-3">
+									<div class="dt-responsive table-responsive">
+										<table id="simpletable"
+											class="table table-striped table-bordered nowrap">
+											<thead>
+												<tr>
+													 <th align="left">S.no</th>
+                                                     <th align="left">GL Account</th>
+                                                     <th align="left">Description</th>
+                                                     <th align="left">Amount(<span class="fa fa-inr"><!--  --></span>)</th>
+                                                     <th align="left">Attachments</th>
+                                                 </tr>
+											</thead>
+											<tbody>
+												<tr data-ng-repeat="item in items">
+                                                    <td align="left">{{$index+1}}</td>
+                                                    <td align="left">{{item.gl_account_name}}</td>
+                                                    <td align="left">{{item.title_description}}</td>
+                                                    <td align="left">{{item.amount}}</td>
+                                                    <td align="left">
+                                                        <a data-ng-href="{{item.document_path}}" target="_blank" title="More Details" target="_blank"> <span class="glyphicon glyphicon-link"></span></a>{{item.doucment_name}}</td>
+                                                </tr>  
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12 mt-1">
+							<div class="panel panel-primary" style="border-color: #4099ff;">
+								<div class="panel-heading btn-grd-primary">
+									<h6 class="card-title">JV View</h6>
+								</div>
+								<div class="panel-body p-3">
+									<div class="dt-responsive table-responsive">
+										<table id="simpletable"
+											class="table table-striped table-bordered nowrap">
+											<thead>
+												<tr>
+													<th align="left">Account Name</th>
+                                                    <th align="left">Debit/By(<span class="fa fa-inr"><!--  --></span>)</th>
+                                                    <th align="left">Credit/To(<span class="fa fa-inr"><!--  --></span>)</th>
+                                                </tr>
+											</thead>
+											<tbody>
+												<div data-ng-if="jvview1.length != 0">
+	                                                <tr data-ng-repeat="jv in jvview1 = jvview1 | filter : search">
+	                                                    <!--  <td align="left">{{$index+1}}</td> -->
+	                                                    <td align="left">{{jv.account_name}}</td>
+	                                                    <td align="left">{{jv.debit}}</td>
+	                                                    <td align="left">{{jv.credit}}</td>
+	                                                </tr>
+	                                            </div>
+	                                            <div data-ng-if="jvview2.length != 0">
+	                                                <tr data-ng-repeat="jv in jvview2 = jvview2 | filter : search">
+	
+	                                                    <td align="left">{{jv.account_name}}</td>
+	                                                    <td align="left">{{jv.debit}}</td>
+	                                                    <td align="left">{{jv.credit}}</td>
+	                                                </tr>
+	                                            </div>
+	                                            <div data-ng-if="jvview3.length != 0">
+	                                                <tr data-ng-repeat="jv in jvview3 = jvview3 | filter : search">
+	
+	                                                    <td align="left">{{jv.account_name}}</td>
+	                                                    <td align="left">{{jv.debit}}</td>
+	                                                    <td align="left">{{jv.credit}}</td>
+	                                                </tr>	
+	                                            </div>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Invoice Documents -->
+	<div class="row collapse mt-2" id="documentsExample">
+		<div class="col-sm-12 col-md-12">
+			<div class="card">
+				<div class="card-header bg-warning">
+					<h6 class="card-title">Invoice Documents</h6>
+				</div>
+				<div class="card-body">
+					<div class="col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xs-12 mt-1">
+						<div class="dt-responsive table-responsive">
+							<table id="simpletable"
+								class="table table-striped table-bordered nowrap">
+								<thead>
+									<tr>
+                                       <th align="left">S.No</th>
+                                       <th align="left">Document name</th>
+                                       <th align="left">Attachments</th>
+                                   </tr>
+								<tbody> 
+									<tr data-ng-repeat="document in documents">
+                                        <td align="left">{{$index+1}}</td>
+                                        <td align="left">{{document.document_name}}</td>
+                                        <td align="left"><a data-ng-href="{{document.document_path}}" target="_blank" title="More Details" target="_blank"> view</a></td>
+                                    </tr> 
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- View Comments -->
+	<div class="row collapse mt-2" id="commentsExample">
+		<div class="col-sm-12 col-md-12">
+			<div class="card">
+				<div class="card-header bg-warning">
+					<h6 class="card-title">View Comments</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+  						<div class="col-md-12">
+   							<div data-ng-repeat="comment in comments">
+					      		<textarea class="form-control" name="" style="height: 300px;" readonly>
+									{{comment.name}}
+									{{comment.comment}}
+									Commented at:{{comment.date_created || 'dd-mm-YYYY HH:MM'}}
+								</textarea>
+					     	</div>
+   						</div>
+    				</div>
+    				<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-primary">
+								<div class="panel-body">
+ 		     						<textarea type="text" class="form-control" data-ng-model="data.object.comments" id="code_preview0" name="" style="height: 100px;"></textarea>
+ 								</div>
+				
+ 							</div> 
+      					</div>
+      					<center><button class="btn btn-success" id="search" data-ng-click="saveComments(data.object);" style="cursor:pointer">Submit Comments</button></center>   
+      				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Action Timeline -->
+	<div class="row collapse mt-2" id="timelineExample">
+		<div class="col-sm-12 col-md-12">
+			<div class="card">
+				<div class="card-header bg-warning">
+					<h6 class="card-title">Action Timeline</h6>
+				</div>
+				<div class="card-body">
+					<div class="main-container">
+						 <section id="timeline" class="timeline-outer">
+							<div class="container" id="content">
+						    	<div class="row">
+						        	<div class="col s12 m12 l12">
+						          		<ul class="timeline">
+	                                        <li class="event" data-ng-repeat="time in timeline">
+	                                            <h3>{{time.created_by}}</h3>
+	                                            <p>
+	                                                {{time.invoice_name}} on {{time.date_created}}
+	                                            </p>
+	                                        </li>
+	                                    </ul>
+						        	</div>   
+						      	</div>   
+						    </div>
+						</section><br/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Invoice Check List -->
+	<div class="row collapse mt-2" id="checklistExample">
+		<div class="col-sm-12 col-md-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Invoice Check List</h6>
+				</div>
+				<div class="card-body">
+					<div class = "row">
+						<div class = "col-md-8">
+							<div id="dataDiv" style="overflow-x:auto;">
+								<table class="table table-bordered">  
+									<thread> 
+										<tr style='background-color: CornflowerBlue'>           
+											<th align="left">S.No</th>
+                                                <th align="left">Invoice Check Name</th>
+                                                <th align="left">Select</th>  		   	             
+										</tr>   
+										<tr data-ng-repeat="checks in InvoiceChecks">
+                                           <td align="left">{{$index+1}}</td>
+                                           <td class="hidden">{{checks.check_id}}</td>
+                                           <td align="left">{{checks.invoice_check_name}}</td>
+                                           <td align="left"><input type="checkbox" data-ng-model="invoiceArr[checks.check_id]" data-ng-checked="allSelected()" />
+                                       </tr>            		             
+									</thread>                         
+								</table> 
+							</div>
+						</div>
+					</div>
+					<center><button type="button" class="btn btn-primary" type="submit" name="theme_submit" data-ng-click="saveChecks(invoiceArr);">Submit</button> </center>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Invoice Check List -->
+	<div class="row collapse mt-2" id="previousExample">
+		<div class="col-sm-12 col-md-12">
+			<div class="card">
+				<div class="card-header bg-warning">
+					<h6 class="card-title">Previous Invoice</h6>
+				</div>
+				<div class="card-body">
+					<div class="panel-body table-responsive">
+						<table class="table table-bordered">
+							<tr style='background-color: CornflowerBlue'>           
+								<th align="left">S.No</th>
+                                <th align="left">Work Order No</th>
+                                <th align="left">(<span class="fa fa-inr"><!--  --></span>) Amount</th>
+                                <th align="left">Debit Taxes</th>
+                                <th align="left">Credit Taxes</th>
+                                <th align="left">Net Amount</th>
+                                <th align="left">Status</th>
+                                <th align="left">View</th>
+                            </tr> 
+							<tr data-ng-repeat="previous in previousDetails">
+                               <td align="left">{{$index+1}}</td>
+                               <td class="hidden">{{previous.voucher_id}}</td>
+                               <td align="left">{{previous.workorder_id}}</td>
+                               <td align="left">{{previous.amount}}</td>
+                               <td align="left">{{previous.debit_tax_amount}}</td>
+                               <td align="left">{{previous.credit_tax_amount}}</td>
+                               <td align="left">{{previous.net_amount}}</td>
+                               <td align="left">{{previous.status}}</td>
+                               <td align="center"><button type="submit" class="btn btn-primary" id="view">View</button></td>
+                           </tr>  
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Invoice Check List -->
+	<div class="row collapse mt-2" id="paymenttermsExample">
+		<div class="col-sm-12 col-md-12">
+			<div class="card">
+				<div class="card-header bg-warning">
+					<h6 class="card-title">Payment Terms</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xs-12 mt-1">
+							<div class="dt-responsive table-responsive">
+								<table class="table table-striped table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Title</th>
+											<th>Rate</th>
+											<th>Condition</th>
+											<th>Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>S.No</td>
+											<td>Name</td>
+											<td>Amount</td>
+											<td>Amount</td>
+											<td>Amount</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+<script>
+	jQuery(document).ready(function() {
+		angular.bootstrap(jQuery("#accountspayableID"), [ 'AccountspayablePendingView' ]);
+	});
+</script>

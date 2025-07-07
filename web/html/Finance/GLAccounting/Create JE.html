@@ -1,0 +1,336 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/finance/glAccounting/createje.js"></script>
+
+
+<!-- Data Tables -->
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="createjeId" data-ng-controller="createjeController">
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Create Journal Voucher</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Finance</a></li>
+							<li class="breadcrumb-item"><a href="#!">GL Accounting</a></li>
+							<li class="breadcrumb-item"><a href="#!">Create JE</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<h5>Create Journal Voucher</h5>
+	<h6>&nbsp;</h6>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">Create Journal Voucher</div>
+				<h5>&nbsp;</h5>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="font-weight-bold">JE Type#&nbsp;<span class = "text-danger">*</span></label> <select
+									class="form-control" data-ng-model="data.object.expense_type">
+									<option value="1">Direct</option>
+									<option value="2">In-Direct</option>
+									<option value="3">Other</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="font-weight-bold">Voucher Date&nbsp;<span class = "text-danger">*</span></label> <input
+									type="date" class="form-control"
+									data-ng-model="data.object.date" placeholder="" id="date" />
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="font-weight-bold">Entry Type</label> <select
+									class="form-control" data-ng-model="data.object.entry_type">
+									<option value="0">All</option>
+									<option value="1">Journal</option>
+									<option value="2">Invoice</option>
+									<option value="3">Payment Entry</option>
+									<option value="4">Payment Receipt</option>
+									<option value="5">Contra</option>
+									<option value="6">Payroll Entry</option>
+									<option value="7">Claim</option>
+									<option value="8">Imprest</option>
+									<option value="9">Receipt Entry</option>
+									<option value="10">Receivable</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="font-weight-bold">Project</label> <select
+									class="form-control" data-ng-model="data.object.project">
+									<option data-ng-repeat="project in projects"
+										value="{{project.project}}">{{project.project_name}}</option>
+								</select>
+							</div>    
+						</div>
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="font-weight-bold">Program</label> <select
+									class="form-control" data-ng-model="data.object.program">
+									<option data-ng-repeat="program in programs"
+										value="{{program.programid}}">{{program.programname}}</option>
+								</select>
+							</div>  
+						</div>
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="font-weight-bold">Work Order No.</label><select
+									class="form-control" data-ng-model="data.object.work_order">
+									<option data-ng-repeat="order in orders"
+										value="{{order.id}}">{{order.workorder_id}}</option>
+								</select>
+							</div>        
+						</div>								
+					</div>   
+					<div class = "row">
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="font-weight-bold">Financial Year&nbsp;<span class = "text-danger">*</span></label>
+								<select class = "form-control" data-ng-model = "data.object.financial_year">
+									<option data-ng-repeat = "year in years" value = "{{year.yearid}}">{{year.years}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="font-weight-bold">GL Accounts</label> <select
+									class="form-control" data-ng-model="data.object.gl_account">
+									<option data-ng-repeat="account in accounts"
+										value="{{account.id}}">{{account.account_name}}</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="font-weight-bold">Cost Center</label> <select
+									class="form-control" data-ng-model="data.object.cost_center">
+									<option data-ng-repeat="cost_center in cost_centers"
+										value="{{cost_center.id}}">{{cost_center.name}}</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="font-weight-bold">Reference Date</label> <input
+									type="date" class="form-control"
+									data-ng-model="data.object.ref_date" id="date" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="font-weight-bold">Debit/Credit</label> <select
+									class="form-control" data-ng-model="data.object.account_type">
+									<option value="1">DEBIT</option>
+									<option value="2">CREDIT</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1"
+							data-ng-show="data.object.expense_type != '2'">
+							<div class="form-group">
+								<label class="font-weight-bold">Amount</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.debit_amount"
+									placeholder="Enter Amount" />
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1"
+							data-ng-show="data.object.expense_type == '2'">
+							<div class="form-group">
+								<label class="font-weight-bold">Amount</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.credit_amount"
+									placeholder="Enter Amount" />
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<label class="font-weight-bold">Description</label>
+							<textarea style="max-width: 339px !important"
+								title="Minimum 0 to 200 Charecters"
+								placeholder="Description for Journal Entry Details"
+								data-ng-model="data.object.descriptiondet" class="form-control"
+								id="description" maxlength="200" rows="6"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Description</h6>
+				</div>
+				<div class="card-body">
+					<textarea
+						style="max-width: 508px !important; min-height: 105px !important;"
+						maxlength="200" placeholder="Description for Journal Entry Header"
+						name="headerDescription" class="form-control"
+						title="Minimum 0 to 200 Charecters" rows="5"
+						data-ng-model="data.object.description"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xs-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Upload Document</h6>
+				</div>
+				<div class="card-body">
+					<button style="margin-right: 5px;" class="btn btn-primary"
+						id="addJeDocuments" role="button" type="button">Add More
+						Documents</button>
+					<div class="form-group row">
+						<div class="form-group col-md-6">
+							<input type="text" class="form-control"
+								placeholder="Document Name"
+								data-ng-model="data.object.document_name" />
+						</div>
+						<div class="form-group col-md-6">
+							<input type="file" data-ng-model="data.object.file"
+								onchange="angular.element(this).scope().uploadFiles(this)"
+								multiple="multiple" class="form-control" id="file" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Comments</h6>
+				</div>
+				<div class="card-body">
+					<textarea
+						style="max-width: 508px !important; min-height: 105px !important;"
+						maxlength="200" placeholder="Comments for Journal Entry Header"
+						name="headerDescription" class="form-control"
+						title="Minimum 0 to 200 Charecters" rows="5"
+						data-ng-model="data.object.comments"></textarea>
+				</div>
+			</div>
+		</div>   
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12 text-center">
+			<button class="btn btn-primary"
+				data-ng-click = "CreateJE(data.object);" id="updatepbtn">Submit</button>
+		</div>
+	</div>
+	
+	<div class = "row">
+		<div class = "col-sm-12">
+			<div clas = "card">
+				<div class = "card-body">
+					<div class="dt-responsive table-responsive">
+							<table id="order-table"
+								class="table table-striped table-bordered nowrap">
+								<thead class="bg-primary">
+									<tr>
+										<th style="min-width: 150px;max-width: 150px;text-align: center;">Particulars</th>   
+									<th style="min-width: 100px;max-width: 100px;text-align: center;">Cost Center</th>    
+									<th style="min-width: 100px;max-width: 100px;text-align: center;">Ref Date</th> 
+									<th style="min-width: 150px;max-width: 150px;text-align: center;">Debit Amount</th>
+									<th style="min-width: 150px;max-width: 150px;text-align: center;">Credit Amount</th>
+									<th style="min-width: 150px;max-width: 150px;text-align: center;">Description</th>
+									<th style="min-width: 100px;max-width: 100px;text-align: center;">Action</th> 	
+									</tr>
+								</thead>    
+								<tbody>
+									<tr data-ng-repeat="je in userdetails">   
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{je.account_name}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{je.cost_centername}}</td>    
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{je.ref_date}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{je.debit_amount || 0}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{je.credit_amount || 0}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">{{je.description}}</td>
+										<td valign="middle" style="vertical-align: middle !important;" class="text-center">
+											<a data-ng-click = "deleteJEheaderdata(je);deleteJEdetailsdata(je)"><i class = "fa fa-trash-o" style = "color:#337ab7;cursor: pointer;"></i></a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+<script>
+	jQuery(document).ready(function() {
+
+		angular.bootstrap(jQuery("#createjeId"), [ 'createje' ]);
+	});
+</script>

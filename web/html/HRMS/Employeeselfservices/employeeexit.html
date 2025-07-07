@@ -1,0 +1,196 @@
+<script src="/erp/files/assets/js/erp-scripts/HRMS/EmployeeSelfServices/exitemployee.js"></script>
+<link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="/erp/files/assets/css/style.css">
+<link rel="stylesheet" type="text/css" href="/erp/files/assets/css/jquery.mCustomScrollbar.css">
+<div id="exitId" data-ng-controller="ExitController">
+
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>I Exit</h5>
+					</div>   
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Employee Self
+									Services</a></li>
+							<li class="breadcrumb-item"><a href="#!">e-Exit</a></li>
+							<li class="breadcrumb-item"><a href="#!">I Exit</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>      
+	</div>
+	<!-- BreadCrumb End -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Employee Resignation</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="text-dark">Resignation Date&nbsp;&nbsp;<span
+									class="text-danger">*</span></label> <input class="form-control"
+									type="date" data-ng-model="data.object.resignation_date" />
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="text-dark">Actual Notice Period(Days)</label> <input
+									type="text" class="form-control"
+									data-ng-model="data1.object.notice_period" disabled>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="text-dark">Relieving Date</label> <input
+									class="form-control" type="date" 
+									data-ng-model="data.object.relieving_date"/>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="text-dark">Desired Notice Period
+									(Days)&nbsp;&nbsp;<span class="text-danger">*</span>
+								</label> <input type="number" class="form-control"
+									placeholder="Enter No of Days" data-ng-model="data.object.hr_desired_notice_period">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xs-12 mt-1">
+							<div class="form-group">
+								<label class="text-dark">Reason&nbsp;&nbsp;<span
+									class="text-danger">*</span></label>
+								<textarea class="form-control"
+									data-ng-model="data.object.reason" rows="2"></textarea>
+							</div>
+						</div>   
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+                                      <div class="row">
+                                        <div class="col-md-12 mt-4 text-center">
+                                            <button class="btn btn-grd-primary hor-grd text-center" id="submit"data-ng-click="addexitemployee(data.object);">Submit</button>
+                                        </div>
+                                    </div><br>
+
+<div class="row">   
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header btn-grd-primary">
+				<h6 class="card-title">Current Working Projects</h6>
+			</div>
+			<div class="card-body">
+				<div class="dt-responsive table-responsive">
+					<table id="order-table"
+						class="table table-hover table-bordered nowrap">
+						<thead class="btn-grd-primary">
+							<tr>
+								<th>S.No</th>
+								<th>Project</th>
+								<th>Work Location</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="empdata in employeeprojectdetails">
+								<td>{{$index+1}}</td>
+								<td>{{empdata.project_name}}</td>
+								<td>{{empdata.name}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row" id="approvalhistory">   
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header btn-grd-primary">
+				<h6 class="card-title">Approval History</h6>
+			</div>
+			<div class="card-body">
+				<div class="dt-responsive table-responsive">
+					<table id="order-table"
+						class="table table-hover table-bordered nowrap">
+						<thead class="btn-grd-primary">
+							<tr>
+								<th>S.No</th>
+								<th>Relieving Date</th>
+								<th>Purpose</th>
+								<th>Creator/Approver</th>
+								<th>Remarks</th>
+								<th>Approved On</th>
+								<th>Submitted On</th>
+								<th>Status</th>  
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="exitdata in employeeexitdetails">
+								<td>{{$index+1}}</td>
+								<td>{{exitdata.relieving_date|date:'dd-MM-yyyy'}}</td>
+								<td>{{exitdata.reason}}</td>
+								<td>{{exitdata.employeename}}</td>
+								<td>{{exitdata.remarks}}</td>
+								<td>{{exitdata.approvedon}}</td>
+								<td>{{exitdata.created_date|date:'dd-MM-yyyy'}}</td>
+								<td>{{exitdata.name}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+$('#simpletable1').DataTable();
+</script>
+
+
+<script>
+	jQuery(document).ready(function() {
+		$("#approvalhistory").show();
+		 angular.bootstrap(jQuery("#exitId"), [ 'exitModule' ]); 
+	});  
+	jQuery("#submit").click(function() {
+		$("#approvalhistory").show();
+		
+	});
+	
+ </script>

@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HrmsReport">
+
+
+	<select id="getCaders" resultType="map">
+		SELECT distinct id,name from
+		hrms.cader ORDER BY name;
+	</select>
+	<select id="getLetterheads" resultType="map">
+		SELECT distinct id,name 
+		as pname
+		from hrms.payslip_heads_mst ;              
+	</select>    
+
+	<!-- Getting getDepartment -->
+	<select id="getDepartment" resultType="map">
+		SELECT distinct id,name
+		from hrms.departments ORDER BY name;
+	</select>
+	<!-- Getting getDesignation -->
+	<select id="getDesignation" resultType="map">
+		SELECT distinct id,name
+		from hrms.designations ORDER BY name;
+	</select>
+
+	<!-- Getting getDivisions -->
+	<select id="getDivisions" resultType="map">
+		SELECT distinct id,name
+		from hrms.divisions ORDER BY name;
+	</select>
+
+
+
+	<!-- Getting getEmployeeType -->
+	<select id="getEmployeeType" resultType="map">
+		SELECT distinct id,type
+		from hrms.employee_types ORDER BY type;
+	</select>
+
+
+	<select id="getAllCadergrades" resultType="map">
+
+		select id,name from
+		hrms.cader;
+
+	</select>
+
+
+
+	<select id="getAllExceptionReport" resultType="map">
+
+
+
+	</select>
+
+
+
+	<select id="getAllExceptiondata" resultType="ReportsEmployee">
+
+		select a.empid,concat(first_name,' ',middle_name,' ',last_name) as
+		name,d.department_name,e.designation_name as designation,f.description
+		as cader_name,g.grade_name ,(case when b.status=0 then 'ACTIVE' when
+		b.status=1 then 'INACTIVE' END) as status_report from
+		(select empid,first_name,middle_name,last_name from
+		hrms.employee_personal_details) a inner join
+		(select * from hrms.employee_employment_details where status= #{p.employeestatus}) b
+		on (a.empid=b.empid) inner join
+		(select * from hrms.employee_bank_details) c on (c.empid=b.empid) inner join
+		(select * from hrms.department_mst) d on (d.id=b.department) inner
+		join
+		(select * from hrms.designation_mst) e on (e.id=b.designation) inner join
+		(select * from hrms.cader_mst) f on (f.id=b.cader) inner join
+		(select * from hrms.grades_mst) g on (g.id=b.grade)
+
+
+	</select>
+
+
+
+
+	<select id="getloginreport" resultType="ReportsEmployee">
+
+
+	</select>
+
+
+	<select id="getclaimsquarterwise" resultType="ReportsEmployee">
+
+
+	</select>
+
+
+	<select id="getclaimsreport" resultType="ReportsEmployee">
+
+
+	</select>
+
+
+	<select id="getEmployeeStatusReport"
+		resultType="ReportsEmployee">
+
+		<!-- select b.employeeid,concat(a.first_name,' ',a.middle_name,' ',a.last_name) 
+			as employeename,(case when b.employee_type='ST' then 'Staff' when b.employee_type='DE' 
+			then 'Deputation' when b.employee_type='OT' then 'Others' when b.employee_type='FE' 
+			then 'Fellow' when b.employee_type='OS' then 'Out Source' end) employee_type,(case 
+			when b.department='OP' then 'Operations' when b.department='HR' then 'Human 
+			Resources' when b.department='FA' then 'Finance Accounts' when b.department='CC' 
+			then 'Corporate Connect' end) department,b.cader,b.joining_date::date as 
+			joindate,b.relieved_date::date as relievedate, (case when b.status='W' then 
+			'Working' when b.status='R' then 'Relieved' end ) as status from hrms.employee_personal_details 
+			a inner join hrms.employee_employment_details b on (a.employeeid=b.employeeid 
+			) and b.cader= #{p.caderid} and b.grade=#{p.gradeid and b.joining_date between 
+			#{p.from_date}::date and #{p.to_date}::date ; -->
+
+		select
+		b.empid,concat(a.first_name,' ',a.middle_name,' ',a.last_name)
+		as
+		employeename,(case when b.employee_type=0 then 'Staff'
+		when
+		b.employee_type=3 then 'Deputation'
+		when b.employee_type=1 then
+		'Others'
+		when b.employee_type=6 then 'Fellow'
+		end) employee_types,(case when
+		b.department=1 then 'Operations'
+		when
+		b.department=2 then 'Human
+		Resources'
+		when b.department=3 then 'Finance
+		Accounts'
+		when
+		b.department=4 then 'Corporate Connect' end)
+		department,c.description as cader,b.grade,b.joining_date as
+		joindate,b.relieved_date as relievedate,
+		(case when b.status=0
+		then
+		'Working'
+		when b.status=1 then 'Relieved' end ) as statusdata from
+		hrms.employee_personal_details a inner join
+		(select * from
+		hrms.employee_employment_details where cader= #{p.caderid} and grade=
+		#{p.gradeid} and joining_date between #{p.from_date}
+		and #{p.to_date} )
+		b on (a.empid=b.empid ) inner join
+
+		(select * from hrms.cader_mst) c on
+		(c.id=b.cader) ;
+
+
+	</select>
+
+	<select id="getEmployeeStatusRelievingReport"
+		resultType="ReportsEmployee">
+
+		select
+		b.empid,concat(a.first_name,' ',a.middle_name,' ',a.last_name)
+		as
+		employeename,(case when b.employee_type=0 then 'Staff'
+		when
+		b.employee_type=3 then 'Deputation'
+		when b.employee_type=1 then
+		'Others'
+		when b.employee_type=6 then 'Fellow'
+		end) employee_types,(case when
+		b.department=1 then 'Operations'
+		when
+		b.department=2 then 'Human
+		Resources'
+		when b.department=3 then 'Finance
+		Accounts'
+		when
+		b.department=4 then 'Corporate Connect' end)
+		department,c.description as cader,b.grade,b.joining_date as
+		joindate,b.relieved_date as relievedate,
+		(case when
+		b.status=0
+		then 'Working'
+		when b.status=1 then 'Relieved' end ) as
+		statusdata from
+		hrms.employee_personal_details a inner join
+		(select *
+		from hrms.employee_employment_details where cader= #{p.caderid} and
+		grade= #{p.gradeid} and relieved_date between #{p.from_date}
+		and
+		#{p.to_date} ) b on (a.empid=b.empid ) inner join
+
+		(select * from
+		hrms.cader_mst) c on (c.id=b.cader) ;
+
+
+
+	</select>
+
+	<select id="getEmployeeStatusStopReport"
+		resultType="ReportsEmployee">
+
+
+	</select>
+
+
+
+	<select id="getAllcfms" resultType="ReportsEmployee">
+
+
+	</select>
+
+	<select id="getEmployeeKotak" resultType="ReportsEmployee">
+		select distinct b.empid,concat(a.first_name,' ',a.middle_name,'
+		',a.last_name) as name
+		,c.bank_name,c.bank_acno,c.pan_no,c.branch,c.ifsc_code,d.amount from
+		(select empid,first_name,middle_name,last_name from
+		hrms.employee_personal_details) a inner join
+		(select * from hrms.employee_employment_details where status=0) b on
+		(a.empid=b.empid) inner join
+		(select * from hrms.employee_bank_details where bank_name='Kotak Mahindra' )
+		c on (c.empid=b.empid) inner join
+		(select a.empid,a.financial_year,a.payroll_month,sum(amount) as amount from
+		hrms.employee_payroll a inner join hrms.payslip_heads_mst b on
+		(a.payslip_head=b.id)
+		where a.financial_year=#{p.financial_year} and
+		a.payroll_month=#{p.payroll_month} and b.title='Earnings' and
+		amount!=0 group by a.empid,a.financial_year,a.payroll_month) d on
+		(b.empid=d.empid)
+	</select>
+
+
+
+	<select id="getOthetKotakbank" resultType="ReportsEmployee">
+		select distinct b.empid,concat(a.first_name,' ',a.middle_name,'
+		',a.last_name) as name
+		,c.bank_name,c.bank_acno,c.pan_no,c.branch,c.ifsc_code,d.amount from
+		(select empid,first_name,middle_name,last_name from
+		hrms.employee_personal_details) a inner join
+		(select * from hrms.employee_employment_details where status=0) b on
+		(a.empid=b.empid) inner join
+		(select * from hrms.employee_bank_details where bank_name!='Kotak Mahindra' )
+		c on (c.empid=b.empid) inner join
+		(select a.empid,a.financial_year,a.payroll_month,sum(amount) as amount from
+		hrms.employee_payroll a inner join hrms.payslip_heads_mst b on
+		(a.payslip_head=b.id)
+		where a.financial_year=#{p.financial_year} and
+		a.payroll_month=#{p.payroll_month} and b.title='Earnings' and
+		amount!=0 group by a.empid,a.financial_year,a.payroll_month) d on
+		(b.empid=d.empid)
+
+	</select>
+
+
+
+	<select id="getAllBank" resultType="ReportsEmployee">
+		select distinct b.empid,concat(a.first_name,' ',a.middle_name,'
+		',a.last_name) as name
+		,c.bank_name,c.bank_acno,c.pan_no,c.branch,c.ifsc_code,d.amount from
+		(select empid,first_name,middle_name,last_name from
+		hrms.employee_personal_details) a inner join
+		(select * from hrms.employee_employment_details where status=0) b on
+		(a.empid=b.empid) inner join
+		(select * from hrms.employee_bank_details ) c on (c.empid=b.empid) inner join
+		(select a.empid,a.financial_year,a.payroll_month,sum(amount) as amount
+		from hrms.employee_payroll a inner join hrms.payslip_heads_mst b on
+		(a.payslip_head=b.id)
+		where a.financial_year=#{p.financial_year} and
+		a.payroll_month=#{p.payroll_month} and b.title='Earnings' and
+		amount!=0 group by a.empid,a.financial_year,a.payroll_month) d on
+		(b.empid=d.empid)
+
+	</select>
+
+
+
+	<select id="getImprestreport" resultType="ReportsEmployee">
+
+
+	</select>
+
+	<select id="getAllcocexception" resultType="ReportsEmployee">
+
+
+	</select>
+
+
+
+   
+
+
+	<select id="getEmployeeStaffwise" resultType="ReportsEmployee">
+
+		select (case when
+		a.employee_type=0 then 'Staff' when a.employee_type=1 then 'Others'
+		when a.employee_type=3 then 'Deputations' end)
+		employeetypes,count(distinct b.empid) as count, sum(case when
+		c.title='Earnings' then b.amount end) as amount from
+		hrms.employee_employment_details a
+		inner join hrms.employee_payroll b on (a.empid=b.empid) inner join
+		hrms.payslip_heads_mst c on (b.payslip_head=c.id)
+		where b.financial_year=#{p.financial_year} and
+		b.payroll_month=#{p.payroll_month} and a.status=0 group by
+		a.employee_type
+
+
+	</select>
+
+
+
+	<select id="getEmployeePaytype" resultType="ReportsEmployee">
+
+		select c.name,(case
+		when c.heads_nature=0 then 'Earnings'
+		when c.heads_nature=1 then
+		'Deductions' end)as type,sum(case when
+		c.heads_nature=0 then b.amount
+		when c.heads_nature=1 then b.amount end) as amount from
+		hrms.employee_employment_details a
+		inner join hrms.employee_payroll b
+		on (a.empid=b.empid) inner join
+		hrms.payslip_heads_mst c
+		on
+		(b.payslip_head=c.id) where b.financial_year=#{p.financial_year} and
+		b.payroll_month= #{p.payroll_month} and a.status=0 group by
+		c.name,(case when c.heads_nature=0 then 'Earnings'
+		when
+		c.heads_nature=1 then 'Deductions' end)
+
+
+
+
+
+
+	</select>
+
+
+
+	<select id="getEmployeeSaturation" resultType="ReportsEmployee">
+
+		select c.name,sum(case when
+		c.heads_nature=0 then b.amount
+		when
+		c.heads_nature=1 then b.amount end) as amount from
+		hrms.employee_employment_details a
+		inner join hrms.employee_payroll b
+		on (a.empid=b.empid) inner join
+		(select * from hrms.payslip_heads_mst
+		where heads_nature= 1)c
+		on
+		(b.payslip_head=c.id) where b.financial_year= #{p.financial_year} and
+		b.payroll_month= #{p.payroll_month} and a.status=0 group by
+		c.name,(case
+		when
+		c.heads_nature=1 then 'Deductions' end)
+
+
+	</select>
+
+	<select id="getEmployeeDeputation" resultType="ReportsEmployee">
+
+
+	</select>
+
+	<select id="getEmployeeOthers" resultType="ReportsEmployee">
+
+		WITH vars(financial_year,payroll_month) as
+		(VALUES(#{financial_year},#{payroll_month}))
+
+		select concat(c.first_name,' ',c.middle_name,' ',c.last_name) as
+		name,a."BASIC" as Gross ,a."HRA" as TDS,a."CONVEYANCE" as
+		conveyance,a."MEDICAL ALLOWANCE" as medical_allowance,a."SPECIAL
+		ALLOWANCE" as special_allowance,a."LTA" as lta ,a."PROFESSIONAL TAX"
+		as professional_tax,
+		a."PF" as pf,a."INCOME TAX" as incometax,a."Employer Contribution PF" as
+		employee_contributionpf,d.lop_days,b.bank_name,b.bank_acno,b.ifsc_code,b.branch,b.pan_no
+		from
+		(select * from crosstab('select a.empid,a.name,b.amount from (select
+		a.empid,b.name,b.id from (select a.empid,b.payslip_heads from
+		hrms.employee_employment_details a,
+		(select distinct payslip_heads from hrms.ctc_calculator_details where
+		ctc_calculator in (3)) b where a.employee_type=1 and status=0) a inner
+		join hrms.payslip_heads_mst b on (a.payslip_heads=b.id)) a left join
+		(select a.empid,c.name,a.amount from hrms.employee_payroll a inner
+		join hrms.employee_employment_details b on (a.empid=b.empid and
+		b.employee_type=1)
+		inner join hrms.payslip_heads_mst c on (a.payslip_head=c.id) where
+		a.financial_year=financial_year and a.payroll_month= payroll_month
+		order by a.empid,payslip_head) b on (a.empid=b.empid and
+		a.name=b.name) order by a.empid,a.id')
+		as stf(empid character varying,"BASIC" decimal,"HRA"
+		decimal,"CONVEYANCE" decimal,"MEDICAL ALLOWANCE" decimal,"SPECIAL
+		ALLOWANCE" decimal,"LTA" decimal,"PROFESSIONAL TAX" decimal,"PF"
+		decimal,"INCOME TAX" decimal,"Employer Contribution PF" decimal)) a
+		left join
+		( select empid,bank_name,bank_acno,ifsc_code,branch,pan_no from
+		hrms.employee_bank_details) b on (a.empid=b.empid)
+		left join hrms.employee_personal_details c on (a.empid=c.empid) left join
+		hrms.employee_lop d on (a.empid=d.empid)
+
+	</select>
+
+	<select id="getEmployeeStaff" resultType="ReportsEmployee">
+
+		WITH vars(financial_year,payroll_month) as
+		(VALUES(#{financial_year},#{payroll_month}))
+		select
+		CAST(concat(c.first_name,' ',c.middle_name,' ',c.last_name) as character varying) as
+		name,a.empid,CAST(a."BASIC" as integer) as basic,CAST(a."HRA" as
+		int)as hra,cast(a."CONVEYANCE" as int) as
+		conveyance,cast(a."MEDICAL ALLOWANCE" as int) as medical_allowance,cast(a."SPECIAL
+		ALLOWANCE" as int) as special_allowance,cast(a."LTA" as int)as lta,
+		cast(a."PROFESSIONAL TAX" as int)as professionaltax ,cast(a."PF" as
+		int)as pf,cast(a."INCOME TAX" as int) as
+		incometax,cast(a."Employer Contribution PF" as int) as
+		employercontributionpf, cast(d.lop_days as int) as lopdays,b.bank_name as
+		bankname,b.bank_acno as accountnumber,b.ifsc_code as ifsccode,b.branch
+		as branchname,b.pan_no as pannumber
+		from
+		(select * from crosstab('select a.empid,a.name,b.amount from (select
+		a.empid,b.name,b.id from (select a.empid,b.payslip_heads from
+		hrms.employee_employment_details a,
+		(select distinct payslip_heads from hrms.ctc_calculator_details where
+		ctc_calculator in (1,2,4,5)) b where a.employee_type=0 and status=0) a
+		inner join hrms.payslip_heads_mst b on (a.payslip_heads=b.id)) a left
+		join
+		(select a.empid,c.name,a.amount from hrms.employee_payroll a inner join
+		hrms.employee_employment_details b on (a.empid=b.empid and
+		b.employee_type=0) inner join hrms.payslip_heads_mst c on
+		(a.payslip_head=c.id) where a.financial_year= financial_year and
+		a.payroll_month= payroll_month
+		order by a.empid,payslip_head) b on (a.empid=b.empid and
+		a.name=b.name) order by a.empid,a.id')
+		as stf(empid character varying,"BASIC" decimal,"HRA"
+		decimal,"CONVEYANCE" decimal,"MEDICAL ALLOWANCE" decimal,"SPECIAL
+		ALLOWANCE" decimal,"LTA" decimal,
+		"PROFESSIONAL TAX" decimal,"PF" decimal,"INCOME TAX" decimal,"Employer Contribution PF" decimal)) a
+		left join
+		( select empid,bank_name,bank_acno,ifsc_code,branch,pan_no from
+		hrms.employee_bank_details) b on (a.empid=b.empid)
+		left join hrms.employee_personal_details c on (a.empid=c.empid) left join
+		hrms.employee_lop d on (a.empid=d.empid);
+
+
+        
+
+
+	</select>
+
+
+	<select id="getEmployeeMonthlyRecouncilation"
+		resultType="ReportsEmployee">
+
+	select a.empid,a.curr,b.prev,(b.prev-a.curr)
+	difference,concat(c.first_name,' ',c.middle_name,' ',c.last_name) as
+	name from (select
+	a.empid,sum(case when b.title='Earnings' then a.amount
+	end) - sum(case
+	when b.title='Deductions' then a.amount end) as curr
+	from
+	hrms.employee_payroll a inner join hrms.payslip_heads_mst b on
+	(a.payslip_head=b.id) where a.financial_year= #{p.financial_year} and
+	a.payroll_month=#{p.payroll_month}
+	group by a.empid) a
+	inner join
+	(select
+	a.empid,sum(case when b.title='Earnings' then a.amount end) - sum(case
+	when b.title='Deductions' then a.amount end) as prev from
+	hrms.employee_payroll a inner join hrms.payslip_heads_mst b on
+	(a.payslip_head=b.id) where a.financial_year= #{p.financial_year} and
+	a.payroll_month= #{p.payroll_month}-1
+	group by a.empid) b on
+	(a.empid=b.empid)inner join
+
+	(select * from hrms.employee_personal_details )c on (a.empid=c.empid)
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</select>
+	
+	
+	
+	<select id="getloginreports" resultType="ReportsEmployee" parameterType="map">
+		select count (login_date) as logincount,login_date from hrms.employee_login_details  where login_date :: date>=#{p.from_date} and
+		#{p.to_date}>=login_date::date group by login_date
+    </select>   
+       
+<select id="getLoginbefore11" resultType="map">
+ select distinct concat(first_name, ' ' ,last_name) as name,a.empid,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,i.type,c.login_time as login_time,c.login_date as login_date,c.logout_time as logout_time,c.created_date  from
+	(select empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details where status=0) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time,created_date  from hrms.employee_login_details) c on (a.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)    
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from hrms.employee_types_mst) i on (i.id = b.employee_type)
+	 where  c.login_time BETWEEN '9:00:00' and '11:00:00'
+	and c.created_date>=#{p.from_date}  and
+		#{p.to_date}>=c.created_date 
+	</select>
+	<select id="getLoginafter11" resultType="map">
+select distinct concat(first_name, ' ' ,last_name) as name,a.empid,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,i.type,c.login_time as login_time,c.login_date as login_date,c.logout_time as logout_time,c.created_date  from
+	(select empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details where status=0) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time,created_date  from hrms.employee_login_details) c on (a.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)    
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from hrms.employee_types_mst) i on (i.id = b.employee_type)
+	 where c.login_time BETWEEN '11:00:00' and '19:00:00'
+	and c.created_date>=#{p.from_date}  and
+		#{p.to_date}>=c.created_date 
+	</select>
+	<select id="getMissedlogin" resultType="map">
+
+		
+		
+		select  distinct concat(first_name, ' ' ,last_name) as name,a.empid,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,i.type ,c.login_time as login_time,c.login_date as login_date,c.logout_time as logout_time,c.created_date  from
+	(select  empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details where status=0) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time,created_date  from hrms.employee_login_details where  created_date>=#{p.from_date}  and
+		#{p.to_date}>=created_date ) c on (a.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from hrms.employee_types_mst) i on (i.id = b.employee_type)
+	
+	</select>
+	<select id="getAllReports" resultType="map">
+	select distinct concat(first_name, ' ' ,last_name) as name,a.empid,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,
+i.type,c.login_time as login_time,c.login_date as login_date,c.logout_time as logout_time,c.created_date  from
+	(select   empid,first_name,last_name from hrms.employee_personal_details ) a 
+	inner join (select * from hrms.employee_employment_details where status=0) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time,created_date  from hrms.employee_login_details) c on (b.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from  hrms.employee_types_mst) i on (i.id = b.employee_type)
+	where  c.created_date>=#{p.from_date}  and
+		#{p.to_date}>=c.created_date 
+	
+	</select>
+	<select id="getLeavesReport" resultType="map">
+	select a.empid,b.empid,b.leave_type,b.approval_by,b.reason,b.leavestatus,a.name,b.from_date,b.to_date from
+(select empid,concat(first_name,'',last_name)as name from
+		hrms.employee_personal_details)a 
+		inner join (select empid,leave_type,approval_by,reason,leavestatus,from_date,to_date from hrms.leaves)b on a.empid=b.empid
+	where b.from_date>=#{p.from_date}  and
+		#{p.to_date}>=b.to_date 
+	</select>
+	     
+	     
+<select id="getDefaultLogins" resultType="map">
+	select distinct concat(first_name, ' ' ,last_name) as name,a.empid,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,
+	i.type,c.login_time as login_time,c.login_date as login_date,c.logout_time as logout_time,c.created_date  from
+	(select   empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details where status=0) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time,created_date  from hrms.employee_login_details) c on (b.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from  hrms.employee_types_mst) i on (i.id = b.employee_type)
+	where  c.created_date>=#{p.from_date}  and
+		#{p.to_date}>=c.created_date 
+	</select>      
+<insert id="Insert" parameterType="map">
+		insert into	hrms.helpdesk_request_types(helpdesk_categoryid,name)
+		values(#{p.helpdesk_categoryid},#{p.name});
+	</insert>
+	<select id="getAllHelpdeskReqType" resultType="ReportsEmployee">
+		SELECT helpdesk_categoryid,name,status from hrms.helpdesk_request_types;
+	</select> 
+	<update id="updateReqTypeData"  parameterType="map">
+		update hrms.helpdesk_request_types SET name=#{p.name},status=#{p.status} WHERE helpdesk_categoryid=#{p.helpdesk_categoryid};
+	</update>
+	<select id="getByIdCategories" resultType="ReportsEmployee">   
+		SELECT name,helpdesk_categoryid,status  from hrms.helpdesk_request_types WHERE helpdesk_categoryid=#{p.helpdesk_categoryid};
+	</select>
+	<select id="getCoCExceptionReport" resultType="map">
+ 
+
+select distinct concat(first_name, ' ' ,last_name) as name,a.empid,b.joining_date,b.status as active,d.description as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,i.type,c.login_time as login_time,c.login_date as login_date,c.logout_time as logout_time from
+	(select empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details where status=0) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time from hrms.employee_login_details) c on (a.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)    
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from hrms.employee_types_mst) i on (i.id = b.employee_type)
+	
+	</select>      
+	<select id="getMonths" resultType="map">
+		SELECT distinct id,name from   
+		hrms.months_mst ORDER BY name;
+	</select>
+	<select id="getYears" resultType="map">
+		SELECT distinct id,name from
+		hrms.financial_year_mst ORDER BY name;
+	</select>
+	<select id="getCfmsReport" resultType="map">
+ select distinct b.empid,concat(a.first_name,' ',a.middle_name,' ',a.last_name) as name ,c.bank_name,c.bank_acno,c.pan_no,c.branch,c.ifsc_code,c.cfms_code,d.amount from
+(select empid,first_name,middle_name,last_name from hrms.employee_personal_details) a inner join
+(select * from hrms.employee_employment_details where  status=0 and employee_type=0) b on (a.empid=b.empid) inner join
+(select * from hrms.employee_bank_details  ) c on (c.empid=b.empid) inner join
+(select a.empid,a.financial_year,a.payroll_month,sum(amount)  as amount from hrms.employee_payroll a inner join hrms.payslip_heads_mst b on (a.payslip_head=b.id) 
+where a.financial_year=#{p.financial_year} and a.payroll_month=#{p.payroll_month} and b.title='Earnings' and amount!=0 group by a.empid,a.financial_year,a.payroll_month) d on (b.empid=d.empid)
+
+	
+	</select>
+	<select id="getCfmsReportDeputations" resultType="map">
+ select distinct b.empid,concat(a.first_name,' ',a.middle_name,' ',a.last_name) as name ,c.bank_name,c.bank_acno,c.pan_no,c.branch,c.ifsc_code,c.cfms_code,d.amount from
+(select empid,first_name,middle_name,last_name from hrms.employee_personal_details) a inner join
+(select * from hrms.employee_employment_details where  status=0 and employee_type=3) b on (a.empid=b.empid) inner join
+(select * from hrms.employee_bank_details  ) c on (c.empid=b.empid) inner join
+(select a.empid,a.financial_year,a.payroll_month,sum(amount)  as amount from hrms.employee_payroll a inner join hrms.payslip_heads_mst b on (a.payslip_head=b.id) 
+where a.financial_year=#{p.financial_year} and a.payroll_month=#{p.payroll_month} and b.title='Earnings' and amount!=0 group by a.empid,a.financial_year,a.payroll_month) d on (b.empid=d.empid)
+
+		
+	</select>
+	<select id="getCfmsReportOthers" resultType="map">
+ select distinct b.empid,concat(a.first_name,' ',a.middle_name,' ',a.last_name) as name ,c.bank_name,c.bank_acno,c.pan_no,c.branch,c.ifsc_code,c.cfms_code,d.amount from
+(select empid,first_name,middle_name,last_name from hrms.employee_personal_details) a inner join
+(select * from hrms.employee_employment_details where  status=0 and employee_type=1) b on (a.empid=b.empid) inner join
+(select * from hrms.employee_bank_details  ) c on (c.empid=b.empid) inner join
+(select a.empid,a.financial_year,a.payroll_month,sum(amount)  as amount from hrms.employee_payroll a inner join hrms.payslip_heads_mst b on (a.payslip_head=b.id) 
+where a.financial_year=#{p.financial_year} and a.payroll_month=#{p.payroll_month} and b.title='Earnings' and amount!=0 group by a.empid,a.financial_year,a.payroll_month) d on (b.empid=d.empid)
+	</select>
+	
+	<!--  /*  employee history*/ -->
+	
+	<select id="getEmployeeHistory" resultType="map">
+	select distinct concat(first_name, ' ' ,last_name) as employeename,a.empid,b.status,d.cader_name as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,
+	i.type,b.company_email,a.mobile from
+	(select   empid,first_name,last_name,mobile from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time from hrms.employee_login_details) c on (b.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from  hrms.employee_types_mst) i on (i.id = b.employee_type)
+	where b.department=#{p.departmentid} or b.cader=#{p.caderid} or b.designation=#{p.designationid} or b.grade=#{p.gradeid} or b.employee_type=#{p.employee_type} 
+
+	</select>
+	<select id="getAllEmployeeHistory" resultType="map">
+	select distinct concat(first_name, ' ' ,last_name) as employeename,a.empid,b.status,d.cader_name as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,
+	i.type,b.company_email,a.mobile from
+	(select   empid,first_name,last_name,mobile from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details) b on (a.empid = b.empid)
+	inner join (select empid,login_date,login_time,logout_time from hrms.employee_login_details) c on (b.empid = c.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from  hrms.employee_types_mst) i on (i.id = b.employee_type)
+	
+	</select>
+	<select id="getEmployeeEmploymentDetails" resultType="map">
+	select distinct concat(first_name, ' ' ,last_name) as employeename,a.empid,b.status,b.reporting_to,d.cader_name as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,
+	i.type from
+	(select empid,first_name,last_name,mobile from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details) b on (a.empid = b.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from  hrms.employee_types_mst) i on (i.id = b.employee_type) where b.empid=#{p.empid}
+	</select>
+	<select id="getEmployeeProjectDetails" resultType="map">
+	select distinct concat(first_name, ' ' ,last_name) as employeename,j.project,
+  j.work_location,j.status,j.from_date,j.to_date,j.modified_by,j.created_date from
+	(select   empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details) b on (a.empid = b.empid)
+	inner join (select * from hrms.project_employee) j on (j.empid=a.empid)where b.empid=#{p.empid}	
+	</select>
+	<select id="getEmployeeSalaryDetails" resultType="map">
+	select distinct concat(first_name, ' ' ,last_name) as employeename,j.amount,j.created_date,j.created_by from
+	(select   empid,first_name,last_name from hrms.employee_personal_details) a 
+	inner join (select * from hrms.employee_employment_details) b on (a.empid = b.empid)
+	inner join (select * from hrms.employee_payroll) j on (j.empid=a.empid)
+	</select>
+	
+	<select id="getByIdEmployeeHistory" resultType="ReportsEmployee">   
+		select distinct concat(first_name, ' ' ,last_name) as employeename,a.empid,b.status,b.reporting_to,d.cader_name as cader,e.department_name as department,f.designation_name as designation,g.grade_name as grade,
+	i.type,j.amount,j.created_date,j.created_by,k.project,
+  k.work_location,k.status,k.from_date,k.to_date,k.modified_by,k.created_date from
+	(select distinct empid,first_name,last_name,mobile from hrms.employee_personal_details) a 
+	inner join (select distinct empid,company_email,cader,grade,
+  joining_date,confirmed_date,contract_from,contract_to,
+  relieved_date,department,designation,division,cost_center,employee_type,
+  notice_period,status,created_by,created_date,reporting_to,comments
+	 from hrms.employee_employment_details) b on (a.empid = b.empid)
+	inner join (select * from hrms.cader_mst) d on (d.id = b.cader)
+	inner join (select * from hrms.department_mst) e on (e.id = b.department)
+	inner join (select * from hrms.designation_mst) f on (f.id = b.designation)
+	inner join (select * from hrms.grades_mst) g on (g.id = b.grade)
+	inner join (select * from  hrms.employee_types_mst) i on (i.id = b.employee_type) 
+	inner join (select distinct empid,payslip_head,financial_year,payroll_month,amount, created_date,created_by  from hrms.employee_payroll) j on (j.empid=a.empid)
+	inner join (select distinct empid, project,work_location ,status,from_date,to_date,
+  reporting_to,created_by,modified_by,created_date from hrms.project_employee) k on (k.empid=a.empid)where a.empid=#{p.empid}
+
+
+	</select>
+	<!--  /*end  employee history*/ -->
+	
+	<select id="getCTCReports" resultType="map">
+select distinct b.empid,concat(a.first_name,' ',a.middle_name,' ',a.last_name) as employeename,c.annual_salary,
+ c.effective_date,i.type from
+(select empid,first_name,middle_name,last_name from hrms.employee_personal_details) a inner join
+(select * from hrms.employee_employment_details where  status=0) b on (a.empid=b.empid) inner join
+(select * from  hrms.employee_types_mst) i on (i.id = b.employee_type) inner join
+(select * from hrms.effective_ctc_association)c on (b.empid=c.empid )where b.empid=#{p.empid} and b.employee_type=#{p.id}
+	</select>
+	<select id="getEmployeeTypes" resultType="map">
+		SELECT distinct id,type from hrms.employee_types_mst order by id;
+	</select>
+	<select id="getEmployeeIds" resultType="map">
+		select concat(first_name,' ',middle_name,' ',last_name) AS employeename,b.empid from hrms.employee_personal_details a 
+		inner join (select * from hrms.employee_employment_details where status=0)b on (a.empid=b.empid);
+	</select>
+	<select id="getCalendarYears" resultType="map">
+		SELECT distinct id,year_name from hrms.calendar_year_mst order by id;
+	</select>
+	<select id="getQuarters" resultType="map">
+		SELECT distinct id,name from hrms.quarter_mst order by id;
+	</select>
+	<select id="getLeaveSummaryReport" resultType="map">
+select a.empid,a.employeename,b.status,e.type as employee_type,c.leaves_eligible,c.leave_balance,c.availed_leaves,
+c.leave_balance,d.name as quarter_name,f.year_name from
+(select empid,concat(first_name,'',last_name) as employeename from hrms.employee_personal_details )a left join
+ (select empid,designation,employee_type,status  from  hrms.employee_employment_details where status=0)b on a.empid=b.empid left join
+(select id,type from hrms.employee_types_mst)e on e.id=b.employee_type left join
+(select calendar_year,empid,quarter,total_leaves as leaves_eligible,used_leaves as availed_leaves,available_leaves as leave_balance from hrms.employee_leave_summary)
+c on b.empid=c.empid
+left join
+(select * from hrms.calendar_year_mst)f on (f.id=c.calendar_year)left join
+(select * from hrms.quarter_mst)d on (d.id=c.quarter)
+ where c.calendar_year=#{p.id}    
+	</select>
+
+
+
+ <select id="GetProfilereport"  resultType="ReportsEmployee">
+
+select  b.name as employeename,a.empid ,c.designation_name from (select * from hrms.employee_employment_details where status=0) a inner join
+
+(select empid,concat(first_name,' ',middle_name,' ',last_name) AS name from hrms.employee_personal_details )b on (a.empid=b.empid) left join 
+
+(select * from hrms.designation_mst )c on (a.designation=c.id)
+
+
+</select>
+
+<select id="GetAttendanceoverviewreport" resultType="ReportsEmployee">
+           
+
+
+
+   
+
+</select>
+
+<select id="getSingleEmpData" resultType="map">	
+		select distinct a.empid,c.name as payslip_head,a.present_amount,b.prev_amount from
+		(select empid,payslip_head,amount as present_amount from hrms.employee_payroll where payroll_month=#{p.payroll_month} and financial_year=#{p.financial_year} and empid=#{p.empid})a inner join
+		(select empid,payslip_head,amount as prev_amount from hrms.employee_payroll where payroll_month=#{p.payroll_month}-1 and financial_year=#{p.financial_year} and empid=#{p.empid})b on a.empid=b.empid
+		and a.payslip_head=b.payslip_head inner join
+		(select id,name from hrms.payslip_heads_mst  where title='Earnings')c on a.payslip_head=c.id
+	</select>
+
+
+
+
+</mapper>     

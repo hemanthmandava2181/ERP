@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Grn">
+	<!--line items -->
+
+
+
+			 <insert id="Insertinvoiceid" parameterType="map">
+		insert into	operations.invoice_details(hsn_sac_code,gl_code,item_description,
+  amount,date_created)
+		values(#{p.hsn_sac_code},#{p.gl_code},#{p.item_description},#{p.amount},current_timestamp)
+	</insert> 
+
+
+			 <insert id="Insertinvoicedetails" parameterType="map">
+		insert into	operations.invoice_header(invoice_id,invoice_date,invoice_due_date,description,
+  amount,credit_tax_amount,debit_tax_amount,status,created_by,modified_by,created_date)
+		values(('INV' || '' || #{year} || '' ||lpad(CAST( #{id} AS character varying ),5,'0')),#{p.invoice_date},
+		#{p.invoice_due_date},#{p.description},#{p.amount},#{p.credit_tax_amount},#{p.debit_tax_amount},#{p.status},#{p.created_by},#{p.modified_by},current_timestamp)
+	</insert> 
+
+
+   
+
+
+
+
+
+
+	<insert id="Insertlineitems" parameterType="map">
+		insert into
+		procurements.grn_details(item_name,brand,location,installation_status,
+		installation_date,po_qty,received_qty,inspected_qty,rejected_qty,qc_qty)
+		values(#{p.item_name},#{p.brand},#{p.location},#{p.installation_status},#{p.installation_date},
+		#{p.po_qty},#{p.received_qty},#{p.inspected_qty},#{p.rejected_qty},#{p.qc_qty})
+	</insert>
+
+
+	<select id="getAlllineitems" resultType="map">
+		SELECT
+		qty,rate,value,item_name,asset_name,specifications,brand,location,
+		installation_status,installation_cost,created_by,created_date,
+		purchaseorder,status from procurements.purchase_order_details;
+	</select>
+	<delete id="deleteDatalineitems"
+		parameterType="java.lang.String">
+		delete from procurements.grn_details where
+		item_name=#{p.item_name};
+	</delete>
+	<update id="updateDatalineitems" parameterType="map">
+		update
+		procurements.grn_details SET brand=#{p.brand},location=#{p.location},
+		installation_status=#{p.installation_status},installation_date=#{p.installation_date},
+		po_qty=#{p.po_qty},received_qty=#{p.received_qty},inspected_qty=#{p.inspected_qty},
+		rejected_qty=#{p.rejected_qty},qc_qty=#{p.qc_qty} WHERE
+		item_name=#{p.item_name};
+	</update>
+	<select id="getByIdlineitems" resultType="GrnModel">     
+		SELECT
+		item_name,brand,location,installation_status,installation_date,
+		po_qty,received_qty,inspected_qty,rejected_qty,qc_qty from
+		procurements.grn_details WHERE item_name=#{p.item_name};
+	</select>
+
+	<select id="getPODetails" resultType="map" parameterType="map">
+		<!-- SELECT order_date,need_by_date from procurements.purchase_order where 
+			purchaseorder_id=#{p.purchaseorder_id}; -->
+		<!-- SELECT
+		b.order_date,b.need_by_date,a.vendorname,a.vendor_id,b.vendor_id from
+		(select distinct vendor_id,vendorname from procurements.vendors_mst)
+		as a
+		inner join (select order_date,need_by_date,vendor_id from
+		procurements.purchase_order where
+		purchaseorder_id=#{p.purchaseorder_id}) as b on a.vendor_id=
+		b.vendor_id; -->
+		
+		
+		
+select vendorname,order_date,need_by_date from (select vendor_id,order_date,need_by_date,purchaseorder_id from procurements.purchase_order) as a inner join 
+(select id,name as vendorname from procurements.vendors order by id) as b on a.vendor_id=b.id where a.purchaseorder_id = #{p.id}
+	</select>
+	<!-- grn details -->
+	<select id="getProjects" resultType="map">
+		SELECT
+		project_id,project_name from procurements.createproject_mst;
+	</select>
+	<select id="getYear" resultType="java.lang.Integer">
+		SELECT
+		(cast(split_part(cast(EXTRACT(year FROM CURRENT_TIMESTAMP) as
+		varchar), '0', 2) as integer)) as year;
+	</select>
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT count(id)+1 as count    
+		from procurements.grn;
+	</select>
+	<insert id="Insertgrnid" parameterType="map">
+		insert into
+		operations.grn(grn_id,po_id,vendor_grn,grn_date,vendor_id,amount,delivery_date,comments,grn_status,received_by,checked_by,approved_by,created_by,created_date)
+		values(('GRN08' || '' || #{year} || '' ||lpad(CAST( #{id} AS character
+		varying
+		),3,'0')),#{p.po_id},#{p.invoice},current_timestamp,#{p.vendor_id},
+		#{p.amount},#{p.need_by_date},#{p.comments},#{p.grn_status},#{p.recieved_by},#{p.checked_by},#{p.approved_by},#{p.created_by},current_timestamp)
+	</insert>
+
+	<select id="getDraftgrn" resultType="map">    
+		select grn_id,purchase_order from operations.grn where purchase_order = #{p.po_id};
+	</select>
+	<!-- Asset internal Request -->   
+	<insert id="Insertassetinternalreq" parameterType="map">
+		insert into
+		operations.asset_requests(request_id,request_type,empid,location,cost_center,created_date)
+		values(('REQ' || '' || #{year} || '' ||lpad(CAST( #{id} AS character
+		varying
+		),3,'0')),#{p.request_type},#{p.empid},#{p.location},#{p.cost_center},current_timestamp)
+	</insert>
+	<!-- <insert id="Insertassetinternalreq" parameterType="map"> insert into 
+		operations.asset_requests(request_id,request_type,empid,location,cost_center, 
+		description,assigned_to,is_closed,closed_date,approved_by,created_by,created_date) 
+		values(('REQ' || '' || #{year} || '' ||lpad(CAST( #{id} AS character varying 
+		),3,'0')),#{p.request_type},#{p.empid},#{p.location},#{p.cost_center}, #{p.description},#{p.assigned_to},#{p.is_closed},#{p.closed_date},#{p.approved_by},#{p.created_by},current_timestamp) 
+		</insert> -->
+	<insert id="InsertPaymentDetails" parameterType="map">
+		insert into
+		operations.asset_request()
+		values(('REQ' || '' || #{year} || ''
+		||lpad(CAST( #{id} AS character varying
+		),3,'0')),#{p.request_type},#{p.empid},#{p.location},#{p.cost_center},current_timestamp)
+	</insert>
+	<select id="getPurchaseOrderDetails" resultType="map">
+		SELECT
+		qty,rate,value,item_name,asset_name,specifications,brand,location,installation_status,
+		installation_cost,created_by,created_date from
+		procurements.purchase_order_details; 
+	</select>
+
+	<select id="getApprovepodetails" resultType="map">
+		SELECT
+		financial_year,po_type,p_type,service_id,sector_id,vendor_id,vendor_comment,order_no,order_date,
+		need_by_date,address,
+		amount_words,amount,instructions,group_name,purchaseorder_id,project_id,scheme_id,program_id,existing_poid,
+		asset_description,status,date_created,created_by,approved_by,order_status,unlock_work_order,vendor_accepted
+		from procurements.purchase_order
+	</select>
+	<select id="getGrnIDs" resultType="map">
+		SELECT
+		grn_id,grn_date,comments from procurements.grn where po_id=#{po_id};
+	</select>
+	<!--Asset details -->
+	<select id="getGrns" resultType="map">  
+		SELECT grn_id,id from
+		operations.grn;   
+	</select>
+	<select id="getAssetDetails" resultType="map">
+		
+<!-- select grn_date,purchaseorder_id,order_date,vendorname from(select purchase_order,vendor,grn_date from operations.grn) as a inner join
+(select purchaseorder_id,order_date,id from procurements.purchase_order) as b on (a.purchase_order=b.id) inner join
+(select id,name as vendorname from procurements.vendors) as c on (c.id = a.vendor)
+ -->
+ 	
+ 	
+
+select grn_date,purchaseorder_id,order_date,vendorname,assets,qty,brand,locationname from 
+(select id,asset_name,qty,brand,location from operations.purchase_order_details) as a inner join 
+(select purchase_order,vendor,grn_date,grn_id from operations.grn) as b on (a.id = b.purchase_order) inner join
+(select purchaseorder_id,order_date,id from procurements.purchase_order) as c on (b.purchase_order=c.id) inner join
+(select id,name as vendorname from procurements.vendors) as d on (d.id = b.vendor) inner join
+(select asset_name as assets,po_id from procurements.asset_names) as e on (a.asset_name = e.po_id) inner join
+(select id,name as locationname from operations.location_mst) as f on (a.location = f.id) where b.grn_id = #{p.grn_id}
+ 
+ 	
+ 
+ 	</select>
+
+
+
+	<select id="getGrnItems" resultType="map">
+		select
+		assets,qty,brand,location from (select id,asset_name as assets from
+		operations.asset_name) as a
+		inner join (select qty,brand,location,id
+		from
+		procurements.purchase_order_details) as b on a.id = b.id;
+	</select>
+
+
+	<select id="getAssetId" resultType="map">
+		select brand,value from
+		procurements.purchase_order_details;
+	</select>
+
+
+
+
+	<!-- /*grn List*/ -->
+	<select id="getGrnListReport" resultType="GrnModel" parameterType="map">
+		select grn_id,grn_date,delivery_date,created_date,po_id from
+		procurements.grn where
+		created_date>=#{p.from_date} and
+		#{p.to_date}>=created_date
+          
+    
+	</select>  
+	<select id="Getpoiddata" resultType="map">
+		
+select financialyear,purchasetype,sector,purchaseorderno,program,poDate,amount,vendorname from 
+(select financial_year,po_type,sector_id,purchaseorder_id as purchaseorderno,program_id,order_date as poDate,amount,vendor_id from procurements.purchase_order) as a inner join
+(select distinct yearid,years as financialyear from procurements.years_mst order by yearid) as b on (a.financial_year = b.yearid) inner join
+(select purchaseotypeid,purchaseotypename as purchasetype from procurements.purchase_order_type_mst) as c on (c.purchaseotypeid = a.po_type) inner join 
+(select sector_name as sector,sector_id,id from procurements.createsector_mst) as d on (a.sector_id = d.id) inner join 
+(select program_name as program,id from procurements.createprogram_mst) as e on (a.program_id = d.id) inner join
+(select id,name as vendorname from procurements.vendors) as f on (a.vendor_id = f.id) where a.purchaseorder_id =#{p.purchaseorder_id}
+	</select>      
+	  
+	
+	
+	    
+	<select id="getByIdpurchaseorderReport" resultType="grnModel">
+		select grn_id,amount from procurements.grn where po_id = #{p.purchaseorder_id};
+	</select>
+     
+   
+      
+
+	<!-- add grn item details -->   
+  
+  
+     
+  
+
+	<insert id="InsertAsset" parameterType="map">
+		insert into
+		operations.asset_details(asset_id,grn,asset_name,oem_no,date_of_manufacturing,value,life_of_asset,residual_value,installation_cost,brand,installation_date,created_date)
+		values(('ASID' || '' || #{year} || '' ||lpad(CAST( #{id} AS character varying),3,'0')),#{p.grn},#{p.asset_name},
+		#{p.oem_no},#{p.date_of_manufacturing},#{p.value},#{p.life_of_asset},#{p.residual_value},#{p.installation_cost},#{p.brand},#{p.installation_date},current_timestamp)
+	</insert>
+	
+	
+	<select id="getGrnData" resultType="map">
+		<!-- select po_amount,pono,vendor_name,grn_amount from (select id,amount as po_amount,purchaseorder_id as pono from procurements.purchase_order) as a 
+inner join (select vendor_id,amount as grn_amount,id from procurements.grn where  grn_id = #{p.grn_id}) as b on a.id = b.id inner join
+(select vendor_id,vendorname as vendor_name from procurements.vendors_mst) as c on c.vendor_id = b.vendor_id -->
+
+
+
+select purchase_order_no,poAmount,GrnAmount,vendorname from(select id,purchase_order_no,amount as poAmount from operations.purchase_order) as a inner join
+(select purchase_order,grn_id,amount as GrnAmount,vendor from operations.vendor_grn) as b on a.id=b.purchase_order inner join
+(select id,name as vendorname from operations.vendors) as c on b.vendor=c.id
+	</select>
+	
+	     
+	<select  id = "getLineItemDetails" resultType="GrnModel">
+		
+		select assets,brand,location,installation_status,installation_cost,qty from procurements.purchase_order_details where po_id = #{p.purchaseorder_id}
+	</select>
+	
+	
+</mapper>                             

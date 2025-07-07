@@ -1,0 +1,158 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block caption-breadcrumb">
+                <div class="breadcrumb-header">
+                    <h5>Payroll Summary</h5>
+                </div>
+                <div class="page-header-breadcrumb">
+                    <ul class="breadcrumb-title">
+                        <li class="breadcrumb-item">
+                            <a href="#!">
+                                <i class="ti-home"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#!">HRMS</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#!">Project Management/a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Payroll Summary</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BreadCrumb End -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div style="margin-top: 35px;" class="panel panel-heading media mar_t2 ">
+                    <div class="media-left ">
+                        <img height="81 " width="81 " style="border: 2px solid #ccc;" class="media-object img-circle " alt=" " src="/files/assets/images/default_Muser.png ">
+                    </div>
+                    <div class="media-body ">
+                        <h5 style="margin: 0; padding: 0; font-weight: 400;">Admin</h5>
+                        <small>Emp.ID : AO0116397 </small><br>
+                        <small>Designation : Administrative Officer </small><br>
+                        <small>Work Location : APSSDC Head Office </small><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                        <label class="font-weight-bold">Claim ID</label>
+                        <input type="text" class="form-control" disabled data-ng-model="data.object.claim_reimbursement_id" />
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                        <label class="font-weight-bold">From Date</label>
+                        <input type="text" class="form-control" data-ng-model="data.object.from_date" disabled />
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                        <label class="font-weight-bold">To Date</label>
+                        <input type="text" class="form-control" data-ng-model="data.object.to_date" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                        <label class="font-weight-bold">Project</label>
+                        <select class="form-control" data-ng-model="data.object.project">
+                                                                    <option data-ng-repeat="project in projects" value="{{project.project}}">{{project.project_name}}</option>
+                                                                </select>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                        <label class="font-weight-bold">Purpose Of Request</label>
+                        <input type="text" class="form-control" data-ng-model="data.object.purposename" disabled />
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                        <label class="font-weight-bold">Advance Amount</label>
+                        <input type="text" class="form-control" data-ng-model="data.object.advance_amount" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                        <label class="font-weight-bold">Reimbursement Claimed</label>
+                        <input type="text" class="form-control" data-ng-model="data.object.release_amount" disabled />
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                        <label class="font-weight-bold">Total Amount</label>
+                        <input type="text" class="form-control" data-ng-model="data.object.amount" disabled />
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                        <label class="font-weight-bold">Remarks</label>
+                        <textarea class="form-control" data-ng-model="data.object.description"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+                        <label class="font-weight-bold">GL Account</label>
+                        <select class="form-control" data-ng-model="data.object.gl_account">
+                                                                    <option data-ng-repeat = "account in accounts" value = "{{account.id}}">{{account.name}}</option>
+                                                                </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="dt-responsive table-responsive">
+                    <table id="simpletable" class="table table-striped table-bordered nowrap">
+                        <thead>
+                            <tr>
+                                <th valign="middle" style="vertical-align: middle !important; min-width: 50px;max-width: 50px;" class="text-center">S.No</th>
+                                <th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="hidden">Claim ID</th>
+                                <th valign="middle" style="vertical-align: middle !important; min-width: 200px;max-width: 200px;" class="text-center">GL Account</th>
+                                <th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">Date</th>
+                                <th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">Claim Type</th>
+                                <th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="hidden">Location</th>
+                                <th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">Bill Number</th>
+                                <th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">Amount</th>
+                                <th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">Attachment</th>
+                                <th valign="middle" style="vertical-align: middle !important; min-width: 150px;max-width: 150px;" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="billsubmissionupdatedata in billsubmissionupdateListdetails">
+                                <td valign="middle" style="vertical-align: middle !important;" class="text-center">{{$index+1}}</td>
+                                <td valign="middle" style="vertical-align: middle !important;" class="hidden">{{billsubmissionupdatedata.claim_reimbursement_id}}</td>
+                                <td valign="middle" style="vertical-align: middle !important;" class="text-center">{{billsubmissionupdatedata.gl_account}}</td>
+                                <td valign="middle" style="vertical-align: middle !important;" class="text-center">{{billsubmissionupdatedata.date}}</td>
+                                <td valign="middle" style="vertical-align: middle !important;" class="text-center">{{billsubmissionupdatedata.claim_type}}</td>
+                                <td valign="middle" style="vertical-align: middle !important;" class="text-center">{{billsubmissionupdatedata.location}}</td>
+                                <td valign="middle" style="vertical-align: middle !important;" class="text-center">{{billsubmissionupdatedata.bill_number}}</td>
+                                <td valign="middle" style="vertical-align: middle !important;" class="text-right">{{billsubmissionupdatedata.amount}}</td>
+                                <td valign="middle" style="vertical-align: middle !important;" class="text-right">{{billsubmissionupdatedata.attachment}}</td>
+                                <td>
+                                    <a data-ng-click=""><i class = "fa fa-trash fa-lg" style = "color:red;cursor: pointer;"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 mt-1 text-center">
+        <button class="btn btn-grd-primary hor-grd">Submit</button>
+    </div>
+</div>

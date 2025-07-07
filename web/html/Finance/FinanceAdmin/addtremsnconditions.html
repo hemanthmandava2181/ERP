@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Welcome to APSSDC ERP - Andhra Pradesh State Skill Development Corporation</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="icon" href="files/assets/images/favicon.png" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="files/bower_components/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="files/assets/icon/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="files/assets/css/feather-icons.css">
+
+    <link rel="stylesheet" type="text/css" href="files/assets/css/sweetalert.css">
+
+    <!-- Data Table -->
+
+    <link rel="stylesheet" type="text/css" href="files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+    <!-- Form Picker  -->
+
+    <link rel="stylesheet" type="text/css" href="files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css">
+
+    <link rel="stylesheet" type="text/css" href="files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css" />
+
+    <link rel="stylesheet" type="text/css" href="files/bower_components/datedropper/css/datedropper.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="files/bower_components/spectrum/css/spectrum.css" />
+
+    <link rel="stylesheet" type="text/css" href="files/bower_components/jquery-minicolors/css/jquery.minicolors.css" />
+
+
+    <link rel="stylesheet" type="text/css" href="files/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="files/assets/css/jquery.mCustomScrollbar.css">
+
+
+    <script src="https://kit.fontawesome.com/541db394b3.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="theme-loader">
+        <div class="loader-track">
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+
+    <div id="pcoded" class="pcoded">
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
+            <nav class="navbar header-navbar pcoded-header">
+                <div class="navbar-wrapper">
+                    <div class="navbar-logo">
+                        <a class="mobile-menu" id="mobile-collapse" href="#">
+                            <i class="ti-menu"></i>
+                        </a>
+                        <div class="mobile-search">
+                            <div class="header-search">
+                                <div class="main-search morphsearch-search">
+                                    <div class="input-group">
+                                        <span class="input-group-addon search-close"><i class="ti-close"></i></span>
+                                        <input type="text" class="form-control" placeholder="Enter Keyword">
+                                        <span class="input-group-addon search-btn"><i class="ti-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <img class="img-fluid" src="files/assets/images/logo.png" width="200px" alt="Theme-Logo" />
+                        </a>
+                        <a class="mobile-options">
+                            <i class="ti-more"></i>
+                        </a>
+                    </div>
+                    <div class="navbar-container container-fluid">
+                        <ul class="nav-left">
+                            <li>
+                                <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
+                            </li>
+                            <li>
+                                <a href="#" onclick="javascript:toggleFullScreen()">
+                                    <i class="ti-fullscreen"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav-right">
+
+                            <li class="header-notification">
+                                <a href="#">
+                                    <i class="ti-bell"></i>
+                                    <span class="badge bg-c-pink"></span>
+                                </a>
+                                <ul class="show-notification">
+                                    <li>
+                                        <h6>Notifications</h6>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <!-- <img class="d-flex align-self-center img-radius" src="files/assets/images/avatar-2.jpg" alt="Generic placeholder image"> -->
+                                            <div class="media-body">
+                                                <h5 class="notification-user">John Doe</h5>
+                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                <span class="notification-time">30 minutes ago</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <!-- <img class="d-flex align-self-center img-radius" src="files/assets/images/avatar-4.jpg" alt="Generic placeholder image"> -->
+                                            <div class="media-body">
+                                                <h5 class="notification-user">Joseph William</h5>
+                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                <span class="notification-time">30 minutes ago</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <!-- <img class="d-flex align-self-center img-radius" src="files/assets/images/avatar-3.jpg" alt="Generic placeholder image"> -->
+                                            <div class="media-body">
+                                                <h5 class="notification-user">Sara Soudein</h5>
+                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                <span class="notification-time">30 minutes ago</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="user-profile header-notification">
+                                <a href="#">
+                                    <img src="files/assets/images/user.png" class="img-radius" alt="User-Profile-Image">
+                                    <span>APSSDC Admin</span>
+                                    <i class="ti-angle-down"></i>
+                                </a>
+                                <ul class="show-notification profile-notification">
+                                    <li>
+                                        <a href="#">
+                                            <i class="ti-user"></i> Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="feather icon-log-out"></i> Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="pcoded-main-container">
+                <div class="pcoded-wrapper">
+                    <nav class="pcoded-navbar">
+                        <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+                        <div class="pcoded-inner-navbar main-menu">
+                            <div class="pcoded-navigation-label text-uppercase">Dashboard</div>
+                            <!-- HRMS Start -->
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu ">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-file-text"></i><b>H</b></span>
+                                        <span class="pcoded-mtext">HRMS</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <!-- Recruitment Nav Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Recruitment</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Create Hiring Request</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Hiring Request</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Candidate Registration</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Select Candidates</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- Recruitment Nav End -->
+                                        <!-- OnBoarding Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">OnBoarding</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Create Employee</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Upload Employee</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Employee Master</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Modify CTC</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- OnBoarding End -->
+                                        <!-- Contract Renewal Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Contract Renewal</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Employee Contract Renewal</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Employee Contract Renewal (CEO)</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- Contract Renewal End -->
+                                        <!-- Attendance Management Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Attendance Management</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Attendance Sheet</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Attendance Report</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Attendance Update</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Leave Report</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Leave Summary Report</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- Attendance Management End -->
+                                        <!-- PayRoll Management Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">PayRoll Management</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Generate PayRoll</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Employee Stop Salary</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">LOP Adjustment</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Caluclator</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Employee PayRoll</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Deputation Employee</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Payment Summary</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">PayRoll Summary</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">PayRoll Reconciliation</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- PayRoll Management End -->
+                                        <!-- Time Management Start -->
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Time Management</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!-- Time Management End -->
+                                        <!-- Leave Encashment Start -->
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Leave Encashment</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!-- Leave Encashment End -->
+                                        <!-- Procurements Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Procurements</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Create Vendor</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Vendor Approvals</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Nature of Services</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- Procurements End -->
+                                        <!-- Asset Management Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Asset Management</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Create GRN</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Asset Details</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Asset Request</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Asset Request List</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Asset Invoice Submission</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">GRN List</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Asset Detail Report</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Fixed Asset Consolidation</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">PO GRN</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- Asset Management End -->
+                                        <!-- Project Management Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Project Management</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Generate PayRoll</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">PayRoll Notify</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Generate Summary</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- Project Management End -->
+                                        <!-- HR Reports Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">HR Reports</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Employee Status Report</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Exception Report</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Profile Report</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Attendance Overview</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Login Report</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">COC Exception Report</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Goals Settings</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">CFMS Report</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- HR Reports End -->
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- HRMS End -->
+                            <!-- PO Management Start -->
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu ">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="ti-receipt"></i><b>H</b></span>
+                                        <span class="pcoded-mtext">PO Management</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Create Purchase Order</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Purchase Order List</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- PO Management End -->
+                            <!-- Finance Start -->
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu ">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-cpu"></i><b>H</b></span>
+                                        <span class="pcoded-mtext">Finance</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext"></span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- Finance End -->
+                            <!-- Order Management Start -->
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="">
+                                    <a href="#">
+                                        <span class="pcoded-micon"><i class="feather icon-box"></i><b>O</b></span>
+                                        <span class="pcoded-mtext">Order Management</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- Order Management End -->
+                            <!-- Work Order Management Start -->
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu ">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-life-buoy"></i><b>H</b></span>
+                                        <span class="pcoded-mtext">Work Order Management</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Create Work Order</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Work Order Summary</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Work Order List</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- Work Order Management End -->
+                            <!-- MoU Management Start -->
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu ">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-server"></i><b>H</b></span>
+                                        <span class="pcoded-mtext">MoU Management</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Create MoU</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">MoU List</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- MoU Management End -->
+                            <!-- Managers Self Services Start -->
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu ">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-users"></i><b>H</b></span>
+                                        <span class="pcoded-mtext">Manager Self Services</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Recruitment</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">My Team Logins</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">My Team Leaves</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">My Team Sheets</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- Managers Self Services End -->
+                            <!-- Employee Self Services Start -->
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu ">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-user-check"></i><b>H</b></span>
+                                        <span class="pcoded-mtext">Employee Self Services</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <!-- Employee Dashboard Start -->
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Employee Dashboard</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!-- Employee Dashboard End -->
+                                        <!-- Time & Attendance Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Time & Attendance</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Attendance & Time Sheet</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">My Team Sheet</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Attendance Summary Graph</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- Time & Attendance End -->
+                                        <!-- Leave Management Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Leave Management</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Apply Leave</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">My Leave</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Leave Status</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- Leave Management End -->
+                                        <!-- OnDuty Request Start -->
+                                        <li class=" ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">OnDuty Request</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!-- OnDuty Request End -->
+                                        <!-- IT Savings (Declaration) Start -->
+                                        <li class=" ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">IT Savings (Declaration) </span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!-- IT Savings (Declaration) End -->
+                                        <!-- Help Desk Start -->
+                                        <li class=" ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Help Desk </span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!-- Help Desk End -->
+                                        <!-- HR Policies Start -->
+                                        <li class=" ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">HR Policies</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!-- HR Policies End -->
+                                        <!-- Employee Directory Start -->
+                                        <li class=" ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Employee Directory </span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!-- Employee Directory End -->
+                                        <!-- View PaySlip Start -->
+                                        <li class=" ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">View PaySlip</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!-- View PaySlip End -->
+                                        <!-- Project Employee Mapping Start -->
+                                        <li class=" ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Project Employee Mapping</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!-- Project Employee Mapping End -->
+
+                                        <!-- e-Exit Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">e-Exit</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">I Exit</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Exit Employee Report</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- e-Exit End -->
+                                        <!-- e-Perform Start -->
+                                        <li class="pcoded-hasmenu ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">e-Perform</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Set Performance Goals</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Appraisal Factors</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Performance Rating</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Final Rating</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- e-Perform End -->
+                                        <!-- Leave Encashment Summary Start -->
+                                        <li class=" ">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Leave Encashment Summary</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <!-- Leave Encashment Summary End -->
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- Employee Self Services End -->
+                            <div class="pcoded-navigation-label text-uppercase">Admin Controls</div>
+                            <!-- Admin Controls Start -->
+                            <ul class="pcoded-item pcoded-left-item">
+                                <!-- HRMS Admin Start -->
+                                <li class="pcoded-hasmenu ">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                        <span class="pcoded-mtext">HRMS Admin</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">HRMS Control</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="pcoded-hasmenu">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">PayRoll Management Control</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Create LetterHead</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">CTC Caluclator</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">TDS & Employee Tax Controls</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="pcoded-hasmenu">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Employee Settings</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <ul class="pcoded-submenu">
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Create Department</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Create Designation</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Create Grade</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Create Caste</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Create Work Location</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                        <span class="pcoded-mtext">Create Help Desk Request Type</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Leave Settings</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!-- HRMS Admin End -->
+                                <!-- Operations Start -->
+                                <li class="pcoded-hasmenu ">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                        <span class="pcoded-mtext">Operations Admin</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Create SDEL Group</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Create Scheme</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Create Sector</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Create Segment</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Create Project</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Create Programs</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Create Mapping Settings</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext">Create Creation Settings</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!-- Operations End -->
+                                <!-- Finance Admin Start -->
+                                <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                        <span class="pcoded-mtext">Finance Admin</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext"></span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!-- Finance Admin End -->
+                                <!-- Super Admin Start -->
+                                <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                        <span class="pcoded-mtext">Super Admin</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="">
+                                            <a href="javascript:void(0)">
+                                                <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                <span class="pcoded-mtext"></span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!-- Super Admin End -->
+
+                            </ul>
+                            <!-- Admin Controls End -->
+                            <div class="pcoded-navigation-label text-uppercase">Others</div>
+                            <!-- LogOut Start -->
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="">
+                                    <a href="#">
+                                        <span class="pcoded-micon"><i class="ti-new-window"></i><b>O</b></span>
+                                        <span class="pcoded-mtext">LogOut</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- LogOut End -->
+                        </div>
+                    </nav>
+                    <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+
+
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Terms & Conditions</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Finance Admin</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Payment Terms</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Terms & Conditions</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <span class="float-left font-weight-bold">'Payment term (50% and 50%)' Group's Terms and Conditions</span>
+                                                <button class="btn btn-primary btn-sm float-right">Payment Groups</button>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row mt-3">
+                                            <div class="col-sm-12 col-xs-12 col-md-4 col-xl-4 col-lg-4 mt-1">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Add Terms & Conditions</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <ul class="nav nav-pills nav-fill nav-justified" role="tablist">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" data-toggle="tab" href="#conditions" role="tab">Conditions</a>
+                                                                <div class="slide"></div>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link active" data-toggle="tab" href="#terms" role="tab">Terms</a>
+                                                                <div class="slide"></div>
+                                                            </li>
+                                                        </ul>
+
+                                                        <div class="tab-content card-block">
+                                                            <div class="tab-pane" id="conditions" role="tabpanel">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12 mt-2">
+                                                                        <div class="form-group">
+                                                                            <label>Title</label>
+                                                                            <textarea class="form-control" rows="2" placeholder="Title"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 mt-2">
+                                                                        <button class="btn btn-primary btn-sm btn-block">Upload Conditions</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-pane active" id="terms" role="tabpanel">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12 mt-2">
+                                                                        <div class="form-group">
+                                                                            <label>Title</label>
+                                                                            <textarea class="form-control" rows="2" placeholder="Title"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12 mt-2">
+                                                                        <div class="form-group">
+                                                                            <label>Rate</label>
+                                                                            <input type="text" class="form-control" id="rate" placeholder="Enter Rate">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12 mt-2">
+                                                                        <div class="form-group">
+                                                                            <label>Percent / Value</label>
+                                                                            <select class="form-control">
+                                                                                <option>Percent</option>
+                                                                                <option>Value</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 mt-2">
+                                                                        <div class="form-group">
+                                                                            <label>Days</label>
+                                                                            <input type="text" class="form-control" id="days" placeholder="Enter Days">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12 mt-2">
+                                                                        <div class="form-group">
+                                                                            <label>From Date</label>
+                                                                            <input id="dropper-default" class="form-control" type="text" placeholder="Select your date" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12 mt-2">
+                                                                        <div class="form-group">
+                                                                            <label>To Date</label>
+                                                                            <input id="dropper-animation" class="form-control" type="text" placeholder="Select your date" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 mt-2">
+                                                                        <div class="form-group">
+                                                                            <label>Select Period</label>
+                                                                            <select class="form-control">
+                                                                                <option>Before</option>
+                                                                                <option>After</option>
+                                                                                <option>Completion</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 mt-2">
+                                                                        <button class="btn btn-primary btn-sm btn-block">Upload Terms</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-xs-12 col-md-8 col-xl-8 col-lg-8 mt-1">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Terms & Conditions List</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="dt-responsive table-responsive">
+                                                            <table class="table table-bordered" id="simpletable">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-center">#</th>
+                                                                        <th class="text-center">Title</th>
+                                                                        <th class="text-center">Edit</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="text-center">1</td>
+                                                                        <td class="text-center">With in 2 week of providing Login Id &passwords for 1000 students</td>
+                                                                        <td class="text-center">
+                                                                            <button type="button" class="btn btn-warning btn-sm"><i class="feather icon-edit mr-2"></i>Edit</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="files/bower_components/jquery/js/jquery.min.js"></script>
+    <script src="files/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
+    <script src="files/bower_components/popper.js/js/popper.min.js"></script>
+    <script src="files/bower_components/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+
+    <script src="files/bower_components/modernizr/js/modernizr.js"></script>
+    <script src="files/bower_components/modernizr/js/css-scrollbars.js"></script>
+
+    <!-- Data Table -->
+
+    <script src="files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+    <!-- Form Picker -->
+
+    <script src="files/assets/pages/advance-elements/moment-with-locales.min.js"></script>
+    <script src="files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="files/assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js"></script>
+
+    <script src="files/bower_components/datedropper/js/datedropper.min.js"></script>
+
+    <script src="files/bower_components/spectrum/js/spectrum.js"></script>
+    <script src="files/bower_components/jscolor/js/jscolor.js"></script>
+
+    <script src="files/bower_components/jquery-minicolors/js/jquery.minicolors.min.js"></script>
+
+    <script src="files/assets/pages/advance-elements/custom-picker.js"></script>
+
+    <script src="files/assets/js/pcoded.min.js"></script>
+    <script src="files/assets/js/vertical/vertical-layout.min.js"></script>
+    <script src="files/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script src="files/assets/js/sweetalert.js"></script>
+
+    <script src="files/assets/js/script.js"></script>
+
+</body>
+
+</html>

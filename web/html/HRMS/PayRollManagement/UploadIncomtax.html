@@ -1,0 +1,147 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/PayrollManagement/uploadincometax.js"></script>
+	
+	<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/lib/xlsx-model.js"></script>
+	
+	<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/lib/xlsx.full.min.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+
+
+<div id="IncomeUpload" data-ng-controller="IncomeUploadController">
+
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Upload Income Tax</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">     
+							<li class="breadcrumb-item"><a href="#!">HRMS <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!"> Payroll
+									Management Services</a></li>
+							<li class="breadcrumb-item"><a href="#!">Upload
+									Incometax </a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="panel panel-default" id="cls9" style="margin-left: 20px;">
+		<div class="panel-heading" style="text-align: center;">
+			<br> <label style="font-size: large;">Income Tax Data</label>
+		</div>
+		<br>
+		<div class="panel panel-default" style="width: 100%">
+			<div class="panel-heading">
+				<label>Upload Details</label>
+			</div>
+			<div class="panel-body">
+				<p>
+					<b style="color: red; text-decoration: underline; font-size: 15px;">Note:
+					</b>
+				</p>
+				<ul style="list-style-type: disc; margin-left: 50px;">
+					<li>Please Download the Excel, fill the details and upload to
+						save Income tax Details&nbsp;&nbsp; <a
+						href="/uploads/UploadIncomeTax.xls"
+						style="color: #2a6496; text-decoration: underline;"
+						target="_blank"> <b style="font-size: large;"> Excel
+								format</b>&nbsp;&nbsp; <img alt="No image"
+							src="/andromeda/images/icons/excel-icon.png"
+							style="height: 22px; width: 15px;">
+					</a>
+					</li>
+					<li>Please don't enter special characters like all
+						000,XXX,aaa,9999 etc.</li>
+					<li>The excel that you have downloaded the xls format.</li>
+					<li>Please dont modify the xls format to xlsx</li>
+				</ul>
+
+				<div class="row">
+					<div class="col-sm-12 col-xl-2 m-b-30">
+						Financial year <label class="col-sm-3 col-form-label"></label>
+					</div>
+					<div class="col-sm-12 col-xl-3 m-b-30">
+						<select class="form-control"
+							data-ng-model="data.object.financial_year">
+							<option></option>
+							<option data-ng-repeat="financialyear in financialyears"
+								value="{{financialyear.id}}">{{financialyear.name}}</option>
+						</select>
+					</div>
+					<div class="col-sm-12 col-xl-2 m-b-30">
+						Month <label class="col-sm-3 col-form-label"></label>
+					</div>
+					<div class="col-sm-12 col-xl-3 m-b-30">
+						<select class="form-control"
+							data-ng-model="data.object.payroll_month">
+							<option></option>
+							<option data-ng-repeat="month in months" value="{{month.id}}">{{month.name}}</option>
+						</select>
+					</div>
+
+					<div class="col-md-4" style="font-size: medium;">
+						<label class="control-label">Upload</label> <input type="file"
+							data-xlsx-model="data.excel" multiple
+							onchange="angular.element(this).scope().uploadFile(this,'studentsDataUpload');">
+
+					</div>      
+					<div class="col-md-1" style="margin-top: 2.5%; margin-left: 2.5%;">
+						<button type="button" class="btn btn-success" id="but"
+							data-ng-click="save(data.excel,data.object);">Save</button>
+					</div>
+					<div class="col-md-1" id="spinner1">
+						<span style="margin-top: 42%; font-size: large;"
+							class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+					</div>
+				</div>
+				<br /> <br />
+			</div>
+		</div>
+
+
+	</div>
+</div>
+
+
+<script>                                             
+		jQuery(document).ready(function() {                                              
+		
+			angular.bootstrap(jQuery("#IncomeUpload"), [ 'uploadincomeModule' ]); 
+		});
+		
+		
+		$("#spinner1").hide();
+		$("#but").on('change',function(){
+			if($(this).val()==="1"){  
+				$("#spinner1").show();   
+			}
+			else
+				{
+				$("#spinner1").hide();   
+				}
+				});
+	</script>

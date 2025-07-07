@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TimeSheet">
+
+	<insert id="Insert" parameterType="map">
+		insert into	hrms.employee_timesheet     
+(timesheet_date,location,task,description,status)
+		values(#{p.timesheet_date},#{p.location},#{p.task},#{p.description},3)
+	</insert>                     
+	   <select id="getById" resultType="TimeSheetModel">
+		SELECT timesheet_date,location,duration,description from hrms.employee_timesheet WHERE task = #{task};
+	  </select>
+
+	<delete id="deleteData" parameterType="java.lang.String">
+		delete from hrms.employee_timesheet where task = #{task};
+	</delete>
+	<select id="getReportings" resultType="map">
+		SELECT a.empid as empid, concat(first_name,' ',middle_name,' ',last_name) AS fullname,
+		b.reporting_to as reporting_to,b.status	
+		FROM hrms.employee_personal_details as a    
+        join (select * from hrms.employee_employment_details where status=0) as b on (a.empid = b.empid)
+	</select> 
+	
+	<select id="getTeamSheets" resultType="TimeSheetModel" parameterType="map">
+		
+		select
+		a.empid,a.employeename,b.status,b.reporting_to,c.timesheet_date,c.task,c.description,c.location,c.duration,c.created_date,c.start_time,c.end_time,c.status
+		from
+		(select empid,concat(first_name,'',last_name) as employeename from
+		hrms.employee_personal_details)a inner join 
+		(select empid,reporting_to,status from hrms.employee_employment_details where status=0)b on a.empid=b.empid
+		inner join
+		(select empid,timesheet_date,task,description,location,duration,created_date,start_time,end_time,status
+		from hrms.employee_timesheet)c on b.empid=c.empid  where
+		c.timesheet_date>=#{p.from_date} and
+		#{p.to_date}>=c.timesheet_date and b.reporting_to=#{p.reporting_to}  
+    </select>
+    <select id="getSheets1" resultType="TimeSheetModel" parameterType="map">
+	select
+		a.empid,a.employeename,b.reporting,c.timesheet_date,c.task,c.description,c.location,c.duration
+		from
+		(select empid,concat(first_name,'',last_name) as employeename from
+		hrms.employee_personal_details)a inner join (select     
+		empid,reporting from
+		hrms.employee_employment_details)b on a.empid=b.empid
+		inner join
+		(select   
+		empid,timesheet_date,task,description,location,duration
+		from hrms.employee_timesheet)c on b.empid=c.empid  where
+		c.timesheet_date>=#{p.from_date} and
+		#{p.to_date}>=c.timesheet_date  
+    </select>
+     
+	  <select id="getAttSheets" resultType="TimeSheetModel" parameterType="map">  
+		select distinct
+		a.empid,a.employeename,c.timesheet_date,c.duration,d.login_date,d.login_time,d.logout_time
+		from
+		(select empid,concat(first_name,'',last_name) as employeename from
+		hrms.employee_personal_details)a inner join 
+		(select * from
+		hrms.employee_personal_details)b on b.empid=a.empid 
+		inner join (select empid,timesheet_date,duration
+		from hrms.employee_timesheet)c on c.empid=b.empid 
+		inner join(select * from hrms.employee_login_details) d on d.empid=c.empid where
+		c.timesheet_date>=#{p.from_date} and   
+		#{p.to_date}>=c.timesheet_date
+
+		
+    </select>
+    
+	
+    <update id="updateDataapprove"  parameterType="map">
+		update hrms.employee_timesheet  SET status=1 where task=#{p.task}
+		 
+	</update>
+	 <update id="updateDatareject"  parameterType="map">
+		update hrms.employee_timesheet  SET status=2  where task=#{p.task}
+		 
+	</update>
+	<select id="getCalendarDetailsdet" resultType="TimeSheetModel" parameterType="map">
+	   select date,day from hrms.calendar_creation where date::date>=#{p.from_date} and #{p.to_date}>=date::date;
+</select>
+	
+</mapper>	

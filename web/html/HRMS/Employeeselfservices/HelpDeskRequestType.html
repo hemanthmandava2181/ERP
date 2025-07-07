@@ -1,0 +1,193 @@
+
+<script   
+	src="/erp/files/assets/js/erp-scripts/HRMS/GeneralSettings/helpdeskrequesttype.js"></script>
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+<div id="HelpDeskRequestType" data-ng-controller="HelpDeskReqTypeController">
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Create Help Desk Request Types </h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!"> HRMS Admin Control Panel</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">General Settings</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!"> Help Desk Request Types</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+
+                                        <!-- Content Starts Here -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Create Help Desk Request Types</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+
+                                                           
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">Request Category
+                                                                 <select name="select" class="form-control"    
+data-ng-model="data.object.helpdesk_categoryid" >
+<option></option>
+<option data-ng-repeat="categorie in categories"
+value="{{categorie.id}}">{{categorie.name}}</option>
+</select>  
+                                                            </div>
+
+
+
+                                                           
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">Request Type Name
+                                                                <input type="text" class="form-control" placeholder="Enter Request Type Name" data-ng-model="data.object.name">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mt-4 text-center">
+                                            <button class="btn btn-grd-primary hor-grd text-center" data-ng-click="saveReqTypeDetails(data.object);">Submit</button>
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="dt-responsive table-responsive">
+                                                        <table id="order-table" class="table table-striped table-bordered nowrap">
+                                                            <thead class="btn-grd-primary">
+                                                                <tr>
+                                                                    <th>Help Desk Request Type</th>
+                                                                    <th> Type Name</th>
+                                                                    <th> Status </th>
+                                                                    <th> Actions</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                               <tr data-ng-repeat="data in reqtypes">
+                                                                    <td>{{data.helpdesk_categoryid}}</td>
+                                                                    <td>{{data.name}}</td>
+                                                                    <td>{{data.status}}</td>
+
+
+                                                                    <td>
+
+                                                                        <button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal" data-ng-click="getByIdCategories(data.helpdesk_categoryid)"><i class="ti-pencil-alt text-primary"></i></button></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                    <!-- Modal  For Modify -->
+                                    <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Update</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+
+                                                                       
+                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Help Request Type
+                                                                            <select name="select" class="form-control"    
+data-ng-model="data.object.helpdesk_categoryid" >
+<option></option>
+<option data-ng-repeat="categorie in categories"
+value="{{categorie.id}}">{{categorie.name}}</option>
+</select>   
+                                                                        </div>
+                                                                       
+                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Type Name
+                                                                            <input type="text" class="form-control" placeholder="Enter Request Type Name" data-ng-model="data.object.name">
+                                                                        </div>
+                                                                      
+                                                                        <div class="col-sm-12 col-xl-3 m-b-30">Status
+                                                                            <select name="select" class="form-control" data-ng-model="data.object.status">
+                                                                                
+                                                                                <option value="true">Active</option>
+                                                                                <option value="false">In-Active</option>
+                                                                            </select>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                        <button type="button" class="btn btn-primary waves-effect waves-light"data-ng-click="updateReqTypeData(data.object);">Submit</button>
+                                                                    </div>
+
+                                                                    <!-- Modify Modal End -->
+
+                                                                    <!-- Content Ends Here -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+                              
+                                <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+                                <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+                                <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+                                <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+                                <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+                                <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+                                <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+                                <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+                                <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+                                <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+                                <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+                               
+                            
+                                <!-- for two tables -->
+                                <script>
+                                    $('#simpletable1').DataTable();
+                                </script>
+
+<script>
+	jQuery(document).ready(function() {
+		
+				angular.bootstrap(jQuery("#HelpDeskRequestType"), [ 'ReqtypeModule' ]);
+	});
+</script>	
+

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>  
+   		<typeAliases>
+   		  	<typeAlias alias="employee" type="com.erp.Model.Employee" />   
+   	        <typeAlias alias="Login" type="com.erp.Model.Login" />  
+   		    <typeAlias alias="Services" type="com.erp.Model.Services" />   
+   		    <typeAlias alias="vendor" type="com.erp.Model.Vendor" />  
+   		    <typeAlias alias="vendorApp" type="com.erp.Model.VendorApp" /> 
+   		    <typeAlias alias="Upload" type="com.erp.Model.Upload" />
+   		    <typeAlias alias="VendorService" type="com.erp.Model.VendorService" />
+   		    <typeAlias alias="EmployeeMaster" type="com.erp.Model.EmployeeMaster" />  
+   		    <typeAlias alias="CreatePo" type="com.erp.Model.CreatePO" />
+   	        <typeAlias alias="POList" type="com.erp.Model.POList" />          
+   	        <typeAlias alias="Attendance" type="com.erp.Model.Attendance" />    
+   	        <typeAlias alias="UserModel" type="com.erp.Model.LeaveStatus" /> 
+   		    <typeAlias alias="Ctc" type="com.erp.Model.Ctc" />       
+   		    <typeAlias alias="Calc" type="com.erp.Model.Calc" />       
+   		    <typeAlias alias="Report" type="com.erp.Model.Report" />  
+   		    <typeAlias alias="Selfservices" type="com.erp.Model.Selfservices" />  
+   		    <typeAlias alias="Scheme" type="com.erp.Model.Scheme" />     
+   	        <typeAlias alias="Project" type="com.erp.Model.Project" />  
+   	        <typeAlias alias="LeavesReport" type="com.erp.Model.LeavesReport" />    
+   	        <typeAlias alias="Program" type="com.erp.Model.Program" />     
+   	        <typeAlias alias="Sdei" type="com.erp.Model.Sdeigroup" />  
+   		    <typeAlias alias="Segment" type="com.erp.Model.Segment" /> 
+   		    <typeAlias alias="Sector" type="com.erp.Model.Sector" />  
+   		    <typeAlias alias="AttendanceReport" type="com.erp.Model.AttendanceReport" />  
+   		    <typeAlias alias="AttendanceSummary" type="com.erp.Model.AttendanceSummary" />  
+   	        <typeAlias alias="timesheetModel" type="com.erp.Model.TimeSheet" /> 
+   		    <typeAlias alias="ManagerModel" type="com.erp.Model.Manager" />  
+    		<typeAlias alias="GrnModel" type="com.erp.Model.Grn" />   
+   		    <typeAlias alias="Operation" type="com.erp.Model.Operation" />   
+   		    <typeAlias alias="Procurement" type="com.erp.Model.Procurement" />
+   		    <typeAlias alias="Finance" type="com.erp.Model.Finance" /> 
+   		      <typeAlias alias="ReportsEmployee" type="com.erp.Model.ReportsEmployee" />
+   		       <typeAlias alias="Payroll" type="com.erp.Model.Payroll" />
+   		       <typeAlias alias="LocationCount" type="com.erp.Model.LocationCount" />
+   		        <typeAlias alias="Notification" type="com.erp.Model.Notification" />
+   		        <typeAlias alias="Deputation" type="com.erp.Model.Deputation" />
+    	
+    	
+    	</typeAliases>
+
+	
+	<mappers>
+	
+	      <mapper resource="com/erp/Employee-MyBatis.xml" />
+		  <mapper resource="com/erp/Login-MyBatis.xml" />
+		  <mapper resource="com/erp/Services-MyBatis.xml" />
+    	  <mapper resource="com/erp/Vendor-MyBatis.xml" />
+	      <mapper resource="com/erp/VendorApp-MyBatis.xml" />
+	      <mapper resource="com/erp/VendorService-MyBatis.xml" />
+	      <mapper resource="com/erp/EmployeeMaster-MyBatis.xml" />
+	      <mapper resource="com/erp/Upload-MyBatis.xml" />
+	      <mapper resource="com/erp/CreatePO-MyBatis.xml" />
+   	      <mapper resource="com/erp/POList-MyBatis.xml" />
+	      <mapper resource="com/erp/Attendance-MyBatis.xml" />  
+          <mapper resource="com/erp/LeaveStatus-MyBatis.xml" />
+		  <mapper resource="com/erp/Ctc-Mybatis.xml" />
+		  <mapper resource="com/erp/Calc-MyBatis.xml" />
+		  <mapper resource="com/erp/Report-MyBatis.xml" />     
+		  <mapper resource="com/erp/Selfservices-MyBatis.xml" /> 
+    	  <mapper resource="com/erp/Project-MyBatis.xml" /> 
+		  <mapper resource="com/erp/Scheme-MyBatis.xml" /> 
+		  <mapper resource="com/erp/Sdei-MyBatis.xml" /> 
+		  <mapper resource="com/erp/Segment-MyBatis.xml" /> 
+		  <mapper resource="com/erp/Sector-MyBatis.xml" /> 
+		  <mapper resource="com/erp/LeavesReport-MyBatis.xml" />
+		  <mapper resource="com/erp/Attendance-MyBatis.xml" />   
+		  <mapper resource="com/erp/AttendanceReport-MyBatis.xml" />  
+	      <mapper resource="com/erp/AttendanceSummary-MyBatis.xml" />  
+	      <mapper resource="com/erp/TimeSheet-MyBatis.xml" /> 
+	      <mapper resource="com/erp/Manager-MyBatis.xml" />    
+          <mapper resource="com/erp/Grn-MyBatis.xml" />       
+		  <mapper resource="com/erp/Operation-MyBatis.xml" /> 
+		  <mapper resource="com/erp/Procurements-MyBatis.xml" />
+		  <mapper resource="com/erp/Finance-MyBatis.xml" /> 
+		  <mapper resource="com/erp/HRMSReports-MyBatis.xml" />     
+		  <mapper resource="com/erp/Payroll-MyBatis.xml" />
+		  <mapper resource="com/erp/Notification-MyBatis.xml" /> 
+		  <mapper resource="com/erp/Deputation-MyBatis.xml" />
+	</mappers>        
+          
+</configuration>                                                      

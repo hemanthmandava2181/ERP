@@ -1,0 +1,670 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/finance/satutaryreports/cashflowreport.js"></script>
+<!-- Form Picker  -->
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css">
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datedropper/css/datedropper.min.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/spectrum/css/spectrum.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/jquery-minicolors/css/jquery.minicolors.css" />
+
+<!-- Cloned CSS -->
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/j-pro/css/demo.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/j-pro/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/j-pro/css/j-forms.css">
+
+<div class="card-body" id="cashflowreportId"
+	data-ng-controller="cashflowreportController">
+
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Cash Flow Report</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Finance &
+									Accounts</a></li>
+							<li class="breadcrumb-item"><a href="#!">Statutory
+									Reports</a></li>
+							<li class="breadcrumb-item"><a href="#!">Cash Flow
+									Report</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-body">
+					<ul class="nav nav-fill nav-pills" role="tablist">
+						<li class="nav-item"><a class="nav-link active"
+							data-toggle="tab" href="#home3" role="tab" id="financialyear"
+							value="1" data-ng-model="data.object.type">Financial Year</a>
+							<div class="slide"></div></li>
+						<li class="nav-item"><a class="nav-link" data-toggle="tab"
+							href="#profile3" role="tab" id="dates" value="2"
+							data-ng-model="data.object.type">Period</a>
+							<div class="slide"></div></li>
+					</ul>
+
+					<div class="tab-content card-block">
+						<div class="tab-pane active" id="financialYearDiv" role="tabpanel">
+							<div class="row">
+								<div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 col-xl-6 mt-1">
+									<div class="form-group">
+										<label>Financial Year</label> <select
+											class="form-control form-control-primary"
+											data-ng-model="data.object.financial_year">
+											<option>--Select--</option>
+											<option data-ng-repeat="year in financialyear"
+												value="{{year.financial_year}}">{{year.fy}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 col-xl-6">
+									<button type="button"
+										class="btn btn-grd-success hor-grd btn-sm mt-4 float-right"
+										data-ng-click="getCashFlowReport(data.object);">
+										<i class="feather icon-download-cloud mr-2"></i>Get Data
+									</button>
+								</div>
+
+
+
+							</div>   
+						</div>
+						<div class="tab-pane" id="profile3" role="tabpanel">
+							<div class="row">
+								<div class="col-md-6 col-sm-12 col-xs-12 col-xl-6 col-md-6">
+									<div class="form-group">
+										<label>From Date</label> <input class="form-control"
+											type="date" placeholder="Select your date"
+											data-ng-model="data.object.from_date" id="from" />
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-12 col-xs-12 col-xl-6 col-md-6">
+									<div class="form-group">
+										<label>To Date</label> <input class="form-control" type="date"
+											placeholder="Select your date"
+											data-ng-model="data.object.to_date" id="to" />
+									</div>
+								</div>
+								<div
+									class="col-md-12 col-sm-12 col-xs-12 col-xl-12 col-md-12 text-center">
+									<button type="button"
+										class="btn btn-sm btn-success hor-grd font-weight-bold"
+										data-ng-click="getMonthCashFlowReport(data.object);">
+										<i class="feather icon-download-cloud mr-2 font-weight-bold"></i>Get
+										Data
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row" id="yearbased">
+		<div class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+			<div class="card" style="border-radius: 25px;">
+				<div class="card-header bg-primary text-center"
+					style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+					<h6 class="card-title">ANDHRA PRADESH STATE SKILL DEVELOPMENT
+						CORPORATION</h6>
+					<h6 class="card-title mt-2">Statement of Cashflow Statement</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div
+							class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+							<button type="button"
+								class="btn btn-success bg-c-yellow text-white btn-out-dashed btn-sm float-left">Export
+								Excel</button>
+
+						</div>
+
+						<div
+							class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-5">
+							<div id="accordion" role="tablist" aria-multiselectable="true">
+								<div class="accordion-panel mt-2 mb-2">
+									<div class="accordion-heading bg-c-pink text-white" role="tab"
+										id="headingOne">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseOne"
+												aria-expanded="true" aria-controls="collapseOne"> </a>
+										</h3>
+									</div>
+									<div id="collapseOne"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingOne">
+										<div class="accordion-content accordion-desc">
+											<div class="dt-responsive table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr class="bg-c-green text-white">
+															<th class="text-center">Particulars</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '8'">2020-2021
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '8'">2019-2020
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '7'">2019-2020
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '7'">2018-2019
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '6'">2018-2019
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '6'">2017-2018
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '5'">2017-2018
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '5'">2016-2017
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '1'">2016-2017
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '1'">2015-2016
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '2'">2015-2016
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '2'">2014-2015
+																( Previous Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '2'">2014-2015
+																( Current Year )</th>
+															<th class="text-center"
+																data-ng-show="data.object.financial_year == '2'">2013-2014
+																( Previous Year )</th>
+														</tr>
+														<td><b>Excess of Income over Expenditure before
+																tax</b></td>
+														<tr
+															data-ng-repeat="cashflow in filteredResult = cashflowDetails | filter:search"
+															data-toggle="collapse">
+
+															<td style="text-align: left;">Depreciation/amortisation</td>
+															<td style="text-align: left;">{{cashflow.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow.previous_amount
+																| number : 2}}</td>
+														</tr>
+														<tr
+															data-ng-repeat="cashflow1 in filteredResult = cashflowDetails1 | filter:search">
+
+															<td style="text-align: left;">Interest Income from
+																Fixed Deposits</td>
+															<td style="text-align: left;">{{cashflow1.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow1.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+
+														<tr
+															data-ng-repeat="cashflow2 in filteredResult = cashflowDetails2 | filter:search">
+
+															<td style="text-align: left;">Interest income on
+																unwinding of financial assets</td>
+															<td style="text-align: left;">{{cashflow2.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow2.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+
+														<tr
+															data-ng-repeat="cashflow3 in filteredResult = cashflowDetails3 | filter:search">
+
+															<td style="text-align: left;">Amortisation of
+																advance rentals</td>
+															<td style="text-align: left;">{{cashflow3.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow3.previous_amount
+																| number : 2}}</td>
+														</tr>
+														<td><b>Movement in working capital changes</b></td>
+
+														<tr
+															data-ng-repeat="cashflow4 in filteredResult = cashflow3Details4 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																trade receivables</td>
+															<td style="text-align: left;">{{cashflow4.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow4.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+														<tr
+															data-ng-repeat="cashflow5 in filteredResult = cashflowDetails5 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																financial assets</td>
+															<td style="text-align: left;">{{cashflow5.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow5.previous_amount
+																| number : 2}}</td>
+
+														</tr>
+
+														<tr
+															data-ng-repeat="cashflow6 in filteredResult = cashflowDetails6 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																other current assets</td>
+															<td style="text-align: left;">{{cashflow6.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow6.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+														<tr
+															data-ng-repeat="cashflow7 in filteredResult = cashflowDetails7 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																other non-current assets</td>
+															<td style="text-align: left;">{{cashflow7.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow7.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+														<tr
+															data-ng-repeat="cashflow8 in filteredResult = cashflowDetails8 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																trade payables</td>
+															<td style="text-align: left;">{{cashflow8.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow8.amount |
+																number : 2}}</td>
+														</tr>
+
+														<tr
+															data-ng-repeat="cashflow9 in filteredResult = cashflowDetails9 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease of
+																financial liabilities</td>
+															<td style="text-align: left;">{{cashflow9.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow9.previous_amount
+																| number : 2}}</td>
+
+														</tr>
+														<tr
+															data-ng-repeat="cashflow10 in filteredResult = cashflowDetails10 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																other current liabilities</td>
+															<td style="text-align: left;">{{cashflow10.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow10.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+
+														<td><b>Cash Flow from Invensting Activities</b></td>
+
+														<tr
+															data-ng-repeat="cashflow11 in filteredResult = cashflowDetails11 | filter:search">
+
+
+															<td style="text-align: left;">Purchase of Properry
+																plant and equipment including CWIP and intangible assets</td>
+															<td style="text-align: left;">{{cashflow11.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow11.previous_amount
+																| number : 2}}</td>
+
+														</tr>
+
+
+														<tr
+															data-ng-repeat="cashflow12 in filteredResult = cashflowDetails12 | filter:search">
+
+															<td style="text-align: left;">Net decrease/increase
+																in cash and cash equivalents</td>
+															<td style="text-align: left;">{{cashflow12.amount |
+																number : 2}}</td>
+															<td style="text-align: left;">{{cashflow12.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="row" id="monthbased">
+		<div class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+			<div class="card" style="border-radius: 25px;">
+				<div class="card-header bg-primary text-center"
+					style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+					<h6 class="card-title">ANDHRA PRADESH STATE SKILL DEVELOPMENT
+						CORPORATION</h6>
+					<h6 class="card-title mt-2">Statement of Cashflow Statement</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div
+							class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+							<button type="button"
+								class="btn btn-success bg-c-yellow text-white btn-out-dashed btn-sm float-left">Export
+								Excel</button>
+       
+						</div>
+
+						<div
+							class="col-md-12 col-xs-12 col-sm-12 col-xl-12 col-lg-12 mt-5">
+							<div id="accordion" role="tablist" aria-multiselectable="true">
+								<div class="accordion-panel mt-2 mb-2">
+									<div class="accordion-heading bg-c-pink text-white" role="tab"
+										id="headingOne">
+										<h3 class="card-title accordion-title">
+											<a class="accordion-msg text-white" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseOne"
+												aria-expanded="true" aria-controls="collapseOne"> </a>
+										</h3>    
+									</div>
+									<div id="collapseOne"
+										class="panel-collapse collapse in show mt-3" role="tabpanel"
+										aria-labelledby="headingOne">
+										<div class="accordion-content accordion-desc">
+											<div class="dt-responsive table-responsive">
+												<table class="table table-bordered">
+													<tbody>
+														<tr class="bg-c-green text-white">
+															<th class="text-center">Particulars</th>
+															<th class="text-center">{{data.object.from_date | date:"dd-MM-yyyy"}} TO {{data.object.to_date | date:"dd-MM-yyyy"}}</th>
+														</tr>
+														<td><b>Excess of Income over Expenditure before
+																tax</b></td>
+														<tr
+															data-ng-repeat="monthcashflow in filteredResult = monthcashflowDetails | filter:search"
+															data-toggle="collapse">
+
+															<td style="text-align: left;">Depreciation/amortisation</td>
+															<td style="text-align: left;">{{monthcashflow.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow.previous_amount
+																| number : 2}}</td>
+														</tr>
+														<tr
+															data-ng-repeat="monthcashflow1 in filteredResult = monthcashflowDetails1 | filter:search">
+
+															<td style="text-align: left;">Interest Income from
+																Fixed Deposits</td>
+															<td style="text-align: left;">{{monthcashflow1.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow1.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+
+														<tr
+															data-ng-repeat="monthcashflow2 in filteredResult = monthcashflowDetails2 | filter:search">
+
+															<td style="text-align: left;">Interest income on
+																unwinding of financial assets</td>
+															<td style="text-align: left;">{{monthcashflow2.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow2.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+
+														<tr
+															data-ng-repeat="monthcashflow3 in filteredResult = monthcashflowDetails3 | filter:search">
+
+															<td style="text-align: left;">Amortisation of
+																advance rentals</td>
+															<td style="text-align: left;">{{monthcashflow3.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow3.previous_amount
+																| number : 2}}</td>
+														</tr>
+														<td><b>Movement in working capital changes</b></td>
+
+														<tr
+															data-ng-repeat="monthcashflow4 in filteredResult = monthcashflow3Details4 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																trade receivables</td>
+															<td style="text-align: left;">{{monthcashflow4.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow4.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+														<tr
+															data-ng-repeat="monthcashflow5 in filteredResult = monthcashflowDetails5 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																financial assets</td>
+															<td style="text-align: left;">{{monthcashflow5.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow5.previous_amount
+																| number : 2}}</td>
+
+														</tr>
+
+														<tr
+															data-ng-repeat="monthcashflow6 in filteredResult = monthcashflowDetails6 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																other current assets</td>
+															<td style="text-align: left;">{{monthcashflow6.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow6.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+														<tr
+															data-ng-repeat="monthcashflow7 in filteredResult = monthcashflowDetails7 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																other non-current assets</td>
+															<td style="text-align: left;">{{monthcashflow7.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow7.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+														<tr
+															data-ng-repeat="monthcashflow8 in filteredResult = monthcashflowDetails8 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																trade payables</td>
+															<td style="text-align: left;">{{monthcashflow8.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow8.amount
+																| number : 2}}</td>
+														</tr>
+
+														<tr
+															data-ng-repeat="monthcashflow9 in filteredResult = monthcashflowDetails9 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease of
+																financial liabilities</td>
+															<td style="text-align: left;">{{monthcashflow9.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow9.previous_amount
+																| number : 2}}</td>
+
+														</tr>
+														<tr
+															data-ng-repeat="monthcashflow10 in filteredResult = monthcashflowDetails10 | filter:search">
+
+															<td style="text-align: left;">Increase/decrease in
+																other current liabilities</td>
+															<td style="text-align: left;">{{monthcashflow10.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow10.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+
+														<td><b>Cash Flow from Invensting Activities</b></td>
+
+														<tr
+															data-ng-repeat="monthcashflow11 in filteredResult = monthcashflowDetails11 | filter:search">
+
+
+															<td style="text-align: left;">Purchase of Properry
+																plant and equipment including CWIP and intangible assets</td>
+															<td style="text-align: left;">{{monthcashflow11.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow11.previous_amount
+																| number : 2}}</td>
+
+														</tr>
+
+
+														<tr
+															data-ng-repeat="monthcashflow12 in filteredResult = monthcashflowDetails12 | filter:search">
+
+															<td style="text-align: left;">Net decrease/increase
+																in cash and cash equivalents</td>
+															<td style="text-align: left;">{{monthcashflow12.amount
+																| number : 2}}</td>
+															<td style="text-align: left;">{{monthcashflow12.previous_amount
+																| number : 2}}</td>
+														</tr>
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+<!-- Cloned JS -->    
+   
+<script src="/erp/files/assets/pages/j-pro/js/jquery.ui.min.js"></script>
+<script src="/erp/files/assets/pages/j-pro/js/jquery.maskedinput.min.js"></script>
+<script src="/erp/files/assets/pages/j-pro/js/jquery-cloneya.min.js"></script>
+
+<script
+	src="/erp/files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+
+<script src="/erp/files/bower_components/modernizr/js/modernizr.js"></script>
+<script src="/erp/files/bower_components/modernizr/js/css-scrollbars.js"></script>
+
+<!-- Form Picker -->
+
+<script
+	src="/erp/files/assets/pages/advance-elements/moment-with-locales.min.js"></script>
+<script
+	src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="/erp/files/assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
+
+<script
+	src="/erp/files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js"></script>
+
+<script
+	src="/erp/files/bower_components/datedropper/js/datedropper.min.js"></script>
+
+<script src="/erp/files/bower_components/spectrum/js/spectrum.js"></script>
+<script src="/erp/files/bower_components/jscolor/js/jscolor.js"></script>
+
+<script
+	src="/erp/files/bower_components/jquery-minicolors/js/jquery.minicolors.min.js"></script>
+
+<script src="/erp/files/assets/pages/advance-elements/custom-picker.js"></script>
+
+<!-- Cloned JS -->
+
+<script src="/erp/files/assets/pages/j-pro/js/custom/cloned-form.js"></script>
+
+<!-- Accordion JS -->
+<script src="/erp/files/assets/pages/accordion/accordion.js"></script>
+
+<script>
+       
+	jQuery(document).ready(function() {
+		
+		angular.bootstrap(jQuery("#cashflowreportId"), [ 'cashflowreport' ]);
+	});
+</script>
+<script>
+   jQuery(document).on('click', "#home3", function(){    
+$("#yearbased").show();
+$("#monthbased").hide();
+});  
+   </script>   
+   
+   <script>
+   jQuery(document).on('click', "#profile3", function(){
+$("#yearbased").hide();
+$("#monthbased").show();
+});  
+   </script>   
+  

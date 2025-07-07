@@ -1,0 +1,465 @@
+
+
+
+   
+
+
+  
+    <link rel="stylesheet" type="text/css" href="files/assets/css/sweetalert.css">
+
+    <link rel="stylesheet" type="text/css" href="files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+
+
+
+<!-- BreadCrumb Start -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block caption-breadcrumb">
+                <div class="breadcrumb-header">
+                    <h5>Employee Contract Renewal List (CEO)</h5>
+                </div>
+                <div class="page-header-breadcrumb">
+                    <ul class="breadcrumb-title">
+                        <li class="breadcrumb-item">
+                            <a href="#!">
+                                <i class="ti-home"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#!">HRMS</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#!">Contract Renewal</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#!">Employee Contract Renewal (CEO)</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BreadCrumb End -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12 mt-1">
+                        <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">Contract Renewal List</button>
+                    </div>
+                    <!-- <div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12 mt-1">
+                        <button class="btn btn-success btn-block" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">HOD Renewal</button>
+                    </div> -->
+                    <div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12 mt-1">
+                        <button class="btn btn-warning btn-block" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3">Pending Renewals in HEAD HR</button>
+                    </div>
+                   <!--  <div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12 mt-1">
+                        <button class="btn btn-danger btn-block" type="button" data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4">Exit List</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row collapse show" id="collapseExample1">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <h6 class="card-title">Contract Renewal List</h6>
+            </div>
+            <div class="card-body">
+                <div id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="accordion-panel">
+                        <div class="accordion-heading" role="tab" id="headingOne">
+                            <h3 class="card-title accordion-title btn-grd-success">
+                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                            HR Approval
+                                                                        </a>
+                            </h3>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="accordion-content accordion-desc" id = "forhr"   data-ng-controller="hrController">
+                                <div class="dt-responsive table-responsive mt-3 mb-3">
+                                
+                                    <table id="hrApproval" class="table table-hover table-bordered nowrap">
+                                        <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                           
+                                            <th>Employee id</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Employee Type</th>
+                                            <th>Date of Joining</th>
+                                            <th>Contract From</th>
+                                            <th>Contract To </th>
+                                            
+                                            <th>Action From HR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+											<tr data-ng-repeat="data in (filteredResult = (regdetails | filter:search))">
+			  									<td>{{$index+1}}</td>
+												<td>{{data.empid}}</td>
+												<td>{{data.first_name}}</td>
+												<td>{{data.last_name}}</td>
+												<td>{{data.employee_type}}</td>
+												<td>{{data.joining_date}}</td>
+												<td>{{data.contract_from}}</td>
+												<td>{{data.contract_to}}</td>
+												<td>{{data.comments}}</td>
+											</tr>
+										</tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-panel">
+                        <div class="accordion-heading" role="tab" id="headingTwo">
+                            <h3 class="card-title accordion-title btn-grd-warning">
+                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                            CEO Approval
+                                                                        </a>
+                            </h3>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="accordion-content accordion-desc">
+                                <div class="dt-responsive table-responsive mt-3 mb-3">
+                                <div class="panel" id = "forceo"  style="overflow:auto;" data-ng-controller="ceoController">
+                                    <table id="ceoApproval" class="table table-hover table-bordered nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+													<th><input type="checkbox" data-ng-model="allprojec"
+														data-ng-true-value="true" data-ng-false-value="false"
+														data-ng-click="setAllIds1(allprojec);"></th>
+													<th>Employee Id</th>
+													<th>First Name</th>
+													<th>Last Name</th>
+													<th>Employee Type</th>
+													<th>Date Joined</th>
+													
+													<th>Contract Start Date</th>
+													<th>Contract End Date</th>
+
+													<th>No of Months</th>
+												</tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr data-ng-repeat="data in (filteredResult = (regdetails1 | filter:search))">
+                                            
+                                             <td><input type="checkbox" data-ng-model="projectEmpArr1[data.empid]" data-ng-checked="allSelected()"></td>
+                                                <td>{{$index+1}}</td>
+                                                 <td>{{data.empid}}</td>
+													<td>{{data.first_name}}</td>
+													<td>{{data.last_name}}</td>  
+													<td>{{data.employee_type}}</td>
+													<td>{{data.joining_date}}</td>
+													<td>{{data.contract_from}}</td>
+													<td>{{data.contract_to}}</td>
+													<td><select name="cars" id="cars"
+														data-ng-model=data.Month>
+															<option value="12 Month">12</option>
+															<option value="11 Month">11</option>
+															<option value="10 Month">10</option>
+															<option value="9 Month">9</option>
+															<option value="8 Month">8</option>
+															<option value="7 Month">7</option>
+															<option value="6 Month">6</option>
+															<option value="5 Month">5</option>
+															<option value="4 Month">4</option>
+															<option value="3 Month">3</option>
+															<option value="2 Month">2</option>
+															<option value="1 Month">1</option> 
+													</select></td>
+												</tr>   
+                                        </tbody>
+                                    </table>
+                                     <center><button type="button" class="btn btn-primary"  type="submit" name="theme_submit" style="margin-left:70%"
+data-ng-click="Approveall(projectEmpArr1,data);">Approve</button></center> 
+                                </div>
+                                </div>
+                            </div>
+                           <!--  <div class="col-sm-12 col-xl-12 m-b-30 text-center"><button type="button" class="btn btn-primary  ">Apply</button></div> -->
+                        </div>
+                    </div>
+                    <div class="accordion-panel">
+                       <!--  <div class=" accordion-heading" role="tab" id="headingThree">
+                            <h3 class="card-title accordion-title btn-grd-danger">
+                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                            CEO Rejected
+                                                                        </a>
+                            </h3>
+                        </div> -->
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="accordion-content accordion-desc">
+                                <div class="dt-responsive table-responsive mt-3 mb-3">
+                                    <table id="ceoRejected" class="table table-hover table-bordered nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Employee id</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Contract From Date</th>
+                                                <th>Contract End Date</th>
+                                                
+                                                <th>No of Months</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr data-ng-repeat="data in (filteredResult = (regdetails1 | filter:search))">
+                                                <td>1</td>
+                                                <td>AS0216061</td>
+                                                <td>Gondi Anil Kumar</td>
+                                                <td>22-02-2016</td>
+                                                <td>22-02-2016</td>
+                                                <td>31-03-2020</td>
+                                                <td>31-03-2020</td>
+                                               
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row collapse" id="collapseExample2">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header bg-success">
+                <h6 class="card-title">HOD Renewal</h6>
+            </div>
+            <div class="card-body">
+                <div class="dt-responsive table-responsive">
+                    <table id="hodRenewal" class="table table-hover table-bordered nowrap">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>EMP ID</th>
+                                <th>NAME</th>
+                                <th>Date Joined</th>
+                                <th>CONTRACT START DATE</th>
+                                <th>CONTRACT END DATE</th>
+                                <th>Date Created</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>AS0216061</td>
+                                <td>Gondi Anil Kumar</td>
+                                <td>22-02-2016</td>
+                                <td>22-02-2016</td>
+                                <td>31-03-2020</td>
+                                <td>31-03-2020</td>
+                                <td><button class="btn btn-grd-info hor-grd btn-sm">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row collapse" id="collapseExample3">
+ <div id="regid" data-ng-controller="rewlController">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h6 class="card-title">Pending Renewals in HEAD HR</h6>
+            </div>
+            <div class="card-body">
+                <div class="dt-responsive table-responsive">
+                    <table id="pendingRenewal" class="table table-hover table-bordered nowrap">
+							<thead>
+								<tr>
+									<th>S.no</th>
+									<th>Employee Id</th>
+									<th>First Name</th> 
+									<th>Last Name</th>
+									<th>Employee Type</th>
+									<th>Date Joined</th>
+									<th>Contract From Date</th>
+									<th>Contract End Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="data in regdetails1">
+									<td align="right">{{$index+1}}</td>
+									<td>{{data.empid}}</td>
+									<td>{{data.first_name}}</td>
+									<td>{{data.last_name}}</td>
+									<td>{{data.employee_type}}</td>
+									<td>{{data.joining_date}}</td>
+									<td>{{data.contract_from}}</td>
+									<td>{{data.contract_to}}</td>
+							</tbody>
+						</table>
+                </div>
+            </div>
+        </div>   
+    </div>
+</div>
+</div>
+
+<div class="row collapse" id="collapseExample4">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header bg-danger">
+                <h6 class="card-title">Exit Page</h6>
+            </div>
+            <div class="card-body">
+                <div id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="accordion-panel">
+                        <div class="accordion-heading" role="tab" id="headingFour">
+                            <h3 class="card-title accordion-title bg-c-lite-green">
+                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                                                            HR Approval
+                                                                        </a>
+                            </h3>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="accordion-content accordion-desc">
+                                <div class="dt-responsive table-responsive mt-3 mb-3">
+                                    <table id="hrApproval_1" class="table table-hover table-bordered nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Emp id</th>
+                                                <th>Name</th>
+                                                <th>Date of Join</th>
+                                                <th>Contract Start Date</th>
+                                                <th>Contract End Date</th>
+                                                <th>Date Created</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>{{$index+1}}</td>
+                                            <td>{{data.empid}}</td>
+                                            <td>{{data.firstname}}r</td>
+                                            <td>22-02-2016</td>
+                                            <td>{{data.contract_from}}</td>
+												<td>{{data.contract_to}}</td>
+                                            <td>31-03-2020</td>
+                                            <td><button class="btn btn-grd-info hor-grd btn-sm">View</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-panel">
+                        <div class="accordion-heading" role="tab" id="headingFive">
+                            <h3 class="card-title accordion-title bg-c-orenge">
+                                <a class="accordion-msg text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                                                            CEO Approval
+                                                                        </a>
+                            </h3>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="accordion-content accordion-desc">
+                                <div class="dt-responsive table-responsive mt-3 mb-3">
+                                    <table id="ceoApproval_1" class="table table-hover table-bordered nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>EMP ID</th>
+                                                <th>NAME</th>
+                                                <th>Date Joined</th>
+                                                <th>CONTRACT START DATE</th>
+                                                <th>CONTRACT END DATE</th>
+                                                <th>Date Created</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><a href="contractrenewalemployeedetailslist.html" class="link">AS0216061</a></td>
+                                            <td>Gondi Anil Kumar</td>
+                                            <td>22-02-2016</td>
+                                            <td>22-02-2016</td>
+                                            <td>31-03-2020</td>
+                                            <td>31-03-2020</td>
+                                            <td><button class="btn btn-grd-info hor-grd btn-sm">View</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script src="files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+
+
+
+<script src="files/assets/js/sweetalert.js"></script>
+<script src="/erp/files/assets/js/erp-scripts/ContractRenewable/hrapproval.js"></script>
+<script src="/erp/files/assets/js/erp-scripts/ContractRenewable/ceoapproval.js"></script>
+ <script src="/erp/files/assets/js/erp-scripts/ContractRenewable/cRenwl2.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#hrApproval').DataTable();
+        $('#ceoApproval').DataTable();
+        $('#ceoRejected').DataTable();
+        $('#hodRenewal').DataTable();
+        $('#pendingRenewal').DataTable();
+        $('#hrApproval_1').DataTable();
+        $('#ceoApproval_1').DataTable();
+    });
+</script>
+<script>
+jQuery(document).ready(function() {
+	
+	angular.bootstrap(jQuery("#forhr"),['hrlist' ] );
+	angular.bootstrap(jQuery("#forceo"),['ceolist' ] );
+	angular.bootstrap(jQuery("#regid"), [ 'cRenwl2' ]);
+	
+});
+
+
+</script> 
+
+

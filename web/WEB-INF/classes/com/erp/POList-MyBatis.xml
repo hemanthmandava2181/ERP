@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="POList">
+
+
+<select id="getAll" resultType="map">
+
+
+
+SELECT c.purchaseotypename,d.purchasetypename,a.amount,a.order_date,e.programname, b.vendorname
+FROM procurements.purchase_order a 
+join procurements.vendors_mst b on (a.vendor_id=b.vendorid)
+join procurements.purchase_order_type_mst c on (a.po_type = c.purchaseotypeid)
+join procurements.purchase_type_mst d  on (a.p_type = d.purchasetypeid)
+join procurements.programs_mst e  on (a.program_id = e.programid)
+		<!-- SELECT po,po2,po_created_date,created_date,program,vendor_name,created_by,approved_by,amount,status,action,document_path from operations.purchase_order2; -->
+	</select>  
+	
+	
+	 <select id="getAll3" resultType="map">
+	 SELECT c.purchaseotypename,d.purchasetypename,a.amount,a.order_date,e.programname, b.vendorname
+FROM procurements.purchase_order a 
+join procurements.vendors_mst b on (a.vendor_id=b.vendorid)
+join procurements.purchase_order_type_mst c on (a.po_type = c.purchaseotypeid)
+join procurements.purchase_type_mst d  on (a.p_type = d.purchasetypeid)
+join procurements.programs_mst e  on (a.program_id = e.programid)
+	<!-- 	SELECT po,po2,po_created_date,created_date,program,vendor_name,created_by,approved_by,amount,status,action,document_path from operations.purchase_order2; -->
+	</select> 
+	<select id="getAll1" resultType="map">
+	SELECT c.purchaseotypename,d.purchasetypename,a.amount,a.order_date,e.programname, b.vendorname
+FROM procurements.purchase_order a 
+join procurements.vendors_mst b on (a.vendor_id=b.vendorid)
+join procurements.purchase_order_type_mst c on (a.po_type = c.purchaseotypeid)
+join procurements.purchase_type_mst d  on (a.p_type = d.purchasetypeid)
+join procurements.programs_mst e  on (a.program_id = e.programid)
+		<!-- SELECT po,po2,po_created_date,created_date,program,vendor_name,created_by,approved_by,amount,status,action,document_path from operations.purchase_order2
+		where status=0; -->
+	</select> 
+	<!-- <select id="getAll4" resultType="map">
+	SELECT po_id FROM procurements.asset_names;
+	</select>
+	 -->
+	 <insert id="InsertPOID"  parameterType="map">       
+		insert into hrms.employee_personal_details(financial_year,po_type,p_type,service_id,program_id,sector_id,
+		vendor_id,vendor_comment,order_no,order_date,need_by_date,address,amount_words,amount,instructions,group_name,iscreated) values (('PO000001','no');
+    </insert>   
+</mapper>           

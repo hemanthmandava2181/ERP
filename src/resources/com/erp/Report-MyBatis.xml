@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Report">
+<select id="getYears" resultType="map">
+		SELECT distinct yearid,years from procurements.years_mst;	
+</select> 
+<select id="getNewjoinerscount" resultType="map">
+		SELECT distinct yearid,years from procurements.years_mst;	
+</select> 
+<select id="getStopsalarycount" resultType="map">
+		SELECT distinct yearid,years from procurements.years_mst;	
+</select> 
+<select id="getRelievingemployeescount" resultType="map">
+		SELECT distinct yearid,years from procurements.years_mst;	
+</select> 
+<select id="getEmployeesalRevisioncount" resultType="map">
+		SELECT distinct yearid,years from procurements.years_mst;	
+</select> 
+</mapper>

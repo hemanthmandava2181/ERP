@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Upload">
+
+
+  	 <select id="getYear1" resultType="String">
+		SELECT (cast(split_part(cast(EXTRACT(year FROM CURRENT_TIMESTAMP) as varchar), '0', 2) as integer)) as year;
+	  </select> 
+	  
+	  <select id="getAll" resultType="map">
+		SELECT empid,first_name,middle_name,last_name,mobile,email from hrms.employee_personal_details;
+	</select> 
+         
+     <select id="getCount" resultType="java.lang.Integer">           
+		SELECT count(id)+1 as count from hrms.employee_personal_details;                        
+	</select>
+	<update id="updateData" parameterType="map">
+		Update hrms.employee_personal_details SET empid=#{empid} where email=#{p.email};
+	</update>     
+
+	<insert id="saveDetails" parameterType="map">
+	<!-- 	insert into hrms.employee_personal_details(empid,first_name,last_name,mobile,
+		email) values
+		 (('AO07' || '' || #{year} || '' ||lpad(CAST( #{id} AS character varying ),5,'0')),
+		 #{p.first_name},#{p.last_name},#{p.mobile},#{p.email}); -->
+		 
+	 insert into hrms.employee_personal_details(empid,first_name,middle_name,last_name,mobile,
+		email) values
+		 (#{p.empid},#{p.first_name},#{p.middle_name},#{p.last_name},#{p.mobile},#{p.email});    
+	</insert>                                                      
+	         
+	  <select id="getEmployeeID" resultType="String">
+		 SELECT  ('AO07' || '' || #{year} || '' ||lpad(CAST( #{id} AS character varying ),5,'0')) as employeeid;   
+	</select>  
+	             
+	
+	<insert id="saveDetails1" parameterType="map">                      
+		insert into	hrms.employee_employment_details(company_email,cader,grade,joining_date,confirmed_date,contract_from,contract_to,relieved_date,
+		department,designation,division,cost_center,employee_type,reporting_to,notice_period,empid)
+		
+		values(#{p.company_email},#{p.cader},#{p.grade},#{p.joining_date},#{p.confirmed_date},#{p.contract_from},
+		#{p.contract_to},#{p.relieved_date},#{p.department},#{p.designation}
+		,#{p.division},#{p.cost_center},#{p.employee_type},#{p.reporting_to},#{p.notice_period},#{p.empid});
+	</insert>
+	<insert id="saveFileUploadDetails" parameterType="map">                            
+		INSERT INTO                                                                              
+		hrms.fileuploaddetails(filepath,fileextension,role,                
+		logtime,year)
+		VALUES(#{p1.filePath},#{p1.fileExtension},#{p1.role},current_timestamp,#{p1.year});      
+	</insert>                          
+	   <!-- <select id="getAll" resultType="Upload">
+		SELECT qualicationid AS qualficationid,qualficationname,status from [qualification_mst] ORDER BY qualicationid; 
+	  </select>  -->
+	<select id="getYear"  resultType="Upload">                          
+	SELECT concat(EXTRACT(YEAR FROM CURRENT_DATE),'-',EXTRACT(YEAR FROM CURRENT_DATE)+1) as year;	
+	</select>
+	        
+	
+</mapper>	

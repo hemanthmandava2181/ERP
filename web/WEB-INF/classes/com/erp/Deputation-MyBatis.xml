@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Deputation">
+
+<select id="getYears" resultType="map">
+		SELECT distinct id ,name  from hrms.financial_year_mst order by id;
+	</select>
+	
+	<select id="getMonths" resultType="map">
+		SELECT distinct id ,name  from hrms.months_mst order by id;
+	</select>
+	
+	<select id="getNames" resultType="map">
+		SELECT distinct a.empid,a.employeename from (select empid,concat(first_name,' ', middle_name,' ',last_name) as employeename from hrms.employee_personal_details) as a inner join (select empid from hrms.employee_employment_details where employee_type=3 and status=0)as b on a.empid=b.empid;
+	</select>
+	
+	<select id="getPname" resultType="map">     
+		SELECT distinct id,name as pname from hrms.payslip_heads_mst order by id;
+	</select>
+	
+	      
+	    
+	<insert id="Insert" parameterType="map">      
+	
+	
+		insert into	hrms.employee_payroll (empid,payslip_head,financial_year,payroll_month,amount)
+		                          values(#{p.empid},#{p.payslip_heads},#{p.financial_year},#{p.monthid},#{p.amount});
+	</insert>
+	
+	
+	
+	
+	</mapper>

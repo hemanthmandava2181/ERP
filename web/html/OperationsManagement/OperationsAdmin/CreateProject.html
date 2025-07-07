@@ -1,0 +1,307 @@
+
+<script
+	src="/erp/files/assets/js/erp-scripts/operationAdmin/project.js"></script>
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+<div id="projectId" data-ng-controller="projectController">
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Create Project</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Operation Admin Control</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!"></a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Create Project</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4 class="card-title">Create Project</h4>
+                                                <div class="card">
+                                                    <div class="card-header">
+
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">Project Name
+                                                                <input class="form-control" type="text" placeholder="Enter Project Name" data-ng-model="data.object.project_name" />
+                                                            </div>
+
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">Budget Type
+                                                                <select name="select" class="form-control" data-ng-model="data.object.budget_type">  
+                <option>--Select --</option>
+                    <option>Budget</option>	
+                    <option>Non-Budget</option>	
+                </select>
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">Scheme
+                                                                <select name="select" class="form-control" data-ng-model="data.object.scheme_id">
+                <option>--Select--</option>
+                    <option data-ng-repeat="scheme in schemes" value="{{scheme.scheme_id}}">{{scheme.scheme_name}}</option>	
+                </select>
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">Financial Year
+                                                                <select class="form-control" name="select" data-ng-model="data.object.financial_year">
+                <option>--Select Year--</option>
+                    <option data-ng-repeat="year in years" value="{{year.yearid}}">{{year.years}}</option>	
+                </select>
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">SDEI Group
+                                                                <select class="form-control" name="select" data-ng-model="data.object.sdei_groupnumber">
+                <option>--Select--</option>
+                    <option data-ng-repeat="sdei in sdeis" value="{{sdei.sdei_groupnumber}}">{{sdei.sdei_groupname}}</option>	
+                </select>
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">Head Count
+                                                                <input class="form-control" type="text" data-ng-model="data.object.headcount" placeholder="Enter Head Count" />
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">CAPEX Budget
+                                                                <input class="form-control" type="text" placeholder="Enter CAPEX Budget" data-ng-model="data.object.capex_budgetvalue" />
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">OPEX Budget
+                                                                <input class="form-control" type="text" placeholder="Enter OPEX Budget" data-ng-model="data.object.opex_budgetvalue" />
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">From Date
+                                                                <input class="form-control" type="date" data-ng-model="data.object.from_date" />
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">To Date
+                                                                <input class="form-control" type="date" data-ng-model="data.object.to_date" />
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">Physical Outcome
+                                                                <input class="form-control" type="text" placeholder="Enter Physical Outcome" data-ng-model="data.object.physical_outcome" />
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-4 m-b-30">Description
+                                                                <textarea class="form-control" placeholder="Enter Description" data-ng-model="data.object.description"></textarea>
+                                                            </div>
+
+
+
+
+
+
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                        <button class="btn btn-primary" data-ng-click="registration(data.object);">Submit</button>
+                                    </div>
+                                    
+                                    
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h4>Project List</h4>
+                                            <div class="card">
+
+                                                <div class="card-header"></div>
+                                                <div class="card-body">
+                                                    <div class="dt-responsive table-responsive">
+                                                        <table class="table table-hover table-bordered" id="simpletable">
+                                                            <thead class="btn-grd-primary">
+                                                                <tr>
+                                                                    <th>S.No</th>
+
+                                                                    <th>Project Id</th>
+                                                                    <th>Project Name</th>
+                                                                    <th>Budget Type</th>
+                                                                    <th> Scheme</th>
+                                                                    <th> Financial Year</th>
+                                                                    <th> SDEI Group</th>
+                                                                    <th>Head Count </th>
+                                                                    <th> CAPEX Budget Value </th>
+                                                                    <th> OPEX Budget Value </th>
+                                                                    <th> From Date </th>
+                                                                    <th>To Date</th>
+                                                                    <th>Description</th>
+                                                                    <th>Physical Outcome</th>
+                                                                    <th>Documents</th>
+                                                                    <th>Status</th>
+                                                                    <th>Action</th>
+                                                                    <th>Update/Delete</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr data-ng-repeat="userdata in filteredResult =(userdetails | filter:search)">
+                                                                    <td>{{index+1}}</td>
+                                                                    <td>{{userdata.project_id}}</td>
+                                                                    <td>{{userdata.project_name}}</td>
+                                                                    <td>{{userdata.budget_type}}</td>
+                                                                    <td>{{userdata.scheme_id}}</td>
+                                                                    <td>{{userdata.financial_year}}</td>
+                                                                    <td>{{userdata.sdei_groupnumber}}</td>
+                                                                    <td>{{userdata.headcount}}</td>
+                                                                    <td>{{userdata.capex_budgetvalue}}</td>
+                                                                    <td>{{userdata.opex_budgetvalue}}</td>
+                                                                    <td>{{userdata.from_date}}</td>
+                                                                    <td>{{userdata.to_date}}</td>
+                                                                    <td>{{userdata.description}}</td>
+                                                                    <td>{{userdata.physical_outcome}}</td>
+                                                                    <td>{{userdata.documents}}</td>
+                                                                    <td>{{userdata.status}}</td>
+                                                                    <td>{{userdata.action}}</td>
+
+
+                                                                    <td><button class="btn  ver-grd waves-effect" data-toggle="modal" data-target="#large-Modal1" data-ng-click="getById(userdata.project_name)"><i class="ti-pencil-alt text-primary"></i></button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="large-Modal1" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Update</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Project Name
+                                                                            <input class="form-control" type="text" placeholder="Enter Project Name" data-ng-model="data.object.project_name" />
+                                                                        </div>
+
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Budget Type
+                                                                            <select name="select" class="form-control" data-ng-model="data.object.budget_type">  
+            <option>--Select --</option>
+                <option>Budget</option>	
+                <option>Non-Budget</option>	
+            </select>
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Scheme
+                                                                            <select name="select" class="form-control" data-ng-model="data.object.scheme_id">
+            <option>--Select--</option>
+                <option data-ng-repeat="scheme in schemes" value="{{scheme.scheme_id}}">{{scheme.scheme_name}}</option>	
+            </select>
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Financial Year
+                                                                            <select class="form-control" name="select" data-ng-model="data.object.financial_year">
+            <option>--Select Year--</option>
+                <option data-ng-repeat="year in years" value="{{year.yearid}}">{{year.years}}</option>	
+            </select>
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">SDEI Group
+                                                                            <select class="form-control" name="select" data-ng-model="data.object.sdei_groupnumber">
+            <option>--Select--</option>
+                <option data-ng-repeat="sdei in sdeis" value="{{sdei.sdei_groupnumber}}">{{sdei.sdei_groupname}}</option>	
+            </select>
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Head Count
+                                                                            <input class="form-control" type="text" data-ng-model="data.object.headcount" placeholder="Enter Head Count" />
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">CAPEX Budget
+                                                                            <input class="form-control" type="text" placeholder="Enter CAPEX Budget" data-ng-model="data.object.capex_budgetvalue" />
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">OPEX Budget
+                                                                            <input class="form-control" type="text" placeholder="Enter OPEX Budget" data-ng-model="data.object.opex_budgetvalue" />
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">From Date
+                                                                            <input class="form-control" type="date" data-ng-model="data.object.from_date" />
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">To Date
+                                                                            <input class="form-control" type="date" data-ng-model="data.object.to_date" />
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Physical Outcome
+                                                                            <input class="form-control" type="text" placeholder="Enter Physical Outcome" data-ng-model="data.object.physical_outcome" />
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-xl-4 m-b-30">Description
+                                                                            <textarea class="form-control" placeholder="Enter Description" data-ng-model="data.object.description"></textarea>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                        <button type="button" class="btn btn-primary waves-effect waves-light" data-ng-click="updateData(data.object)" >Submit</button>
+                                                                    </div>
+                                                                    <!--  Modal End -->
+
+
+
+
+
+
+
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                         </div>      
+                           
+   
+    <!-- Data Table -->
+    <script src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+    
+
+    <script>
+        $('#simpletable1').DataTable();
+    </script>
+<script>
+		jQuery(document).ready(function() {         
+			
+  			 angular.bootstrap(jQuery("#projectId"), [ 'projectModule' ]); 
+	    });
+		
+	</script>

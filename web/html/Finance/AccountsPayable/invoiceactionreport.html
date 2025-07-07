@@ -1,0 +1,237 @@
+<script src="/erp/files/assets/js/erp-scripts/finance/accountspayable/invoiceactionreport.js"></script>
+
+<div id="invoiceactionreportId"
+	data-ng-controller="invoiceactionreportController">
+	<div class="row">
+		<div class="col-sm-12">  
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Invoice Action Report</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">Finance &
+									Accounts</a></li>
+							<li class="breadcrumb-item"><a href="#!">Accounts
+									Paayable</a></li>
+							<li class="breadcrumb-item"><a href="#!">Invoice Action
+									Report</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<h5>Invoice Action Report 2</h5>
+	<h8>&nbsp;</h8>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<!-- <div class="card-header bg-primary">
+                    <h6 class="card-title">Employee List</h6> 
+                </div> -->
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<div class="form-group">
+								<label class="font-weight-bold">From Date&nbsp;&nbsp;<span
+									class="text-danger">*</span> :
+								</label> <input type="date" class="form-control form-control-primary"
+									placeholder="Enter From Date">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<div class="form-group">
+								<label class="font-weight-bold">To Date&nbsp;&nbsp;<span
+									class="text-danger">*</span> :
+								</label> <input type="date" class="form-control form-control-primary"
+									placeholder="Enter From Date">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<div class="form-group">
+								<label class="font-weight-bold">User&nbsp;&nbsp;<span
+									class="text-danger">*</span> :
+								</label> <select class="form-control form-control-primary">
+									<option value="opt1">select</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+							<div class="form-group">
+								<label class="font-weight-bold">Vendor&nbsp;&nbsp;<span
+									class="text-danger">*</span> :
+								</label> <select class="form-control form-control-primary">
+									<option value="opt1">select</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 mt-1 text-center">
+							<button class="btn btn-grd-success ver-grd">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<h6>&nbsp;</h6>
+	<h5>Invoice Action List By (selected user name comes here)</h5>
+	<br>
+	<h5>From Date :(date) - To Date :(date)</h5>
+	<h6>&nbsp;</h6>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xs-12">
+							<button class="btn btn-info btn-block" type="button"
+								data-toggle="collapse" data-target="#inflowExample"
+								aria-expanded="false" aria-controls="collapseExample">
+								In Flow</button>
+						</div>
+						<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xs-12">
+							<button class="btn btn-warning btn-block" type="button"
+								data-toggle="collapse" data-target="#outflowExample"
+								aria-expanded="false" aria-controls="collapseExample">
+								Out Flow</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row collapse show mt-2" id="inflowExample">
+		<div class="col-sm-12 col-md-12">
+			<div class="card">
+				<div class="card-header bg-info">
+					<h6 class="card-title">In Flow</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<label class="font-weight-bold">Total Invoice Count:</label> <input
+								type="text" class="form-control form-control-primary" disabled>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<label class="font-weight-bold">Today Inflow Count:</label> <input
+								type="text" class="form-control form-control-primary" disabled>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<label class="font-weight-bold">Total Vendors Count:</label> <input
+								type="text" class="form-control form-control-primary" disabled>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<label class="font-weight-bold">Total Count:</label> <input
+								type="text" class="form-control form-control-primary" disabled>
+						</div>
+					</div>
+					<hr>
+					<div class="dt-responsive table-responsive">
+						<table id="simpletable"
+							class="table table-striped table-bordered nowrap">
+							<thead>
+								<tr>
+									<th>S.No</th>
+									<th>Invoice ID</th>
+									<th>Order Type</th>
+									<th>Date</th>
+									<th>Amount</th>
+									<th>Status</th>
+									<th>Vedor</th>
+									<th>View</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>S.No</td>
+									<td>Invoice ID</td>
+									<td>Order Type</td>
+									<td>Date</td>
+									<td>Amount</td>
+									<td>Status</td>
+									<td>Vedor</td>
+									<td><button class="btn btn-grd-success ver-grd">View</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row collapse mt-2" id="outflowExample">
+		<div class="col-sm-12 col-md-12">
+			<div class="card">
+				<div class="card-header bg-warning">
+					<h6 class="card-title">Out Flow</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<label class="font-weight-bold">Total Invoice Count:</label> <input
+								type="text" class="form-control form-control-primary" disabled>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<label class="font-weight-bold">Today Outflow Count:</label> <input
+								type="text" class="form-control form-control-primary" disabled>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<label class="font-weight-bold">Total Vendor Count:</label> <input
+								type="text" class="form-control form-control-primary" disabled>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xs-12">
+							<label class="font-weight-bold">Total Count:</label> <input
+								type="text" class="form-control form-control-primary" disabled>
+						</div>
+					</div>
+					<hr>
+					<div class="dt-responsive table-responsive">
+						<table id="order-table"
+							class="table table-striped table-bordered nowrap">
+							<thead>
+								<tr>
+									<th>S.No</th>
+									<th>Invoice ID</th>
+									<th>Order Type</th>
+									<th>Date</th>
+									<th>Amount</th>
+									<th>Status</th>
+									<th>Vedor</th>
+									<th>View</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>S.No</td>
+									<td>Invoice ID</td>
+									<td>Order Type</td>
+									<td>Date</td>
+									<td>Amount</td>
+									<td>Status</td>
+									<td>Vedor</td>
+									<td><button class="btn btn-grd-success ver-grd">View</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	jQuery(document).ready(function() {
+		angular.bootstrap(jQuery("#invoiceactionreportId "),[ 'invoiceactionreport' ]);
+	});
+</script>

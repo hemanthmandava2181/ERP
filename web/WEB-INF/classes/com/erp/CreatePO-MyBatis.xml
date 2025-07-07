@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CreatePo">
+
+
+
+<!-- <select id="getMoUIds" parameterType="map" resultType="map">
+		SELECT program_id,scheme_id,project_id from procurements.createprogram_mst where program_id=#{p.program_id};
+	</select>  -->
+
+	<select id="getYears" resultType="map">
+		SELECT distinct yearid,years
+		from procurements.years_mst;
+	</select>
+	<select id="getPurchaseOrderType" resultType="map">
+		SELECT distinct
+		purchaseotypeid,purchaseotypename from
+		procurements.purchase_order_type_mst;
+	</select>
+	    
+   
+	<select id="getPurchaseType" resultType="map">
+		
+		SELECT distinct
+		id,name from operations.purchase_type_mst;
+	</select>
+
+	<select id="getAssetNames" resultType="map">
+		SELECT distinct po_id,asset_name from procurements.asset_names ;
+	</select>
+	<select id="getServices" resultType="map">
+		
+		SELECT distinct
+		id,service_name from operations.vender_service_nature_mst order by id;   
+	</select>
+
+	<!-- <select id="getPrograms" resultType="map"> SELECT distinct program_id,program_name 
+		from procurements.createprogram_mst; </select> -->
+	<select id="getProjects" resultType="map">
+		SELECT
+		project_id,project_name from procurements.createproject_mst;
+	</select>
+	<select id="getSchemes" resultType="map">
+		SELECT distinct
+		scheme_id,scheme_name from procurements.createscheme_mst;
+	</select>
+
+	<select id="getSectors" resultType="map">
+		SELECT sector_id,sector_name
+		from procurements.createsector_mst;
+	</select>
+
+	<select id="getVendors" resultType="map">
+		
+		SELECT id,name
+		from operations.vendors order by id;
+	</select>
+	<select id="getAssets" resultType="map">
+		SELECT po_id,asset_name from
+		procurements.asset_names;
+	</select>
+	<select id="getLocations" resultType="map">
+		
+		SELECT id,name
+		from operations.location_mst order by id;
+	</select>
+	<select id="getNames" resultType="map">
+		SELECT distinct id,first_name from hrms.employee_personal_details;
+	</select>
+	<select id="getVendornames" resultType="map">
+		
+select distinct service_name,vendorname from (select service,vendor from procurements.vendor_services) as a inner join
+(select id,service_name from operations.vender_service_nature_mst) as b on (a.vendor=b.id) inner join
+(select id,name as vendorname from procurements.vendors order by id) as c on c.id=a.vendor where b.id=#{p.service_name}
+	</select>
+	<select id="getPrograms" resultType="map">
+		SELECT program_id,program_name from procurements.createprogram_mst;
+	</select>
+	<insert id="Insert" parameterType="map">
+		insert into
+		procurements.program_details(asset_name,qty,rate,value,brand,specifications,location,installation_status,installation_cost)
+		values
+		(#{p.asset_name},#{p.qty},#{p.rate},#{p.value},#{p.brand},#{p.specifications},#{p.location},#{p.installation_status},#{p.installation_cost})
+	</insert>
+
+	<!-- <select id="getAll" resultType="map">
+		SELECT
+		asset_name,qty,rate,value,brand,specifications,location,installation_status,installation_cost
+		from procurements.program_details;
+	</select> -->
+
+	<select id="getById" resultType="CreatePo">
+		SELECT asset_name,qty,rate ,value
+		,brand,specifications,location,installation_status,installation_cost
+		from procurements.program_details
+		WHERE asset_name = #{asset_name} ;
+	</select>
+
+	<select id="getGroups" resultType="map">
+		SELECT id,group_name from
+		procurements.payment_groups;
+	</select>
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT count(id)+1 as count
+		from procurements.purchase_order;
+	</select>
+	<select id="getYear" resultType="java.lang.Integer">
+		select extract(year from current_date);
+	</select>
+	<select id="getMonth" resultType="java.lang.Integer">
+		SELECT cast(EXTRACT(month FROM
+		CURRENT_TIMESTAMP) as integer) as month;
+	</select>
+
+	<select id="getItemNames" resultType="map">
+		SELECT distinct id,item_name from
+		operations.item_names;
+	</select>  
+	<select id="getPOID" resultType="map">
+		SELECT distinct purchaseorder_id
+		from procurements.purchase_order;
+	</select>
+
+
+	<select id="getProgramid" resultType="java.lang.String">
+		select program_id as proid from procurements.createprogram_mst ;
+	</select>
+
+  
+
+	<!-- <insert id="Insert1" parameterType="map"> insert into procurements.purchase_order(financial_year,po_type,p_type,service_id,program_id, 
+		sector_id,vendor_id,vendor_comment,order_no,order_date,need_by_date,address,amount_words,amount, 
+		instructions,group_name,project_id,scheme_id,purchaseorder_id) values (#{p.financial_year},#{p.po_type},#{p.p_type},#{p.serviceid},#{p.program_id},#{p.sector_id}, 
+		#{p.vendorid},#{p.vendor_comment},#{p.order_no},#{p.order_date},#{p.need_by_date},#{p.address}, 
+		#{p.amount_words},#{p.amount},#{p.instructions},#{p.group_name},#{p.project_id},#{p.scheme_id}, 
+		('PO'||'' || '' || '/' || '' || #{scheme_id} ||'' || '/' || ''|| #{project_id}||'' 
+		|| '/' || ''|| #{program_id} ||''|| '/' || ''||lpad(CAST( #{id} AS character 
+		varying ),3,'0'))) ('POID'||''||lpad(CAST( #{id} AS character varying),5,'0')), 
+		</insert> -->
+
+	<update id="updateData" parameterType="map">
+		update
+		procurements.program_details SET asset_name = #{p.asset_name},qty =
+		#{p.qty},rate = #{p.rate},value = #{p.value},brand =
+		#{p.brand},specifications = #{p.specifications},location =
+		#{p.location},installation_status =
+		#{p.installation_status},installation_cost = #{p.installation_cost}
+		WHERE asset_name=#{p.asset_name};
+	</update>
+	<select id="getAll5" resultType="map">
+		SELECT qty,brand,location,installation_status from
+		procurements.program_details;
+	</select>
+	<select id="getAllIds" parameterType="map" resultType="map">
+		SELECT
+		program_id,scheme_id,project_id,from_date,to_date from
+		procurements.createprogram_mst where program_id=#{p.program_id};
+	</select>
+
+	<!-- purchase order id creation -->
+
+	<!-- <update id="Update" parameterType="map"> update procurements.purchase_order 
+		SET purchaseorder_id = concat(#{p.scheme_id},#{p.project_id},#{p.program_id},financial_year,lpad(CAST(month 
+		AS character varying),4,'0'),lpad(CAST( #{p.count} AS character varying ),6,'0')); 
+		</update> -->
+
+	<insert id="Insert1" parameterType="map">
+		insert into
+		procurements.purchase_order(financial_year,po_type,p_type,service_id,program_id,sector_id,vendor_id,vendor_comment,order_no,order_date,need_by_date,address,amount_words,amount,instructions,group_name,purchaseorder_id,scheme_id,project_id)
+		values
+		(#{p.financial_year},#{p.po_type},#{p.p_type},#{p.serviceid},#{p.program_id},#{p.sector_id},#{p.vendorid},#{p.vendor_comment},#{p.order_no},#{p.order_date},#{p.need_by_date},#{p.address},#{p.amount_words},#{p.amount},#{p.instructions},#{p.group_name},
+		('PO' ||'' || '' || '/' || '' || #{year} ||'' || '/' || ''|| #{month} ||''||
+		'/' || ''||lpad(CAST( #{id} AS character varying
+		),6,'0')),#{p.project_id},#{p.scheme_id})
+	</insert>
+
+
+  
+
+	<!-- ##############CONSUMABLES DETAILS############ -->
+
+
+	<select id="getQuantity" resultType="java.lang.Double">
+
+		select currval(qty) from procurements.purchase_order_details;
+
+	</select>
+
+
+
+
+
+	<insert id="Consumables" parameterType="map">
+		insert into
+		procurements.purchase_order_details(qty,rate,specifications,brand,location,installation_status,installation_cost,created_date,purchase_type,assets,value)
+		values
+		(#{p.qty},#{p.rate},#{p.specifications},#{p.brand},#{p.location},#{p.installation_status},#{p.installation_cost},current_timestamp,#{p.p_type},#{p.assets},#{p.value});
+	</insert>
+
+	<!-- <insert id="POAmount" parameterType="map"> insert into procurements.purchase_order_details(value) 
+		values (#{p.value}); </insert> -->
+
+	<select id="getConsume" resultType="map">
+
+		select  qty as quantity,rate,value,specifications,brand,location as
+		location_id,installation_status,installation_cost from
+		procurements.purchase_order_details
+
+	</select>
+
+
+  
+     
+
+	<select id="getProgramDet" parameterType="map" resultType="map"   >
+	
+		SELECT project_id ,from_date,to_date,description,program_id,segment_id,sector_id,scheme_id from procurements.createprogram_mst WHERE program_id= #{p.program_id} ;
+	</select>
+
+
+
+
+		<insert id = "TraineeMulti" parameterType ="map">
+			insert into procurements.workorder_actuals(amount) values (#{p.value});
+			
+		</insert>
+
+   
+   
+   <insert id="addWOItems" parameterType="map">
+		insert into procurements.workorder_actuals(model,duration_hours_check,no_of_trainers_check,description,location,duration_days,no_of_trainers,model_rate,amount)
+		 values (#{p.paybasemodel},#{p.duration_hours_check},#{p.no_of_trainers_check},#{p.description},#{p.id},#{p.duration_days},#{p.no_of_trainers},#{p.rate},#{p.value});
+	</insert>
+   
+   
+    <insert id="addwoadditions" parameterType="map">
+		insert into procurements.workorder_additions_map(description,value,rate,per_days,trainer_trainee,per_days_check,trainer_trainee_check)
+		 values (#{p.description},#{p.value11},#{p.rate11},#{p.duration_days11},#{p.no_of_trainers11},#{p.duration_days_check11},#{p.duration_days_trainer11});
+	</insert>
+   
+   
+   
+   
+   <!-- ################################generating MouIds #####################-->
+   
+   <select id="getMoUIds" parameterType="map" resultType="map">
+		SELECT
+		program_id,scheme_id,project_id,from_date :: date,to_date :: date from
+		procurements.createprogram_mst where program_id=#{p.program_id};
+	</select>
+   
+   
+       
+  
+   
+   
+</mapper>   
+      
+
+   
+
+
+
+
+
+
+
+
+
+
+
+<!-- <select id="count" resultType="java.lang.Integer"> SELECT count(id)+1 
+	as count from procurements.vender_service_nature_mst </select> <update id="updateDetails" 
+	parameterType="map"> update procurements.vender_service_nature_mst SET service_id 
+	= concat('NS',lpad(CAST( #{count} AS character varying ),2,'0')) WHERE service_name=#{p.service_name}; 
+	</update> <select id="getAll" resultType="map"> SELECT service_id,service_name,status 
+	from procurements.vender_service_nature_mst; </select> <select id="getNameWiseData" 
+	resultType="VendorService"> SELECT service_name,status from procurements.vender_service_nature_mst 
+	where service_name=#{service_name}; </select> <select id="getById" resultType="vendorservice"> 
+	SELECT service_name,status,service_id from procurements.vender_service_nature_mst 
+	WHERE service_id = #{service_id} ; </select> <update id="updateData" parameterType="map"> 
+	update procurements.vender_service_nature_mst SET service_name = #{p.service_name},status 
+	= CAST(#{p.status} as boolean) WHERE service_id=#{p.service_id}; </update> -->
+
+<!-- <select id="getById1" resultType="CreatePo"> SELECT name as vendor_name,brand,location 
+	from procurements.program_details WHERE name = #{name}; </select> <delete 
+	id="deleteData1" parameterType="java.lang.String"> delete from procurements.program_details 
+	where name = #{name}; </delete> <update id="updateData1" parameterType="map"> 
+	update procurements.program_details SET brand=#{p.brand},location=#{p.location} 
+	WHERE name=#{p.name}; </update> -->
+                          

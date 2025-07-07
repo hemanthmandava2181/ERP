@@ -1,0 +1,295 @@
+
+<script
+	src="/erp/files/assets/js/erp-scripts/HRMS/Attendance/attendanceSheetModule.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="attendanceSheetDiv"
+	data-ng-controller="attendanceSheetController">
+	<!-- BreadCrumb Start -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-block caption-breadcrumb">
+					<div class="breadcrumb-header">
+						<h5>Attendance Sheet</h5>
+					</div>
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item"><a href="#!"> <i
+									class="ti-home"></i>
+							</a></li>
+							<li class="breadcrumb-item"><a href="#!">HRMS</a></li>
+							<li class="breadcrumb-item"><a href="#!">Attendance
+									Management</a></li>
+							<li class="breadcrumb-item"><a href="#!">Attendance
+									Sheet</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- BreadCrumb End -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h6 class="card-title">Employee Attendance Sheet</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<label>Department</label> <select class="form-control"
+								data-ng-model="data.object.department">
+								<option data-ng-repeat="department in departments"
+									value="{{department.id}}">{{department.department_name}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<label>Cadre</label> <select class="form-control"
+								data-ng-model="data.object.cader">
+								<option data-ng-repeat="cader in caders"
+									value="{{cader.id}}">{{cader.cader_name}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<label>Grade</label> <select class="form-control"
+								data-ng-model="data.object.grade">
+								<option data-ng-repeat="grade in grades"
+									value="{{grade.id}}">{{grade.grade_name}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<label>Employee Type</label> <select class="form-control"
+								data-ng-model="data.object.employee_type">
+								<option data-ng-repeat="type in types" value="{{type.id}}">{{type.type}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>From Date</label> <input class="form-control"
+									id="fromdate" data-ng-model="data.object.from_date"
+									name="fromdate" type="date" placeholder="Enter From Date">
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<div class="form-group">
+								<label>To Date</label> <input class="form-control" id="todate"
+									name="todate" data-ng-model="data.object.to_date" type="date"
+									placeholder="Enter to Date">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<label>Reporting manager</label> <select class="form-control"
+								data-ng-model="data.object.reporting_to">
+								<option data-ng-repeat="report in reportings"
+									value="{{report.empid}}">{{report.fullname}}</option>
+							</select>
+						</div>
+						<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4 col-xs-12 mt-1">
+							<label>Location</label> <select class="form-control"
+								data-ng-model="data.object.id">
+								<option data-ng-repeat="loc in locations" value="{{loc.id}}">{{loc.location_name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="col-sm-12 col-xl-12 m-b-30 text-center">
+                                                        <button class="btn btn-primary">Search</button>
+                                                    </div> -->
+
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-12 col-xl-12 m-b-30 text-center">
+		<button class="btn btn-primary" style="margin-bottom: 15px;"
+			data-ng-click="getCalendarDetails(data.object);" id="timesheetdata"
+			value="submit" type="submit">Search</button>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header"></div>
+				<div class="card-body">
+					<div class="dt-responsive table-responsive">
+						<table class="table table-hover table-bordered" id="simpletable">
+							<thead class='btn-grd-primary'>
+								<tr style='background-color: CornflowerBlue'>
+									<th>S.no</th>
+									<th>Employee ID</th>
+									<th>Employee Name</th>
+									<th data-ng-repeat="dateWise in data[0]['presenceArr']">{{
+										dateWise['date'] }}</th>
+									<th>No.of Absent Days</th>
+									<th>No.of Present Days</th>
+									<th>No.of Leaves</th>
+									<th>No.of Holidays</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									data-ng-repeat="student in filteredResult = data | filter:search">
+									<td>{{$index+1}}</td>
+									<td>{{student.empid}}</td>
+									<td>{{student.name}}</td>
+									<td
+										data-ng-repeat="presence1 in student ['presenceArr'] track by $index">
+										<div
+											data-ng-if="presence1['workingDayOrNot'] == 'T' && presence1['status'] == 'P'">
+											<font color='green'><b>{{presence1.status}}</b>&nbsp;<i
+												class="fa fa-pencil"
+												style="font-size: 12px; color: #4dffff; cursor: pointer;"
+												data-ng-click="getstatus(student,presence1)"
+												data-toggle="modal" data-target="#myModel"
+												aria-hidden="true"></i></font>
+										</div>
+
+										<div
+											data-ng-if="presence1['workingDayOrNot'] == 'T' && presence1['status'] == 'A'">
+											<font color='red'><b>{{presence1.status}}</b>&nbsp;<i
+												class="fa fa-pencil"
+												style="font-size: 12px; color: #4dffff; cursor: pointer;"
+												data-ng-click="getstatusab(student,presence1)"
+												data-toggle="modal" data-target="#myModel"
+												aria-hidden="true"></i></font>
+										</div>
+										<div data-ng-if="presence1['workingDayOrNot'] == 'F'">
+											<font color='blue'><b>H</b></font>
+										</div>
+										<div
+											data-ng-if="presence1['status'] == 'P' && presence1['workingDayOrNot'] == 'T'"
+											data-ng-init="student.daysPresent = student.daysPresent+1;"></div>
+										<div
+											data-ng-if="presence1['status'] == 'A' && presence1['workingDayOrNot'] == 'T'"
+											data-ng-init="student.daysAbsent = student.daysAbsent + 1"></div>
+										<div data-ng-if="presence1['workingDayOrNot'] == 'F'"
+											data-ng-init="student.daysHoliday = student.daysHoliday + 1"></div>
+									</td>
+
+									<td><b>{{student.daysAbsent || 0}}</b></td>
+									<td><b>{{student.daysPresent || 0}}</b></td>
+									<td>{{student.total_leaves}}</td>
+									<td><b>{{student.daysHoliday || 0}}</b></td>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="modal fade" id="myModel" role="dialog">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Employee Attendance Update</h4>
+						</div>
+						<div class="modal-body">   
+							<div class="panel panel-success">  
+								<div class="panel-body">
+									<form>
+										<br> <label class="control-label col-md-2">Employee ID:</label>
+										<div class="col-md-4">
+											<input type="text" class="form-control" disabled
+												data-ng-model="data.object.empid" data-ng-value=>
+										</div>
+										<label
+											class="control-label col-md-2">Date:</label>
+										<div class="col-md-4">
+											<input type="text" class="form-control" disabled
+												data-ng-model="data.object.date">
+										</div>
+										<br> <br> <br> <br>    
+										<label class="control-label col-md-2">Status:</label>
+										<div class="col-md-4">     
+										<select class="form-control" data-ng-model="data.object.workingday">
+											<option value="True">Present</option>
+											<option value="False">Absent</option>
+											<option value="Leave">Leave</option>   
+										</select>       
+										</div>				    			   
+									</form>           
+								</div>                
+							</div>      
+						</div>   
+						<div class="modal-footer">
+							<button type="button" id="update" class="btn btn-primary" data-ng-show = "data.object.workingday == 'False'"
+								data-ng-click="updateattendance(data.object)" data-dismiss="modal"
+								style="width: 100px">Update</button>
+								
+							<button type="button" id="update" class="btn btn-primary" data-ng-show = "data.object.workingday == 'True'"
+								data-ng-click="updateattendancepresent(data.object)" data-dismiss="modal"
+								style="width: 100px">Update</button>
+								
+							<button type="button" id="update" class="btn btn-primary" data-ng-show = "data.object.workingday == 'Leave'"
+								data-ng-click="updateattendanceleave(data.object)" data-dismiss="modal"
+								style="width: 100px">Update</button>
+							<button type="button" class="btn btn-warning"
+								style="margin-right: 70px; width: 100px" data-dismiss="modal">Close</button>
+						</div>
+
+					</div>
+				</div>           
+			</div> 
+	
+	
+	
+	
+	
+
+
+</div>
+
+
+<!-- Data Table -->
+<script
+	src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+
+
+<script>
+	$('#simpletable1').DataTable();
+</script>
+<script>
+	jQuery(document).ready(
+			function() {
+
+				angular.bootstrap(jQuery("#attendanceSheetDiv"),
+						[ 'attendanceSheetModule' ]);
+			});
+	
+	jQuery("#timesheetdata").click(function(){
+		$("#timesheet").show();       
+	}); 
+</script>

@@ -1,0 +1,700 @@
+<script
+	src="/erp/files/assets/js/erp-scripts/finance/accountspayable/bookedinvoices.js"></script>
+
+<!-- Data Tables -->
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div id="bookedinvoiceId" data-ng-controller="bookedinvoiceController">
+	<div id="mainpage">
+		<div class="row">   
+			<div class="col-sm-12">                    
+				<div class="card">
+					<div class="card-block caption-breadcrumb">
+						<div class="breadcrumb-header">
+							<h5>Booked Invoices</h5>
+						</div>
+						<div class="page-header-breadcrumb">
+							<ul class="breadcrumb-title">
+								<li class="breadcrumb-item"><a href="#!"> <i
+										class="ti-home"></i>
+								</a></li>
+								<li class="breadcrumb-item"><a href="#!">Finance</a></li>
+								<li class="breadcrumb-item"><a href="#!">Account
+										Payable</a></li>
+								<li class="breadcrumb-item"><a href="#!">Book Invoice</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- BreadCrumb End -->
+		<h5>Booked Invoices</h5>
+		<h8>&nbsp;</h8>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+								<button class="btn btn-info btn-block" type="button"
+									data-toggle="collapse" data-target="#bookedinvoiceexample"
+									aria-expanded="false" aria-controls="collapseExample">
+									Booked Invoices</button>
+							</div>
+							<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 mt-1">
+								<button class="btn btn-warning btn-block" type="button"
+									data-toggle="collapse" data-target="#paidInvoiceexample"
+									aria-expanded="false" aria-controls="collapseExample">
+									Partly Paid Invoices</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row collapse show mt-2" id="bookedinvoiceexample">
+			<div class="col-sm-12 col-md-12">
+				<div class="card">
+					<div class="card-header bg-info">
+						<h6 class="card-title">Booked Invoices</h6>
+					</div>
+					<div class="card-body">
+						<!-- <button class="btn btn-success float-right">Release
+							Payment</button> -->
+
+						<div class="dt-responsive table-responsive">
+							<table id="order-table"
+								class="table table-striped table-bordered nowrap">
+								<thead>
+									<tr>
+										<th
+											style="min-width: 170px; max-width: 170px; text-align: center;">S.No</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">WO.No/PO.No</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">AP
+											ID</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">Vendor
+											Name</th>
+										<th
+											style="min-width: 170px; max-width: 170px; text-align: center;">Order
+											Type</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">Status</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">Date&time</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="bookeddata in bookedDetails">
+										<td align="center">{{$index+1}}</td>
+										<td align="center">{{bookeddata.workorder_id}}</td>
+										<td align="center">{{bookeddata.voucher_id}}</td>
+										<td align="center">{{bookeddata.name}}</td>
+										<td align="center">{{bookeddata.ordertype}}</td>
+										<td align="center">{{bookeddata.invoice_name}}</td>
+										<td align="center">{{bookeddata.date}}</td>
+										<td align="center">
+											<button class="btn btn-primary" id="viewpagebtn"
+												data-ng-click="getJouranlentrydata(bookeddata.voucher_id);getJVDetails(bookeddata.voucher_id);">View</button>
+										</td>
+									</tr>
+									<!--  -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row collapse mt-2" id="paidInvoiceexample">
+			<div class="col-sm-12 col-md-12">
+				<div class="card">
+					<div class="card-header bg-warning">
+						<h6 class="card-title">Partly Paid Invoices</h6>
+					</div>
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table id="simpletable"
+								class="table table-striped table-bordered nowrap">
+								<thead>
+									<tr>
+										<th
+											style="min-width: 170px; max-width: 170px; text-align: center;">S.No</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">WO.No/PO.No/MoU.No.</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">AP
+											ID</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">Vendor
+											Name</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">Order
+											Type</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">Status</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">Date&time</th>
+										<th
+											style="min-width: 200px; max-width: 200px; text-align: center;">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="partiallypaid in partiallypaidDetails">
+										<td align="center">{{$index+1}}</td>
+										<td align="center">{{partiallypaid.workorder_id}}</td>
+										<td align="center">{{partiallypaid.voucher_id}}</td>
+										<td align="center">{{partiallypaid.name}}</td>
+										<td align="center">{{partiallypaid.ordertype}}</td>
+										<td align="center">{{partiallypaid.invoice_name}}</td>
+										<td align="center">{{partiallypaid.payment_date}}</td>
+										<td align="center">
+											<button class="btn btn-primary"
+												data-ng-click="getPartialpaydet(partiallypaid.voucher_number);"
+												id="paybtn">PAY</button>
+										</td>   
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	<!-- Booked invoices view page -->
+	<div id="bookedinvoicesview">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-block caption-breadcrumb">
+						<div class="breadcrumb-header">
+							<h5>Booked Invoices View Page</h5>
+						</div>
+						<div class="page-header-breadcrumb">
+							<ul class="breadcrumb-title">
+								<li class="breadcrumb-item"><a href="#!"> <i
+										class="ti-home"></i>
+								</a></li>
+								<li class="breadcrumb-item"><a href="#!">Finance &
+										Accounts</a></li>
+								<li class="breadcrumb-item"><a href="#!">Accounts
+										Payable</a></li>
+								<li class="breadcrumb-item"><a href="#!">Booked
+										Invoices</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>     
+		</div>
+		<!-- BreadCrumb End -->     
+		<!-- Content Starts Here -->
+		<div class="row">
+			<div class="col-sm-12 col-md-8 col-xl-8 col-lg-8 col-xs-12">
+				<h5>Journal Entry</h5>
+			</div>
+			<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+				<button class="btn btn-success">PDF</button>
+				<button class="btn btn-success mr-2" id="releasepayementbtn"
+					data-ng-click="getpaymentdetails(data.object);">Release
+					Payment</button>
+			</div>
+		</div>
+		<h8>&nbsp;</h8>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header bg-primary">
+						<div class="row">
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold">Voucher No : </label>
+							</div>
+							<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+								{{data.object.voucher_number}}</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label>&nbsp;</label>
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold">Voucher Date : </label>
+							</div>
+							<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+								{{data.object.voucher_date}}</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold">Document Date : </label>
+							</div>
+							<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+								{{data.object.due_date}}</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label>&nbsp;</label>
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold">Invoice No : </label>
+							</div>
+							<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+								{{data.object.invoice_id}}</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold">Invoice Date : </label>
+							</div>
+							<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+								{{data.object.invoice_date}}</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label>&nbsp;</label>
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold">Entry Posted By : </label>
+							</div>
+							<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+								{{data.object.name}}</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold">Due Date : </label>
+							</div>
+							<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+								{{data.object.due_date}}</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label>&nbsp;</label>
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold">Processed By : </label>
+							</div>
+							<div class="col-sm-12 col-md-3 col-xl-3 col-lg-3 col-xs-12">
+								{{data.object.created_by}}</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="dt-responsive table-responsive">
+							<table id="order-table"
+								class="table table-striped table-bordered nowrap">
+								<thead>
+									<tr>
+										<th align="left">Account Name</th>
+										<th align="left">Debit/By(<span class="fa fa-inr">
+												<!--  -->
+										</span>)
+										</th>
+										<th align="left">Credit/To(<span class="fa fa-inr">
+												<!--  -->
+										</span>)
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<div data-ng-if="jvview1.length != 0">
+										<tr data-ng-repeat="jv in jvview1 = jvview1 | filter : search">
+											<!--  <td align="left">{{$index+1}}</td> -->
+											<td align="left">{{jv.account_name}}</td>
+											<td align="left">{{jv.debit}}</td>
+											<td align="left">{{jv.credit}}</td>
+										</tr>
+									</div>
+									<div data-ng-if="jvview2.length != 0">
+										<tr data-ng-repeat="jv in jvview2 = jvview2 | filter : search">
+											<td align="left">{{jv.account_name}}</td>
+											<td align="left">{{jv.debit}}</td>
+											<td align="left">{{jv.credit}}</td>
+										</tr>
+									</div>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold">Description : </label>
+							</div>
+							<div class="col-sm-12 col-md-10 col-xl-10 col-lg-10 col-xs-12">
+								<textarea class="form-control"
+									data-ng-model="data.object.description" id="description"
+									disabled></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header bg-primary">
+						<h6 class="card-title">Approval History</h6>
+					</div>
+					<div class="card-body"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- release payment page -->
+	<div id="releasepayementpage">
+		<!-- BreadCrumb Start -->   
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-block caption-breadcrumb">
+						<div class="breadcrumb-header">
+							<h5>Bank Payment</h5>
+						</div>
+						<div class="page-header-breadcrumb">
+							<ul class="breadcrumb-title">
+								<li class="breadcrumb-item"><a href="#!"> <i
+										class="ti-home"></i>
+								</a></li>
+								<li class="breadcrumb-item"><a href="#!">Finance &
+										Accounts</a></li>
+								<li class="breadcrumb-item"><a href="#!">Accounts
+										Payable</a></li>
+								<li class="breadcrumb-item"><a href="#!">Booked
+										Invoices</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- BreadCrumb End -->
+		<!-- Content Starts Here -->
+		<h5>Bank Payment</h5>
+		<h8>&nbsp;</h8>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">    
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Vendor Name :</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.name" disabled />
+							</div>
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> P.O/W.O /MoU No :</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.workorder_id" disabled />
+							</div>
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Voucher No :</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.voucher_number" disabled />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Invoice Date :</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.invoice_date" disabled />
+							</div>
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Due Date :</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.due_date" disabled />
+							</div>
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Invoice Amount :</label> <input
+									type="text" class="form-control" onkeyup="Calamount()"
+									id="vendorsamount" data-ng-model="data.object.net_amount"
+									disabled />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Bank
+									Account&nbsp;&nbsp;<span class="text-danger">*</span> :
+								</label> <select class = "form-control" data-ng-model = "data.object.bank_gl_account">
+								<option data-ng-repeat="bank in banks" value="{{bank.id}}">{{bank.bank_account}}</option>
+							</select>
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold">Neft/RTGS No<span
+									class="text-danger">*</span> :
+								</label> <input type = "text" class = "form-control" data-ng-model = "data.object.reference_number" />
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold"> Date<span
+									class="text-danger">*</span> :
+								</label> <input type = "date" class = "form-control" data-ng-model = "data.object.payment_date" />
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold"> Amount<span
+									class="text-danger">*</span> :
+								</label> <input type = "text" class = "form-control" onkeyup="Calamount()" id = "payingamount" data-ng-model = "data.object.amount" />
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold"> Vendor Balance<span
+									class="text-danger">*</span> :
+								</label> <input type = "text" class = "form-control" data-ng-model = "data.object.net_amount" disabled />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+								<label class="font-weight-bold">Description&nbsp;&nbsp;<span
+									class="text-danger">*</span> :
+								</label>
+								<textarea type = "text" class = "form-control" data-ng-model = "data.object.description"></textarea>
+							</div>
+							<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+								<label class="font-weight-bold">Round Off (-) :</label> <input type = "text" class = "form-control" id = "diffamount" data-ng-model = "data.object.diff_amount" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+								<label class="font-weight-bold">Signatory 1&nbsp;&nbsp;<span
+									class="text-danger">*</span> :
+								</label> <input type="text" class="form-control"
+									data-ng-model="data.object.signature_one" />    
+							</div>
+							<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+								<label class="font-weight-bold">Signatory 2&nbsp;&nbsp;<span
+									class="text-danger">*</span> :
+								</label> <input type = "text" class = "form-control" data-ng-model = "data.object.signature_two" />
+							</div>
+						</div>   
+						<h3>&nbsp;</h3>
+						<div class="row">
+							<div class="col-sm-12 mt-1 text-center">
+								<button class="btn btn-success"
+									data-ng-click="Releasepaymenttovendor(data.object);">Pay</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- partially paid invoices pay btn view -->
+	<div id="partialpaypage">
+		<!-- BreadCrumb Start -->   
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-block caption-breadcrumb">
+						<div class="breadcrumb-header">
+							<h5>Bank Payment</h5>
+						</div>
+						<div class="page-header-breadcrumb">
+							<ul class="breadcrumb-title">
+								<li class="breadcrumb-item"><a href="#!"> <i
+										class="ti-home"></i>
+								</a></li>
+								<li class="breadcrumb-item"><a href="#!">Finance &
+										Accounts</a></li>
+								<li class="breadcrumb-item"><a href="#!">Accounts
+										Payable</a></li>
+								<li class="breadcrumb-item"><a href="#!">Booked
+										Invoices</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- BreadCrumb End -->
+		<!-- Content Starts Here -->
+		<h5>Bank Payment</h5>
+		<h8>&nbsp;</h8>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">    
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Vendor Name :</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.name" disabled />
+							</div>
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> P.O/W.O /MoU No :</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.workorder_id" disabled />
+							</div>
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Voucher No :</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.voucher_number" disabled />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Invoice Date :</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.invoice_date" disabled />
+							</div>
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Due Date :</label> <input
+									type="text" class="form-control"
+									data-ng-model="data.object.due_date" disabled />
+							</div>
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Invoice Amount :</label> <input
+									type="text" class="form-control" onkeyup="Calamount()"
+									id="vendorsamount" data-ng-model="data.object.net_amount"
+									disabled />
+							</div>
+						</div>    
+						<div class="row">
+							<div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xs-12">
+								<label class="font-weight-bold"> Bank
+									Account&nbsp;&nbsp;<span class="text-danger">*</span> :
+								</label> <select class = "form-control" data-ng-model = "data.object.bank_gl_account">
+								<option data-ng-repeat="bank in banks" value="{{bank.id}}">{{bank.bank_account}}</option>
+							</select>
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold">Neft/RTGS No<span
+									class="text-danger">*</span> :
+								</label> <input type = "text" class = "form-control" data-ng-model = "data.object.reference_number" />
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold"> Date<span
+									class="text-danger">*</span> :
+								</label> <input type = "date" class = "form-control" data-ng-model = "data.object.payment_date" />
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold"> Amount<span
+									class="text-danger">*</span> :
+								</label> <input type = "text" class = "form-control" onkeyup="Calamount()" id = "payingamount" data-ng-model = "data.object.amount" />
+							</div>
+							<div class="col-sm-12 col-md-2 col-xl-2 col-lg-2 col-xs-12">
+								<label class="font-weight-bold"> Vendor Balance<span
+									class="text-danger">*</span> :
+								</label> <input type = "text" class = "form-control" data-ng-model = "data.object.net_amount" disabled />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+								<label class="font-weight-bold">Description&nbsp;&nbsp;<span
+									class="text-danger">*</span> :
+								</label>
+								<textarea type = "text" class = "form-control" data-ng-model = "data.object.description"></textarea>
+							</div>
+							<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+								<label class="font-weight-bold">Round Off (-) :</label> <input type = "text" class = "form-control" id = "diffamount" data-ng-model = "data.object.diff_amount" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+								<label class="font-weight-bold">Signatory 1&nbsp;&nbsp;<span
+									class="text-danger">*</span> :
+								</label> <input type="text" class="form-control"
+									data-ng-model="data.object.signature_one" />    
+							</div>
+							<div class="col-sm-12 col-md-6 col-xl-6 col-lg-6 col-xs-12">
+								<label class="font-weight-bold">Signatory 2&nbsp;&nbsp;<span
+									class="text-danger">*</span> :
+								</label> <input type = "text" class = "form-control" data-ng-model = "data.object.signature_two" />
+							</div>
+						</div>   
+						<h3>&nbsp;</h3>
+						<div class="row">
+							<div class="col-sm-12 mt-1 text-center">
+								<button class="btn btn-success"
+									data-ng-click="Releasepaymenttovendor(data.object);">Pay</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+</div>
+
+
+<!-- Data Tables -->
+<script
+	src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/jszip.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js "></script>
+<script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js "></script>
+<script
+	src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js "></script>
+
+<script
+	src="/erp/files/assets/pages/data-table/js/data-table-custom.js "></script>
+
+<script>
+/* var a = document.getElementById()    
+$("#mainpage").show();
+$("#bookedinvoicesview").hide();
+$("#releasepayementpage").hide(); */
+	jQuery(document).ready(function() {
+		document.getElementById("mainpage").style.display = "block";
+		document.getElementById("bookedinvoicesview").style.display = "none";
+		document.getElementById("releasepayementpage").style.display = "none";
+		document.getElementById("partialpaypage").style.display = "none";
+		angular.bootstrap(jQuery("#bookedinvoiceId"), [ 'bookedinvoices' ]);
+	});
+	        
+	$(document).on('click', "#viewpagebtn", function() {
+		document.getElementById("mainpage").style.display = "none";
+		document.getElementById("bookedinvoicesview").style.display = "block";
+		document.getElementById("releasepayementpage").style.display = "none";
+		document.getElementById("partialpaypage").style.display = "none";
+	});
+	
+	$(document).on('click', "#releasepayementbtn", function() {
+		document.getElementById("mainpage").style.display = "none";
+		document.getElementById("bookedinvoicesview").style.display = "none";
+		document.getElementById("releasepayementpage").style.display = "block";
+		document.getElementById("partialpaypage").style.display = "none";
+	}); 
+	
+	$(document).on('click', "#paybtn", function() {
+		document.getElementById("mainpage").style.display = "none";
+		document.getElementById("bookedinvoicesview").style.display = "none";
+		document.getElementById("releasepayementpage").style.display = "none";
+		document.getElementById("partialpaypage").style.display = "block";
+	});    
+</script>
+
+<script type="text/javascript">
+    function Calamount() {
+        var txtFirstNo = document.getElementById('payingamount').value;
+        var txtSecondNo = document.getElementById('vendorsamount').value;
+        var result1 = parseFloat(txtSecondNo) - parseFloat(txtFirstNo);
+        if (!isNaN(result1)) {   
+            document.getElementById('diffamount').value = result1;
+        }   
+    }   
+</script>

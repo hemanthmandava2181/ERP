@@ -1,0 +1,259 @@
+
+<script	src="/erp/files/assets/js/erp-scripts/finance/satutaryreports/displayaccountbalance.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/erp/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+<div  id="displayaccountbalanceId" data-ng-controller="displayaccountbalanceController">
+                                        <!-- BreadCrumb Start -->
+                                        <div class="row">     
+                                            <div class="col-sm-12">      
+                                                <div class="card">
+                                                    <div class="card-block caption-breadcrumb">
+                                                        <div class="breadcrumb-header">
+                                                            <h5>Display Account Balance</h5>
+                                                        </div>
+                                                        <div class="page-header-breadcrumb">
+                                                            <ul class="breadcrumb-title">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">
+                                                                        <i class="ti-home"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Finance</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Statutory Reports</a>
+                                                                </li>
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="#!">Dispaly Account Balance</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- BreadCrumb End -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header bg-primary">
+                                                        <h6 class="card-title">Ledger Balance</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">GL Accounts
+                                                                <select name="select" class="form-control"
+                                                                 
+						data-ng-model="data.object.id">
+						<option>--Select--</option>   
+						<option data-ng-repeat="account in GLAccount"
+							value="{{account.id}}">{{account.account_name}}</option>
+					</select>  
+                                                            </div>
+                                                            
+                                                          
+                                                           
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">From Date
+                                                                <input class="form-control" type="date" data-ng-model = "data.object.from_date" id = "from"  />
+                                                            </div>
+                                                            <div class="col-sm-12 col-xl-3 m-b-30">To Date
+                                                                <input class="form-control" type="date" data-ng-model = "data.object.to_date" id = "to"  />
+                                                            </div>
+
+                                                            <div class="col-sm-12 col-xl-3 m-b-30 text-center">
+                                                                <button class="btn btn-primary" id = "reportbtn" data-ng-click = "getDisplayAccountBalance(data.object);">Submit</button>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row"  id = "viewpanel">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header"></div>
+                                                    <div class="card-body">
+                                                        <button class="btn btn-primary">Export Excel</button>
+                                                        <button class="btn btn-primary">PRINT</button><br><br>
+                                                        <div class="dt-responsive table-responsive">
+                                                            <table class="table table-hover table-bordered" id="simpletable">
+                                                                <thead class="btn-grd-primary">
+                                                                    <tr>
+                                                                        <th>S.No</th>
+                                                                        <th>Date</th>
+                                                                        <th>Account</th>
+                                                                        <th>Description</th>
+                                                                        <th>Voucher Type</th>
+                                                                        <th>Voucher No</th>
+                                                                        <th>Debit</th>
+                                                                        <th>Credit</th>
+                                                                    </tr>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr data-ng-repeat="balance in filteredResult = displayBalance | filter:search">          
+									 <td >{{$index+1}}</td>                
+									 <td >{{balance.date}}</td>
+									 <td >{{balance.account_types}}</td>
+									  <td >{{balance.description}}</td>
+									   <td >{{balance.name}}</td>
+									    <td ><a data-ng-click="getJournalEntryDetails(balance);" data-toggle="modal" data-target="#large-Modal">{{balance.voucher_number}}</a></td>
+									     <td >{{balance.debit_amount | number : 2}}</td>
+									      <td >{{balance.credit_amount | number : 2}}</td>
+                                                                    
+                                                                   
+                                                                   
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+          
+                                                            <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Journal Voucher Details</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+				<div data-ng-repeat="data in Details">  
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-primary" style="border-color: #4099ff;">
+								<div class="panel-body p-3">
+								<div class="row">
+								 <div class="col-sm-4">Voucher Number:
+								 {{data.voucher_number}}  </div>
+								  <div class="col-sm-4">Project Name:
+								 {{data.project}}  </div>
+								   <div class="col-sm-4">Program Name::
+								 {{data.program}}  </div>
+								 
+								</div>
+								<div class="row">
+								 <div class="col-sm-4">W.O NO/P.O NO:
+								 {{data.workorder_name}}  </div>
+								  <div class="col-sm-4">Entry Type:
+								 {{data.entry_type}}  </div>
+								   <div class="col-sm-4">Date:
+								 {{data.date}}  </div>
+								 
+								</div>
+								<div class="row">
+								 <div class="col-sm-4">Account Payable ID:
+								 <a id="account" data-ng-click="getPreviousInvoiceDetails(data.workorder);getTaxDetails(data.voucher_id);getDocumentDetails(data.voucher_id);getCommentDetails(data.voucher_id);getTimelineDetails(data.voucher_id);
+											 getItemDetails(data.voucher_id);getPaymentDetails(data.voucher_id);
+											 getByPendingDetails(data.voucher_id);getJVDetails(data.voucher_id);">{{data.voucher_id}}</a>		  </div>
+								
+								</div>
+									<div class="panel panel-primary">            
+					<div class="panel-body">   
+						<div id="dataDiv" style="overflow-x: auto;">
+							<table class="table table-bordered">
+								<thread>
+								<tr style='background-color: CornflowerBlue'>
+									<th
+										style="min-width: 50px; max-width: 50px; text-align: center;">S.No</th>
+									<th
+										style="min-width: 250px; max-width: 250px; text-align: center;">Reference Date</th>
+										<th
+										style="min-width: 250px; max-width: 250px; text-align: center;">GL Account</th>
+									<th
+									
+										style="min-width: 150px; max-width: 150px; text-align: center;">Cost Center</th>
+										<th
+										style="min-width: 250px; max-width: 250px; text-align: center;">Debit/BY Amount</th>
+										<th
+										style="min-width: 250px; max-width: 250px; text-align: center;">Credit/TO Amount</th>
+											<th
+										style="min-width: 250px; max-width: 250px; text-align: center;">Description</th>
+   
+								</tr>      
+								<tr   
+									data-ng-repeat="entry in filteredResult = entryDetails | filter:search">
+									<td align="left">{{$index+1}}</td>
+									<td align="left"><a data-ng-click="" data-toggle="modal" data-target="#myModal">{{entry.ref_date}}</a></td>
+									<td align="left">{{entry.gl_account_name}}</td>
+									<td align="left">{{entry.cost_center}}</td>
+									<td align="left">{{entry.debit_amount | number : 2}}</td>
+									<td align="left">{{entry.credit_amount | number : 2}}</td>
+									<td align="left">{{entry.description}}</td>
+									
+								</tr>
+								<tr>         
+					<td colspan="4">      
+					<center><b>Total</b></center></td> 
+					<td><b>{{entryDetails[0].debit_total | number : 2}}</b></td>
+					<td><b>{{entryDetails[0].credit_total | number : 2}}</b></td>
+					
+					    
+					</tr>          
+								</thread>   
+							</table>   
+						</div>
+					</div>   
+				</div> 
+								
+								</div>      
+								</div>   
+								</div>
+								</div>
+								</div>
+								</div>
+								
+				</div>
+								</div>
+								</div>
+
+                                    </div>
+                              
+
+   
+    <!-- Data Table -->
+    <script src="/erp/files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="/erp/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/erp/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="/erp/files/assets/pages/data-table/js/data-table-custom.js"></script>
+
+   
+    <script>   
+        $('#simpletable1').DataTable();
+    </script>      
+    <script>
+		$("#viewpanel").hide();
+		jQuery(document).ready(function() { 
+			
+			angular.bootstrap(jQuery("#displayaccountbalanceId"), [ 'displayaccountbalance' ]);
+		});
+		
+   </script>
+   <script>
+$(document).on('click', "#reportbtn", function(){
+			$("#viewpanel").show();	 
+		});
+		</script>
